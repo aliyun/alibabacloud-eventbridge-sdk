@@ -1,0 +1,71 @@
+{
+	"scope": "alibabacloud",
+	"name": "eventbridge",
+	"version": "0.0.1",
+	"main": "./main.tea",
+	"maintainers": [
+		{
+			"name": "Alibaba Cloud SDK",
+			"email": "sdk-team@alibabacloud.com"
+		}
+	],
+	"java": {
+		"package": "com.aliyun.eventbridge",
+		"packageInfo": {
+			"description": "Alibaba Cloud eventbridge SDK for Java",
+			"url": "https://github.com/aliyun/alibabacloud-eventbridge-sdk",
+			"licenseNmae": "The Apache License, Version 2.0",
+			"licenseUrl": "http://www.apache.org/licenses/LICENSE-2.0.txt",
+			"developerId": "aliyunproducts",
+			"developerName": "Aliyun SDK",
+			"developerEmail": "aliyunsdk@aliyun.com"
+		}
+	},
+	"releases": {
+		"java": "com.aliyun:eventbridge:0.0.1",
+		"go": "github.com/alibabacloud-go/eventbridge-sdk:v1.1.0",
+		"csharp": "AlibabaCloud.SDK.Eventbridge:0.0.1",
+		"ts": "@alicloud/eventbridge:^1.0.0",
+		"php": "alibabacloud/eventbridge:^0.1.0",
+		"python": "alibabacloud_eventbridge:0.0.1"
+	},
+	"libraries": {
+		"Credential": "alibabacloud:Credential:*",
+		"Util": "alibabacloud:Util:*",
+		"EventBridgeUtil": "alibabacloud:EventBridgeUtil:*"
+	},
+	"python": {
+		"package": "alibabacloud_eventbridge",
+		"clientName": "client",
+		"packageInfo": {
+			"name": "alibabacloud_eventbridge",
+			"desc": "Alibaba Cloud EventBridge SDK Library for Python",
+			"github": "https://github.com/aliyun/alibabacloud-eventbridge-sdk",
+			"author": "Alibaba Cloud SDK",
+			"email": "sdk-team@alibabacloud.com"
+		}
+	},
+	"csharp": {
+		"className": "EventBridgeClient",
+		"namespace": "AlibabaCloud.SDK.EventBridge",
+		"packageInfo": {
+			"name": "eventbridge",
+			"title": "alibabacloud-eventBridge",
+			"description": "Alibaba Cloud EventBridge SDK Library for .NET",
+			"company": "Alibaba Cloud, Inc",
+			"interface": true
+		}
+	},
+	"php": {
+		"package": "AlibabaCloud.SDK.EventBridge",
+		"clientName": "Eventbridge",
+		"packageInfo": {
+			"name": "alibabacloud/eventbridge",
+			"desc": "Alibaba Cloud EventBridge SDK Library for PHP",
+			"github": "https://github.com/aliyun/alibabacloud-eventbridge-sdk",
+			"files": {
+				"LICENSE": "../LICENSE"
+			}
+		}
+	}
+}
