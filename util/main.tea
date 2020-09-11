@@ -1,0 +1,25 @@
+/**
+ * This is for EventBridge SDK
+ */
+
+/**
+ * Get the string to be signed according to request
+ * @param request  which contains signed messages
+ * @return the signed string
+ */
+static function getStringToSign(request: $Request): string;
+
+/**
+ * Get signature according to stringToSign, secret
+ * @param stringToSign  the signed string
+ * @param secret accesskey secret
+ * @return the signature
+ */
+static function getSignature(stringToSign: string, secret: string): string;
+
+/**
+ * Serialize events
+ * @param events the object
+ * @return the result
+ */
+static function serialize(events: any): any;
