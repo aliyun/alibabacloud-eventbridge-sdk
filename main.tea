@@ -1,0 +1,792 @@
+/**
+ *
+ */
+import Util;
+import EventBridgeUtil;
+import Credential;
+
+type @protocol = string
+type @readTimeout = number
+type @connectTimeout = number
+type @httpProxy = string
+type @httpsProxy = string
+type @noProxy = string
+type @maxIdleConns = number
+type @endpoint = string
+type @regionId = string
+type @credential = Credential
+
+/**
+ * Model for initing client
+ */
+model Config {
+  accessKeyId?: string(description='accesskey id',default=''),
+  accessKeySecret?: string(description='accesskey secret',default=''),
+  securityToken?: string(description='security token',default=''),
+  protocol?: string(description='http protocol',example='http',default='http'),
+  regionId?: string(description='region id',example='cn-hangzhou',default='',pattern='^[a-zA-Z0-9_-]+$'),
+  readTimeout?: number(description='read timeout',example='10',default=''),
+  connectTimeout?: number(description='connect timeout',example='10',default=''),
+  httpProxy?: string(description='http proxy',example='http://localhost',default=''),
+  httpsProxy?: string(description='https proxy',example='https://localhost',default=''),
+  credential?: Credential(description='credential',example='',default=''),
+  endpoint?: string(description='endpoint',example='cs.aliyuncs.com',default=''),
+  noProxy?: string(description='proxy white list',example='http://localhost',default=''),
+  maxIdleConns?: number(description='max idle conns',example='3',default=''),
+}
+
+/**
+ * Init client with Config
+ * @param config config contains the necessary information to create a client
+ */
+init(config: Config){
+  if (Util.isUnset(config)) {
+    throw {
+      code = 'ParameterMissing',
+      message = '\'config\' can not be unset'
+    };
+  }
+
+  Util.validateModel(config);
+  if(!Util.empty(config.accessKeyId) && !Util.empty(config.accessKeySecret)){
+    var credentialType = 'access_key';
+    if (!Util.empty(config.securityToken)) {
+      credentialType = 'sts';
+    }
+
+    var credentialConfig = new Credential.Config{
+      accessKeyId = config.accessKeyId,
+      type = credentialType,
+      accessKeySecret = config.accessKeySecret,
+      securityToken = config.securityToken
+    };
+    @credential = new Credential(credentialConfig);
+  } else if(!Util.isUnset(config.credential)) {
+    @credential = config.credential;
+  } else {
+    throw {
+      code = 'ParameterMissing',
+      message = '\'accessKeyId\' and \'accessKeySecret\' or \'credential\' can not be unset'
+    };
+  }
+  
+  @regionId = config.regionId;
+  @protocol = config.protocol;
+  @endpoint = config.endpoint;
+  @readTimeout = config.readTimeout;
+  @connectTimeout = config.connectTimeout;
+  @httpProxy = config.httpProxy;
+  @httpsProxy = config.httpsProxy;
+  @maxIdleConns = config.maxIdleConns;
+}
+
+/**
+ * The detail of put event result
+ */
+model PutEventsResponseEntry {
+  eventId?: string(name='EventId'),
+  traceId?: string(name='TraceId'),
+  errorCode?: string(name='ErrorCode'),
+  errorMessage?: string(name='ErrorMessage'),
+}
+
+/**
+ * Cloud Event Stanard Froamt
+ */
+model CloudEvent {
+  id: string(name='id'),
+  source: string(name='source', maxLength=128),
+  specversion: string(name='specversion'),
+  type: string(name='type', maxLength=64),
+  datacontenttype?: string(name='datacontenttype'),
+  dataschema?: string(name='dataschema'),
+  subject?: string(name='subject'),
+  time?: string(name='time', maxLength=64, pattern='[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{3}[\\\\s\\\\S]*'),
+  extensions: map[string]any(name='extensions'),
+  data?: bytes(name='data'),
+}
+
+/**
+ * put event response
+ */
+model PutEventsResponse = {
+  requestId: string(name='RequestId'),
+  resourceOwnerAccountId: string(name='ResourceOwnerAccountId'),
+  failedEntryCount?: integer(name='FailedEntryCount'),
+  entryList?: [ PutEventsResponseEntry ](name='EntryList'),
+}
+
+/**
+ * Publish event to the aliyun EventBus
+ */
+async function putEvents(eventList: [ CloudEvent ]): PutEventsResponse {
+  var runtime = new Util.RuntimeOptions{};
+  return putEventsWithOptions(eventList, runtime);
+}
+
+/**
+ * Publish event to the aliyun EventBus
+ */
+async function putEventsWithOptions(eventList: [ CloudEvent ], runtime: Util.RuntimeOptions): PutEventsResponse {
+  for (var cloudEvent : eventList) {
+    Util.validateModel(cloudEvent);
+  }
+  var body = EventBridgeUtil.serialize(eventList);
+  return doRequest('putEvents', 'HTTP', 'POST', `/openapi/putEvents`, null, body, runtime);
+}
+
+/**
+ * The request of create EventBus
+ */
+model CreateEventBusRequest = {
+  eventBusName: string(name='EventBusName', maxLength=127, minLength=1),
+  description?: string(name='Description'),
+}
+
+/**
+ * The response of create EventBus
+ */
+model CreateEventBusResponse = {
+  requestId: string(name='RequestId'),
+  resourceOwnerAccountId: string(name='ResourceOwnerAccountId'),
+  eventBusARN?: string(name='EventBusARN'),
+}
+
+/**
+ * Creates a new event bus within your account. This can be a custom event bus which you can use to receive events from your custom applications and services
+ */
+async function createEventBus(request: CreateEventBusRequest): CreateEventBusResponse {
+  var runtime = new Util.RuntimeOptions{};
+  return createEventBusWithOptions(request, runtime);
+}
+
+/**
+ * Creates a new event bus within your account. This can be a custom event bus which you can use to receive events from your custom applications and services
+ */
+async function createEventBusWithOptions(request: CreateEventBusRequest, runtime: Util.RuntimeOptions): CreateEventBusResponse {
+  Util.validateModel(request);
+  return doRequest('createEventBus', 'HTTP', 'POST', `/openapi/createEventBus`, null, request, runtime);
+}
+
+/**
+ * The request of delete the EventBus
+ */
+model DeleteEventBusRequest = {
+  eventBusName: string(name='EventBusName'),
+}
+
+/**
+ * The response of delete the EventBus
+ */
+model DeleteEventBusResponse = {
+  requestId: string(name='RequestId'),
+  resourceOwnerAccountId: string(name='ResourceOwnerAccountId'),
+}
+
+/**
+ * Deletes the specified custom event bus in your account,You can't delete your account's default event bus
+ */
+async function deleteEventBus(request: DeleteEventBusRequest): DeleteEventBusResponse {
+  var runtime = new Util.RuntimeOptions{};
+  return deleteEventBusWithOptions(request, runtime);
+}
+
+/**
+ * Deletes the specified custom event bus in your account,You can't delete your account's default event bus
+ */
+async function deleteEventBusWithOptions(request: DeleteEventBusRequest, runtime: Util.RuntimeOptions): DeleteEventBusResponse {
+  Util.validateModel(request);
+  return doRequest('deleteEventBus', 'HTTP', 'POST', `/openapi/deleteEventBus`, null, request, runtime);
+}
+
+/**
+ * The request of get the detail of EventBus
+ */
+model GetEventBusRequest = {
+  eventBusName: string(name='EventBusName'),
+}
+
+/**
+ * The response of get the detail of EventBus
+ */
+model GetEventBusResponse = {
+  requestId: string(name='RequestId'),
+  resourceOwnerAccountId: string(name='ResourceOwnerAccountId'),
+  eventBusARN: string(name='EventBusARN'),
+  eventBusName: string(name='EventBusName'),
+  description: string(name='Description'),
+  createTimestamp: int64(name='CreateTimestamp'),
+}
+
+/**
+ * Displays details about an event bus in your account
+ */
+async function getEventBus(request: GetEventBusRequest): GetEventBusResponse {
+  var runtime = new Util.RuntimeOptions{};
+  return getEventBusWithOptions(request, runtime);
+}
+
+/**
+ * Displays details about an event bus in your account
+ */
+async function getEventBusWithOptions(request: GetEventBusRequest, runtime: Util.RuntimeOptions): GetEventBusResponse {
+  Util.validateModel(request);
+  return doRequest('getEventBus', 'HTTP', 'POST', `/openapi/getEventBus`, null, request, runtime);
+}
+
+/**
+ * The request of list all the EventBus which meet the search criteria
+ */
+model ListEventBusesRequest = {
+  namePrefix?: string(name='NamePrefix'),
+  limit?: number(name='Limit'),
+  nextToken?: string(name='NextToken'),
+}
+
+/**
+ * The detail of EventBuses
+ */
+model EventBusEntry = {
+  eventBusName: string(name='EventBusName'),
+  eventBusARN: string(name='EventBusARN'),
+  description: string(name='Description'),
+  createTimestamp: int64(name='CreateTimestamp'),
+}
+
+/**
+ * The response of search EventBus
+ */
+model ListEventBusesResponse = {
+  requestId: string(name='RequestId'),
+  resourceOwnerAccountId: string(name='ResourceOwnerAccountId'),
+  eventBuses: [ EventBusEntry ](name='EventBuses'),
+  nextToken: string(name='NextToken'),
+  total: number(name='Total'),
+}
+
+/**
+ * List all the EventBus in your account, including the default event bus, custom event buses, which meet the search criteria.
+ */
+async function listEventBuses(request: ListEventBusesRequest): ListEventBusesResponse {
+  var runtime = new Util.RuntimeOptions{};
+  return listEventBusesWithOptions(request, runtime);
+}
+
+/**
+ * List all the EventBus in your account, including the default event bus, custom event buses, which meet the search criteria.
+ */
+async function listEventBusesWithOptions(request: ListEventBusesRequest, runtime: Util.RuntimeOptions): ListEventBusesResponse {
+  Util.validateModel(request);
+  return doRequest('listEventBuses', 'HTTP', 'POST', `/openapi/listEventBuses`, null, request, runtime);
+}
+
+/**
+ * The request of create an EventBus rule on Aliyun
+ */
+model CreateRuleRequest = {
+  eventBusName: string(name='EventBusName', maxLength=127, minLength=1),
+  description?: string(name='Description'),
+  ruleName: string(name='RuleName'),
+  status?: string(name='Status'),
+  filterPattern?: string(name='FilterPattern'),
+  targets: [ TargetEntry ](name='Targets'),
+}
+
+/**
+ * The detail of TargetEntry
+ */
+model TargetEntry = {
+  id: string(name='Id'),
+  type?: string(name='Type'),
+  endpoint: string(name='Endpoint'),
+  pushSelector?: string(name='PushSelector'),
+  pushRetryStrategy?: string(name='PushRetryStrategy'),
+  paramList?: [ EBTargetParam ](name='ParamList'),
+}
+
+/**
+ * The param of EBTargetParam
+ */
+model EBTargetParam = {
+  resourceKey: string(name='ResourceKey'),
+  form: string(name='Form'),
+  value?: string(name='Value'),
+  template?: string(name='Template'),
+}
+
+/**
+ * The response of create EventBus Rule
+ */
+model CreateRuleResponse = {
+  requestId: string(name='RequestId'),
+  resourceOwnerAccountId: string(name='ResourceOwnerAccountId'),
+  ruleARN: string(name='RuleARN'),
+}
+
+/**
+ * Create an EventBus rule on Aliyun
+ */
+async function createRule(request: CreateRuleRequest): CreateRuleResponse {
+  var runtime = new Util.RuntimeOptions{};
+  return createRuleWithOptions(request, runtime);
+}
+
+/**
+ * Create an EventBus rule on Aliyun
+ */
+async function createRuleWithOptions(request: CreateRuleRequest, runtime: Util.RuntimeOptions): CreateRuleResponse {
+  Util.validateModel(request);
+  return doRequest('createRule', 'HTTP', 'POST', `/openapi/createRule`, null, request, runtime);
+}
+
+/**
+ * The request of delete the rule
+ */
+model DeleteRuleRequest = {
+  eventBusName: string(name='EventBusName'),
+  ruleName: string(name='RuleName'),
+}
+
+/**
+ * The response of delete the rule
+ */
+model DeleteRuleResponse = {
+  requestId: string(name='RequestId'),
+  resourceOwnerAccountId: string(name='ResourceOwnerAccountId'),
+}
+
+/**
+ * Deletes the specified rule.
+ */
+async function deleteRule(request: DeleteRuleRequest): DeleteRuleResponse {
+  var runtime = new Util.RuntimeOptions{};
+  return deleteRuleWithOptions(request, runtime);
+}
+
+/**
+ * Deletes the specified rule.
+ */
+async function deleteRuleWithOptions(request: DeleteRuleRequest, runtime: Util.RuntimeOptions): DeleteRuleResponse {
+  Util.validateModel(request);
+  return doRequest('deleteRule', 'HTTP', 'POST', `/openapi/deleteRule`, null, request, runtime);
+}
+
+/**
+ * The request of disable the EventBus rule
+ */
+model DisableRuleRequest = {
+  eventBusName: string(name='EventBusName'),
+  ruleName: string(name='RuleName'),
+}
+
+/**
+ * The response of disable the EventBus rule
+ */
+model DisableRuleResponse = {
+  requestId: string(name='RequestId'),
+  resourceOwnerAccountId: string(name='ResourceOwnerAccountId'),
+}
+
+/**
+ * Disables the specified rule
+ */
+async function disableRule(request: DisableRuleRequest): DisableRuleResponse {
+  var runtime = new Util.RuntimeOptions{};
+  return disableRuleWithOptions(request, runtime);
+}
+
+/**
+ * Disables the specified rule
+ */
+async function disableRuleWithOptions(request: DisableRuleRequest, runtime: Util.RuntimeOptions): DisableRuleResponse {
+  Util.validateModel(request);
+  return doRequest('disableRule', 'HTTP', 'POST', `/openapi/disableRule`, null, request, runtime);
+}
+
+/**
+ * The request of enable the EventBus rule
+ */
+model EnableRuleRequest = {
+  eventBusName: string(name='EventBusName'),
+  ruleName: string(name='RuleName'),
+}
+
+/**
+ * The response of enable the EventBus rule
+ */
+model EnableRuleResponse = {
+  requestId: string(name='RequestId'),
+  resourceOwnerAccountId: string(name='ResourceOwnerAccountId'),
+}
+
+/**
+ * Enables the specified rule
+ */
+async function enableRule(request: EnableRuleRequest): EnableRuleResponse {
+  var runtime = new Util.RuntimeOptions{};
+  return enableRuleWithOptions(request, runtime);
+}
+
+/**
+ * Enables the specified rule
+ */
+async function enableRuleWithOptions(request: EnableRuleRequest, runtime: Util.RuntimeOptions): EnableRuleResponse {
+  Util.validateModel(request);
+  return doRequest('enableRule', 'HTTP', 'POST', `/openapi/enableRule`, null, request, runtime);
+}
+
+/**
+ * The request of Get EventBus
+ */
+model GetRuleRequest = {
+  eventBusName: string(name='EventBusName'),
+  ruleName: string(name='RuleName'),
+}
+
+/**
+ * The response of Get EventBus
+ */
+model GetRuleResponse = {
+  requestId: string(name='RequestId'),
+  resourceOwnerAccountId: string(name='ResourceOwnerAccountId'),
+  eventBusName: string(name='EventBusName'),
+  ruleARN: string(name='RuleARN'),
+  ruleName: string(name='RuleName'),
+  description: string(name='Description'),
+  status: string(name='Status'),
+  filterPattern: string(name='FilterPattern'),
+  targets: [ TargetEntry ](name='Targets'),
+  ctime: int64(name='Ctime'),
+  mtime: int64(name='Mtime'),
+}
+
+/**
+ * Describes the specified rule
+ */
+async function getRule(request: GetRuleRequest): GetRuleResponse {
+  var runtime = new Util.RuntimeOptions{};
+  return getRuleWithOptions(request, runtime);
+}
+
+/**
+ * Describes the specified rule
+ */
+async function getRuleWithOptions(request: GetRuleRequest, runtime: Util.RuntimeOptions): GetRuleResponse {
+  Util.validateModel(request);
+  return doRequest('getRule', 'HTTP', 'POST', `/openapi/getRule`, null, request, runtime);
+}
+
+/**
+ * The request of search EventBus
+ */
+model ListRulesRequest = {
+  eventBusName: string(name='EventBusName'),
+  ruleNamePrefix?: string(name='RuleNamePrefix'),
+  limit?: number(name='Limit'),
+  nextToken?: string(name='NextToken'),
+}
+
+/**
+ * The response of search EventBus
+ */
+model ListRulesResponse = {
+  requestId: string(name='RequestId'),
+  resourceOwnerAccountId: string(name='ResourceOwnerAccountId'),
+  nextToken: string(name='NextToken'),
+  rules: [ EventRuleDTO ](name='Rules'),
+  total: number(name='Total'),
+}
+
+/**
+ * The detail of EventBuses rule
+ */
+model EventRuleDTO = {
+  ruleARN: string(name='RuleARN'),
+  eventBusName: string(name='EventBusName'),
+  ruleName: string(name='RuleName'),
+  description: string(name='Description'),
+  status: string(name='Status'),
+  filterPattern: string(name='FilterPattern'),
+  targets: [ TargetEntry ](name='Targets'),
+  ctime: int64(name='Ctime'),
+  mtime: int64(name='Mtime'),
+}
+
+/**
+ * List all the rules which meet the search criteria
+ */
+async function listRules(request: ListRulesRequest): ListRulesResponse {
+  var runtime = new Util.RuntimeOptions{};
+  return listRulesWithOptions(request, runtime);
+}
+
+/**
+ * List all the rules which meet the search criteria
+ */
+async function listRulesWithOptions(request: ListRulesRequest, runtime: Util.RuntimeOptions): ListRulesResponse {
+  Util.validateModel(request);
+  return doRequest('listRules', 'HTTP', 'POST', `/openapi/listRules`, null, request, runtime);
+}
+
+/**
+ * The request of update the EventBus rule
+ */
+model UpdateRuleRequest = {
+  eventBusName: string(name='EventBusName'),
+  ruleName: string(name='RuleName'),
+  description?: string(name='Description'),
+  status?: string(name='Status'),
+  filterPattern?: string(name='FilterPattern'),
+}
+
+/**
+ * The response of update the EventBus rule
+ */
+model UpdateRuleResponse = {
+  requestId: string(name='RequestId'),
+  resourceOwnerAccountId: string(name='ResourceOwnerAccountId'),
+}
+
+/**
+ * update the specified rule.
+ */
+async function updateRule(request: UpdateRuleRequest): UpdateRuleResponse {
+  var runtime = new Util.RuntimeOptions{};
+  return updateRuleWithOptions(request, runtime);
+}
+
+/**
+ * update the specified rule.
+ */
+async function updateRuleWithOptions(request: UpdateRuleRequest, runtime: Util.RuntimeOptions): UpdateRuleResponse {
+  Util.validateModel(request);
+  return doRequest('updateRule','HTTP', 'POST', `/openapi/updateRule`, null, request, runtime);
+}
+
+/**
+ * The request of create Targets
+ */
+model CreateTargetsRequest = {
+  eventBusName: string(name='EventBusName'),
+  ruleName: string(name='RuleName'),
+  targets: [ TargetEntry ](name='Targets'),
+}
+
+/**
+ * The response of create Targets
+ */
+model CreateTargetsResponse = {
+  requestId: string(name='RequestId'),
+  resourceOwnerAccountId: string(name='ResourceOwnerAccountId'),
+  eventBusARN: string(name='EventBusARN'),
+}
+
+/**
+ * Adds the specified targets to the specified rule
+ */
+async function createTargets(request: CreateTargetsRequest): CreateTargetsResponse {
+  var runtime = new Util.RuntimeOptions{};
+  return createTargetsWithOptions(request, runtime);
+}
+
+/**
+ * Adds the specified targets to the specified rule
+ */
+async function createTargetsWithOptions(request: CreateTargetsRequest, runtime: Util.RuntimeOptions): CreateTargetsResponse {
+  Util.validateModel(request);
+  return doRequest('createTargets','HTTP', 'POST', `/openapi/createTargets`, null, request, runtime);
+}
+
+/**
+ * The request of delete Targets
+ */
+model DeleteTargetsRequest = {
+  eventBusName: string(name='EventBusName'),
+  ruleName: string(name='RuleName'),
+  targetIds: [ string ](name='TargetIds'),
+}
+
+/**
+ * The response of delete Targets
+ */
+model DeleteTargetsResponse = {
+  requestId: string(name='RequestId'),
+  resourceOwnerAccountId: string(name='ResourceOwnerAccountId'),
+  errorEntriesCount: number(name='ErrorEntriesCount'),
+  errorEntries: [ TargetResultEntry ](name='ErrorEntries'),
+}
+
+/**
+ * The result detail of target operation
+ */
+model TargetResultEntry = {
+  errorCode: string(name='ErrorCode'),
+  errorMessage: string(name='ErrorMessage'),
+  entryId: string(name='EntryId'),
+}
+
+/**
+ * Delete the specified targets from the specified rule
+ */
+async function deleteTargets(request: DeleteTargetsRequest): DeleteTargetsResponse {
+  var runtime = new Util.RuntimeOptions{};
+  return deleteTargetsWithOptions(request, runtime);
+}
+
+/**
+ * Delete the specified targets from the specified rule
+ */
+async function deleteTargetsWithOptions(request: DeleteTargetsRequest, runtime: Util.RuntimeOptions): DeleteTargetsResponse {
+  Util.validateModel(request);
+  return doRequest('deleteTargets','HTTP', 'POST', `/openapi/deleteTargets`, null, request, runtime);
+}
+
+/**
+ * The request of search Targets
+ */
+model ListTargetsRequest = {
+  eventBusName: string(name='EventBusName'),
+  ruleName: string(name='RuleName'),
+  limit?: number(name='Limit'),
+}
+
+/**
+ * The response of search Targets
+ */
+model ListTargetsResponse = {
+  requestId: string(name='RequestId'),
+  resourceOwnerAccountId: string(name='ResourceOwnerAccountId'),
+  targets: [ TargetEntry ](name='Targets'),
+}
+
+/**
+ * List all the Targets which meet the search criteria
+ */
+async function listTargets(request: ListTargetsRequest): ListTargetsResponse {
+  var runtime = new Util.RuntimeOptions{};
+  return listTargetsWithOptions(request, runtime);
+}
+
+/**
+ * List all the Targets which meet the search criteria
+ */
+async function listTargetsWithOptions(request: ListTargetsRequest, runtime: Util.RuntimeOptions): ListTargetsResponse {
+  Util.validateModel(request);
+  return doRequest('listTargets','HTTP', 'POST', `/openapi/listTargets`, null, request, runtime);
+}
+
+/**
+ * The request of testEventPattern
+ */
+model TestEventPatternRequest = {
+  event: string(name='Event', maxLength=2048),
+  eventPattern: string(name='EventPattern', maxLength=2048),
+}
+
+/**
+ * The response of testEventPattern
+ */
+model TestEventPatternResponse = {
+  requestId: string(name='RequestId'),
+  resourceOwnerAccountId: string(name='ResourceOwnerAccountId'),
+  result: boolean(name='Result'),
+}
+
+/**
+ * Tests whether the specified event pattern matches the provided event
+ */
+async function testEventPattern(request: TestEventPatternRequest): TestEventPatternResponse {
+  var runtime = new Util.RuntimeOptions{};
+  return testEventPatternWithOptions(request, runtime);
+}
+
+/**
+ * Tests whether the specified event pattern matches the provided event
+ */
+async function testEventPatternWithOptions(request: TestEventPatternRequest, runtime: Util.RuntimeOptions): TestEventPatternResponse {
+  Util.validateModel(request);
+  return doRequest('testEventPattern','HTTP', 'POST', `/openapi/testEventPattern`, null, request, runtime);
+}
+
+/**
+ * Encapsulate the request and invoke the network
+ * @param action the api name
+ * @param protocol http or https
+ * @param method e.g. GET
+ * @param pathname pathname of every api
+ * @param query which contains request params
+ * @param body content of request
+ * @param runtime which controls some details of call api, such as retry times
+ * @return the response
+ */
+api doRequest(action: string, protocol: string, method: string, pathname: string, query: map[string]string, body: any, runtime: Util.RuntimeOptions): object {
+  __request.protocol = Util.defaultString(@protocol, protocol);
+  __request.method = method;
+  __request.pathname = pathname;
+  __request.headers = {
+    date = Util.getDateUTCString(),
+    host = @endpoint,
+    accept = 'application/json',
+    x-acs-signature-nonce = Util.getNonce(),
+    x-acs-signature-method = 'HMAC-SHA1',
+    x-acs-signature-version = '1.0',
+    x-eventbridge-version = '2015-06-06',
+    user-agent = Util.getUserAgent(' aliyun-eventbridge-sdk/1.1.0'),
+  };
+
+  if (!Util.isUnset(@regionId)) {
+    __request.headers.x-eventbridge-regionId = @regionId;
+  }
+
+  if (!Util.isUnset(body)) {
+    __request.body = Util.toJSONString(body);
+    __request.headers.content-type = 'application/json; charset=utf-8';
+  }
+
+  if (Util.equalString(action, 'putEvents')) {
+    __request.headers.content-type = 'application/cloudevents-batch+json; charset=utf-8';
+  }
+
+  if (!Util.isUnset(query)) {
+    __request.query = query;
+  }
+
+  var accessKeyId = @credential.getAccessKeyId();
+  var accessKeySecret = @credential.getAccessKeySecret();
+  var securityToken = @credential.getSecurityToken();
+  if (!Util.empty(securityToken)) {
+    __request.headers.x-acs-accesskey-id = accessKeyId;
+    __request.headers.x-acs-security-token = securityToken;
+  }
+
+  var stringToSign = EventBridgeUtil.getStringToSign(__request);
+  __request.headers.authorization = `acs:${accessKeyId}:${EventBridgeUtil.getSignature(stringToSign, accessKeySecret)}`;
+} returns {
+  var result = Util.readAsJSON(__response.body);
+  var tmp = Util.assertAsMap(result);
+  if (Util.is4xx(__response.statusCode) || Util.is5xx(__response.statusCode)) {
+    throw {
+      code = tmp.code,
+      message = `EventBridgeError ${tmp.message}`,
+      data = tmp,
+    }
+  }
+  return tmp;
+} runtime {
+  timeouted = 'retry',
+  readTimeout = Util.defaultNumber(runtime.readTimeout, @readTimeout),
+  connectTimeout = Util.defaultNumber(runtime.connectTimeout, @connectTimeout),
+  httpProxy = Util.defaultString(runtime.httpProxy, @httpProxy),
+  httpsProxy = Util.defaultString(runtime.httpsProxy, @httpsProxy),
+  noProxy = Util.defaultString(runtime.noProxy, @noProxy),
+  maxIdleConns = Util.defaultNumber(runtime.maxIdleConns, @maxIdleConns),
+  retry = {
+    retryable = runtime.autoretry,
+    maxAttempts = Util.defaultNumber(runtime.maxAttempts, 3)
+  },
+  backoff = {
+    policy = Util.defaultString(runtime.backoffPolicy, 'no'),
+    period = Util.defaultNumber(runtime.backoffPeriod, 1)
+  },
+  ignoreSSL = runtime.ignoreSSL
+}
