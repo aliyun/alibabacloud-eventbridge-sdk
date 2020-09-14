@@ -14,7 +14,7 @@ composer require alibabacloud/eventbridge
 
 ## 问题
 
-[提交 Issue](https://github.com/aliyun/alibabacloud-sdk/issues/new)，不符合指南的问题可能会立即关闭。
+[提交 Issue](https://github.com/aliyun/alibabacloud-eventbridge-sdk/issues/new)，不符合指南的问题可能会立即关闭。
 
 ## 发行说明
 
@@ -22,7 +22,7 @@ composer require alibabacloud/eventbridge
 
 ## 相关
 
-* [最新源码](https://github.com/aliyun/alibabacloud-sdk)
+* [最新源码](https://github.com/aliyun/alibabacloud-eventbridge-sdk)
 
 ## 许可证
 
