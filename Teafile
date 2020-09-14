@@ -31,7 +31,7 @@
 	},
 	"libraries": {
 		"Credential": "alibabacloud:Credential:*",
-		"Util": "alibabacloud:Util:*",
+		"Util": "darabonba:Util:*",
 		"EventBridgeUtil": "alibabacloud:EventBridgeUtil:*"
 	},
 	"python": {
