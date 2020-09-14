@@ -35,7 +35,7 @@ public class CloudEvent extends TeaModel {
     public String subject;
 
     @NameInMap("time")
-    @Validation(pattern = "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{3}Z[\\s\\S]*", maxLength = 64)
+    @Validation(pattern = "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{3}[\\s\\S]*", maxLength = 64)
     public String time;
 
     @NameInMap("extensions")
