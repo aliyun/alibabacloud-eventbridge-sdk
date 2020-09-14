@@ -1,0 +1,77 @@
+<?php
+
+// This file is auto-generated, don't edit it. Thanks.
+
+namespace AlibabaCloud\SDK\EventBridge\Models;
+
+use AlibabaCloud\Tea\Model;
+
+/**
+ * The response of testEventPattern.
+ */
+class TestEventPatternResponse extends Model
+{
+    /**
+     * @var string
+     */
+    public $requestId;
+
+    /**
+     * @var string
+     */
+    public $resourceOwnerAccountId;
+
+    /**
+     * @var bool
+     */
+    public $result;
+    protected $_name = [
+        'requestId'              => 'RequestId',
+        'resourceOwnerAccountId' => 'ResourceOwnerAccountId',
+        'result'                 => 'Result',
+    ];
+
+    public function validate()
+    {
+        Model::validateRequired('requestId', $this->requestId, true);
+        Model::validateRequired('resourceOwnerAccountId', $this->resourceOwnerAccountId, true);
+        Model::validateRequired('result', $this->result, true);
+    }
+
+    public function toMap()
+    {
+        $res = [];
+        if (null !== $this->requestId) {
+            $res['RequestId'] = $this->requestId;
+        }
+        if (null !== $this->resourceOwnerAccountId) {
+            $res['ResourceOwnerAccountId'] = $this->resourceOwnerAccountId;
+        }
+        if (null !== $this->result) {
+            $res['Result'] = $this->result;
+        }
+
+        return $res;
+    }
+
+    /**
+     * @param array $map
+     *
+     * @return TestEventPatternResponse
+     */
+    public static function fromMap($map = [])
+    {
+        $model = new self();
+        if (isset($map['RequestId'])) {
+            $model->requestId = $map['RequestId'];
+        }
+        if (isset($map['ResourceOwnerAccountId'])) {
+            $model->resourceOwnerAccountId = $map['ResourceOwnerAccountId'];
+        }
+        if (isset($map['Result'])) {
+            $model->result = $map['Result'];
+        }
+
+        return $model;
+    }
+}
