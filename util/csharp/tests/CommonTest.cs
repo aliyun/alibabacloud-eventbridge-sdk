@@ -24,11 +24,11 @@ namespace tests
             request.Headers["date"] = "date";
             Assert.Equal("GET\nmd5\napplication/json\ndate\n/", Common.GetStringToSign(request));
 
-            request.Headers["x-eventbridge-custom-key"] = "any value";
-            Assert.Equal("GET\nmd5\napplication/json\ndate\nx-eventbridge-custom-key:any value\n/", Common.GetStringToSign(request));
+            request.Headers["x-acs-custom-key"] = "any value";
+            Assert.Equal("GET\nmd5\napplication/json\ndate\nx-acs-custom-key:any value\n/", Common.GetStringToSign(request));
 
             request.Query["key"] = "val ue with space";
-            Assert.Equal("GET\nmd5\napplication/json\ndate\nx-eventbridge-custom-key:any value\n/?key=val ue with space", Common.GetStringToSign(request));
+            Assert.Equal("GET\nmd5\napplication/json\ndate\nx-acs-custom-key:any value\n/?key=val ue with space", Common.GetStringToSign(request));
         }
 
         [Fact]

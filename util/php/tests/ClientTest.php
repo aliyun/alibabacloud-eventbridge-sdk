@@ -33,14 +33,14 @@ class ClientTest extends TestCase
             'content-md5'              => 'md5',
             'content-type'             => 'application/json',
             'date'                     => 'date',
-            'x-eventbridge-custom-key' => 'any value',
+            'x-acs-custom-key' => 'any value',
         ];
-        $this->assertEquals("GET\nmd5\napplication/json\ndate\nx-eventbridge-custom-key:any value\n/", Client::getStringToSign($request));
+        $this->assertEquals("GET\nmd5\napplication/json\ndate\nx-acs-custom-key:any value\n/", Client::getStringToSign($request));
 
         $request->query = [
             'key' => 'val ue with space',
         ];
-        $this->assertEquals("GET\nmd5\napplication/json\ndate\nx-eventbridge-custom-key:any value\n/?key=val ue with space", Client::getStringToSign($request));
+        $this->assertEquals("GET\nmd5\napplication/json\ndate\nx-acs-custom-key:any value\n/?key=val ue with space", Client::getStringToSign($request));
     }
 
     public function testGetSignature()

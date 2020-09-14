@@ -8,11 +8,13 @@ package-lock.json
 coverage/
 libraries/
 .DS_Store
-*.sh
 tmp/
 .idea/
 .php_cs.cache
 *.iml
+
+coverage.html
+coverage.out
 go.sum
 
 **/csharp/**/bin
