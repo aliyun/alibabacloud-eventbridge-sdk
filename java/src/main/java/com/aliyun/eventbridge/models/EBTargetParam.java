@@ -18,11 +18,9 @@ public class EBTargetParam extends TeaModel {
     public String form;
 
     @NameInMap("Value")
-    @Validation(required = true)
     public String value;
 
     @NameInMap("Template")
-    @Validation(required = true)
     public String template;
 
     public static EBTargetParam build(java.util.Map<String, ?> map) {

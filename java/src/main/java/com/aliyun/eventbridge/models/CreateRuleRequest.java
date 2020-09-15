@@ -27,7 +27,7 @@ public class CreateRuleRequest extends TeaModel {
     public String filterPattern;
 
     @NameInMap("Targets")
-    @Validation(required = true, maxLength = 2048)
+    @Validation(required = true)
     public java.util.List<TargetEntry> targets;
 
     public static CreateRuleRequest build(java.util.Map<String, ?> map) {
