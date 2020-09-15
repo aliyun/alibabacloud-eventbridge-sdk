@@ -14,6 +14,7 @@ import com.aliyun.eventbridge.models.DeleteRuleRequest;
 import com.aliyun.eventbridge.models.DeleteTargetsRequest;
 import com.aliyun.eventbridge.models.DeleteTargetsResponse;
 import com.aliyun.eventbridge.models.DisableRuleRequest;
+import com.aliyun.eventbridge.models.EBTargetParam;
 import com.aliyun.eventbridge.models.EnableRuleRequest;
 import com.aliyun.eventbridge.models.GetRuleRequest;
 import com.aliyun.eventbridge.models.GetRuleResponse;
@@ -24,6 +25,7 @@ import com.aliyun.eventbridge.models.ListTargetsResponse;
 import com.aliyun.eventbridge.models.TargetEntry;
 import com.aliyun.eventbridge.models.UpdateRuleRequest;
 import com.aliyun.eventbridge.util.CommonStatus;
+import com.google.common.collect.Lists;
 
 public class EventRuleSamples {
 
@@ -40,20 +42,23 @@ public class EventRuleSamples {
     public void createEventRuleSample() {
         try {
             CreateRuleRequest createEventRuleRequest = new CreateRuleRequest();
-            TargetEntry targetEntry1 = new TargetEntry();
-            targetEntry1.setId("mnsQueueTarget");
-            targetEntry1.setEndpoint("acs:mns:{region}:{accountId}:queues/{queueName}");
+            EBTargetParam param1 = new EBTargetParam();
+            param1.setResourceKey("url");
+            param1.setForm("CONSTANT");
+            param1.setValue("http://aliyun.com");
 
-            TargetEntry targetEntry2 = new TargetEntry();
-            targetEntry2.setId("mnsQueueTarget");
-            targetEntry2.setEndpoint("acs:mns:{region}:{accountId}:queues/{queueName}");
+            EBTargetParam param2 = new EBTargetParam();
+            param2.setResourceKey("Body");
+            param2.setForm("CONSTANT");
+            param2.setValue("demo sample");
 
-            TargetEntry targetEntry3 = new TargetEntry();
-            targetEntry3.setId("fcTarget");
-            targetEntry3.setEndpoint(
-                "acs:fc:{region}:{accountId}:services/{serviceName}.LATEST/functions/{functionName}");
+            List<EBTargetParam> paramList = Lists.newArrayList(param1, param2);
+            TargetEntry targetEntry = new TargetEntry();
+            targetEntry.setId("mnsQueueTarget");
+            targetEntry.setEndpoint("acs:mns:{region}:{accountId}:queues/{queueName}");
+            targetEntry.setParamList(paramList);
 
-            List<TargetEntry> targetEntryList = Arrays.asList(targetEntry1, targetEntry2, targetEntry3);
+            List<TargetEntry> targetEntryList = Arrays.asList(targetEntry);
             createEventRuleRequest.setRuleName("myRule");
             createEventRuleRequest.setEventBusName("myBus");
             createEventRuleRequest.setFilterPattern(

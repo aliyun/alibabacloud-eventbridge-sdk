@@ -132,7 +132,7 @@ public class ClientTest {
             EBTargetParam param2 = new EBTargetParam();
             param2.setResourceKey("Body");
             param2.setForm("CONSTANT");
-            param2.setValue("静罗测试");
+            param2.setValue("Demo Sample");
 
             List<EBTargetParam> paramList = Lists.newArrayList(param1, param2);
             TargetEntry targetEntry = new TargetEntry();
