@@ -34,10 +34,19 @@ func main() {
 		panic(err)
 	}
 
-	req := new(eventbridge.CreateEventBusRequest).
-		SetEventBusName("demo-bus")
+	event := new(eventbridge.CloudEvent).
+		SetDatacontenttype("application/json").
+		SetData([]byte("test")).
+		SetId("id").
+		SetSource("source").
+		SetTime("2020-08-24T13:54:05.965Asia/Shanghai").
+		SetSubject("1.0").
+		SetType("type").
+		SetExtensions(map[string]interface{}{
+			"aliyuneventbusname": "BusName",
+		})
 
-	resp, err := client.CreateEventBus(req)
+	resp, err := client.PutEvents([]*eventbridge.CloudEvent{event})
 	if err != nil {
 		panic(err)
 	}
