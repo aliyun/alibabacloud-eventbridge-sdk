@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-# This file is auto-generated, don't edit it. Thanks.
 from alibabacloud_eventbridge.client import Client as EventBridgeClient
 from alibabacloud_eventbridge import models as event_bridge_models
 from alibabacloud_tea_console.client import Client as ConsoleClient
@@ -21,7 +19,6 @@ class Client(object):
     def put_events(client):
         event = event_bridge_models.CloudEvent(
         )
-        event.datacontenttype = "application/json"
         event.data = UtilClient.to_bytes("test")
         event.id = "a5074581-7e74-4e4c-868f-47e7afdf8445"
         event.source = "acs.oss"
@@ -36,7 +33,6 @@ class Client(object):
             resp = client.put_events([
                 event
             ])
-            ConsoleClient.log("--------------------Publish event to the aliyun EventBus--------------------")
             ConsoleClient.log(UtilClient.to_jsonstring(resp.to_map()))
         except Exception as error:
             ConsoleClient.log(error.message)

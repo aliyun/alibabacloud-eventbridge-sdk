@@ -1,4 +1,4 @@
-package event
+package main
 
 import (
 	"fmt"
@@ -7,10 +7,11 @@ import (
 )
 
 func main() {
+
 	config := new(eventbridge.Config).
-		SetAccessKeyId("accessKeyId").
-		SetAccessKeySecret("accessKeySecret").
-		SetEndpoint("endpoint")
+		SetAccessKeyId("{accessKeyId}").
+		SetAccessKeySecret("{accessKeySecret}").
+		SetEndpoint("{endpoint}")
 
 	client, err := eventbridge.NewClient(config)
 	if err != nil {
