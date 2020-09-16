@@ -96,7 +96,7 @@ model PutEventsResponseEntry {
 model CloudEvent {
   id: string(name='id'),
   source: string(name='source', maxLength=128),
-  specversion: string(name='specversion'),
+  specversion?: string(name='specversion'),
   type: string(name='type', maxLength=64),
   datacontenttype?: string(name='datacontenttype'),
   dataschema?: string(name='dataschema'),
@@ -129,6 +129,13 @@ async function putEvents(eventList: [ CloudEvent ]): PutEventsResponse {
  */
 async function putEventsWithOptions(eventList: [ CloudEvent ], runtime: Util.RuntimeOptions): PutEventsResponse {
   for (var cloudEvent : eventList) {
+    if (Util.isUnset(cloudEvent.specversion)) {
+      cloudEvent.specversion = '1.0';
+    }
+
+    if (Util.isUnset(cloudEvent.datacontenttype)) {
+      cloudEvent.datacontenttype = 'application/json; charset=utf-8';
+    }
     Util.validateModel(cloudEvent);
   }
   var body = EventBridgeUtil.serialize(eventList);

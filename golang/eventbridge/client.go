@@ -160,7 +160,7 @@ func (s *PutEventsResponseEntry) SetErrorMessage(v string) *PutEventsResponseEnt
 type CloudEvent struct {
 	Id              *string                `json:"id,omitempty" xml:"id,omitempty" require:"true"`
 	Source          *string                `json:"source,omitempty" xml:"source,omitempty" require:"true" maxLength:"128"`
-	Specversion     *string                `json:"specversion,omitempty" xml:"specversion,omitempty" require:"true"`
+	Specversion     *string                `json:"specversion,omitempty" xml:"specversion,omitempty"`
 	Type            *string                `json:"type,omitempty" xml:"type,omitempty" require:"true" maxLength:"64"`
 	Datacontenttype *string                `json:"datacontenttype,omitempty" xml:"datacontenttype,omitempty"`
 	Dataschema      *string                `json:"dataschema,omitempty" xml:"dataschema,omitempty"`
@@ -1627,7 +1627,6 @@ func (client *Client) DoRequest(action *string, protocol *string, method *string
 				"x-eventbridge-version":   tea.String("2015-06-06"),
 				"user-agent":              util.GetUserAgent(tea.String(" aliyun-eventbridge-sdk/1.1.0")),
 			}
-
 			if !tea.BoolValue(util.IsUnset(client.RegionId)) {
 				request_.Headers["x-eventbridge-regionId"] = client.RegionId
 			}
@@ -1716,6 +1715,14 @@ func (client *Client) PutEvents(eventList []*CloudEvent) (_result *PutEventsResp
  */
 func (client *Client) PutEventsWithOptions(eventList []*CloudEvent, runtime *util.RuntimeOptions) (_result *PutEventsResponse, _err error) {
 	for _, cloudEvent := range eventList {
+		if tea.BoolValue(util.IsUnset(cloudEvent.Specversion)) {
+			cloudEvent.Specversion = tea.String("1.0")
+		}
+
+		if tea.BoolValue(util.IsUnset(cloudEvent.Datacontenttype)) {
+			cloudEvent.Datacontenttype = tea.String("application/json; charset=utf-8")
+		}
+
 		_err = util.ValidateModel(cloudEvent)
 		if _err != nil {
 			return _result, _err
