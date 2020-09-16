@@ -190,6 +190,13 @@ public class EventBridgeClient implements EventBridge {
     public PutEventsResponse putEventsWithOptions(java.util.List<CloudEvent> eventList, com.aliyun.teautil.models.RuntimeOptions runtime) {
 
         for (CloudEvent cloudEvent : eventList) {
+            if (com.aliyun.teautil.Common.isUnset(cloudEvent.specversion)) {
+                cloudEvent.specversion = "1.0";
+            }
+
+            if (com.aliyun.teautil.Common.isUnset(cloudEvent.datacontenttype)) {
+                cloudEvent.datacontenttype = "application/json; charset=utf-8";
+            }    
             com.aliyun.teautil.Common.validateModel(cloudEvent);
         }
         Object body =Serializer.serialize(eventList);
