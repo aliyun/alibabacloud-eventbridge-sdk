@@ -13,7 +13,7 @@
     "go": "github.com/alibabacloud-go/eventbridge-util/client:v1.0.1",
     "java": "com.aliyun:eventbridge-util:0.0.1",
     "python": "alibabacloud_eventbridge_util:0.0.1",
-    "csharp": "AlibabaCloud.EventBridgeUtil:0.0.1",
+    "csharp": "AlibabaCloud.EventBridgeUtil:0.0.2",
     "php": "alibabacloud/eventbrgidge-util:^0.1.0"
   },
   "python": {
