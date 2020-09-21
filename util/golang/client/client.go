@@ -154,8 +154,8 @@ func Serialize(events interface{}) (_result interface{}) {
 
 		if m["datacontenttype"] != nil {
 			datacontenttype := m["datacontenttype"].(string)
-			if (datacontenttype != "application/json" && datacontenttype != "text/json") &&
-				m["data"] != nil {
+			if (!strings.HasPrefix(datacontenttype, "application/json") &&
+				!strings.HasPrefix(datacontenttype, "text/json")) && m["data"] != nil {
 				data := m["data"].(string)
 				m["data_base64"] = data
 				delete(m, "data")

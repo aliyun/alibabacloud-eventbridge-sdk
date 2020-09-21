@@ -18,7 +18,6 @@ public class CloudEvent extends TeaModel {
     public String source;
 
     @NameInMap("specversion")
-    @Validation(required = true)
     public String specversion;
 
     @NameInMap("type")
