@@ -70,7 +70,7 @@ init(config: Config){
     };
   }
   
-  if (!Util.empty(config.endpoint)) {
+  if (Util.empty(config.endpoint)) {
     throw {
       code = 'ParameterMissing',
       message = '\'endpoint\' can not be unset'
