@@ -1,8 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
+
 using AlibabaCloud.EventBridgeUtil;
+
 using Tea;
+
 using Xunit;
 
 namespace tests
@@ -56,7 +59,7 @@ namespace tests
             list.Add(testModel);
             list.Add(testModelExtension);
 
-            var result = (List<Dictionary<string, object>>)Common.Serialize(list);
+            var result = (List<Dictionary<string, object>>) Common.Serialize(list);
             Assert.NotNull(result);
             Assert.Equal(2, result.Count);
             Assert.Equal("text/plain", result[0]["datacontenttype"]);
@@ -65,6 +68,12 @@ namespace tests
             Assert.Equal("bar", result[1]["foo"]);
         }
 
+        [Fact]
+        public void Test_StartWith()
+        {
+            Assert.True(Common.StartWith("eventbridge", "event"));
+            Assert.False(Common.StartWith("eventbridge", "evenc"));
+        }
 
         public class TestModel : TeaModel
         {
