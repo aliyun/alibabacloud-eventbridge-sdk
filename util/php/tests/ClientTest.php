@@ -33,7 +33,7 @@ class ClientTest extends TestCase
             'content-md5'              => 'md5',
             'content-type'             => 'application/json',
             'date'                     => 'date',
-            'x-acs-custom-key' => 'any value',
+            'x-acs-custom-key'         => 'any value',
         ];
         $this->assertEquals("GET\nmd5\napplication/json\ndate\nx-acs-custom-key:any value\n/", Client::getStringToSign($request));
 
@@ -58,5 +58,11 @@ class ClientTest extends TestCase
             ['datacontenttype'=>'text/plain', 'data_base64'=>'test1'],
             ['datacontenttype'=> 'text/json', 'foo'=>'bar'],
         ], $result);
+    }
+
+    public function testStartWith()
+    {
+        $this->assertTrue(Client::startWith('x-test-string', 'x-test'));
+        $this->assertFalse(Client::startWith('x-test-string', 'test-string'));
     }
 }
