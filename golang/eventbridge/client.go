@@ -1557,6 +1557,22 @@ func (client *Client) Init(config *Config) (_err error) {
 		return _err
 	}
 
+	if !tea.BoolValue(util.Empty(config.Endpoint)) {
+		_err = tea.NewSDKError(map[string]interface{}{
+			"code":    "ParameterMissing",
+			"message": "'endpoint' can not be unset",
+		})
+		return _err
+	}
+
+	if tea.BoolValue(eventbridgeutil.StartWith(config.Endpoint, tea.String("http"))) || tea.BoolValue(eventbridgeutil.StartWith(config.Endpoint, tea.String("https"))) {
+		_err = tea.NewSDKError(map[string]interface{}{
+			"code":    "ParameterError",
+			"message": "'endpoint' shouldn't start with 'http' or 'https'",
+		})
+		return _err
+	}
+
 	client.RegionId = config.RegionId
 	client.Protocol = config.Protocol
 	client.Endpoint = config.Endpoint
@@ -1679,7 +1695,7 @@ func (client *Client) DoRequest(action *string, protocol *string, method *string
 			if tea.BoolValue(util.Is4xx(response_.StatusCode)) || tea.BoolValue(util.Is5xx(response_.StatusCode)) {
 				_err = tea.NewSDKError(map[string]interface{}{
 					"code":    tmp["code"],
-					"message": "EventBridgeError " + tea.ToString(tmp["message"]),
+					"message": "[EventBridgeError] " + tea.ToString(tmp["message"]),
 					"data":    tmp,
 				})
 				return _result, _err
