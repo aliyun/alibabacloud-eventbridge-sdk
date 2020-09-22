@@ -70,6 +70,19 @@ init(config: Config){
     };
   }
   
+  if (!Util.empty(config.endpoint)) {
+    throw {
+      code = 'ParameterMissing',
+      message = '\'endpoint\' can not be unset'
+    };
+  }
+
+  if (EventBridgeUtil.startWith(config.endpoint, 'http') || EventBridgeUtil.startWith(config.endpoint, 'https')) {
+    throw {
+      code = 'ParameterError',
+      message = '\'endpoint\' shouldn\'t start with \'http\' or \'https\''
+    };
+  }
   @regionId = config.regionId;
   @protocol = config.protocol;
   @endpoint = config.endpoint;
