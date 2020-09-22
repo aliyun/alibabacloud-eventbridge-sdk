@@ -101,3 +101,13 @@ class Client(object):
             dic = {key: value for key, value in dic.items() if value is not None}
             out.append(dic)
         return out
+
+    @staticmethod
+    def start_with(origin, prefix):
+        """
+        Judge if the  origin is start with the prefix
+        @param origin the original string
+        @param prefix the prefix string
+        @return the result
+        """
+        return origin.startswith(prefix)
