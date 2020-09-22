@@ -82,3 +82,11 @@ func Test_Serialize(t *testing.T) {
 	res = Serialize("string")
 	utils.AssertEqual(t, "string", res)
 }
+
+func Test_StartWith(t *testing.T) {
+	res := StartWith(tea.String("eventbridge"), tea.String("event"))
+	utils.AssertEqual(t, true, tea.BoolValue(res))
+
+	res = StartWith(tea.String("eventbridge"), tea.String("evenc"))
+	utils.AssertEqual(t, false, tea.BoolValue(res))
+}
