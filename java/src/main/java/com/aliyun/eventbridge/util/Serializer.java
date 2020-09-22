@@ -36,7 +36,7 @@ public class Serializer {
                     map = (Map<String, Object>)(object);
                 }
                 contentType = String.valueOf(map.get("datacontenttype"));
-                if ("application/json".equalsIgnoreCase(contentType) || "text/json".equalsIgnoreCase(contentType)) {
+                if (contentType.startsWith("application/json") || contentType.startsWith("text/json")) {
                     result = map.remove("data");
                     if (null != result) {
                         bytes = (byte[])result;

@@ -53,6 +53,13 @@ public class EventBridgeClient implements EventBridge {
                 new TeaPair("message", "'accessKeyId' and 'accessKeySecret' or 'credential' can not be unset")
             ));
         }
+        if (com.aliyun.teautil.Common.empty(config.endpoint)) {
+            throw new ValidateException("endpoint can not be unset");
+        }
+
+        if (config.endpoint.startsWith("http") || config.endpoint.startsWith("https")) {
+            throw new ValidateException("endpoint shouldn't start with http or https");
+        }
 
         this._regionId = config.regionId;
         this._protocol = config.protocol;
@@ -152,7 +159,7 @@ public class EventBridgeClient implements EventBridge {
                 if (com.aliyun.teautil.Common.is4xx(response_.statusCode) || com.aliyun.teautil.Common.is5xx(response_.statusCode)) {
                     throw new TeaException(TeaConverter.buildMap(
                         new TeaPair("code", tmp.get("code")),
-                        new TeaPair("message", "EventBridgeError" + tmp.get("message")),
+                        new TeaPair("message", "[EventBridgeError] " + tmp.get("message")),
                         new TeaPair("data", tmp)
                     ));
                 }
@@ -167,7 +174,7 @@ public class EventBridgeClient implements EventBridge {
                 if (Tea.isRetryable(e)) {
                     continue;
                 }
-                throw new RuntimeException(e);
+                throw new TeaException(e.getMessage(), e);
             }
         }
 
