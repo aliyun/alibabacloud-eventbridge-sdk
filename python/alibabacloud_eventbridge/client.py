@@ -59,6 +59,16 @@ class Client(object):
                 "code": "ParameterMissing",
                 "message": "'accessKeyId' and 'accessKeySecret' or 'credential' can not be unset"
             })
+        if UtilClient.empty(config.endpoint):
+            raise TeaException({
+                "code": "ParameterMissing",
+                "message": "'endpoint' can not be unset"
+            })
+        if EventBridgeUtilClient.start_with(config.endpoint, "http") or EventBridgeUtilClient.start_with(config.endpoint, "https"):
+            raise TeaException({
+                "code": "ParameterError",
+                "message": "'endpoint' shouldn't start with 'http' or 'https'"
+            })
         self._region_id = config.region_id
         self._protocol = config.protocol
         self._endpoint = config.endpoint
@@ -154,7 +164,7 @@ class Client(object):
                     _request.headers["x-acs-accesskey-id"] = access_key_id
                     _request.headers["x-acs-security-token"] = security_token
                 string_to_sign = EventBridgeUtilClient.get_string_to_sign(_request)
-                _request.headers["authorization"] = "acs:" + str(access_key_id) + ":" + str(EventBridgeUtilClient.get_signature(string_to_sign, access_key_secret)) + ""
+                _request.headers["authorization"] = 'acs:%s:%s' % (access_key_id, EventBridgeUtilClient.get_signature(string_to_sign, access_key_secret))
                 _last_request = _request
                 _response = TeaCore.do_action(_request, _runtime)
                 result = UtilClient.read_as_json(_response.body)
@@ -162,7 +172,7 @@ class Client(object):
                 if UtilClient.is_4xx(_response.status_code) or UtilClient.is_5xx(_response.status_code):
                     raise TeaException({
                         "code": tmp.get('code'),
-                        "message": "EventBridgeError " + str(tmp.get('message')) + "",
+                        "message": '[EventBridgeError] %s' % tmp.get('message'),
                         "data": tmp
                     })
                 return tmp
@@ -187,9 +197,13 @@ class Client(object):
         Publish event to the aliyun EventBus
         """
         for cloud_event in event_list:
+            if UtilClient.is_unset(cloud_event.specversion):
+                cloud_event.specversion = "1.0"
+            if UtilClient.is_unset(cloud_event.datacontenttype):
+                cloud_event.datacontenttype = "application/json; charset=utf-8"
             UtilClient.validate_model(cloud_event)
         body = EventBridgeUtilClient.serialize(event_list)
-        return eventbridge_models.PutEventsResponse().from_map(self.do_request("putEvents", "HTTP", "POST", "/openapi/putEvents", None, body, runtime))
+        return eventbridge_models.PutEventsResponse().from_map(self.do_request("putEvents", "HTTP", "POST", '/openapi/putEvents', None, body, runtime))
 
     def create_event_bus(self, request):
         """
@@ -205,7 +219,7 @@ class Client(object):
         Creates a new event bus within your account. This can be a custom event bus which you can use to receive events from your custom applications and services
         """
         UtilClient.validate_model(request)
-        return eventbridge_models.CreateEventBusResponse().from_map(self.do_request("createEventBus", "HTTP", "POST", "/openapi/createEventBus", None, request.to_map(), runtime))
+        return eventbridge_models.CreateEventBusResponse().from_map(self.do_request("createEventBus", "HTTP", "POST", '/openapi/createEventBus', None, request.to_map(), runtime))
 
     def delete_event_bus(self, request):
         """
@@ -221,7 +235,7 @@ class Client(object):
         Deletes the specified custom event bus in your account,You can't delete your account's default event bus
         """
         UtilClient.validate_model(request)
-        return eventbridge_models.DeleteEventBusResponse().from_map(self.do_request("deleteEventBus", "HTTP", "POST", "/openapi/deleteEventBus", None, request.to_map(), runtime))
+        return eventbridge_models.DeleteEventBusResponse().from_map(self.do_request("deleteEventBus", "HTTP", "POST", '/openapi/deleteEventBus', None, request.to_map(), runtime))
 
     def get_event_bus(self, request):
         """
@@ -237,7 +251,7 @@ class Client(object):
         Displays details about an event bus in your account
         """
         UtilClient.validate_model(request)
-        return eventbridge_models.GetEventBusResponse().from_map(self.do_request("getEventBus", "HTTP", "POST", "/openapi/getEventBus", None, request.to_map(), runtime))
+        return eventbridge_models.GetEventBusResponse().from_map(self.do_request("getEventBus", "HTTP", "POST", '/openapi/getEventBus', None, request.to_map(), runtime))
 
     def list_event_buses(self, request):
         """
@@ -253,7 +267,7 @@ class Client(object):
         List all the EventBus in your account, including the default event bus, custom event buses, which meet the search criteria.
         """
         UtilClient.validate_model(request)
-        return eventbridge_models.ListEventBusesResponse().from_map(self.do_request("listEventBuses", "HTTP", "POST", "/openapi/listEventBuses", None, request.to_map(), runtime))
+        return eventbridge_models.ListEventBusesResponse().from_map(self.do_request("listEventBuses", "HTTP", "POST", '/openapi/listEventBuses', None, request.to_map(), runtime))
 
     def create_rule(self, request):
         """
@@ -269,7 +283,7 @@ class Client(object):
         Create an EventBus rule on Aliyun
         """
         UtilClient.validate_model(request)
-        return eventbridge_models.CreateRuleResponse().from_map(self.do_request("createRule", "HTTP", "POST", "/openapi/createRule", None, request.to_map(), runtime))
+        return eventbridge_models.CreateRuleResponse().from_map(self.do_request("createRule", "HTTP", "POST", '/openapi/createRule', None, request.to_map(), runtime))
 
     def delete_rule(self, request):
         """
@@ -285,7 +299,7 @@ class Client(object):
         Deletes the specified rule.
         """
         UtilClient.validate_model(request)
-        return eventbridge_models.DeleteRuleResponse().from_map(self.do_request("deleteRule", "HTTP", "POST", "/openapi/deleteRule", None, request.to_map(), runtime))
+        return eventbridge_models.DeleteRuleResponse().from_map(self.do_request("deleteRule", "HTTP", "POST", '/openapi/deleteRule', None, request.to_map(), runtime))
 
     def disable_rule(self, request):
         """
@@ -301,7 +315,7 @@ class Client(object):
         Disables the specified rule
         """
         UtilClient.validate_model(request)
-        return eventbridge_models.DisableRuleResponse().from_map(self.do_request("disableRule", "HTTP", "POST", "/openapi/disableRule", None, request.to_map(), runtime))
+        return eventbridge_models.DisableRuleResponse().from_map(self.do_request("disableRule", "HTTP", "POST", '/openapi/disableRule', None, request.to_map(), runtime))
 
     def enable_rule(self, request):
         """
@@ -317,7 +331,7 @@ class Client(object):
         Enables the specified rule
         """
         UtilClient.validate_model(request)
-        return eventbridge_models.EnableRuleResponse().from_map(self.do_request("enableRule", "HTTP", "POST", "/openapi/enableRule", None, request.to_map(), runtime))
+        return eventbridge_models.EnableRuleResponse().from_map(self.do_request("enableRule", "HTTP", "POST", '/openapi/enableRule', None, request.to_map(), runtime))
 
     def get_rule(self, request):
         """
@@ -333,7 +347,7 @@ class Client(object):
         Describes the specified rule
         """
         UtilClient.validate_model(request)
-        return eventbridge_models.GetRuleResponse().from_map(self.do_request("getRule", "HTTP", "POST", "/openapi/getRule", None, request.to_map(), runtime))
+        return eventbridge_models.GetRuleResponse().from_map(self.do_request("getRule", "HTTP", "POST", '/openapi/getRule', None, request.to_map(), runtime))
 
     def list_rules(self, request):
         """
@@ -349,7 +363,7 @@ class Client(object):
         List all the rules which meet the search criteria
         """
         UtilClient.validate_model(request)
-        return eventbridge_models.ListRulesResponse().from_map(self.do_request("listRules", "HTTP", "POST", "/openapi/listRules", None, request.to_map(), runtime))
+        return eventbridge_models.ListRulesResponse().from_map(self.do_request("listRules", "HTTP", "POST", '/openapi/listRules', None, request.to_map(), runtime))
 
     def update_rule(self, request):
         """
@@ -365,7 +379,7 @@ class Client(object):
         update the specified rule.
         """
         UtilClient.validate_model(request)
-        return eventbridge_models.UpdateRuleResponse().from_map(self.do_request("updateRule", "HTTP", "POST", "/openapi/updateRule", None, request.to_map(), runtime))
+        return eventbridge_models.UpdateRuleResponse().from_map(self.do_request("updateRule", "HTTP", "POST", '/openapi/updateRule', None, request.to_map(), runtime))
 
     def create_targets(self, request):
         """
@@ -381,7 +395,7 @@ class Client(object):
         Adds the specified targets to the specified rule
         """
         UtilClient.validate_model(request)
-        return eventbridge_models.CreateTargetsResponse().from_map(self.do_request("createTargets", "HTTP", "POST", "/openapi/createTargets", None, request.to_map(), runtime))
+        return eventbridge_models.CreateTargetsResponse().from_map(self.do_request("createTargets", "HTTP", "POST", '/openapi/createTargets', None, request.to_map(), runtime))
 
     def delete_targets(self, request):
         """
@@ -397,7 +411,7 @@ class Client(object):
         Delete the specified targets from the specified rule
         """
         UtilClient.validate_model(request)
-        return eventbridge_models.DeleteTargetsResponse().from_map(self.do_request("deleteTargets", "HTTP", "POST", "/openapi/deleteTargets", None, request.to_map(), runtime))
+        return eventbridge_models.DeleteTargetsResponse().from_map(self.do_request("deleteTargets", "HTTP", "POST", '/openapi/deleteTargets', None, request.to_map(), runtime))
 
     def list_targets(self, request):
         """
@@ -413,7 +427,7 @@ class Client(object):
         List all the Targets which meet the search criteria
         """
         UtilClient.validate_model(request)
-        return eventbridge_models.ListTargetsResponse().from_map(self.do_request("listTargets", "HTTP", "POST", "/openapi/listTargets", None, request.to_map(), runtime))
+        return eventbridge_models.ListTargetsResponse().from_map(self.do_request("listTargets", "HTTP", "POST", '/openapi/listTargets', None, request.to_map(), runtime))
 
     def test_event_pattern(self, request):
         """
@@ -429,4 +443,4 @@ class Client(object):
         Tests whether the specified event pattern matches the provided event
         """
         UtilClient.validate_model(request)
-        return eventbridge_models.TestEventPatternResponse().from_map(self.do_request("testEventPattern", "HTTP", "POST", "/openapi/testEventPattern", None, request.to_map(), runtime))
+        return eventbridge_models.TestEventPatternResponse().from_map(self.do_request("testEventPattern", "HTTP", "POST", '/openapi/testEventPattern', None, request.to_map(), runtime))

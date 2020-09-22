@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
 # This file is auto-generated, don't edit it. Thanks.
 from Tea.model import TeaModel
-from typing import Dict, Any, List
+try:
+    from typing import Dict, Any, List
+except ImportError:
+    pass
 
 
 class Config(TeaModel):
@@ -127,7 +130,6 @@ class CloudEvent(TeaModel):
         self.validate_required(self.source, 'source')
         if self.source:
             self.validate_max_length(self.source, 'source', 128)
-        self.validate_required(self.specversion, 'specversion')
         self.validate_required(self.type, 'type')
         if self.type:
             self.validate_max_length(self.type, 'type', 64)
