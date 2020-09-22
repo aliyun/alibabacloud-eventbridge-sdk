@@ -774,7 +774,7 @@ api doRequest(action: string, protocol: string, method: string, pathname: string
   if (Util.is4xx(__response.statusCode) || Util.is5xx(__response.statusCode)) {
     throw {
       code = tmp.code,
-      message = `EventBridgeError ${tmp.message}`,
+      message = `[EventBridgeError] ${tmp.message}`,
       data = tmp,
     }
   }
