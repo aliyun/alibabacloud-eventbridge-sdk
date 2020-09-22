@@ -1,4 +1,5 @@
 import unittest
+
 from Tea.request import TeaRequest
 from Tea.model import TeaModel
 from alibabacloud_eventbridge_util.client import Client
@@ -146,3 +147,8 @@ class TestClient(unittest.TestCase):
             },
         ]
         self.assertEqual(tmp, res)
+
+    def test_start_with(self):
+        self.assertTrue(Client.start_with('hello world', 'hello'))
+        self.assertFalse(Client.start_with('hello world', 'world'))
+
