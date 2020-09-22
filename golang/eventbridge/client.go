@@ -1557,7 +1557,7 @@ func (client *Client) Init(config *Config) (_err error) {
 		return _err
 	}
 
-	if !tea.BoolValue(util.Empty(config.Endpoint)) {
+	if tea.BoolValue(util.Empty(config.Endpoint)) {
 		_err = tea.NewSDKError(map[string]interface{}{
 			"code":    "ParameterMissing",
 			"message": "'endpoint' can not be unset",
