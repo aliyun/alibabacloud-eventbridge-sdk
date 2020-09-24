@@ -22,12 +22,13 @@ func main() {
 		SetDatacontenttype("application/json").
 		SetData([]byte("test")).
 		SetId("id").
+		SetSpecversion("1.0").
 		SetSource("source").
 		SetTime("2020-08-24T13:54:05.965Asia/Shanghai").
 		SetSubject("1.0").
 		SetType("type").
 		SetExtensions(map[string]interface{}{
-			"aliyuneventbusname": "BusName",
+			"aliyuneventbusname": "demo-bus",
 		})
 
 	resp, err := client.PutEvents([]*eventbridge.CloudEvent{event})

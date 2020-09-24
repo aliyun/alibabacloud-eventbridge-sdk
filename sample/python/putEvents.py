@@ -27,7 +27,7 @@ class Client(object):
         event.subject = "1.0"
         event.type = "acs:oss:cn-hangzhou:1234567:xls-papk/game_apk/123.jpg"
         event.extensions = {
-            "aliyuneventbusname": "demo-bus"
+            "aliyuneventbusname": "jingluo-bus"
         }
         try:
             resp = client.put_events([
@@ -38,7 +38,8 @@ class Client(object):
             ConsoleClient.log(error.message)
 
     @staticmethod
-    def main(args):
+    def main():
         client = Client.create_client()
-        Client.create_event_bus_sample(client)
         Client.put_events(client)
+
+Client.main()
