@@ -1,8 +1,6 @@
 // This file is auto-generated, don't edit it. Thanks.
 package com.aliyun.eventbridge;
 
-import com.aliyun.eventbridge.util.Serializer;
-import com.aliyun.eventbridge.util.SignatureHelper;
 import com.aliyun.tea.*;
 import com.aliyun.eventbridge.models.*;
 
@@ -32,15 +30,14 @@ public class EventBridgeClient implements EventBridge {
 
         com.aliyun.teautil.Common.validateModel(config);
         if (!com.aliyun.teautil.Common.empty(config.accessKeyId) && !com.aliyun.teautil.Common.empty(config.accessKeySecret)) {
+            String credentialType = "access_key";
             if (!com.aliyun.teautil.Common.empty(config.securityToken)) {
-                config.type = "sts";
-            } else {
-                config.type = "access_key";
+                credentialType = "sts";
             }
 
             com.aliyun.credentials.models.Config credentialConfig = com.aliyun.credentials.models.Config.build(TeaConverter.buildMap(
                 new TeaPair("accessKeyId", config.accessKeyId),
-                new TeaPair("type", config.type),
+                new TeaPair("type", credentialType),
                 new TeaPair("accessKeySecret", config.accessKeySecret),
                 new TeaPair("securityToken", config.securityToken)
             ));
@@ -53,12 +50,19 @@ public class EventBridgeClient implements EventBridge {
                 new TeaPair("message", "'accessKeyId' and 'accessKeySecret' or 'credential' can not be unset")
             ));
         }
+
         if (com.aliyun.teautil.Common.empty(config.endpoint)) {
-            throw new ValidateException("endpoint can not be unset");
+            throw new TeaException(TeaConverter.buildMap(
+                new TeaPair("code", "ParameterMissing"),
+                new TeaPair("message", "'endpoint' can not be unset")
+            ));
         }
 
-        if (config.endpoint.startsWith("http") || config.endpoint.startsWith("https")) {
-            throw new ValidateException("endpoint shouldn't start with http or https");
+        if (com.aliyun.eventBridgeUtil.EventBridgeUtil.startWith(config.endpoint, "http") || com.aliyun.eventBridgeUtil.EventBridgeUtil.startWith(config.endpoint, "https")) {
+            throw new TeaException(TeaConverter.buildMap(
+                new TeaPair("code", "ParameterError"),
+                new TeaPair("message", "'endpoint' shouldn't start with 'http' or 'https'")
+            ));
         }
 
         this._regionId = config.regionId;
@@ -117,7 +121,6 @@ public class EventBridgeClient implements EventBridge {
                     new TeaPair("x-eventbridge-version", "2015-06-06"),
                     new TeaPair("user-agent", com.aliyun.teautil.Common.getUserAgent(" aliyun-eventbridge-sdk/1.1.0"))
                 );
-
                 if (!com.aliyun.teautil.Common.isUnset(_regionId)) {
                     request_.headers.put("x-eventbridge-regionId", _regionId);
                 }
@@ -143,38 +146,27 @@ public class EventBridgeClient implements EventBridge {
                     request_.headers.put("x-acs-security-token", securityToken);
                 }
 
-                String stringToSign = SignatureHelper.getStringToSign(request_);
-                request_.headers.put("authorization", "acs:" + accessKeyId + ":" + SignatureHelper.getSignature(stringToSign, accessKeySecret) + "");
+                String stringToSign = com.aliyun.eventBridgeUtil.EventBridgeUtil.getStringToSign(request_);
+                request_.headers.put("authorization", "acs:" + accessKeyId + ":" + com.aliyun.eventBridgeUtil.EventBridgeUtil.getSignature(stringToSign, accessKeySecret) + "");
                 _lastRequest = request_;
                 TeaResponse response_ = Tea.doAction(request_, runtime_);
-
-                if (com.aliyun.teautil.Common.equalNumber(response_.statusCode, 204)) {
-                    return TeaConverter.buildMap(
-                        new TeaPair("requestId", response_.headers.get("x-eventbridge-request-id"))
-                    );
-                }
 
                 Object result = com.aliyun.teautil.Common.readAsJSON(response_.body);
                 java.util.Map<String, Object> tmp = com.aliyun.teautil.Common.assertAsMap(result);
                 if (com.aliyun.teautil.Common.is4xx(response_.statusCode) || com.aliyun.teautil.Common.is5xx(response_.statusCode)) {
                     throw new TeaException(TeaConverter.buildMap(
                         new TeaPair("code", tmp.get("code")),
-                        new TeaPair("message", "[EventBridgeError] " + tmp.get("message")),
+                        new TeaPair("message", "[EventBridgeError] " + tmp.get("message") + ""),
                         new TeaPair("data", tmp)
                     ));
                 }
 
-                return TeaConverter.merge(Object.class,
-                    TeaConverter.buildMap(
-                        new TeaPair("requestId", response_.headers.get("x-eventbridge-request-id"))
-                    ),
-                    tmp
-                );
+                return tmp;
             } catch (Exception e) {
                 if (Tea.isRetryable(e)) {
                     continue;
                 }
-                throw new TeaException(e.getMessage(), e);
+                throw new RuntimeException(e);
             }
         }
 
@@ -203,10 +195,11 @@ public class EventBridgeClient implements EventBridge {
 
             if (com.aliyun.teautil.Common.isUnset(cloudEvent.datacontenttype)) {
                 cloudEvent.datacontenttype = "application/json; charset=utf-8";
-            }    
+            }
+
             com.aliyun.teautil.Common.validateModel(cloudEvent);
         }
-        Object body =Serializer.serialize(eventList);
+        Object body = com.aliyun.eventBridgeUtil.EventBridgeUtil.serialize(eventList);
         return TeaModel.toModel(this.doRequest("putEvents", "HTTP", "POST", "/openapi/putEvents", null, body, runtime), new PutEventsResponse());
     }
 

@@ -24,6 +24,10 @@
     "namespace": "AlibabaCloud.EventBridgeUtil",
     "className": "Common"
   },
+  "java": {
+    "className": "EventBridgeUtil",
+    "package": "com.aliyun.eventBridgeUtil"
+  },
   "php": {
     "package": "AlibabaCloud.EventBridgeUtil",
     "clientName": "Client",

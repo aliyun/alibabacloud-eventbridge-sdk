@@ -1,9 +1,7 @@
 // This file is auto-generated, don't edit it. Thanks.
 package com.aliyun.eventbridge.models;
 
-import com.aliyun.tea.NameInMap;
-import com.aliyun.tea.TeaModel;
-import com.aliyun.tea.Validation;
+import com.aliyun.tea.*;
 
 /**
  * The request of testEventPattern
@@ -26,7 +24,6 @@ public class TestEventPatternRequest extends TeaModel {
         this.event = event;
         return this;
     }
-
     public String getEvent() {
         return this.event;
     }
@@ -35,7 +32,6 @@ public class TestEventPatternRequest extends TeaModel {
         this.eventPattern = eventPattern;
         return this;
     }
-
     public String getEventPattern() {
         return this.eventPattern;
     }

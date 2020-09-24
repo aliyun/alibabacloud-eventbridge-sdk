@@ -1,17 +1,18 @@
 // This file is auto-generated, don't edit it. Thanks.
 package com.aliyun.eventbridge.models;
 
-import com.aliyun.tea.NameInMap;
-import com.aliyun.tea.TeaModel;
+import com.aliyun.tea.*;
 
 /**
  * The response of create EventBus
  */
 public class CreateEventBusResponse extends TeaModel {
     @NameInMap("RequestId")
+    @Validation(required = true)
     public String requestId;
 
     @NameInMap("ResourceOwnerAccountId")
+    @Validation(required = true)
     public String resourceOwnerAccountId;
 
     @NameInMap("EventBusARN")
@@ -26,7 +27,6 @@ public class CreateEventBusResponse extends TeaModel {
         this.requestId = requestId;
         return this;
     }
-
     public String getRequestId() {
         return this.requestId;
     }
@@ -35,7 +35,6 @@ public class CreateEventBusResponse extends TeaModel {
         this.resourceOwnerAccountId = resourceOwnerAccountId;
         return this;
     }
-
     public String getResourceOwnerAccountId() {
         return this.resourceOwnerAccountId;
     }
@@ -44,7 +43,6 @@ public class CreateEventBusResponse extends TeaModel {
         this.eventBusARN = eventBusARN;
         return this;
     }
-
     public String getEventBusARN() {
         return this.eventBusARN;
     }

@@ -1,8 +1,7 @@
 // This file is auto-generated, don't edit it. Thanks.
 package com.aliyun.eventbridge.models;
 
-import com.aliyun.tea.NameInMap;
-import com.aliyun.tea.TeaModel;
+import com.aliyun.tea.*;
 
 /**
  * The detail of put event result
@@ -29,7 +28,6 @@ public class PutEventsResponseEntry extends TeaModel {
         this.eventId = eventId;
         return this;
     }
-
     public String getEventId() {
         return this.eventId;
     }
@@ -38,7 +36,6 @@ public class PutEventsResponseEntry extends TeaModel {
         this.traceId = traceId;
         return this;
     }
-
     public String getTraceId() {
         return this.traceId;
     }
@@ -47,7 +44,6 @@ public class PutEventsResponseEntry extends TeaModel {
         this.errorCode = errorCode;
         return this;
     }
-
     public String getErrorCode() {
         return this.errorCode;
     }
@@ -56,7 +52,6 @@ public class PutEventsResponseEntry extends TeaModel {
         this.errorMessage = errorMessage;
         return this;
     }
-
     public String getErrorMessage() {
         return this.errorMessage;
     }

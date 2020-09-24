@@ -22,7 +22,7 @@ public class ClientTest {
     /**
      * Create client  初始化公共请求参数
      */
-    public static com.aliyun.eventbridge.EventBridge createClient() {
+    public static com.aliyun.eventbridge.EventBridgeClient createClient() {
         Config config = new Config();
         config.setAccessKeyId(System.getenv("accessKeyId"))
             .setAccessKeySecret(System.getenv("accessKeySecret"))
@@ -339,7 +339,7 @@ public class ClientTest {
     }
 
     public static void main(String[] args) {
-        EventBridge client = createClient();
+        EventBridgeClient client = createClient();
         //createEventBusSample(client);
         //deleteEventBusSample(client);
         //getEventBusSample(client);
