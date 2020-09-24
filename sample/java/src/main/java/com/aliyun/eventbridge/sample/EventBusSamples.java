@@ -26,7 +26,7 @@ public class EventBusSamples {
     public void createEventBusSample() {
         try {
             CreateEventBusRequest createEventBusRequest = new CreateEventBusRequest();
-            createEventBusRequest.setEventBusName("myBus");
+            createEventBusRequest.setEventBusName("demo-bus");
             createEventBusRequest.setDescription("my first bus on eventbridge!");
             CreateEventBusResponse response = eventBridgeClient.createEventBus(createEventBusRequest);
             System.out.println("create bus success : " + response);
@@ -71,9 +71,9 @@ public class EventBusSamples {
         EventBusSamples sample = new EventBusSamples();
         try {
             sample.createEventBusSample();
-            sample.getEventBusSample();
-            sample.listEventBusSample();
-            sample.deleteEventBusSample();
+            //sample.getEventBusSample();
+            //sample.listEventBusSample();
+            //sample.deleteEventBusSample();
         } catch (Throwable e) {
             e.printStackTrace();
         }

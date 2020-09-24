@@ -55,7 +55,7 @@ public class EventRuleSamples {
             List<EBTargetParam> paramList = Lists.newArrayList(param1, param2);
             TargetEntry targetEntry = new TargetEntry();
             targetEntry.setId("mnsQueueTarget");
-            targetEntry.setEndpoint("acs:mns:{region}:{accountId}:queues/{queueName}");
+            targetEntry.setType("http");
             targetEntry.setParamList(paramList);
 
             List<TargetEntry> targetEntryList = Arrays.asList(targetEntry);

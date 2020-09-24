@@ -1,0 +1,43 @@
+{
+  "name": "alibabacloud/eventbridge",
+  "description": "Alibaba Cloud EventBridge Sample Library for PHP",
+  "type": "library",
+  "license": "Apache-2.0",
+  "authors": [],
+  "require": {
+    "php": ">5.5",
+    "alibabacloud/credentials": "^1.1",
+    "alibabacloud/tea-console": "^0.1.0",
+    "alibabacloud/tea-utils": "^0.2.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^4.8.35|^5.4.3"
+  },
+  "autoload": {
+    "psr-4": {
+      "Alibabacloud\\Sample\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Alibabacloud\\Sample\\Tests\\": "tests",
+      "AlibabaCloud\\SDK\\EventBridge\\": "../../php/src",
+      "AlibabaCloud\\EventBridgeUtil\\": "../../util/php/src"
+    }
+  },
+  "scripts": {
+    "fixer": "php-cs-fixer fix ./",
+    "test": [
+      "@clearCache",
+      "php ./tests/boostrap.php"
+    ],
+    "clearCache": "rm -rf cache/*"
+  },
+  "config": {
+    "sort-packages": true,
+    "preferred-install": "dist",
+    "optimize-autoloader": true
+  },
+  "prefer-stable": true,
+  "minimum-stability": "dev"
+}

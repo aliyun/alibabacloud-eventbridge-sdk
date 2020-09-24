@@ -30,7 +30,7 @@ public class PutEventsSample {
         cloudEventList.add(EventBuilder.builder()
             .withId("a5074581-7e74-4e4c-868f-47e7afdf8445")
             .withSource(URI.create("acs.oss"))
-            .withType("oss:ObjectCreated:PostObject")
+            .withType("oss:ObjectCreated:PostObjectPostObjectPostObjectPostObjectPostObjectPostObjectPostObjectPostObjectPostObjectPostObjectPostObjectPostObjectPostObjectPostObjectPostObjectPostObject")
             .withSubject("acs:oss:cn-hangzhou:1234567:xls-papk/game_apk/123.jpg")
             .withTime(new Date())
             .withJsonString("{ \"E-Mail\": \"${email}\" }")
