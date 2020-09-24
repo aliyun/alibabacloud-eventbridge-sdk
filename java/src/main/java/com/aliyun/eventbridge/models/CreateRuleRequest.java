@@ -1,9 +1,7 @@
 // This file is auto-generated, don't edit it. Thanks.
 package com.aliyun.eventbridge.models;
 
-import com.aliyun.tea.NameInMap;
-import com.aliyun.tea.TeaModel;
-import com.aliyun.tea.Validation;
+import com.aliyun.tea.*;
 
 /**
  * The request of create an EventBus rule on Aliyun
@@ -39,7 +37,6 @@ public class CreateRuleRequest extends TeaModel {
         this.eventBusName = eventBusName;
         return this;
     }
-
     public String getEventBusName() {
         return this.eventBusName;
     }
@@ -48,7 +45,6 @@ public class CreateRuleRequest extends TeaModel {
         this.description = description;
         return this;
     }
-
     public String getDescription() {
         return this.description;
     }
@@ -57,7 +53,6 @@ public class CreateRuleRequest extends TeaModel {
         this.ruleName = ruleName;
         return this;
     }
-
     public String getRuleName() {
         return this.ruleName;
     }
@@ -66,7 +61,6 @@ public class CreateRuleRequest extends TeaModel {
         this.status = status;
         return this;
     }
-
     public String getStatus() {
         return this.status;
     }
@@ -75,7 +69,6 @@ public class CreateRuleRequest extends TeaModel {
         this.filterPattern = filterPattern;
         return this;
     }
-
     public String getFilterPattern() {
         return this.filterPattern;
     }
@@ -84,7 +77,6 @@ public class CreateRuleRequest extends TeaModel {
         this.targets = targets;
         return this;
     }
-
     public java.util.List<TargetEntry> getTargets() {
         return this.targets;
     }

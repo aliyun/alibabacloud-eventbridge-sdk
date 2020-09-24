@@ -1,18 +1,18 @@
 // This file is auto-generated, don't edit it. Thanks.
 package com.aliyun.eventbridge.models;
 
-import com.aliyun.tea.NameInMap;
-import com.aliyun.tea.TeaModel;
-import com.aliyun.tea.Validation;
+import com.aliyun.tea.*;
 
 /**
  * The response of get the detail of EventBus
  */
 public class GetEventBusResponse extends TeaModel {
     @NameInMap("RequestId")
+    @Validation(required = true)
     public String requestId;
 
     @NameInMap("ResourceOwnerAccountId")
+    @Validation(required = true)
     public String resourceOwnerAccountId;
 
     @NameInMap("EventBusARN")
@@ -40,7 +40,6 @@ public class GetEventBusResponse extends TeaModel {
         this.requestId = requestId;
         return this;
     }
-
     public String getRequestId() {
         return this.requestId;
     }
@@ -49,7 +48,6 @@ public class GetEventBusResponse extends TeaModel {
         this.resourceOwnerAccountId = resourceOwnerAccountId;
         return this;
     }
-
     public String getResourceOwnerAccountId() {
         return this.resourceOwnerAccountId;
     }
@@ -58,7 +56,6 @@ public class GetEventBusResponse extends TeaModel {
         this.eventBusARN = eventBusARN;
         return this;
     }
-
     public String getEventBusARN() {
         return this.eventBusARN;
     }
@@ -67,7 +64,6 @@ public class GetEventBusResponse extends TeaModel {
         this.eventBusName = eventBusName;
         return this;
     }
-
     public String getEventBusName() {
         return this.eventBusName;
     }
@@ -76,7 +72,6 @@ public class GetEventBusResponse extends TeaModel {
         this.description = description;
         return this;
     }
-
     public String getDescription() {
         return this.description;
     }
@@ -85,7 +80,6 @@ public class GetEventBusResponse extends TeaModel {
         this.createTimestamp = createTimestamp;
         return this;
     }
-
     public Long getCreateTimestamp() {
         return this.createTimestamp;
     }

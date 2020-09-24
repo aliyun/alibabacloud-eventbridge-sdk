@@ -1,9 +1,7 @@
 // This file is auto-generated, don't edit it. Thanks.
 package com.aliyun.eventbridge.models;
 
-import com.aliyun.tea.NameInMap;
-import com.aliyun.tea.TeaModel;
-import com.aliyun.tea.Validation;
+import com.aliyun.tea.*;
 
 /**
  * The detail of TargetEntry
@@ -38,7 +36,6 @@ public class TargetEntry extends TeaModel {
         this.id = id;
         return this;
     }
-
     public String getId() {
         return this.id;
     }
@@ -47,7 +44,6 @@ public class TargetEntry extends TeaModel {
         this.type = type;
         return this;
     }
-
     public String getType() {
         return this.type;
     }
@@ -56,7 +52,6 @@ public class TargetEntry extends TeaModel {
         this.endpoint = endpoint;
         return this;
     }
-
     public String getEndpoint() {
         return this.endpoint;
     }
@@ -65,7 +60,6 @@ public class TargetEntry extends TeaModel {
         this.pushSelector = pushSelector;
         return this;
     }
-
     public String getPushSelector() {
         return this.pushSelector;
     }
@@ -74,7 +68,6 @@ public class TargetEntry extends TeaModel {
         this.pushRetryStrategy = pushRetryStrategy;
         return this;
     }
-
     public String getPushRetryStrategy() {
         return this.pushRetryStrategy;
     }
@@ -83,8 +76,8 @@ public class TargetEntry extends TeaModel {
         this.paramList = paramList;
         return this;
     }
-
     public java.util.List<EBTargetParam> getParamList() {
         return this.paramList;
     }
+
 }

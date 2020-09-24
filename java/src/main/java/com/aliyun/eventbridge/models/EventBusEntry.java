@@ -1,9 +1,7 @@
 // This file is auto-generated, don't edit it. Thanks.
 package com.aliyun.eventbridge.models;
 
-import com.aliyun.tea.NameInMap;
-import com.aliyun.tea.TeaModel;
-import com.aliyun.tea.Validation;
+import com.aliyun.tea.*;
 
 /**
  * The detail of EventBuses
@@ -34,7 +32,6 @@ public class EventBusEntry extends TeaModel {
         this.eventBusName = eventBusName;
         return this;
     }
-
     public String getEventBusName() {
         return this.eventBusName;
     }
@@ -43,7 +40,6 @@ public class EventBusEntry extends TeaModel {
         this.eventBusARN = eventBusARN;
         return this;
     }
-
     public String getEventBusARN() {
         return this.eventBusARN;
     }
@@ -52,7 +48,6 @@ public class EventBusEntry extends TeaModel {
         this.description = description;
         return this;
     }
-
     public String getDescription() {
         return this.description;
     }
@@ -61,7 +56,6 @@ public class EventBusEntry extends TeaModel {
         this.createTimestamp = createTimestamp;
         return this;
     }
-
     public Long getCreateTimestamp() {
         return this.createTimestamp;
     }

@@ -1,9 +1,7 @@
 // This file is auto-generated, don't edit it. Thanks.
 package com.aliyun.eventbridge.models;
 
-import com.aliyun.tea.NameInMap;
-import com.aliyun.tea.TeaModel;
-import com.aliyun.tea.Validation;
+import com.aliyun.tea.*;
 
 /**
  * Model for initing client
@@ -62,11 +60,6 @@ public class Config extends TeaModel {
     @NameInMap("maxIdleConns")
     public Integer maxIdleConns;
 
-    // credential type
-    @NameInMap("type")
-    @Deprecated
-    public String type;
-
     public static Config build(java.util.Map<String, ?> map) {
         Config self = new Config();
         return TeaModel.build(map, self);
@@ -76,7 +69,6 @@ public class Config extends TeaModel {
         this.accessKeyId = accessKeyId;
         return this;
     }
-
     public String getAccessKeyId() {
         return this.accessKeyId;
     }
@@ -85,7 +77,6 @@ public class Config extends TeaModel {
         this.accessKeySecret = accessKeySecret;
         return this;
     }
-
     public String getAccessKeySecret() {
         return this.accessKeySecret;
     }
@@ -94,7 +85,6 @@ public class Config extends TeaModel {
         this.securityToken = securityToken;
         return this;
     }
-
     public String getSecurityToken() {
         return this.securityToken;
     }
@@ -103,7 +93,6 @@ public class Config extends TeaModel {
         this.protocol = protocol;
         return this;
     }
-
     public String getProtocol() {
         return this.protocol;
     }
@@ -112,7 +101,6 @@ public class Config extends TeaModel {
         this.regionId = regionId;
         return this;
     }
-
     public String getRegionId() {
         return this.regionId;
     }
@@ -121,7 +109,6 @@ public class Config extends TeaModel {
         this.readTimeout = readTimeout;
         return this;
     }
-
     public Integer getReadTimeout() {
         return this.readTimeout;
     }
@@ -130,7 +117,6 @@ public class Config extends TeaModel {
         this.connectTimeout = connectTimeout;
         return this;
     }
-
     public Integer getConnectTimeout() {
         return this.connectTimeout;
     }
@@ -139,7 +125,6 @@ public class Config extends TeaModel {
         this.httpProxy = httpProxy;
         return this;
     }
-
     public String getHttpProxy() {
         return this.httpProxy;
     }
@@ -148,7 +133,6 @@ public class Config extends TeaModel {
         this.httpsProxy = httpsProxy;
         return this;
     }
-
     public String getHttpsProxy() {
         return this.httpsProxy;
     }
@@ -157,7 +141,6 @@ public class Config extends TeaModel {
         this.credential = credential;
         return this;
     }
-
     public com.aliyun.credentials.Client getCredential() {
         return this.credential;
     }
@@ -166,7 +149,6 @@ public class Config extends TeaModel {
         this.endpoint = endpoint;
         return this;
     }
-
     public String getEndpoint() {
         return this.endpoint;
     }
@@ -175,7 +157,6 @@ public class Config extends TeaModel {
         this.noProxy = noProxy;
         return this;
     }
-
     public String getNoProxy() {
         return this.noProxy;
     }
@@ -184,18 +165,8 @@ public class Config extends TeaModel {
         this.maxIdleConns = maxIdleConns;
         return this;
     }
-
     public Integer getMaxIdleConns() {
         return this.maxIdleConns;
-    }
-
-    public Config setType(String type) {
-        this.type = type;
-        return this;
-    }
-
-    public String getType() {
-        return this.type;
     }
 
 }
