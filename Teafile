@@ -13,7 +13,7 @@
 		"package": "com.aliyun.eventbridge",
 		"className": "EventBridgeClient",
 		"implements": "EventBridge",
-		"throwsException": false,
+		"NoException": true,
 		"packageInfo": {
 			"description": "Alibaba Cloud eventbridge Util for Java",
 			"url": "https://github.com/aliyun/alibabacloud-eventbridge-sdk",
