@@ -33,9 +33,9 @@ public class EventRuleSamples {
 
     public EventRuleSamples() {
         Config authConfig = new Config();
-        authConfig.accessKeyId = "{accessKeyId}";
-        authConfig.accessKeySecret = "{accessKeySecret}";
-        authConfig.endpoint = "{endpoint}";
+        authConfig.accessKeyId = "vZ3VL0SuJdHiEmvU";
+        authConfig.accessKeySecret = "5WhwklGwaybTFrc3D6uERQ3MJtw5kp";
+        authConfig.endpoint = "1370104181926700.eventbridge.test.com:7001";
         eventBridgeClient = new EventBridgeClient(authConfig);
     }
 
@@ -43,23 +43,32 @@ public class EventRuleSamples {
         try {
             CreateRuleRequest createEventRuleRequest = new CreateRuleRequest();
             EBTargetParam param1 = new EBTargetParam();
-            param1.setResourceKey("url");
+            param1.setResourceKey("URL");
             param1.setForm("CONSTANT");
-            param1.setValue("http://aliyun.com");
+            param1.setValue("https://oapi.dingtalk"
+                + ".com/robot/send?access_token=1019d4a13b9e2ef6b2fu8374uhfe076fbad17b396fc5e9684814ed8460");
 
             EBTargetParam param2 = new EBTargetParam();
-            param2.setResourceKey("Body");
+            param2.setResourceKey("SecretKey");
             param2.setForm("CONSTANT");
-            param2.setValue("demo sample");
+            param2.setValue("SEC121a71ff304a65b4f7cd90de101b43gf343321f4d9f6c1ca514300d15234");
 
-            List<EBTargetParam> paramList = Lists.newArrayList(param1, param2);
+            EBTargetParam param3 = new EBTargetParam();
+            param3.setResourceKey("Body");
+            param3.setForm("TEMPLATE");
+            param3.setValue("{\n" + "    \"key\":\"$.source\",\n" + "    \"value\":\"$.data\"\n" + "}");
+            param3.setTemplate("{\"msgtype\": \"text\",\"text\": " + "{\"content\": \"Hello：${key}\"}}");
+
+
+            List<EBTargetParam> paramList = Lists.newArrayList(param1, param2, param3);
             TargetEntry targetEntry = new TargetEntry();
             targetEntry.setId("mnsQueueTarget");
-            targetEntry.setType("http");
+            targetEntry.setType("acs.dingtalk");
             targetEntry.setParamList(paramList);
+            targetEntry.setEndpoint("http://aliyun.com");
 
             List<TargetEntry> targetEntryList = Arrays.asList(targetEntry);
-            createEventRuleRequest.setRuleName("myRule");
+            createEventRuleRequest.setRuleName("myRule3");
             createEventRuleRequest.setEventBusName("myBus");
             createEventRuleRequest.setFilterPattern(
                 "{\"source\":[\"crmabc.newsletter\"],\"type\":[\"UserSignUp\", \"UserLogin\"]}");
@@ -191,22 +200,21 @@ public class EventRuleSamples {
         }
     }
 
-    public static void main(String[] args, EventRuleSamples eventRuleSamples1) {
+    public static void main(String[] args) {
         EventBusSamples eventBusSamples = new EventBusSamples();
-        EventRuleSamples eventRuleSamples = eventRuleSamples1;
+        EventRuleSamples eventRuleSamples = new EventRuleSamples();
         try {
             // Create EventBus
-            eventBusSamples.createEventBusSample();
-
+            //eventBusSamples.createEventBusSample();
             eventRuleSamples.createEventRuleSample();
-            eventRuleSamples.getEventRuleSample();
-            eventRuleSamples.enableEventRuleSample();
-            eventRuleSamples.disableEventRuleSample();
-            eventRuleSamples.updateEventRuleSample();
-            eventRuleSamples.listEventRuleSample();
-            eventRuleSamples.createTargetsSample();
-            eventRuleSamples.listTargetsSample();
-            eventRuleSamples.deleteTargetsSample();
+            //eventRuleSamples.getEventRuleSample();
+            //eventRuleSamples.enableEventRuleSample();
+            //eventRuleSamples.disableEventRuleSample();
+            //eventRuleSamples.updateEventRuleSample();
+            //eventRuleSamples.listEventRuleSample();
+            //eventRuleSamples.createTargetsSample();
+            //eventRuleSamples.listTargetsSample();
+            //eventRuleSamples.deleteTargetsSample();
         } catch (Throwable e) {
             e.printStackTrace();
         }
