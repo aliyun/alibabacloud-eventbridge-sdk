@@ -9,6 +9,7 @@
 - [Usage for Go](./golang/README-CN.md)
 - [Usage for PHP](./php/README-CN.md)
 - [Usage for Python](./python/README-CN.md)
+- [Usage for Java](./java/README-CN.md)
 
 ## 问题
 
