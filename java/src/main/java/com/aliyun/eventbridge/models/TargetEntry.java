@@ -12,14 +12,12 @@ public class TargetEntry extends TeaModel {
     public String id;
 
     @NameInMap("Type")
+    @Validation(required = true)
     public String type;
 
     @NameInMap("Endpoint")
     @Validation(required = true)
     public String endpoint;
-
-    @NameInMap("PushSelector")
-    public String pushSelector;
 
     @NameInMap("PushRetryStrategy")
     public String pushRetryStrategy;
@@ -54,14 +52,6 @@ public class TargetEntry extends TeaModel {
     }
     public String getEndpoint() {
         return this.endpoint;
-    }
-
-    public TargetEntry setPushSelector(String pushSelector) {
-        this.pushSelector = pushSelector;
-        return this;
-    }
-    public String getPushSelector() {
-        return this.pushSelector;
     }
 
     public TargetEntry setPushRetryStrategy(String pushRetryStrategy) {
