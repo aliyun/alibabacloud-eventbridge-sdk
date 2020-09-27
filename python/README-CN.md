@@ -42,6 +42,13 @@ request = CloudEvent(
 )
 
 resp = client.put_events(request)
+
+print(resp)
+print('request id:', resp.request_id)
+print('failed entry count:', resp.failed_entry_count)
+for entry in resp.entry_list:
+    print('entry id:', entry.event_id)
+    print('trace id:', entry.trace_id)
 ```
 
 ## 参数说明
