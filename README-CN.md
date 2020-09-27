@@ -7,6 +7,7 @@
 
 ### Golang
 - [Usage for Go](./golang/README-CN.md)
+- [Usage for PHP](./php/README-CN.md)
 
 ## 问题
 
