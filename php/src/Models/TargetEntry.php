@@ -29,11 +29,6 @@ class TargetEntry extends Model
     /**
      * @var string
      */
-    public $pushSelector;
-
-    /**
-     * @var string
-     */
     public $pushRetryStrategy;
 
     /**
@@ -44,7 +39,6 @@ class TargetEntry extends Model
         'id'                => 'Id',
         'type'              => 'Type',
         'endpoint'          => 'Endpoint',
-        'pushSelector'      => 'PushSelector',
         'pushRetryStrategy' => 'PushRetryStrategy',
         'paramList'         => 'ParamList',
     ];
@@ -66,9 +60,6 @@ class TargetEntry extends Model
         }
         if (null !== $this->endpoint) {
             $res['Endpoint'] = $this->endpoint;
-        }
-        if (null !== $this->pushSelector) {
-            $res['PushSelector'] = $this->pushSelector;
         }
         if (null !== $this->pushRetryStrategy) {
             $res['PushRetryStrategy'] = $this->pushRetryStrategy;
@@ -102,9 +93,6 @@ class TargetEntry extends Model
         }
         if (isset($map['Endpoint'])) {
             $model->endpoint = $map['Endpoint'];
-        }
-        if (isset($map['PushSelector'])) {
-            $model->pushSelector = $map['PushSelector'];
         }
         if (isset($map['PushRetryStrategy'])) {
             $model->pushRetryStrategy = $map['PushRetryStrategy'];

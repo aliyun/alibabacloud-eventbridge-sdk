@@ -77,7 +77,6 @@ class CloudEvent extends Model
     {
         Model::validateRequired('id', $this->id, true);
         Model::validateRequired('source', $this->source, true);
-        Model::validateRequired('specversion', $this->specversion, true);
         Model::validateRequired('type', $this->type, true);
         Model::validateRequired('extensions', $this->extensions, true);
         Model::validateMaxLength('source', $this->source, 128);
