@@ -4,6 +4,11 @@ English | [简体中文](README-CN.md)
 
 # Alibaba Cloud EventBridge SDK
 
+## Usage
+
+### Golang
+- [Usage for Go](./golang/README.md)
+
 ## Issues
 
 [Opening an Issue](https://github.com/aliyun/alibabacloud-eventbridge-sdk/issues/new), Issues not conforming to the guidelines may be closed immediately.
