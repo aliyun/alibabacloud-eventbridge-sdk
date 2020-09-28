@@ -33,9 +33,9 @@ public class EventRuleSamples {
 
     public EventRuleSamples() {
         Config authConfig = new Config();
-        authConfig.accessKeyId = "vZ3VL0SuJdHiEmvU";
-        authConfig.accessKeySecret = "5WhwklGwaybTFrc3D6uERQ3MJtw5kp";
-        authConfig.endpoint = "1370104181926700.eventbridge.test.com:7001";
+        authConfig.accessKeyId = "{accessKeyId}";
+        authConfig.accessKeySecret = "{accessKeySecret}";
+        authConfig.endpoint = "{endpoint}";
         eventBridgeClient = new EventBridgeClient(authConfig);
     }
 
