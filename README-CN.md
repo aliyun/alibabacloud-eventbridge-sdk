@@ -3,6 +3,9 @@
 
 # Alibaba Cloud EventBridge SDK
 
+[![Travis Build Status](https://travis-ci.org/aliyun/alibabacloud-eventbridge-sdk.svg?branch=master)](https://travis-ci.org/aliyun/alibabacloud-eventbridge-sdk)
+[![codecov](https://codecov.io/gh/aliyun/alibabacloud-eventbridge-sdk/branch/master/graph/badge.svg)](https://codecov.io/gh/aliyun/alibabacloud-eventbridge-sdk)
+
 ## 使用说明
 
 ### Golang
