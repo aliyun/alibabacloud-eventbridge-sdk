@@ -1,9 +1,7 @@
 // This file is auto-generated, don't edit it. Thanks.
 package com.aliyun.eventbridge.models;
 
-import com.aliyun.tea.NameInMap;
-import com.aliyun.tea.TeaModel;
-import com.aliyun.tea.Validation;
+import com.aliyun.tea.*;
 
 /**
  * The result detail of target operation
@@ -30,7 +28,6 @@ public class TargetResultEntry extends TeaModel {
         this.errorCode = errorCode;
         return this;
     }
-
     public String getErrorCode() {
         return this.errorCode;
     }
@@ -39,7 +36,6 @@ public class TargetResultEntry extends TeaModel {
         this.errorMessage = errorMessage;
         return this;
     }
-
     public String getErrorMessage() {
         return this.errorMessage;
     }
@@ -48,7 +44,6 @@ public class TargetResultEntry extends TeaModel {
         this.entryId = entryId;
         return this;
     }
-
     public String getEntryId() {
         return this.entryId;
     }

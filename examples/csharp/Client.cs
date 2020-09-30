@@ -8,16 +8,15 @@ using System.Threading.Tasks;
 
 using Tea;
 using Tea.Utils;
-using Xunit;
 
 namespace Alibabacloud.Sample
 {
-    public class Client 
+    public class Client
     {
 
         /**
-        * Create client  初始化公共请求参数
-        */
+         * Create client  初始化公共请求参数
+         */
         public static AlibabaCloud.SDK.EventBridge.EventBridgeClient CreateClient()
         {
             AlibabaCloud.SDK.EventBridge.Models.Config config = new AlibabaCloud.SDK.EventBridge.Models.Config();
@@ -47,8 +46,7 @@ namespace Alibabacloud.Sample
             catch (Exception _error)
             {
                 TeaException error = new TeaException(new Dictionary<string, object>
-                {
-                    { "message", _error.Message }
+                { { "message", _error.Message }
                 });
                 AlibabaCloud.TeaConsole.Client.Log(error.Message);
             }
@@ -71,8 +69,7 @@ namespace Alibabacloud.Sample
             catch (Exception _error)
             {
                 TeaException error = new TeaException(new Dictionary<string, object>
-                {
-                    { "message", _error.Message }
+                { { "message", _error.Message }
                 });
                 AlibabaCloud.TeaConsole.Client.Log(error.Message);
             }
@@ -95,8 +92,7 @@ namespace Alibabacloud.Sample
             catch (Exception _error)
             {
                 TeaException error = new TeaException(new Dictionary<string, object>
-                {
-                    { "message", _error.Message }
+                { { "message", _error.Message }
                 });
                 AlibabaCloud.TeaConsole.Client.Log(error.Message);
             }
@@ -119,8 +115,7 @@ namespace Alibabacloud.Sample
             catch (Exception _error)
             {
                 TeaException error = new TeaException(new Dictionary<string, object>
-                {
-                    { "message", _error.Message }
+                { { "message", _error.Message }
                 });
                 AlibabaCloud.TeaConsole.Client.Log(error.Message);
             }
@@ -155,8 +150,7 @@ namespace Alibabacloud.Sample
             catch (Exception _error)
             {
                 TeaException error = new TeaException(new Dictionary<string, object>
-                {
-                    { "message", _error.Message }
+                { { "message", _error.Message }
                 });
                 AlibabaCloud.TeaConsole.Client.Log(error.Message);
             }
@@ -179,8 +173,7 @@ namespace Alibabacloud.Sample
             catch (Exception _error)
             {
                 TeaException error = new TeaException(new Dictionary<string, object>
-                {
-                    { "message", _error.Message }
+                { { "message", _error.Message }
                 });
                 AlibabaCloud.TeaConsole.Client.Log(error.Message);
             }
@@ -203,8 +196,7 @@ namespace Alibabacloud.Sample
             catch (Exception _error)
             {
                 TeaException error = new TeaException(new Dictionary<string, object>
-                {
-                    { "message", _error.Message }
+                { { "message", _error.Message }
                 });
                 AlibabaCloud.TeaConsole.Client.Log(error.Message);
             }
@@ -227,8 +219,7 @@ namespace Alibabacloud.Sample
             catch (Exception _error)
             {
                 TeaException error = new TeaException(new Dictionary<string, object>
-                {
-                    { "message", _error.Message }
+                { { "message", _error.Message }
                 });
                 AlibabaCloud.TeaConsole.Client.Log(error.Message);
             }
@@ -251,8 +242,7 @@ namespace Alibabacloud.Sample
             catch (Exception _error)
             {
                 TeaException error = new TeaException(new Dictionary<string, object>
-                {
-                    { "message", _error.Message }
+                { { "message", _error.Message }
                 });
                 AlibabaCloud.TeaConsole.Client.Log(error.Message);
             }
@@ -274,8 +264,7 @@ namespace Alibabacloud.Sample
             catch (Exception _error)
             {
                 TeaException error = new TeaException(new Dictionary<string, object>
-                {
-                    { "message", _error.Message }
+                { { "message", _error.Message }
                 });
                 AlibabaCloud.TeaConsole.Client.Log(error.Message);
             }
@@ -299,8 +288,7 @@ namespace Alibabacloud.Sample
             catch (Exception _error)
             {
                 TeaException error = new TeaException(new Dictionary<string, object>
-                {
-                    { "message", _error.Message }
+                { { "message", _error.Message }
                 });
                 AlibabaCloud.TeaConsole.Client.Log(error.Message);
             }
@@ -313,11 +301,11 @@ namespace Alibabacloud.Sample
                 AlibabaCloud.SDK.EventBridge.Models.TestEventPatternRequest request = new AlibabaCloud.SDK.EventBridge.Models.TestEventPatternRequest();
                 string pattern = "{\n" + "    \"source\": [\"acs.oss\"],\n" + "    \"data\": {\n" + "      \"b\": [1]\n" + "    }\n" + "}";
                 string jsonData = "{\n" + "        \"id\":\"51efe8e2-841f-4900-8ff5-3c6dfae1060e\",\n" +
-            "        \"source\":\"acs.oss\",\n" + "        \"type\":\"oss:ObjectCreated:PostObject\",\n"  +
-            "        \"dataschema\":\"http://taobao.com/test.json\",\n" +
-            "        \"subject\":\"acs:oss:cn-hangzhou:1234567:xls-papk/game_apk/123.jpg\",\n" +
-            "        \"aliyuneventbusname\":\"demo-bus\",\n" + "        \"data\":{\n" +
-            "            \"a\":\"test\",\n" + "            \"b\":1\n" + "        }\n" + "}";
+                    "        \"source\":\"acs.oss\",\n" + "        \"type\":\"oss:ObjectCreated:PostObject\",\n" +
+                    "        \"dataschema\":\"http://taobao.com/test.json\",\n" +
+                    "        \"subject\":\"acs:oss:cn-hangzhou:1234567:xls-papk/game_apk/123.jpg\",\n" +
+                    "        \"aliyuneventbusname\":\"demo-bus\",\n" + "        \"data\":{\n" +
+                    "            \"a\":\"test\",\n" + "            \"b\":1\n" + "        }\n" + "}";
                 request.Event = jsonData;
                 request.EventPattern = pattern;
                 AlibabaCloud.SDK.EventBridge.Models.TestEventPatternResponse testEventPatternResponse = client.TestEventPattern(request);
@@ -331,8 +319,7 @@ namespace Alibabacloud.Sample
             catch (Exception _error)
             {
                 TeaException error = new TeaException(new Dictionary<string, object>
-                {
-                    { "message", _error.Message }
+                { { "message", _error.Message }
                 });
                 AlibabaCloud.TeaConsole.Client.Log(error.Message);
             }
@@ -343,13 +330,13 @@ namespace Alibabacloud.Sample
             try
             {
                 AlibabaCloud.SDK.EventBridge.Models.TestEventPatternRequest request = new AlibabaCloud.SDK.EventBridge.Models.TestEventPatternRequest();
-                string pattern = "{\n" + "    \"source\": [\"acs.oss\"],\n" + "    \"data\": {\n" + "      \"b\": [2]\n"+ "    }\n" + "}";
+                string pattern = "{\n" + "    \"source\": [\"acs.oss\"],\n" + "    \"data\": {\n" + "      \"b\": [2]\n" + "    }\n" + "}";
                 string jsonData = "{\n" + "        \"id\":\"51efe8e2-841f-4900-8ff5-3c6dfae1060e\",\n" +
-            "        \"source\":\"acs.oss\",\n" + "        \"type\":\"oss:ObjectCreated:PostObject\",\n" +
-            "        \"dataschema\":\"http://taobao.com/test.json\",\n" +
-            "        \"subject\":\"acs:oss:cn-hangzhou:1234567:xls-papk/game_apk/123.jpg\",\n" +
-            "        \"aliyuneventbusname\":\"demo-bus\",\n" + "        \"data\":{\n" +
-            "            \"a\":\"test\",\n" + "            \"b\":1\n" + "        }\n" + "}";
+                    "        \"source\":\"acs.oss\",\n" + "        \"type\":\"oss:ObjectCreated:PostObject\",\n" +
+                    "        \"dataschema\":\"http://taobao.com/test.json\",\n" +
+                    "        \"subject\":\"acs:oss:cn-hangzhou:1234567:xls-papk/game_apk/123.jpg\",\n" +
+                    "        \"aliyuneventbusname\":\"demo-bus\",\n" + "        \"data\":{\n" +
+                    "            \"a\":\"test\",\n" + "            \"b\":1\n" + "        }\n" + "}";
                 request.Event = jsonData;
                 request.EventPattern = pattern;
                 AlibabaCloud.SDK.EventBridge.Models.TestEventPatternResponse testEventPatternResponse = client.TestEventPattern(request);
@@ -363,8 +350,7 @@ namespace Alibabacloud.Sample
             catch (Exception _error)
             {
                 TeaException error = new TeaException(new Dictionary<string, object>
-                {
-                    { "message", _error.Message }
+                { { "message", _error.Message }
                 });
                 AlibabaCloud.TeaConsole.Client.Log(error.Message);
             }
@@ -396,8 +382,7 @@ namespace Alibabacloud.Sample
             catch (Exception _error)
             {
                 TeaException error = new TeaException(new Dictionary<string, object>
-                {
-                    { "message", _error.Message }
+                { { "message", _error.Message }
                 });
                 AlibabaCloud.TeaConsole.Client.Log(error.Message);
             }
@@ -426,8 +411,7 @@ namespace Alibabacloud.Sample
             catch (Exception _error)
             {
                 TeaException error = new TeaException(new Dictionary<string, object>
-                {
-                    { "message", _error.Message }
+                { { "message", _error.Message }
                 });
                 AlibabaCloud.TeaConsole.Client.Log(error.Message);
             }
@@ -451,16 +435,15 @@ namespace Alibabacloud.Sample
             catch (Exception _error)
             {
                 TeaException error = new TeaException(new Dictionary<string, object>
-                {
-                    { "message", _error.Message }
+                { { "message", _error.Message }
                 });
                 AlibabaCloud.TeaConsole.Client.Log(error.Message);
             }
         }
 
         /**
-        * PutEvents
-        */
+         * PutEvents
+         */
         public static void PutEvents(AlibabaCloud.SDK.EventBridge.EventBridgeClient client)
         {
             AlibabaCloud.SDK.EventBridge.Models.CloudEvent event_ = new AlibabaCloud.SDK.EventBridge.Models.CloudEvent();
@@ -474,8 +457,7 @@ namespace Alibabacloud.Sample
             event_.Subject = "1.0";
             event_.Type = "acs:oss:cn-hangzhou:1234567:xls-papk/game_apk/123.jpg";
             event_.Extensions = new Dictionary<string, object>
-            {
-                {"aliyuneventbusname", "demo-bus"},
+            { { "aliyuneventbusname", "demo-bus" },
             };
             try
             {
@@ -493,15 +475,13 @@ namespace Alibabacloud.Sample
             catch (Exception _error)
             {
                 TeaException error = new TeaException(new Dictionary<string, object>
-                {
-                    { "message", _error.Message }
+                { { "message", _error.Message }
                 });
                 AlibabaCloud.TeaConsole.Client.Log(error.Message);
             }
         }
 
-        [Fact]
-        public static void TestEventBridge()
+        static void Main(string[] args)
         {
             AlibabaCloud.SDK.EventBridge.EventBridgeClient client = Client.CreateClient();
             Client.CreateEventBusSample(client);
@@ -522,7 +502,6 @@ namespace Alibabacloud.Sample
             Client.DeleteEventRuleSample(client);
             Client.DeleteEventBusSample(client);
         }
-
 
     }
 }

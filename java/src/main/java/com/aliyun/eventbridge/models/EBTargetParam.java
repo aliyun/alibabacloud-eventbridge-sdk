@@ -1,12 +1,10 @@
 // This file is auto-generated, don't edit it. Thanks.
 package com.aliyun.eventbridge.models;
 
-import com.aliyun.tea.NameInMap;
-import com.aliyun.tea.TeaModel;
-import com.aliyun.tea.Validation;
+import com.aliyun.tea.*;
 
 /**
- * The detail of EBTargetParam
+ * The param of EBTargetParam
  */
 public class EBTargetParam extends TeaModel {
     @NameInMap("ResourceKey")
@@ -32,7 +30,6 @@ public class EBTargetParam extends TeaModel {
         this.resourceKey = resourceKey;
         return this;
     }
-
     public String getResourceKey() {
         return this.resourceKey;
     }
@@ -41,7 +38,6 @@ public class EBTargetParam extends TeaModel {
         this.form = form;
         return this;
     }
-
     public String getForm() {
         return this.form;
     }
@@ -50,7 +46,6 @@ public class EBTargetParam extends TeaModel {
         this.value = value;
         return this;
     }
-
     public String getValue() {
         return this.value;
     }
@@ -59,8 +54,8 @@ public class EBTargetParam extends TeaModel {
         this.template = template;
         return this;
     }
-
     public String getTemplate() {
         return this.template;
     }
+
 }

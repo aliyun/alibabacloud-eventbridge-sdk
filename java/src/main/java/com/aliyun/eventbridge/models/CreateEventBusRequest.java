@@ -1,9 +1,7 @@
 // This file is auto-generated, don't edit it. Thanks.
 package com.aliyun.eventbridge.models;
 
-import com.aliyun.tea.NameInMap;
-import com.aliyun.tea.TeaModel;
-import com.aliyun.tea.Validation;
+import com.aliyun.tea.*;
 
 /**
  * The request of create EventBus
@@ -25,7 +23,6 @@ public class CreateEventBusRequest extends TeaModel {
         this.eventBusName = eventBusName;
         return this;
     }
-
     public String getEventBusName() {
         return this.eventBusName;
     }
@@ -34,7 +31,6 @@ public class CreateEventBusRequest extends TeaModel {
         this.description = description;
         return this;
     }
-
     public String getDescription() {
         return this.description;
     }

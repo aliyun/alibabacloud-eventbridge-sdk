@@ -11,8 +11,11 @@
 	],
 	"java": {
 		"package": "com.aliyun.eventbridge",
+		"className": "EventBridgeClient",
+		"implements": "EventBridge",
+		"NoException": true,
 		"packageInfo": {
-			"description": "Alibaba Cloud eventbridge SDK for Java",
+			"description": "Alibaba Cloud eventbridge Util for Java",
 			"url": "https://github.com/aliyun/alibabacloud-eventbridge-sdk",
 			"licenseNmae": "The Apache License, Version 2.0",
 			"licenseUrl": "http://www.apache.org/licenses/LICENSE-2.0.txt",

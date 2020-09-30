@@ -611,7 +611,6 @@ type TargetEntry struct {
 	Id                *string          `json:"Id,omitempty" xml:"Id,omitempty" require:"true"`
 	Type              *string          `json:"Type,omitempty" xml:"Type,omitempty"`
 	Endpoint          *string          `json:"Endpoint,omitempty" xml:"Endpoint,omitempty" require:"true"`
-	PushSelector      *string          `json:"PushSelector,omitempty" xml:"PushSelector,omitempty"`
 	PushRetryStrategy *string          `json:"PushRetryStrategy,omitempty" xml:"PushRetryStrategy,omitempty"`
 	ParamList         []*EBTargetParam `json:"ParamList,omitempty" xml:"ParamList,omitempty" type:"Repeated"`
 }
@@ -636,11 +635,6 @@ func (s *TargetEntry) SetType(v string) *TargetEntry {
 
 func (s *TargetEntry) SetEndpoint(v string) *TargetEntry {
 	s.Endpoint = &v
-	return s
-}
-
-func (s *TargetEntry) SetPushSelector(v string) *TargetEntry {
-	s.PushSelector = &v
 	return s
 }
 

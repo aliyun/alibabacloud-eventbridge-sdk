@@ -54,6 +54,43 @@ func main() {
 }
 ```
 
+## Parameter Specification
+
+```go
+type Config struct {
+	AccessKeyId          *string                // AccessKey Id
+	AccessKeySecret      *string                // AccessKey Secret
+	Credential           credential.Credential  // credential，If you have any questions, please refer to it https://github.com/aliyun/credentials-go/blob/master/README-CN.md
+	SecurityToken        *string                // Security Token
+	Endpoint             *string                // endpoint
+	Protocol             *string                // http or https
+	RegionId             *string                // region
+	ReadTimeout          *int                   // read timeout
+	ConnectTimeout       *int                   // connect tiemout
+	HttpProxy            *string                // http proxy
+	HttpsProxy           *string                // https proxy
+	NoProxy              *string                // agent whitelist
+	MaxIdleConns         *int                   // maximum number of connections
+}
+
+type RuntimeOptions struct {
+	Autoretry        *bool       // whether to enable retry
+	IgnoreSSL        *bool       // whether SSL validation is ignored
+	MaxAttempts      *int        // maximum number of retries， defaut: 3
+	BackoffPolicy    *string     // retry the sleep strategy, default: no
+	BackoffPeriod    *int        // retry the sleep time,default: 1
+	ReadTimeout      *int        // read timeout
+	ConnectTimeout   *int        // connect timeout
+	LocalAddr        *string     // the local network adapter ip
+	HttpProxy        *string     // http proxy
+	HttpsProxy       *string     // https proxy
+	NoProxy          *string     // agent whitelist
+	MaxIdleConns     *int        // maximum number of connections
+	Socks5Proxy      *string     // socks5 proxy
+	Socks5NetWork    *string     // socks5 agency agreement
+}
+```
+
 ## Issues
 [Opening an Issue](https://github.com/aliyun/alibabacloud-eventbridge-sdk/issues/new), Issues not conforming to the guidelines may be closed immediately.
 

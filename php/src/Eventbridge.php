@@ -104,6 +104,18 @@ class Eventbridge
                 'message' => "'accessKeyId' and 'accessKeySecret' or 'credential' can not be unset",
             ]);
         }
+        if (Utils::empty_($config->endpoint)) {
+            throw new TeaError([
+                'code'    => 'ParameterMissing',
+                'message' => "'endpoint' can not be unset",
+            ]);
+        }
+        if (Client::startWith($config->endpoint, 'http') || Client::startWith($config->endpoint, 'https')) {
+            throw new TeaError([
+                'code'    => 'ParameterError',
+                'message' => "'endpoint' shouldn't start with 'http' or 'https'",
+            ]);
+        }
         $this->_regionId       = $config->regionId;
         $this->_protocol       = $config->protocol;
         $this->_endpoint       = $config->endpoint;
@@ -209,7 +221,7 @@ class Eventbridge
                 if (Utils::is4xx($_response->statusCode) || Utils::is5xx($_response->statusCode)) {
                     throw new TeaError([
                         'code'    => $tmp['code'],
-                        'message' => 'EventBridgeError ' . $tmp['message'] . '',
+                        'message' => '[EventBridgeError] ' . (string) ($tmp['message']) . '',
                         'data'    => $tmp,
                     ]);
                 }
@@ -257,6 +269,12 @@ class Eventbridge
     public function putEventsWithOptions($eventList, $runtime)
     {
         foreach ($eventList as $cloudEvent) {
+            if (Utils::isUnset($cloudEvent->specversion)) {
+                $cloudEvent->specversion = '1.0';
+            }
+            if (Utils::isUnset($cloudEvent->datacontenttype)) {
+                $cloudEvent->datacontenttype = 'application/json; charset=utf-8';
+            }
             Utils::validateModel($cloudEvent);
         }
         $body = Client::serialize($eventList);

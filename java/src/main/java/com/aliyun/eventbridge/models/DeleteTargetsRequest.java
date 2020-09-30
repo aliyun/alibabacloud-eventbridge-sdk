@@ -1,9 +1,7 @@
 // This file is auto-generated, don't edit it. Thanks.
 package com.aliyun.eventbridge.models;
 
-import com.aliyun.tea.NameInMap;
-import com.aliyun.tea.TeaModel;
-import com.aliyun.tea.Validation;
+import com.aliyun.tea.*;
 
 /**
  * The request of delete Targets
@@ -30,7 +28,6 @@ public class DeleteTargetsRequest extends TeaModel {
         this.eventBusName = eventBusName;
         return this;
     }
-
     public String getEventBusName() {
         return this.eventBusName;
     }
@@ -39,7 +36,6 @@ public class DeleteTargetsRequest extends TeaModel {
         this.ruleName = ruleName;
         return this;
     }
-
     public String getRuleName() {
         return this.ruleName;
     }
@@ -48,7 +44,6 @@ public class DeleteTargetsRequest extends TeaModel {
         this.targetIds = targetIds;
         return this;
     }
-
     public java.util.List<String> getTargetIds() {
         return this.targetIds;
     }

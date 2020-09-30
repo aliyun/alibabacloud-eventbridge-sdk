@@ -1,9 +1,7 @@
 // This file is auto-generated, don't edit it. Thanks.
 package com.aliyun.eventbridge.models;
 
-import com.aliyun.tea.NameInMap;
-import com.aliyun.tea.TeaModel;
-import com.aliyun.tea.Validation;
+import com.aliyun.tea.*;
 
 /**
  * Cloud Event Stanard Froamt
@@ -53,7 +51,6 @@ public class CloudEvent extends TeaModel {
         this.id = id;
         return this;
     }
-
     public String getId() {
         return this.id;
     }
@@ -62,7 +59,6 @@ public class CloudEvent extends TeaModel {
         this.source = source;
         return this;
     }
-
     public String getSource() {
         return this.source;
     }
@@ -71,7 +67,6 @@ public class CloudEvent extends TeaModel {
         this.specversion = specversion;
         return this;
     }
-
     public String getSpecversion() {
         return this.specversion;
     }
@@ -80,7 +75,6 @@ public class CloudEvent extends TeaModel {
         this.type = type;
         return this;
     }
-
     public String getType() {
         return this.type;
     }
@@ -89,7 +83,6 @@ public class CloudEvent extends TeaModel {
         this.datacontenttype = datacontenttype;
         return this;
     }
-
     public String getDatacontenttype() {
         return this.datacontenttype;
     }
@@ -98,7 +91,6 @@ public class CloudEvent extends TeaModel {
         this.dataschema = dataschema;
         return this;
     }
-
     public String getDataschema() {
         return this.dataschema;
     }
@@ -107,7 +99,6 @@ public class CloudEvent extends TeaModel {
         this.subject = subject;
         return this;
     }
-
     public String getSubject() {
         return this.subject;
     }
@@ -116,7 +107,6 @@ public class CloudEvent extends TeaModel {
         this.time = time;
         return this;
     }
-
     public String getTime() {
         return this.time;
     }
@@ -125,7 +115,6 @@ public class CloudEvent extends TeaModel {
         this.extensions = extensions;
         return this;
     }
-
     public java.util.Map<String, ?> getExtensions() {
         return this.extensions;
     }
@@ -134,7 +123,6 @@ public class CloudEvent extends TeaModel {
         this.data = data;
         return this;
     }
-
     public byte[] getData() {
         return this.data;
     }

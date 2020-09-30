@@ -54,6 +54,42 @@ func main() {
 }
 ```
 
+## 参数说明
+```go
+type Config struct {
+	AccessKeyId          *string                // AccessKey Id
+	AccessKeySecret      *string                // AccessKey Secret
+	SecurityToken        *string                // Security Token
+	Endpoint             *string                // endpoint
+	Protocol             *string                // 请求协议
+	Credential           credential.Credential  // 凭证，如有疑问请参考：https://github.com/aliyun/credentials-go/blob/master/README-CN.md
+	RegionId             *string                // 区域
+	ReadTimeout          *int                   // 读超时
+	ConnectTimeout       *int                   // 连接超时
+	HttpProxy            *string                // http 的代理
+	HttpsProxy           *string                // https 的代理
+	NoProxy              *string                // 代理白名单
+	MaxIdleConns         *int                   // 最大连接数
+}
+
+type RuntimeOptions struct {
+	Autoretry        *bool       // 是否开启重试
+	IgnoreSSL        *bool       // 是否忽略 SSL 校验
+	MaxAttempts      *int        // 最大重试次数， 默认为 3
+	BackoffPolicy    *string     // 重试休眠策略，默认为 no
+	BackoffPeriod    *int        // 重试休眠时间， 默认为 1
+	ReadTimeout      *int        // 读超时
+	ConnectTimeout   *int        // 连接超时
+	LocalAddr        *string     // 本地网卡 ip
+	HttpProxy        *string     // http 的代理
+	HttpsProxy       *string     // https 的代理
+	NoProxy          *string     // 代理白名单
+	MaxIdleConns     *int        // 最大连接数
+	Socks5Proxy      *string     // socks5 代理
+	Socks5NetWork    *string     // socks5 代理协议
+}
+```
+
 ## 问题
 [Opening an Issue](https://github.com/aliyun/alibabacloud-eventbridge-sdk/issues/new)，不符合指南的问题可能会立即关闭。
 

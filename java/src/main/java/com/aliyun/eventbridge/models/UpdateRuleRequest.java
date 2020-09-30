@@ -1,9 +1,7 @@
 // This file is auto-generated, don't edit it. Thanks.
 package com.aliyun.eventbridge.models;
 
-import com.aliyun.tea.NameInMap;
-import com.aliyun.tea.TeaModel;
-import com.aliyun.tea.Validation;
+import com.aliyun.tea.*;
 
 /**
  * The request of update the EventBus rule
@@ -35,7 +33,6 @@ public class UpdateRuleRequest extends TeaModel {
         this.eventBusName = eventBusName;
         return this;
     }
-
     public String getEventBusName() {
         return this.eventBusName;
     }
@@ -44,7 +41,6 @@ public class UpdateRuleRequest extends TeaModel {
         this.ruleName = ruleName;
         return this;
     }
-
     public String getRuleName() {
         return this.ruleName;
     }
@@ -53,7 +49,6 @@ public class UpdateRuleRequest extends TeaModel {
         this.description = description;
         return this;
     }
-
     public String getDescription() {
         return this.description;
     }
@@ -62,7 +57,6 @@ public class UpdateRuleRequest extends TeaModel {
         this.status = status;
         return this;
     }
-
     public String getStatus() {
         return this.status;
     }
@@ -71,7 +65,6 @@ public class UpdateRuleRequest extends TeaModel {
         this.filterPattern = filterPattern;
         return this;
     }
-
     public String getFilterPattern() {
         return this.filterPattern;
     }

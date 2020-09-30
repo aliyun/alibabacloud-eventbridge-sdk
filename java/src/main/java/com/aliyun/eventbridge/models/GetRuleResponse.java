@@ -1,18 +1,18 @@
 // This file is auto-generated, don't edit it. Thanks.
 package com.aliyun.eventbridge.models;
 
-import com.aliyun.tea.NameInMap;
-import com.aliyun.tea.TeaModel;
-import com.aliyun.tea.Validation;
+import com.aliyun.tea.*;
 
 /**
  * The response of Get EventBus
  */
 public class GetRuleResponse extends TeaModel {
     @NameInMap("RequestId")
+    @Validation(required = true)
     public String requestId;
 
     @NameInMap("ResourceOwnerAccountId")
+    @Validation(required = true)
     public String resourceOwnerAccountId;
 
     @NameInMap("EventBusName")
@@ -60,7 +60,6 @@ public class GetRuleResponse extends TeaModel {
         this.requestId = requestId;
         return this;
     }
-
     public String getRequestId() {
         return this.requestId;
     }
@@ -69,7 +68,6 @@ public class GetRuleResponse extends TeaModel {
         this.resourceOwnerAccountId = resourceOwnerAccountId;
         return this;
     }
-
     public String getResourceOwnerAccountId() {
         return this.resourceOwnerAccountId;
     }
@@ -78,7 +76,6 @@ public class GetRuleResponse extends TeaModel {
         this.eventBusName = eventBusName;
         return this;
     }
-
     public String getEventBusName() {
         return this.eventBusName;
     }
@@ -87,7 +84,6 @@ public class GetRuleResponse extends TeaModel {
         this.ruleARN = ruleARN;
         return this;
     }
-
     public String getRuleARN() {
         return this.ruleARN;
     }
@@ -96,7 +92,6 @@ public class GetRuleResponse extends TeaModel {
         this.ruleName = ruleName;
         return this;
     }
-
     public String getRuleName() {
         return this.ruleName;
     }
@@ -105,7 +100,6 @@ public class GetRuleResponse extends TeaModel {
         this.description = description;
         return this;
     }
-
     public String getDescription() {
         return this.description;
     }
@@ -114,7 +108,6 @@ public class GetRuleResponse extends TeaModel {
         this.status = status;
         return this;
     }
-
     public String getStatus() {
         return this.status;
     }
@@ -123,7 +116,6 @@ public class GetRuleResponse extends TeaModel {
         this.filterPattern = filterPattern;
         return this;
     }
-
     public String getFilterPattern() {
         return this.filterPattern;
     }
@@ -132,7 +124,6 @@ public class GetRuleResponse extends TeaModel {
         this.targets = targets;
         return this;
     }
-
     public java.util.List<TargetEntry> getTargets() {
         return this.targets;
     }
@@ -141,7 +132,6 @@ public class GetRuleResponse extends TeaModel {
         this.ctime = ctime;
         return this;
     }
-
     public Long getCtime() {
         return this.ctime;
     }
@@ -150,7 +140,6 @@ public class GetRuleResponse extends TeaModel {
         this.mtime = mtime;
         return this;
     }
-
     public Long getMtime() {
         return this.mtime;
     }

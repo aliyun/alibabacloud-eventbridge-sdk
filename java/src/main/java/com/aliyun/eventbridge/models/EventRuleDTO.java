@@ -1,9 +1,7 @@
 // This file is auto-generated, don't edit it. Thanks.
 package com.aliyun.eventbridge.models;
 
-import com.aliyun.tea.NameInMap;
-import com.aliyun.tea.TeaModel;
-import com.aliyun.tea.Validation;
+import com.aliyun.tea.*;
 
 /**
  * The detail of EventBuses rule
@@ -54,7 +52,6 @@ public class EventRuleDTO extends TeaModel {
         this.ruleARN = ruleARN;
         return this;
     }
-
     public String getRuleARN() {
         return this.ruleARN;
     }
@@ -63,7 +60,6 @@ public class EventRuleDTO extends TeaModel {
         this.eventBusName = eventBusName;
         return this;
     }
-
     public String getEventBusName() {
         return this.eventBusName;
     }
@@ -72,7 +68,6 @@ public class EventRuleDTO extends TeaModel {
         this.ruleName = ruleName;
         return this;
     }
-
     public String getRuleName() {
         return this.ruleName;
     }
@@ -81,7 +76,6 @@ public class EventRuleDTO extends TeaModel {
         this.description = description;
         return this;
     }
-
     public String getDescription() {
         return this.description;
     }
@@ -90,7 +84,6 @@ public class EventRuleDTO extends TeaModel {
         this.status = status;
         return this;
     }
-
     public String getStatus() {
         return this.status;
     }
@@ -99,7 +92,6 @@ public class EventRuleDTO extends TeaModel {
         this.filterPattern = filterPattern;
         return this;
     }
-
     public String getFilterPattern() {
         return this.filterPattern;
     }
@@ -108,7 +100,6 @@ public class EventRuleDTO extends TeaModel {
         this.targets = targets;
         return this;
     }
-
     public java.util.List<TargetEntry> getTargets() {
         return this.targets;
     }
@@ -117,7 +108,6 @@ public class EventRuleDTO extends TeaModel {
         this.ctime = ctime;
         return this;
     }
-
     public Long getCtime() {
         return this.ctime;
     }
@@ -126,7 +116,6 @@ public class EventRuleDTO extends TeaModel {
         this.mtime = mtime;
         return this;
     }
-
     public Long getMtime() {
         return this.mtime;
     }

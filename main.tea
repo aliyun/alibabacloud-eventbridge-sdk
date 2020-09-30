@@ -317,9 +317,8 @@ model CreateRuleRequest = {
  */
 model TargetEntry = {
   id: string(name='Id'),
-  type?: string(name='Type'),
+  type: string(name='Type'),
   endpoint: string(name='Endpoint'),
-  pushSelector?: string(name='PushSelector'),
   pushRetryStrategy?: string(name='PushRetryStrategy'),
   paramList?: [ EBTargetParam ](name='ParamList'),
 }

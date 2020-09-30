@@ -1,18 +1,18 @@
 // This file is auto-generated, don't edit it. Thanks.
 package com.aliyun.eventbridge.models;
 
-import com.aliyun.tea.NameInMap;
-import com.aliyun.tea.TeaModel;
-import com.aliyun.tea.Validation;
+import com.aliyun.tea.*;
 
 /**
  * The response of search EventBus
  */
 public class ListEventBusesResponse extends TeaModel {
     @NameInMap("RequestId")
+    @Validation(required = true)
     public String requestId;
 
     @NameInMap("ResourceOwnerAccountId")
+    @Validation(required = true)
     public String resourceOwnerAccountId;
 
     @NameInMap("EventBuses")
@@ -36,7 +36,6 @@ public class ListEventBusesResponse extends TeaModel {
         this.requestId = requestId;
         return this;
     }
-
     public String getRequestId() {
         return this.requestId;
     }
@@ -45,7 +44,6 @@ public class ListEventBusesResponse extends TeaModel {
         this.resourceOwnerAccountId = resourceOwnerAccountId;
         return this;
     }
-
     public String getResourceOwnerAccountId() {
         return this.resourceOwnerAccountId;
     }
@@ -54,7 +52,6 @@ public class ListEventBusesResponse extends TeaModel {
         this.eventBuses = eventBuses;
         return this;
     }
-
     public java.util.List<EventBusEntry> getEventBuses() {
         return this.eventBuses;
     }
@@ -63,7 +60,6 @@ public class ListEventBusesResponse extends TeaModel {
         this.nextToken = nextToken;
         return this;
     }
-
     public String getNextToken() {
         return this.nextToken;
     }
@@ -72,7 +68,6 @@ public class ListEventBusesResponse extends TeaModel {
         this.total = total;
         return this;
     }
-
     public Integer getTotal() {
         return this.total;
     }

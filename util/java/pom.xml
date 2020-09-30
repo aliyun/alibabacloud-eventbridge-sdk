@@ -3,13 +3,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.aliyun</groupId>
-    <version>1.1.2-SNAPSHOT</version>
-    <artifactId>eventbridge-client</artifactId>
+    <artifactId>eventbridge-util</artifactId>
+    <version>0.0.1</version>
     <packaging>jar</packaging>
-    <name>eventbridge-client</name>
-    <description>Alibaba Cloud eventbridge SDK for Java
-    </description>
-    <url>https://github.com/aliyun/alibabacloud-sdk</url>
+    <name>eventbridge-util</name>
+    <description>Alibaba Cloud eventbridge Util for Java</description>
+    <url>https://github.com/aliyun/alibabacloud-eventbridge-sdk</url>
     <licenses>
         <license>
             <name>The Apache License, Version 2.0</name>
@@ -40,36 +39,15 @@
     </scm>
     <dependencies>
         <dependency>
-            <groupId>com.aliyun</groupId>
-            <artifactId>tea-util</artifactId>
-            <version>0.2.7</version>
-        </dependency>
-        <dependency>
-            <groupId>com.aliyun</groupId>
-            <artifactId>credentials-java</artifactId>
-            <version>0.2.5</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.aliyun</groupId>
-                    <artifactId>tea</artifactId>
-                </exclusion>
-            </exclusions>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>21.0</version>
         </dependency>
         <dependency>
             <groupId>com.aliyun</groupId>
             <artifactId>tea</artifactId>
-            <version>[1.1.0, 2.0.0)</version>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.11</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.aliyun</groupId>
-            <artifactId>eventbridge-util</artifactId>
-            <version>0.0.1</version>
+            <version>1.1.0</version>
+            <optional>true</optional>
         </dependency>
     </dependencies>
     <build>

@@ -1,17 +1,18 @@
 // This file is auto-generated, don't edit it. Thanks.
 package com.aliyun.eventbridge.models;
 
-import com.aliyun.tea.NameInMap;
-import com.aliyun.tea.TeaModel;
+import com.aliyun.tea.*;
 
 /**
  * put event response
  */
 public class PutEventsResponse extends TeaModel {
     @NameInMap("RequestId")
+    @Validation(required = true)
     public String requestId;
 
     @NameInMap("ResourceOwnerAccountId")
+    @Validation(required = true)
     public String resourceOwnerAccountId;
 
     @NameInMap("FailedEntryCount")
@@ -29,7 +30,6 @@ public class PutEventsResponse extends TeaModel {
         this.requestId = requestId;
         return this;
     }
-
     public String getRequestId() {
         return this.requestId;
     }
@@ -38,7 +38,6 @@ public class PutEventsResponse extends TeaModel {
         this.resourceOwnerAccountId = resourceOwnerAccountId;
         return this;
     }
-
     public String getResourceOwnerAccountId() {
         return this.resourceOwnerAccountId;
     }
@@ -47,7 +46,6 @@ public class PutEventsResponse extends TeaModel {
         this.failedEntryCount = failedEntryCount;
         return this;
     }
-
     public Integer getFailedEntryCount() {
         return this.failedEntryCount;
     }
@@ -56,7 +54,6 @@ public class PutEventsResponse extends TeaModel {
         this.entryList = entryList;
         return this;
     }
-
     public java.util.List<PutEventsResponseEntry> getEntryList() {
         return this.entryList;
     }
