@@ -84,37 +84,37 @@ namespace Alibabacloud.Sample
         public string SecurityToken { get; set; }
 
         /// <summary>
-        /// http or https
+        /// 请求协议，http or https
         /// </summary>
         public string Protocol { get; set; }
 
         /// <summary>
-        /// region
+        /// 区域
         /// </summary>
         public string RegionId { get; set; }
 
         /// <summary>
-        /// read timeout
+        /// 读超时
         /// </summary>
         public int? ReadTimeout { get; set; }
 
         /// <summary>
-        /// connect timeout
+        /// 连接超时
         /// </summary>
         public int? ConnectTimeout { get; set; }
 
         /// <summary>
-        /// http proxy
+        /// http 的代理
         /// </summary>
         public string HttpProxy { get; set; }
 
         /// <summary>
-        /// https proxy
+        /// https 的代理
         /// </summary>
         public string HttpsProxy { get; set; }
 
         /// <summary>
-        /// credential,If you have any questions, please refer to it https://github.com/aliyun/credentials-csharp/blob/master/README-CN.md
+        /// 凭证，如有疑问请参考： https://github.com/aliyun/credentials-csharp/blob/master/README-CN.md
         /// </summary>
         public Aliyun.Credentials.Client Credential { get; set; }
 
@@ -124,12 +124,12 @@ namespace Alibabacloud.Sample
         public string Endpoint { get; set; }
 
         /// <summary>
-        /// proxy white list
+        /// 代理白名单
         /// </summary>
         public string NoProxy { get; set; }
 
         /// <summary>
-        /// max idle conns
+        /// 最大连接数
         /// </summary>
         public int? MaxIdleConns { get; set; }
 
@@ -138,72 +138,72 @@ namespace Alibabacloud.Sample
     public class RuntimeOptions
     {
         /// <summary>
-        /// whether to enable retry
+        /// 是否开启重试
         /// </summary>
         public bool? Autoretry { get; set; }
 
         /// <summary>
-        /// whether SSL validation is ignored
+        /// 是否忽略 SSL 校验
         /// </summary>
         public bool? IgnoreSSL { get; set; }
 
         /// <summary>
-        /// maximum number of retries, defaut: 3
+        /// 最大重试次数， 默认为 3
         /// </summary>
         public int? MaxAttempts { get; set; }
 
         /// <summary>
-        /// retry the sleep strategy, default: no
+        /// 重试休眠策略，默认为 no
         /// </summary>
         public string BackoffPolicy { get; set; }
 
         /// <summary>
-        /// retry the sleep time,default: 1
+        /// 重试休眠时间， 默认为 1
         /// </summary>
         public int? BackoffPeriod { get; set; }
 
         /// <summary>
-        /// read timeout
+        /// 读超时
         /// </summary>
         public int? ReadTimeout { get; set; }
 
         /// <summary>
-        /// connect timeout
+        /// 连接超时
         /// </summary>
         public int? ConnectTimeout { get; set; }
 
         /// <summary>
-        /// the local network adapter ip
+        /// 本地网卡 ip
         /// </summary>
         public string LocalAddr { get; set; }
 
         /// <summary>
-        /// http proxy
+        /// http 的代理
         /// </summary>
         public string HttpProxy { get; set; }
 
         /// <summary>
-        /// https proxy
+        /// https 的代理
         /// </summary>
         public string HttpsProxy { get; set; }
 
         /// <summary>
-        /// agent whitelist
+        /// 代理白名单
         /// </summary>
         public string NoProxy { get; set; }
 
         /// <summary>
-        /// maximum number of connections
+        /// 最大连接数
         /// </summary>
         public int? MaxIdleConns { get; set; }
 
         /// <summary>
-        /// socks5 proxy
+        /// socks5 代理
         /// </summary>
         public string Socks5Proxy { get; set; }
 
         /// <summary>
-        /// socks5 agency agreement
+        /// socks5 代理协议
         /// </summary>
         public string Socks5NetWork { get; set; }
 ```
