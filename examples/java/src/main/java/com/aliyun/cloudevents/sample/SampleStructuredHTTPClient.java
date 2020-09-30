@@ -13,9 +13,9 @@ import io.vertx.core.http.HttpClientRequest;
 
 public class SampleStructuredHTTPClient {
 
-    private static String accessKeyId = "your accessKeyId";
-    private static String accessKeySecret = "your accessKeySecret";
-    private static String endpoint = "http://endpoint/openapi/putEvents";
+    private static String accessKeyId = "{accessKeyId}";
+    private static String accessKeySecret = "{accessKeySecret}";
+    private static String endpoint = "http://{endpoint}/openapi/putEvents";
 
     public static void main(String[] args) throws Exception {
 
@@ -37,7 +37,7 @@ public class SampleStructuredHTTPClient {
 
         String id = UUID.randomUUID()
             .toString();
-        String data = "Event data";
+        String data = "{\"name\":\"EventBridge\",\"scope\":100}";
 
         // Create the event starting from the template
         final CloudEvent event = eventTemplate.newBuilder()
