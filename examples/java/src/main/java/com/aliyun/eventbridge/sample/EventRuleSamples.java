@@ -59,13 +59,13 @@ public class EventRuleSamples {
             param3.setValue("{\n" + "    \"key\":\"$.source\",\n" + "    \"value\":\"$.data\"\n" + "}");
             param3.setTemplate("{\"msgtype\": \"text\",\"text\": " + "{\"content\": \"Hello：${key}\"}}");
 
-
             List<EBTargetParam> paramList = Lists.newArrayList(param1, param2, param3);
             TargetEntry targetEntry = new TargetEntry();
-            targetEntry.setId("mnsQueueTarget");
+            targetEntry.setId("dingdtalk.target");
             targetEntry.setType("acs.dingtalk");
             targetEntry.setParamList(paramList);
-            targetEntry.setEndpoint("http://aliyun.com");
+            targetEntry.setEndpoint("https://oapi.dingtalk"
+                + ".com/robot/send?access_token=1019d4a13b9e2ef6b2fu8374uhfe076fbad17b396fc5e9684814ed8460");
 
             List<TargetEntry> targetEntryList = Arrays.asList(targetEntry);
             createEventRuleRequest.setRuleName("myRule3");
@@ -159,10 +159,30 @@ public class EventRuleSamples {
     public void createTargetsSample() {
         try {
             TargetEntry targetEntry = new TargetEntry();
-            targetEntry.setId("mnsQueueTarget");
-            targetEntry.setEndpoint("acs:mns:{region}:{accountId}:queues/{queueName}");
-            targetEntry.setPushRetryStrategy("BACKOFF_RETRY");
-            targetEntry.setPushSelector("MATCHED_EVENT");
+            targetEntry.setId("dingdtalk.target");
+            targetEntry.setType("acs.dingtalk");
+            targetEntry.setEndpoint("https://oapi.dingtalk"
+                + ".com/robot/send?access_token=1019d4a13b9e2ef6b2fu8374uhfe076fbad17b396fc5e9684814ed8460");
+
+            EBTargetParam param1 = new EBTargetParam();
+            param1.setResourceKey("URL");
+            param1.setForm("CONSTANT");
+            param1.setValue("https://oapi.dingtalk"
+                + ".com/robot/send?access_token=1019d4a13b9e2ef6b2fu8374uhfe076fbad17b396fc5e9684814ed8460");
+
+            EBTargetParam param2 = new EBTargetParam();
+            param2.setResourceKey("SecretKey");
+            param2.setForm("CONSTANT");
+            param2.setValue("SEC121a71ff304a65b4f7cd90de101b43gf343321f4d9f6c1ca514300d15234");
+
+            EBTargetParam param3 = new EBTargetParam();
+            param3.setResourceKey("Body");
+            param3.setForm("TEMPLATE");
+            param3.setValue("{\n" + "    \"key\":\"$.source\",\n" + "    \"value\":\"$.data\"\n" + "}");
+            param3.setTemplate("{\"msgtype\": \"text\",\"text\": " + "{\"content\": \"Hello：${key}\"}}");
+
+            List<EBTargetParam> paramList = Lists.newArrayList(param1, param2, param3);
+            targetEntry.setParamList(paramList);
 
             CreateTargetsRequest createTargetsRequest = new CreateTargetsRequest();
             createTargetsRequest.setRuleName("myRule");

@@ -43,7 +43,7 @@ public class SampleStructuredHTTPClient {
         final CloudEvent event = eventTemplate.newBuilder()
             .withId(id)
             .withData("application/json", data.getBytes())
-            .withExtension("aliyuneventbusname", "jingluo-bus")
+            .withExtension("aliyuneventbusname", "demo-bus")
             .withSource(URI.create("https://github.com/cloudevents/sdk-java/tree/master/examples/vertx"))
             .withType("vertx.example")
             .withSubject("acs:oss:cn-hangzhou:1234567:xls-papk/game_apk/123.jpg")
