@@ -15,7 +15,7 @@
  *
  */
 
-package com.aliyun.eventbridge.util;
+package com.aliyun.eventbridge.utils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
