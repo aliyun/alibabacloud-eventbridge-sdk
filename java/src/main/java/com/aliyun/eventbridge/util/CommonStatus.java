@@ -1,4 +1,4 @@
-package com.aliyun.eventbridge.utils;
+package com.aliyun.eventbridge.util;
 
 import java.util.HashSet;
 import java.util.Set;

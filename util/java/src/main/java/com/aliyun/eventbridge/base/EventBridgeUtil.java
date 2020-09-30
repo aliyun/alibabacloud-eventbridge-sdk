@@ -1,5 +1,5 @@
 // This file is auto-generated, don't edit it. Thanks.
-package com.aliyun.eventbridge.util;
+package com.aliyun.eventbridge.base;
 
 import com.aliyun.tea.*;
 import com.aliyun.tea.utils.StringUtils;
