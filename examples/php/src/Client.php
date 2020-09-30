@@ -54,7 +54,7 @@ class Client
     {
         try {
             $createEventBusRequest               = new CreateEventBusRequest([]);
-            $createEventBusRequest->eventBusName = 'jingluo-bus';
+            $createEventBusRequest->eventBusName = 'demo-bus';
             $response                            = $client->createEventBus($createEventBusRequest);
             Console::log('--------------------Create bus success --------------------');
             Console::log(Utils::toJSONString($response->toMap()));
