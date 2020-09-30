@@ -119,7 +119,7 @@ public class EventBridgeClient implements EventBridge {
                     new TeaPair("x-acs-signature-method", "HMAC-SHA1"),
                     new TeaPair("x-acs-signature-version", "1.0"),
                     new TeaPair("x-eventbridge-version", "2015-06-06"),
-                    new TeaPair("user-agent", com.aliyun.teautil.Common.getUserAgent(" aliyun-eventbridge-sdk/1.1.0"))
+                    new TeaPair("user-agent", com.aliyun.teautil.Common.getUserAgent(" aliyun-eventbridge-sdk/1.2.0"))
                 );
                 if (!com.aliyun.teautil.Common.isUnset(_regionId)) {
                     request_.headers.put("x-eventbridge-regionId", _regionId);
