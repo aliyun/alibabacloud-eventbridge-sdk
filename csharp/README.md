@@ -5,6 +5,8 @@ English | [简体中文](README-CN.md)
 
 ## Installation
 
+- [NuGet Package](https://www.nuget.org/packages/AlibabaCloud.SDK.Eventbridge/)
+
 Use .Net CLI ( Recommand )
 
     dotnet add package AlibabaCloud.SDK.Eventbridge
