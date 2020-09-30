@@ -1,4 +1,4 @@
-package com.aliyun.eventbridge.util;
+package com.aliyun.eventbridge.utils;
 
 import java.net.URI;
 import java.util.Date;
