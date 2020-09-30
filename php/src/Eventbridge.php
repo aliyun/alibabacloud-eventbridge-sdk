@@ -168,9 +168,9 @@ class Eventbridge
         $_lastException = null;
         $_now           = time();
         $_retryTimes    = 0;
-        while (Tea::allowRetry($_runtime['retry'], $_retryTimes, $_now)) {
+        while (Tea::allowRetry(@$_runtime['retry'], $_retryTimes, $_now)) {
             if ($_retryTimes > 0) {
-                $_backoffTime = Tea::getBackoffTime($_runtime['backoff'], $_retryTimes);
+                $_backoffTime = Tea::getBackoffTime(@$_runtime['backoff'], $_retryTimes);
                 if ($_backoffTime > 0) {
                     Tea::sleep($_backoffTime);
                 }
@@ -190,7 +190,7 @@ class Eventbridge
                     'x-acs-signature-method'  => 'HMAC-SHA1',
                     'x-acs-signature-version' => '1.0',
                     'x-eventbridge-version'   => '2015-06-06',
-                    'user-agent'              => Utils::getUserAgent(' aliyun-eventbridge-sdk/1.1.0'),
+                    'user-agent'              => Utils::getUserAgent(' aliyun-eventbridge-sdk/1.2.0'),
                 ];
                 if (!Utils::isUnset($this->_regionId)) {
                     $_request->headers['x-eventbridge-regionId'] = $this->_regionId;
@@ -220,8 +220,8 @@ class Eventbridge
                 $tmp                                = Utils::assertAsMap($result);
                 if (Utils::is4xx($_response->statusCode) || Utils::is5xx($_response->statusCode)) {
                     throw new TeaError([
-                        'code'    => $tmp['code'],
-                        'message' => '[EventBridgeError] ' . (string) ($tmp['message']) . '',
+                        'code'    => @$tmp['code'],
+                        'message' => '[EventBridgeError] ' . (string) (@$tmp['message']) . '',
                         'data'    => $tmp,
                     ]);
                 }
