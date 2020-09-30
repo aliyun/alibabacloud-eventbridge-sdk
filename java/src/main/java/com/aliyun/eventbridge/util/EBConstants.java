@@ -1,4 +1,4 @@
-package com.aliyun.eventbridge.utils;
+package com.aliyun.eventbridge.util;
 
 public class EBConstants {
 
