@@ -46,6 +46,7 @@ class TargetEntry extends Model
     public function validate()
     {
         Model::validateRequired('id', $this->id, true);
+        Model::validateRequired('type', $this->type, true);
         Model::validateRequired('endpoint', $this->endpoint, true);
     }
 
