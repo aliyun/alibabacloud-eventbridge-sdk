@@ -17,16 +17,12 @@ namespace AlibabaCloud.SDK.EventBridge.Models
         public string Id { get; set; }
 
         [NameInMap("Type")]
-        [Validation(Required=false)]
+        [Validation(Required=true)]
         public string Type { get; set; }
 
         [NameInMap("Endpoint")]
         [Validation(Required=true)]
         public string Endpoint { get; set; }
-
-        [NameInMap("PushSelector")]
-        [Validation(Required=false)]
-        public string PushSelector { get; set; }
 
         [NameInMap("PushRetryStrategy")]
         [Validation(Required=false)]
