@@ -42,7 +42,7 @@ class Config(TeaModel):
         self.max_idle_conns = max_idle_conns  # type: int
 
     def validate(self):
-        if self.region_id:
+        if self.region_id is not None:
             self.validate_pattern(self.region_id, 'region_id', '^[a-zA-Z0-9_-]+$')
 
     def to_map(self):
@@ -128,12 +128,12 @@ class CloudEvent(TeaModel):
     def validate(self):
         self.validate_required(self.id, 'id')
         self.validate_required(self.source, 'source')
-        if self.source:
+        if self.source is not None:
             self.validate_max_length(self.source, 'source', 128)
         self.validate_required(self.type, 'type')
-        if self.type:
+        if self.type is not None:
             self.validate_max_length(self.type, 'type', 64)
-        if self.time:
+        if self.time is not None:
             self.validate_max_length(self.time, 'time', 64)
             self.validate_pattern(self.time, 'time', '[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{3}[\\s\\S]*')
         self.validate_required(self.extensions, 'extensions')
@@ -221,7 +221,7 @@ class CreateEventBusRequest(TeaModel):
 
     def validate(self):
         self.validate_required(self.event_bus_name, 'event_bus_name')
-        if self.event_bus_name:
+        if self.event_bus_name is not None:
             self.validate_max_length(self.event_bus_name, 'event_bus_name', 127)
 
     def to_map(self):
@@ -493,7 +493,7 @@ class CreateRuleRequest(TeaModel):
 
     def validate(self):
         self.validate_required(self.event_bus_name, 'event_bus_name')
-        if self.event_bus_name:
+        if self.event_bus_name is not None:
             self.validate_max_length(self.event_bus_name, 'event_bus_name', 127)
         self.validate_required(self.rule_name, 'rule_name')
         self.validate_required(self.targets, 'targets')
@@ -537,17 +537,16 @@ class TargetEntry(TeaModel):
     """
     The detail of TargetEntry
     """
-    def __init__(self, id=None, type=None, endpoint=None, push_selector=None, push_retry_strategy=None,
-                 param_list=None):
+    def __init__(self, id=None, type=None, endpoint=None, push_retry_strategy=None, param_list=None):
         self.id = id                    # type: str
         self.type = type                # type: str
         self.endpoint = endpoint        # type: str
-        self.push_selector = push_selector  # type: str
         self.push_retry_strategy = push_retry_strategy  # type: str
         self.param_list = param_list    # type: List[EBTargetParam]
 
     def validate(self):
         self.validate_required(self.id, 'id')
+        self.validate_required(self.type, 'type')
         self.validate_required(self.endpoint, 'endpoint')
         if self.param_list:
             for k in self.param_list:
@@ -559,7 +558,6 @@ class TargetEntry(TeaModel):
         result['Id'] = self.id
         result['Type'] = self.type
         result['Endpoint'] = self.endpoint
-        result['PushSelector'] = self.push_selector
         result['PushRetryStrategy'] = self.push_retry_strategy
         result['ParamList'] = []
         if self.param_list is not None:
@@ -573,7 +571,6 @@ class TargetEntry(TeaModel):
         self.id = map.get('Id')
         self.type = map.get('Type')
         self.endpoint = map.get('Endpoint')
-        self.push_selector = map.get('PushSelector')
         self.push_retry_strategy = map.get('PushRetryStrategy')
         self.param_list = []
         if map.get('ParamList') is not None:
@@ -1347,10 +1344,10 @@ class TestEventPatternRequest(TeaModel):
 
     def validate(self):
         self.validate_required(self.event, 'event')
-        if self.event:
+        if self.event is not None:
             self.validate_max_length(self.event, 'event', 2048)
         self.validate_required(self.event_pattern, 'event_pattern')
-        if self.event_pattern:
+        if self.event_pattern is not None:
             self.validate_max_length(self.event_pattern, 'event_pattern', 2048)
 
     def to_map(self):

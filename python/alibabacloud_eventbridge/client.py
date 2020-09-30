@@ -146,7 +146,7 @@ class Client(object):
                     "x-acs-signature-method": "HMAC-SHA1",
                     "x-acs-signature-version": "1.0",
                     "x-eventbridge-version": "2015-06-06",
-                    "user-agent": UtilClient.get_user_agent(" aliyun-eventbridge-sdk/1.1.0")
+                    "user-agent": UtilClient.get_user_agent(" aliyun-eventbridge-sdk/1.2.0")
                 }
                 if not UtilClient.is_unset(self._region_id):
                     _request.headers["x-eventbridge-regionId"] = self._region_id
@@ -187,9 +187,7 @@ class Client(object):
         """
         Publish event to the aliyun EventBus
         """
-        runtime = util_models.RuntimeOptions(
-
-        )
+        runtime = util_models.RuntimeOptions()
         return self.put_events_with_options(event_list, runtime)
 
     def put_events_with_options(self, event_list, runtime):
@@ -209,9 +207,7 @@ class Client(object):
         """
         Creates a new event bus within your account. This can be a custom event bus which you can use to receive events from your custom applications and services
         """
-        runtime = util_models.RuntimeOptions(
-
-        )
+        runtime = util_models.RuntimeOptions()
         return self.create_event_bus_with_options(request, runtime)
 
     def create_event_bus_with_options(self, request, runtime):
@@ -225,9 +221,7 @@ class Client(object):
         """
         Deletes the specified custom event bus in your account,You can't delete your account's default event bus
         """
-        runtime = util_models.RuntimeOptions(
-
-        )
+        runtime = util_models.RuntimeOptions()
         return self.delete_event_bus_with_options(request, runtime)
 
     def delete_event_bus_with_options(self, request, runtime):
@@ -241,9 +235,7 @@ class Client(object):
         """
         Displays details about an event bus in your account
         """
-        runtime = util_models.RuntimeOptions(
-
-        )
+        runtime = util_models.RuntimeOptions()
         return self.get_event_bus_with_options(request, runtime)
 
     def get_event_bus_with_options(self, request, runtime):
@@ -257,9 +249,7 @@ class Client(object):
         """
         List all the EventBus in your account, including the default event bus, custom event buses, which meet the search criteria.
         """
-        runtime = util_models.RuntimeOptions(
-
-        )
+        runtime = util_models.RuntimeOptions()
         return self.list_event_buses_with_options(request, runtime)
 
     def list_event_buses_with_options(self, request, runtime):
@@ -273,9 +263,7 @@ class Client(object):
         """
         Create an EventBus rule on Aliyun
         """
-        runtime = util_models.RuntimeOptions(
-
-        )
+        runtime = util_models.RuntimeOptions()
         return self.create_rule_with_options(request, runtime)
 
     def create_rule_with_options(self, request, runtime):
@@ -289,9 +277,7 @@ class Client(object):
         """
         Deletes the specified rule.
         """
-        runtime = util_models.RuntimeOptions(
-
-        )
+        runtime = util_models.RuntimeOptions()
         return self.delete_rule_with_options(request, runtime)
 
     def delete_rule_with_options(self, request, runtime):
@@ -305,9 +291,7 @@ class Client(object):
         """
         Disables the specified rule
         """
-        runtime = util_models.RuntimeOptions(
-
-        )
+        runtime = util_models.RuntimeOptions()
         return self.disable_rule_with_options(request, runtime)
 
     def disable_rule_with_options(self, request, runtime):
@@ -321,9 +305,7 @@ class Client(object):
         """
         Enables the specified rule
         """
-        runtime = util_models.RuntimeOptions(
-
-        )
+        runtime = util_models.RuntimeOptions()
         return self.enable_rule_with_options(request, runtime)
 
     def enable_rule_with_options(self, request, runtime):
@@ -337,9 +319,7 @@ class Client(object):
         """
         Describes the specified rule
         """
-        runtime = util_models.RuntimeOptions(
-
-        )
+        runtime = util_models.RuntimeOptions()
         return self.get_rule_with_options(request, runtime)
 
     def get_rule_with_options(self, request, runtime):
@@ -353,9 +333,7 @@ class Client(object):
         """
         List all the rules which meet the search criteria
         """
-        runtime = util_models.RuntimeOptions(
-
-        )
+        runtime = util_models.RuntimeOptions()
         return self.list_rules_with_options(request, runtime)
 
     def list_rules_with_options(self, request, runtime):
@@ -369,9 +347,7 @@ class Client(object):
         """
         update the specified rule.
         """
-        runtime = util_models.RuntimeOptions(
-
-        )
+        runtime = util_models.RuntimeOptions()
         return self.update_rule_with_options(request, runtime)
 
     def update_rule_with_options(self, request, runtime):
@@ -385,9 +361,7 @@ class Client(object):
         """
         Adds the specified targets to the specified rule
         """
-        runtime = util_models.RuntimeOptions(
-
-        )
+        runtime = util_models.RuntimeOptions()
         return self.create_targets_with_options(request, runtime)
 
     def create_targets_with_options(self, request, runtime):
@@ -401,9 +375,7 @@ class Client(object):
         """
         Delete the specified targets from the specified rule
         """
-        runtime = util_models.RuntimeOptions(
-
-        )
+        runtime = util_models.RuntimeOptions()
         return self.delete_targets_with_options(request, runtime)
 
     def delete_targets_with_options(self, request, runtime):
@@ -417,9 +389,7 @@ class Client(object):
         """
         List all the Targets which meet the search criteria
         """
-        runtime = util_models.RuntimeOptions(
-
-        )
+        runtime = util_models.RuntimeOptions()
         return self.list_targets_with_options(request, runtime)
 
     def list_targets_with_options(self, request, runtime):
@@ -433,9 +403,7 @@ class Client(object):
         """
         Tests whether the specified event pattern matches the provided event
         """
-        runtime = util_models.RuntimeOptions(
-
-        )
+        runtime = util_models.RuntimeOptions()
         return self.test_event_pattern_with_options(request, runtime)
 
     def test_event_pattern_with_options(self, request, runtime):
