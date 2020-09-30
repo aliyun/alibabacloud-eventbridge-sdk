@@ -58,7 +58,7 @@ public class EventBridgeClient implements EventBridge {
             ));
         }
 
-        if (com.aliyun.eventbridge.util.EventBridgeUtil.startWith(config.endpoint, "http") || com.aliyun.eventbridge.util.EventBridgeUtil.startWith(config.endpoint, "https")) {
+        if (com.aliyun.eventbridge.base.EventBridgeUtil.startWith(config.endpoint, "http") || com.aliyun.eventbridge.base.EventBridgeUtil.startWith(config.endpoint, "https")) {
             throw new TeaException(TeaConverter.buildMap(
                 new TeaPair("code", "ParameterError"),
                 new TeaPair("message", "'endpoint' shouldn't start with 'http' or 'https'")
@@ -146,8 +146,8 @@ public class EventBridgeClient implements EventBridge {
                     request_.headers.put("x-acs-security-token", securityToken);
                 }
 
-                String stringToSign = com.aliyun.eventbridge.util.EventBridgeUtil.getStringToSign(request_);
-                request_.headers.put("authorization", "acs:" + accessKeyId + ":" + com.aliyun.eventbridge.util.EventBridgeUtil.getSignature(stringToSign, accessKeySecret) + "");
+                String stringToSign = com.aliyun.eventbridge.base.EventBridgeUtil.getStringToSign(request_);
+                request_.headers.put("authorization", "acs:" + accessKeyId + ":" + com.aliyun.eventbridge.base.EventBridgeUtil.getSignature(stringToSign, accessKeySecret) + "");
                 _lastRequest = request_;
                 TeaResponse response_ = Tea.doAction(request_, runtime_);
 
@@ -199,7 +199,7 @@ public class EventBridgeClient implements EventBridge {
 
             com.aliyun.teautil.Common.validateModel(cloudEvent);
         }
-        Object body = com.aliyun.eventbridge.util.EventBridgeUtil.serialize(eventList);
+        Object body = com.aliyun.eventbridge.base.EventBridgeUtil.serialize(eventList);
         return TeaModel.toModel(this.doRequest("putEvents", "HTTP", "POST", "/openapi/putEvents", null, body, runtime), new PutEventsResponse());
     }
 
