@@ -609,7 +609,7 @@ func (s *CreateRuleRequest) SetTargets(v []*TargetEntry) *CreateRuleRequest {
  */
 type TargetEntry struct {
 	Id                *string          `json:"Id,omitempty" xml:"Id,omitempty" require:"true"`
-	Type              *string          `json:"Type,omitempty" xml:"Type,omitempty"`
+	Type              *string          `json:"Type,omitempty" xml:"Type,omitempty" require:"true"`
 	Endpoint          *string          `json:"Endpoint,omitempty" xml:"Endpoint,omitempty" require:"true"`
 	PushRetryStrategy *string          `json:"PushRetryStrategy,omitempty" xml:"PushRetryStrategy,omitempty"`
 	ParamList         []*EBTargetParam `json:"ParamList,omitempty" xml:"ParamList,omitempty" type:"Repeated"`
@@ -1635,7 +1635,7 @@ func (client *Client) DoRequest(action *string, protocol *string, method *string
 				"x-acs-signature-method":  tea.String("HMAC-SHA1"),
 				"x-acs-signature-version": tea.String("1.0"),
 				"x-eventbridge-version":   tea.String("2015-06-06"),
-				"user-agent":              util.GetUserAgent(tea.String(" aliyun-eventbridge-sdk/1.1.0")),
+				"user-agent":              util.GetUserAgent(tea.String(" aliyun-eventbridge-sdk/1.2.0")),
 			}
 			if !tea.BoolValue(util.IsUnset(client.RegionId)) {
 				request_.Headers["x-eventbridge-regionId"] = client.RegionId
