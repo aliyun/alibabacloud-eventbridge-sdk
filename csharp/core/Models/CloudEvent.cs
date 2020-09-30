@@ -21,7 +21,7 @@ namespace AlibabaCloud.SDK.EventBridge.Models
         public string Source { get; set; }
 
         [NameInMap("specversion")]
-        [Validation(Required=true)]
+        [Validation(Required=false)]
         public string Specversion { get; set; }
 
         [NameInMap("type")]

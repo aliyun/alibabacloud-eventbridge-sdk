@@ -69,6 +69,22 @@ namespace AlibabaCloud.SDK.EventBridge
                     {"message", "'accessKeyId' and 'accessKeySecret' or 'credential' can not be unset"},
                 });
             }
+            if (AlibabaCloud.TeaUtil.Common.Empty(config.Endpoint))
+            {
+                throw new TeaException(new Dictionary<string, string>
+                {
+                    {"code", "ParameterMissing"},
+                    {"message", "'endpoint' can not be unset"},
+                });
+            }
+            if (AlibabaCloud.EventBridgeUtil.Common.StartWith(config.Endpoint, "http") || AlibabaCloud.EventBridgeUtil.Common.StartWith(config.Endpoint, "https"))
+            {
+                throw new TeaException(new Dictionary<string, string>
+                {
+                    {"code", "ParameterError"},
+                    {"message", "'endpoint' shouldn't start with 'http' or 'https'"},
+                });
+            }
             this._regionId = config.RegionId;
             this._protocol = config.Protocol;
             this._endpoint = config.Endpoint;
@@ -144,7 +160,7 @@ namespace AlibabaCloud.SDK.EventBridge
                         {"x-acs-signature-method", "HMAC-SHA1"},
                         {"x-acs-signature-version", "1.0"},
                         {"x-eventbridge-version", "2015-06-06"},
-                        {"user-agent", AlibabaCloud.TeaUtil.Common.GetUserAgent(" aliyun-eventbridge-sdk/1.1.0")},
+                        {"user-agent", AlibabaCloud.TeaUtil.Common.GetUserAgent(" aliyun-eventbridge-sdk/1.2.0")},
                     };
                     if (!AlibabaCloud.TeaUtil.Common.IsUnset(_regionId))
                     {
@@ -183,7 +199,7 @@ namespace AlibabaCloud.SDK.EventBridge
                         throw new TeaException(new Dictionary<string, object>
                         {
                             {"code", tmp.Get("code")},
-                            {"message", "EventBridgeError " + tmp.Get("message")},
+                            {"message", "[EventBridgeError] " + tmp.Get("message")},
                             {"data", tmp},
                         });
                     }
@@ -268,7 +284,7 @@ namespace AlibabaCloud.SDK.EventBridge
                         {"x-acs-signature-method", "HMAC-SHA1"},
                         {"x-acs-signature-version", "1.0"},
                         {"x-eventbridge-version", "2015-06-06"},
-                        {"user-agent", AlibabaCloud.TeaUtil.Common.GetUserAgent(" aliyun-eventbridge-sdk/1.1.0")},
+                        {"user-agent", AlibabaCloud.TeaUtil.Common.GetUserAgent(" aliyun-eventbridge-sdk/1.2.0")},
                     };
                     if (!AlibabaCloud.TeaUtil.Common.IsUnset(_regionId))
                     {
@@ -307,7 +323,7 @@ namespace AlibabaCloud.SDK.EventBridge
                         throw new TeaException(new Dictionary<string, object>
                         {
                             {"code", tmp.Get("code")},
-                            {"message", "EventBridgeError " + tmp.Get("message")},
+                            {"message", "[EventBridgeError] " + tmp.Get("message")},
                             {"data", tmp},
                         });
                     }
@@ -352,6 +368,14 @@ namespace AlibabaCloud.SDK.EventBridge
         {
 
             foreach (var cloudEvent in eventList) {
+                if (AlibabaCloud.TeaUtil.Common.IsUnset(cloudEvent.Specversion))
+                {
+                    cloudEvent.Specversion = "1.0";
+                }
+                if (AlibabaCloud.TeaUtil.Common.IsUnset(cloudEvent.Datacontenttype))
+                {
+                    cloudEvent.Datacontenttype = "application/json; charset=utf-8";
+                }
                 AlibabaCloud.TeaUtil.Common.ValidateModel(cloudEvent);
             }
             object body = AlibabaCloud.EventBridgeUtil.Common.Serialize(eventList);
@@ -365,6 +389,14 @@ namespace AlibabaCloud.SDK.EventBridge
         {
 
             foreach (var cloudEvent in eventList) {
+                if (AlibabaCloud.TeaUtil.Common.IsUnset(cloudEvent.Specversion))
+                {
+                    cloudEvent.Specversion = "1.0";
+                }
+                if (AlibabaCloud.TeaUtil.Common.IsUnset(cloudEvent.Datacontenttype))
+                {
+                    cloudEvent.Datacontenttype = "application/json; charset=utf-8";
+                }
                 AlibabaCloud.TeaUtil.Common.ValidateModel(cloudEvent);
             }
             object body = AlibabaCloud.EventBridgeUtil.Common.Serialize(eventList);
