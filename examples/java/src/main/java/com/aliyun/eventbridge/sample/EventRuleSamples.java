@@ -46,12 +46,12 @@ public class EventRuleSamples {
             param1.setResourceKey("URL");
             param1.setForm("CONSTANT");
             param1.setValue("https://oapi.dingtalk"
-                + ".com/robot/send?access_token=1019d4a13b9e2ef6b2fu8374uhfe076fbad17b396fc5e9684814ed8460");
+                + ".com/robot/send?access_token=1019d4a19e2ef6b2f***********396fc5e94814ed8460");
 
             EBTargetParam param2 = new EBTargetParam();
             param2.setResourceKey("SecretKey");
             param2.setForm("CONSTANT");
-            param2.setValue("SEC121a71ff304a65b4f7cd90de101b43gf343321f4d9f6c1ca514300d15234");
+            param2.setValue("SEC121a71ff304a65b4f7c**************1f4d9f6c1ca514300d15234");
 
             EBTargetParam param3 = new EBTargetParam();
             param3.setResourceKey("Body");
@@ -65,7 +65,7 @@ public class EventRuleSamples {
             targetEntry.setType("acs.dingtalk");
             targetEntry.setParamList(paramList);
             targetEntry.setEndpoint("https://oapi.dingtalk"
-                + ".com/robot/send?access_token=1019d4a13b9e2ef6b2fu8374uhfe076fbad17b396fc5e9684814ed8460");
+                + ".com/robot/send?access_token=1019d4a19e2ef6b2f***********396fc5e94814ed8460");
 
             List<TargetEntry> targetEntryList = Arrays.asList(targetEntry);
             createEventRuleRequest.setRuleName("myRule3");
@@ -162,18 +162,18 @@ public class EventRuleSamples {
             targetEntry.setId("dingdtalk.target");
             targetEntry.setType("acs.dingtalk");
             targetEntry.setEndpoint("https://oapi.dingtalk"
-                + ".com/robot/send?access_token=1019d4a13b9e2ef6b2fu8374uhfe076fbad17b396fc5e9684814ed8460");
+                + ".com/robot/send?access_token=1019d4a19e2ef6b2f***********396fc5e94814ed8460");
 
             EBTargetParam param1 = new EBTargetParam();
             param1.setResourceKey("URL");
             param1.setForm("CONSTANT");
             param1.setValue("https://oapi.dingtalk"
-                + ".com/robot/send?access_token=1019d4a13b9e2ef6b2fu8374uhfe076fbad17b396fc5e9684814ed8460");
+                + ".com/robot/send?access_token=1019d4a19e2ef6b2f***********396fc5e94814ed8460");
 
             EBTargetParam param2 = new EBTargetParam();
             param2.setResourceKey("SecretKey");
             param2.setForm("CONSTANT");
-            param2.setValue("SEC121a71ff304a65b4f7cd90de101b43gf343321f4d9f6c1ca514300d15234");
+            param2.setValue("SEC121a71ff304a65b4f7c**************1f4d9f6c1ca514300d15234");
 
             EBTargetParam param3 = new EBTargetParam();
             param3.setResourceKey("Body");
