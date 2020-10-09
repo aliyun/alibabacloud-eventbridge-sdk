@@ -10,7 +10,7 @@
     }
   ],
   "releases": {
-    "go": "github.com/alibabacloud-go/eventbridge-util/client:v1.0.3",
+    "go": "github.com/alibabacloud-go/eventbridge-util/client:v1.0.4",
     "java": "com.aliyun:eventbridge-util:0.0.3",
     "python": "alibabacloud_eventbridge_util:0.0.1",
     "csharp": "AlibabaCloud.EventBridgeUtil:0.0.3",
