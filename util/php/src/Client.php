@@ -67,24 +67,25 @@ class Client
                 $v = $v->toMap();
             }
             if (\is_array($v)) {
-                if (isset($v['datacontenttype'])) {
-                    $content_type = $v['datacontenttype'];
-                    if (isset($v['data']) && \is_array($v['data'])) {
-                        // to string
-                        $str = '';
-                        foreach ($v['data'] as $ch) {
-                            $str .= \chr($ch);
-                        }
-                        $v['data'] = $str;
+                if (!isset($v['datacontenttype']) || empty($v['datacontenttype'])) {
+                    $v['datacontenttype'] = 'application/json';
+                }
+                $content_type = $v['datacontenttype'];
+                if (isset($v['data']) && \is_array($v['data'])) {
+                    // to string
+                    $str = '';
+                    foreach ($v['data'] as $ch) {
+                        $str .= \chr($ch);
                     }
-                    if (!\in_array($content_type, ['application/json', 'text/json']) && !empty($v['data'])) {
-                        $v['data_base64'] = \base64_encode($v['data']);
-                        unset($v['data']);
-                    } elseif (!empty($v['data'])) {
-                        $res = @json_decode($v['data'], true);
-                        if (\is_array($res)) {
-                            $v['data'] = $res;
-                        }
+                    $v['data'] = $str;
+                }
+                if (!\in_array($content_type, ['application/json', 'text/json']) && !empty($v['data'])) {
+                    $v['data_base64'] = base64_encode($v['data']);
+                    unset($v['data']);
+                } elseif (!empty($v['data'])) {
+                    $res = @json_decode($v['data'], true);
+                    if (\is_array($res)) {
+                        $v['data'] = $res;
                     }
                 }
                 if (isset($v['extensions']) && \is_array($v['extensions'])) {
