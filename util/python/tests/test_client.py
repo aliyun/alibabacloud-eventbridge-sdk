@@ -114,21 +114,38 @@ class TestClient(unittest.TestCase):
     def test_serialize(self):
         test_model1 = self.CloudEvent(
             datacontenttype='text/plain',
-            data=b'test',
+            data=b'demo',
             extensions={'key': 'ok'}
         )
         test_model2 = self.CloudEvent(
             datacontenttype='text/json',
-            data=b'test',
+            data=b'{"bus": "demo"}',
+        )
+        test_model3 = self.CloudEvent(
+            datacontenttype='text/json',
+            data=b'[{"bus": "demo"}]',
+        )
+        test_model4 = self.CloudEvent(
+            datacontenttype='text/json',
+            data=b'demo',
         )
         events = [
-            test_model1, test_model2
+            test_model1,
+            test_model2,
+            test_model3,
+            test_model4
         ]
         res = Client.serialize(events)
+
         self.assertEqual('ok', res[0]['key'])
-        self.assertEqual('dGVzdA==', res[0]['data_base64'])
+        self.assertEqual('ZGVtbw==', res[0]['data_base64'])
         self.assertIsNone(res[0].get('data'))
-        self.assertIsNotNone(res[1].get('data'))
+
+        self.assertEqual({'bus': 'demo'}, res[1].get('data'))
+
+        self.assertEqual([{'bus': 'demo'}], res[2].get('data'))
+
+        self.assertEqual('demo', res[3].get('data'))
 
         res = Client.serialize(None)
         self.assertIsNone(res)
