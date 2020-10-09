@@ -1,18 +1,22 @@
 package com.aliyun.eventbridge;
 
 import java.util.List;
+import java.util.Map;
 
 import com.aliyun.eventbridge.base.EventBridgeUtil;
 import com.aliyun.eventbridge.models.CloudEvent;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.google.gson.Gson;
 import junit.framework.TestCase;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class EventBridgeUtilTest extends TestCase {
+public class EventSerializeTest extends TestCase {
 
     private final String JSON_OBJECT_EVENT = "[{\"datacontenttype\":\"application/json\",\"data\":{\"bus\":\"demo\"}}]";
+
+    private final String JSON_OBJECT_EMPTY_EVENT = "[{\"data\":{\"bus\":\"demo\"}}]";
 
     private final String JSON_ARRAY_EVENT = "[{\"datacontenttype\":\"application/json\",\"data\":[{\"bus\":\"demo\"},"
         + "{\"bus\":\"demo\"}]}]";
@@ -26,6 +30,9 @@ public class EventBridgeUtilTest extends TestCase {
     private final String BASE64_EVENT = "[{\"data_base64\":\"eyAiYnVzIjoiZGVtbyIgfQ\\u003d\\u003d\","
         + "\"datacontenttype\":\"application/octet-stream\"}]";
 
+    private final String EXTENSION_EVENT = "[{\"data_base64\":\"eyAiYnVzIjoiZGVtbyIgfQ\\u003d\\u003d\","
+        + "\"datacontenttype\":\"application/octet-stream\",\"key\":\"value\"}]";
+
     @Test
     public void testJsonObjectSerialize() {
         CloudEvent cloudEvent = new CloudEvent();
@@ -34,6 +41,16 @@ public class EventBridgeUtilTest extends TestCase {
         List<CloudEvent> cloudEventList = Lists.newArrayList(cloudEvent);
         Object object = EventBridgeUtil.serialize(cloudEventList);
         Assert.assertEquals(JSON_OBJECT_EVENT, new Gson().toJson(object));
+    }
+
+
+    @Test
+    public void testJsonObjectEmptySerialize() {
+        CloudEvent cloudEvent = new CloudEvent();
+        cloudEvent.setData(("{ \"bus\":\"demo\" }").getBytes());
+        List<CloudEvent> cloudEventList = Lists.newArrayList(cloudEvent);
+        Object object = EventBridgeUtil.serialize(cloudEventList);
+        Assert.assertEquals(JSON_OBJECT_EMPTY_EVENT, new Gson().toJson(object));
     }
 
     @Test
@@ -84,5 +101,18 @@ public class EventBridgeUtilTest extends TestCase {
         List<CloudEvent> cloudEventList = Lists.newArrayList(cloudEvent);
         Object object = EventBridgeUtil.serialize(cloudEventList);
         Assert.assertEquals(BASE64_EVENT, new Gson().toJson(object));
+    }
+
+    @Test
+    public void testExtensionSerialize() {
+        CloudEvent cloudEvent = new CloudEvent();
+        Map<String, String> extensions = Maps.newHashMap();
+        extensions.put("key", "value");
+        cloudEvent.setDatacontenttype("application/octet-stream")
+            .setData(("{ \"bus\":\"demo\" }").getBytes())
+            .setExtensions(extensions);
+        List<CloudEvent> cloudEventList = Lists.newArrayList(cloudEvent);
+        Object object = EventBridgeUtil.serialize(cloudEventList);
+        Assert.assertEquals(EXTENSION_EVENT, new Gson().toJson(object));
     }
 }

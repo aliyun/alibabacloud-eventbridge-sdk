@@ -123,7 +123,7 @@ public class EventBridgeUtil {
             byte[] bytes;
             String data;
             Object result;
-            String contentType;
+            Object contentType;
             List<Map<String, Object>> resultList = new ArrayList<>();
             for (Object object : list) {
                 if (TeaModel.class.isAssignableFrom(object.getClass())) {
@@ -131,7 +131,7 @@ public class EventBridgeUtil {
                 } else {
                     map = (Map<String, Object>)(object);
                 }
-                contentType = String.valueOf(map.get("datacontenttype"));
+                contentType = map.get("datacontenttype");
                 if (isJsonContentType(contentType)) {
                     result = map.remove("data");
                     if (null != result) {
@@ -174,11 +174,11 @@ public class EventBridgeUtil {
      *
      * @return
      */
-    private static Charset getCharset(String dataContentType) {
-        if (Strings.isNullOrEmpty(dataContentType)) {
+    private static Charset getCharset(Object contentType) {
+        if (contentType == null || Strings.isNullOrEmpty(contentType.toString())) {
             return DEFAULT_CHARSET;
         }
-        MediaType mediaType = MediaType.parse(dataContentType);
+        MediaType mediaType = MediaType.parse(contentType.toString());
         if (mediaType == null) {
             return DEFAULT_CHARSET;
         }
@@ -199,8 +199,10 @@ public class EventBridgeUtil {
      *
      * @return
      */
-    private static boolean isJsonContentType(String contentType) {
-        return contentType == null || contentType.startsWith("application/json") || contentType.startsWith("text/json");
+    private static boolean isJsonContentType(Object contentType) {
+        return contentType == null || contentType.toString()
+            .startsWith("application/json") || contentType.toString()
+            .startsWith("text" + "/json");
     }
 
     /**
