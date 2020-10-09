@@ -2,6 +2,7 @@
 import hashlib
 import hmac
 import base64
+import json
 
 
 class Client(object):
@@ -88,11 +89,14 @@ class Client(object):
             dic = e.to_map().copy()
 
             content_type = dic.get('datacontenttype')
-            if content_type not in ('application/json', 'text/json') and dic.get('data'):
+            if content_type not in ('application/json', 'text/json', None) and dic.get('data'):
                 dic['data_base64'] = base64.b64encode(dic.get('data')).decode('utf-8')
                 del dic['data']
             elif dic.get('data'):
-                dic['data'] = str(dic['data'], encoding='utf-8')
+                try:
+                    dic['data'] = json.loads(str(dic['data'], encoding='utf-8'))
+                except ValueError:
+                    dic['data'] = str(dic['data'], encoding='utf-8')
 
             if dic.get('extensions'):
                 for k, v in dic.get('extensions').items():
