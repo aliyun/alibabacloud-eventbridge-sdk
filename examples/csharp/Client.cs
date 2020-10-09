@@ -36,19 +36,19 @@ namespace Alibabacloud.Sample
                 AlibabaCloud.SDK.EventBridge.Models.CreateEventBusRequest createEventBusRequest = new AlibabaCloud.SDK.EventBridge.Models.CreateEventBusRequest();
                 createEventBusRequest.EventBusName = "demo-bus";
                 AlibabaCloud.SDK.EventBridge.Models.CreateEventBusResponse response = client.CreateEventBus(createEventBusRequest);
-                AlibabaCloud.TeaConsole.Client.Log("--------------------Create bus success --------------------");
-                AlibabaCloud.TeaConsole.Client.Log(AlibabaCloud.TeaUtil.Common.ToJSONString(response.ToMap()));
+                Console.WriteLine("--------------------Create bus success --------------------");
+                Console.WriteLine(AlibabaCloud.TeaUtil.Common.ToJSONString(response.ToMap()));
             }
             catch (TeaException error)
             {
-                AlibabaCloud.TeaConsole.Client.Log(error.Message);
+                Console.WriteLine(error.Message);
             }
             catch (Exception _error)
             {
                 TeaException error = new TeaException(new Dictionary<string, object>
                 { { "message", _error.Message }
                 });
-                AlibabaCloud.TeaConsole.Client.Log(error.Message);
+                Console.WriteLine(error.Message);
             }
         }
 
@@ -60,18 +60,18 @@ namespace Alibabacloud.Sample
                 AlibabaCloud.SDK.EventBridge.Models.DeleteEventBusRequest deleteEventBusRequest = new AlibabaCloud.SDK.EventBridge.Models.DeleteEventBusRequest();
                 deleteEventBusRequest.EventBusName = "demo-bus";
                 client.DeleteEventBus(deleteEventBusRequest);
-                AlibabaCloud.TeaConsole.Client.Log("--------------------Delete bus success --------------------");
+                Console.WriteLine("--------------------Delete bus success --------------------");
             }
             catch (TeaException error)
             {
-                AlibabaCloud.TeaConsole.Client.Log(error.Message);
+                Console.WriteLine(error.Message);
             }
             catch (Exception _error)
             {
                 TeaException error = new TeaException(new Dictionary<string, object>
                 { { "message", _error.Message }
                 });
-                AlibabaCloud.TeaConsole.Client.Log(error.Message);
+                Console.WriteLine(error.Message);
             }
         }
 
@@ -82,19 +82,19 @@ namespace Alibabacloud.Sample
                 AlibabaCloud.SDK.EventBridge.Models.GetEventBusRequest describeEventBusRequest = new AlibabaCloud.SDK.EventBridge.Models.GetEventBusRequest();
                 describeEventBusRequest.EventBusName = "demo-bus";
                 AlibabaCloud.SDK.EventBridge.Models.GetEventBusResponse deScribeResponse = client.GetEventBus(describeEventBusRequest);
-                AlibabaCloud.TeaConsole.Client.Log("--------------------describe bus success --------------------");
-                AlibabaCloud.TeaConsole.Client.Log(AlibabaCloud.TeaUtil.Common.ToJSONString(deScribeResponse.ToMap()));
+                Console.WriteLine("--------------------describe bus success --------------------");
+                Console.WriteLine(AlibabaCloud.TeaUtil.Common.ToJSONString(deScribeResponse.ToMap()));
             }
             catch (TeaException error)
             {
-                AlibabaCloud.TeaConsole.Client.Log(error.Message);
+                Console.WriteLine(error.Message);
             }
             catch (Exception _error)
             {
                 TeaException error = new TeaException(new Dictionary<string, object>
                 { { "message", _error.Message }
                 });
-                AlibabaCloud.TeaConsole.Client.Log(error.Message);
+                Console.WriteLine(error.Message);
             }
         }
 
@@ -105,19 +105,19 @@ namespace Alibabacloud.Sample
                 AlibabaCloud.SDK.EventBridge.Models.ListEventBusesRequest listEventBusesRequest = new AlibabaCloud.SDK.EventBridge.Models.ListEventBusesRequest();
                 listEventBusesRequest.Limit = 100;
                 AlibabaCloud.SDK.EventBridge.Models.ListEventBusesResponse response = client.ListEventBuses(listEventBusesRequest);
-                AlibabaCloud.TeaConsole.Client.Log("--------------------list bus success --------------------");
-                AlibabaCloud.TeaConsole.Client.Log(AlibabaCloud.TeaUtil.Common.ToJSONString(response.ToMap()));
+                Console.WriteLine("--------------------list bus success --------------------");
+                Console.WriteLine(AlibabaCloud.TeaUtil.Common.ToJSONString(response.ToMap()));
             }
             catch (TeaException error)
             {
-                AlibabaCloud.TeaConsole.Client.Log(error.Message);
+                Console.WriteLine(error.Message);
             }
             catch (Exception _error)
             {
                 TeaException error = new TeaException(new Dictionary<string, object>
                 { { "message", _error.Message }
                 });
-                AlibabaCloud.TeaConsole.Client.Log(error.Message);
+                Console.WriteLine(error.Message);
             }
         }
 
@@ -140,19 +140,19 @@ namespace Alibabacloud.Sample
                 createEventRuleRequest.Status = "enable";
                 createEventRuleRequest.Targets = targetEntryList;
                 AlibabaCloud.SDK.EventBridge.Models.CreateRuleResponse response = client.CreateRule(createEventRuleRequest);
-                AlibabaCloud.TeaConsole.Client.Log("--------------------create rule success--------------------");
-                AlibabaCloud.TeaConsole.Client.Log(AlibabaCloud.TeaUtil.Common.ToJSONString(response.ToMap()));
+                Console.WriteLine("--------------------create rule success--------------------");
+                Console.WriteLine(AlibabaCloud.TeaUtil.Common.ToJSONString(response.ToMap()));
             }
             catch (TeaException error)
             {
-                AlibabaCloud.TeaConsole.Client.Log(error.Message);
+                Console.WriteLine(error.Message);
             }
             catch (Exception _error)
             {
                 TeaException error = new TeaException(new Dictionary<string, object>
                 { { "message", _error.Message }
                 });
-                AlibabaCloud.TeaConsole.Client.Log(error.Message);
+                Console.WriteLine(error.Message);
             }
         }
 
@@ -164,18 +164,18 @@ namespace Alibabacloud.Sample
                 deleteRuleRequest.RuleName = "myRule3";
                 deleteRuleRequest.EventBusName = "demo-bus";
                 client.DeleteRule(deleteRuleRequest);
-                AlibabaCloud.TeaConsole.Client.Log("--------------------delete rule success--------------------");
+                Console.WriteLine("--------------------delete rule success--------------------");
             }
             catch (TeaException error)
             {
-                AlibabaCloud.TeaConsole.Client.Log(error.Message);
+                Console.WriteLine(error.Message);
             }
             catch (Exception _error)
             {
                 TeaException error = new TeaException(new Dictionary<string, object>
                 { { "message", _error.Message }
                 });
-                AlibabaCloud.TeaConsole.Client.Log(error.Message);
+                Console.WriteLine(error.Message);
             }
         }
 
@@ -187,18 +187,18 @@ namespace Alibabacloud.Sample
                 enableEventRuleRequest.RuleName = "myRule3";
                 enableEventRuleRequest.EventBusName = "demo-bus";
                 client.EnableRule(enableEventRuleRequest);
-                AlibabaCloud.TeaConsole.Client.Log("--------------------enable rule success--------------------");
+                Console.WriteLine("--------------------enable rule success--------------------");
             }
             catch (TeaException error)
             {
-                AlibabaCloud.TeaConsole.Client.Log(error.Message);
+                Console.WriteLine(error.Message);
             }
             catch (Exception _error)
             {
                 TeaException error = new TeaException(new Dictionary<string, object>
                 { { "message", _error.Message }
                 });
-                AlibabaCloud.TeaConsole.Client.Log(error.Message);
+                Console.WriteLine(error.Message);
             }
         }
 
@@ -210,18 +210,18 @@ namespace Alibabacloud.Sample
                 disableEventRuleRequest.RuleName = "myRule3";
                 disableEventRuleRequest.EventBusName = "demo-bus";
                 client.DisableRule(disableEventRuleRequest);
-                AlibabaCloud.TeaConsole.Client.Log("--------------------disable rule success--------------------");
+                Console.WriteLine("--------------------disable rule success--------------------");
             }
             catch (TeaException error)
             {
-                AlibabaCloud.TeaConsole.Client.Log(error.Message);
+                Console.WriteLine(error.Message);
             }
             catch (Exception _error)
             {
                 TeaException error = new TeaException(new Dictionary<string, object>
                 { { "message", _error.Message }
                 });
-                AlibabaCloud.TeaConsole.Client.Log(error.Message);
+                Console.WriteLine(error.Message);
             }
         }
 
@@ -233,18 +233,18 @@ namespace Alibabacloud.Sample
                 describeEventRuleRequest.RuleName = "myRule3";
                 describeEventRuleRequest.EventBusName = "demo-bus";
                 client.GetRule(describeEventRuleRequest);
-                AlibabaCloud.TeaConsole.Client.Log("--------------------describe rule success--------------------");
+                Console.WriteLine("--------------------describe rule success--------------------");
             }
             catch (TeaException error)
             {
-                AlibabaCloud.TeaConsole.Client.Log(error.Message);
+                Console.WriteLine(error.Message);
             }
             catch (Exception _error)
             {
                 TeaException error = new TeaException(new Dictionary<string, object>
                 { { "message", _error.Message }
                 });
-                AlibabaCloud.TeaConsole.Client.Log(error.Message);
+                Console.WriteLine(error.Message);
             }
         }
 
@@ -255,18 +255,18 @@ namespace Alibabacloud.Sample
                 AlibabaCloud.SDK.EventBridge.Models.ListRulesRequest listEventRulesRequest = new AlibabaCloud.SDK.EventBridge.Models.ListRulesRequest();
                 listEventRulesRequest.EventBusName = "demo-bus";
                 AlibabaCloud.SDK.EventBridge.Models.ListRulesResponse response = client.ListRules(listEventRulesRequest);
-                AlibabaCloud.TeaConsole.Client.Log("--------------------listRules rule success--------------------");
+                Console.WriteLine("--------------------listRules rule success--------------------");
             }
             catch (TeaException error)
             {
-                AlibabaCloud.TeaConsole.Client.Log(error.Message);
+                Console.WriteLine(error.Message);
             }
             catch (Exception _error)
             {
                 TeaException error = new TeaException(new Dictionary<string, object>
                 { { "message", _error.Message }
                 });
-                AlibabaCloud.TeaConsole.Client.Log(error.Message);
+                Console.WriteLine(error.Message);
             }
         }
 
@@ -279,18 +279,18 @@ namespace Alibabacloud.Sample
                 updateEventRuleRequest.RuleName = "myRule3";
                 updateEventRuleRequest.FilterPattern = "{\"source\":[\"acs.oss\"],\"type\":[\"oss:BucketQueried:GetBucketStat\"]}";
                 client.UpdateRule(updateEventRuleRequest);
-                AlibabaCloud.TeaConsole.Client.Log("--------------------update rule success--------------------");
+                Console.WriteLine("--------------------update rule success--------------------");
             }
             catch (TeaException error)
             {
-                AlibabaCloud.TeaConsole.Client.Log(error.Message);
+                Console.WriteLine(error.Message);
             }
             catch (Exception _error)
             {
                 TeaException error = new TeaException(new Dictionary<string, object>
                 { { "message", _error.Message }
                 });
-                AlibabaCloud.TeaConsole.Client.Log(error.Message);
+                Console.WriteLine(error.Message);
             }
         }
 
@@ -309,19 +309,19 @@ namespace Alibabacloud.Sample
                 request.Event = jsonData;
                 request.EventPattern = pattern;
                 AlibabaCloud.SDK.EventBridge.Models.TestEventPatternResponse testEventPatternResponse = client.TestEventPattern(request);
-                AlibabaCloud.TeaConsole.Client.Log("--------------------test event pattern --------------------");
-                AlibabaCloud.TeaConsole.Client.Log(AlibabaCloud.TeaUtil.Common.ToJSONString(testEventPatternResponse.ToMap()));
+                Console.WriteLine("--------------------test event pattern --------------------");
+                Console.WriteLine(AlibabaCloud.TeaUtil.Common.ToJSONString(testEventPatternResponse.ToMap()));
             }
             catch (TeaException error)
             {
-                AlibabaCloud.TeaConsole.Client.Log(error.Message);
+                Console.WriteLine(error.Message);
             }
             catch (Exception _error)
             {
                 TeaException error = new TeaException(new Dictionary<string, object>
                 { { "message", _error.Message }
                 });
-                AlibabaCloud.TeaConsole.Client.Log(error.Message);
+                Console.WriteLine(error.Message);
             }
         }
 
@@ -340,19 +340,19 @@ namespace Alibabacloud.Sample
                 request.Event = jsonData;
                 request.EventPattern = pattern;
                 AlibabaCloud.SDK.EventBridge.Models.TestEventPatternResponse testEventPatternResponse = client.TestEventPattern(request);
-                AlibabaCloud.TeaConsole.Client.Log("--------------------test event pattern --------------------");
-                AlibabaCloud.TeaConsole.Client.Log(AlibabaCloud.TeaUtil.Common.ToJSONString(testEventPatternResponse.ToMap()));
+                Console.WriteLine("--------------------test event pattern --------------------");
+                Console.WriteLine(AlibabaCloud.TeaUtil.Common.ToJSONString(testEventPatternResponse.ToMap()));
             }
             catch (TeaException error)
             {
-                AlibabaCloud.TeaConsole.Client.Log(error.Message);
+                Console.WriteLine(error.Message);
             }
             catch (Exception _error)
             {
                 TeaException error = new TeaException(new Dictionary<string, object>
                 { { "message", _error.Message }
                 });
-                AlibabaCloud.TeaConsole.Client.Log(error.Message);
+                Console.WriteLine(error.Message);
             }
         }
 
@@ -372,19 +372,19 @@ namespace Alibabacloud.Sample
                 };
                 addTargetsRequest.Targets = list;
                 AlibabaCloud.SDK.EventBridge.Models.CreateTargetsResponse response = client.CreateTargets(addTargetsRequest);
-                AlibabaCloud.TeaConsole.Client.Log("--------------------Add targets success--------------------");
-                AlibabaCloud.TeaConsole.Client.Log(AlibabaCloud.TeaUtil.Common.ToJSONString(response.ToMap()));
+                Console.WriteLine("--------------------Add targets success--------------------");
+                Console.WriteLine(AlibabaCloud.TeaUtil.Common.ToJSONString(response.ToMap()));
             }
             catch (TeaException error)
             {
-                AlibabaCloud.TeaConsole.Client.Log(error.Message);
+                Console.WriteLine(error.Message);
             }
             catch (Exception _error)
             {
                 TeaException error = new TeaException(new Dictionary<string, object>
                 { { "message", _error.Message }
                 });
-                AlibabaCloud.TeaConsole.Client.Log(error.Message);
+                Console.WriteLine(error.Message);
             }
         }
 
@@ -401,19 +401,19 @@ namespace Alibabacloud.Sample
                 };
                 removeTargetsResponse.TargetIds = list;
                 AlibabaCloud.SDK.EventBridge.Models.DeleteTargetsResponse response = client.DeleteTargets(removeTargetsResponse);
-                AlibabaCloud.TeaConsole.Client.Log("--------------------remove targets success--------------------");
-                AlibabaCloud.TeaConsole.Client.Log(AlibabaCloud.TeaUtil.Common.ToJSONString(response.ToMap()));
+                Console.WriteLine("--------------------remove targets success--------------------");
+                Console.WriteLine(AlibabaCloud.TeaUtil.Common.ToJSONString(response.ToMap()));
             }
             catch (TeaException error)
             {
-                AlibabaCloud.TeaConsole.Client.Log(error.Message);
+                Console.WriteLine(error.Message);
             }
             catch (Exception _error)
             {
                 TeaException error = new TeaException(new Dictionary<string, object>
                 { { "message", _error.Message }
                 });
-                AlibabaCloud.TeaConsole.Client.Log(error.Message);
+                Console.WriteLine(error.Message);
             }
         }
 
@@ -425,19 +425,19 @@ namespace Alibabacloud.Sample
                 listTargetsRequest.EventBusName = "demo-bus";
                 listTargetsRequest.RuleName = "myRule3";
                 AlibabaCloud.SDK.EventBridge.Models.ListTargetsResponse response = client.ListTargets(listTargetsRequest);
-                AlibabaCloud.TeaConsole.Client.Log("--------------------list targets success--------------------");
-                AlibabaCloud.TeaConsole.Client.Log(AlibabaCloud.TeaUtil.Common.ToJSONString(response.ToMap()));
+                Console.WriteLine("--------------------list targets success--------------------");
+                Console.WriteLine(AlibabaCloud.TeaUtil.Common.ToJSONString(response.ToMap()));
             }
             catch (TeaException error)
             {
-                AlibabaCloud.TeaConsole.Client.Log(error.Message);
+                Console.WriteLine(error.Message);
             }
             catch (Exception _error)
             {
                 TeaException error = new TeaException(new Dictionary<string, object>
                 { { "message", _error.Message }
                 });
-                AlibabaCloud.TeaConsole.Client.Log(error.Message);
+                Console.WriteLine(error.Message);
             }
         }
 
@@ -465,19 +465,19 @@ namespace Alibabacloud.Sample
                 {
                     event_
                 });
-                AlibabaCloud.TeaConsole.Client.Log("--------------------Publish event to the aliyun EventBus--------------------");
-                AlibabaCloud.TeaConsole.Client.Log(AlibabaCloud.TeaUtil.Common.ToJSONString(resp.ToMap()));
+                Console.WriteLine("--------------------Publish event to the aliyun EventBus--------------------");
+                Console.WriteLine(AlibabaCloud.TeaUtil.Common.ToJSONString(resp.ToMap()));
             }
             catch (TeaException error)
             {
-                AlibabaCloud.TeaConsole.Client.Log(error.Message);
+                Console.WriteLine(error.Message);
             }
             catch (Exception _error)
             {
                 TeaException error = new TeaException(new Dictionary<string, object>
                 { { "message", _error.Message }
                 });
-                AlibabaCloud.TeaConsole.Client.Log(error.Message);
+                Console.WriteLine(error.Message);
             }
         }
 

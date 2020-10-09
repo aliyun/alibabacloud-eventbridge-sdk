@@ -74,10 +74,27 @@ namespace AlibabaCloud.EventBridgeUtil
                 var map = ((TeaModel) model).ToMap();
                 var contentType = map.Get("datacontenttype").ToSafeString();
                 var data = map.Get("data");
-                if (contentType != null && !contentType.StartsWith("application/json") && !contentType.StartsWith("text/json") && data != null)
+
+                if(data != null)
                 {
-                    map["data_base64"] = data;
-                    map.Remove("data");
+                    byte[] bytes = (byte[])data;
+                    if(contentType != null && (contentType.StartsWith("application/json") || contentType.StartsWith("text/json")))
+                    {
+                        string jsonData = Encoding.UTF8.GetString(bytes);
+                        try
+                        {
+                            map["data"] = JsonConvert.DeserializeObject<object>(jsonData);
+                        }
+                        catch
+                        {
+                            map["data"] = jsonData;
+                        }
+                    }
+                    else
+                    {
+                        map["data_base64"] = System.Convert.ToBase64String(bytes);
+                        map.Remove("data");
+                    }
                 }
 
                 if (map.ContainsKey("extensions"))
