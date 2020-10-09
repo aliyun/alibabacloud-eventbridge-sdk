@@ -57,14 +57,14 @@ func Test_Serialize(t *testing.T) {
 	in := []*TestEvent{
 		&TestEvent{
 			Datacontenttype: tea.String("text/plain"),
-			Data:            []byte("test"),
+			Data:            []byte(`{"test":"ok"}`),
 			Extensions: map[string]interface{}{
 				"key": "ok",
 			},
 		},
 		&TestEvent{
 			Datacontenttype: tea.String("text/json"),
-			Data:            []byte("test"),
+			Data:            []byte(`{"test":"ok"}`),
 		},
 	}
 	out := make([]map[string]interface{}, 0)
@@ -72,9 +72,9 @@ func Test_Serialize(t *testing.T) {
 	byt, _ := json.Marshal(res)
 	json.Unmarshal(byt, &out)
 	utils.AssertEqual(t, "ok", out[0]["key"].(string))
-	utils.AssertEqual(t, "dGVzdA==", out[0]["data_base64"].(string))
+	utils.AssertEqual(t, "eyJ0ZXN0Ijoib2sifQ==", out[0]["data_base64"].(string))
 	utils.AssertNil(t, out[0]["data"])
-	utils.AssertEqual(t, "test", out[1]["data"].(string))
+	utils.AssertEqual(t, map[string]interface{}{"test": "ok"}, out[1]["data"].(map[string]interface{}))
 
 	res = Serialize(nil)
 	utils.AssertNil(t, res)

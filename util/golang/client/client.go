@@ -163,9 +163,11 @@ func Serialize(events interface{}) (_result interface{}) {
 		}
 
 		if m["data"] != nil {
+			res := make(map[string]interface{})
 			data := m["data"].(string)
 			tmp, _ := base64.StdEncoding.DecodeString(data)
-			m["data"] = string(tmp)
+			json.Unmarshal([]byte(tmp), &res)
+			m["data"] = res
 		}
 
 		if m["extensions"] != nil {
