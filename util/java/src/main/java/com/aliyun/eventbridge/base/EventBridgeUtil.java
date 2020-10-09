@@ -3,18 +3,24 @@ package com.aliyun.eventbridge.base;
 
 import com.aliyun.tea.*;
 import com.aliyun.tea.utils.StringUtils;
+import com.google.common.base.Strings;
 import com.google.common.io.BaseEncoding;
+import com.google.common.net.MediaType;
+import com.google.gson.JsonParser;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
-
 
 public class EventBridgeUtil {
 
     /**
      * Get the string to be signed according to request
-     * @param request  which contains signed messages
+     *
+     * @param request which contains signed messages
+     *
      * @return the signed string
      */
     public static String getStringToSign(TeaRequest request) {
@@ -48,14 +54,16 @@ public class EventBridgeUtil {
             String key = canonicalizedKeysArray[i];
             result.append(key);
             result.append(":");
-            result.append(headers.get(key).trim());
+            result.append(headers.get(key)
+                .trim());
             result.append("\n");
         }
         return result.toString();
     }
 
     protected static String getCanonicalizedResource(String pathname, Map<String, String> query) {
-        String[] keys = query.keySet().toArray(new String[query.size()]);
+        String[] keys = query.keySet()
+            .toArray(new String[query.size()]);
         if (keys.length <= 0) {
             return pathname;
         }
@@ -68,19 +76,22 @@ public class EventBridgeUtil {
             key = keys[i];
             result.append(key);
             value = query.get(key);
-            if (!StringUtils.isEmpty(value) && !"".equals(value.trim())) {
+            if (!StringUtils.isEmpty(value) && !"" .equals(value.trim())) {
                 result.append("=");
                 result.append(value);
             }
             result.append("&");
         }
-        return result.deleteCharAt(result.length() - 1).toString();
+        return result.deleteCharAt(result.length() - 1)
+            .toString();
     }
 
     /**
      * Get signature according to stringToSign, secret
-     * @param stringToSign  the signed string
-     * @param secret accesskey secret
+     *
+     * @param stringToSign the signed string
+     * @param secret       accesskey secret
+     *
      * @return the signature
      */
     public static String getSignature(String stringToSign, String secret) {
@@ -88,7 +99,8 @@ public class EventBridgeUtil {
             Mac mac = Mac.getInstance("HmacSHA1");
             mac.init(new SecretKeySpec(secret.getBytes("UTF-8"), "HmacSHA1"));
             byte[] signData = mac.doFinal(stringToSign.getBytes("UTF-8"));
-            return BaseEncoding.base64().encode(signData);
+            return BaseEncoding.base64()
+                .encode(signData);
         } catch (Exception e) {
             throw new EventBridgeUtilException(e);
         }
@@ -96,7 +108,9 @@ public class EventBridgeUtil {
 
     /**
      * Serialize events
+     *
      * @param events the object
+     *
      * @return the result
      */
     public static Object serialize(Object events) {
@@ -118,18 +132,19 @@ public class EventBridgeUtil {
                     map = (Map<String, Object>)(object);
                 }
                 contentType = String.valueOf(map.get("datacontenttype"));
-                if (contentType.startsWith("application/json") || contentType.startsWith("text/json")) {
+                if (isJsonContentType(contentType)) {
                     result = map.remove("data");
                     if (null != result) {
                         bytes = (byte[])result;
-                        String str = new String(bytes);
-                        map.put("data", str);
+                        String str = new String(bytes, getCharset(contentType));
+                        map.put("data", new JsonParser().parse(str));
                     }
                 } else {
                     result = map.remove("data");
                     if (null != result) {
                         bytes = (byte[])result;
-                        data = BaseEncoding.base64().encode(bytes);
+                        data = BaseEncoding.base64()
+                            .encode(bytes);
                         map.put("data_base64", data);
                     }
                 }
@@ -152,10 +167,48 @@ public class EventBridgeUtil {
         }
     }
 
+    private static final Charset DEFAULT_CHARSET = StandardCharsets.UTF_8;
+
+    /**
+     * get data charset from dataContentType,default value is UTF-8
+     *
+     * @return
+     */
+    private static Charset getCharset(String dataContentType) {
+        if (Strings.isNullOrEmpty(dataContentType)) {
+            return DEFAULT_CHARSET;
+        }
+        MediaType mediaType = MediaType.parse(dataContentType);
+        if (mediaType == null) {
+            return DEFAULT_CHARSET;
+        }
+        if (!mediaType.charset()
+            .isPresent() || mediaType.charset()
+            .get() == null) {
+            return DEFAULT_CHARSET;
+        } else {
+            return mediaType.charset()
+                .get();
+        }
+    }
+
+    /**
+     * return true if is json contentType
+     *
+     * @param contentType
+     *
+     * @return
+     */
+    private static boolean isJsonContentType(String contentType) {
+        return contentType == null || contentType.startsWith("application/json") || contentType.startsWith("text/json");
+    }
+
     /**
      * Judge if the  origin is start with the prefix
+     *
      * @param origin the original string
      * @param prefix the prefix string
+     *
      * @return the result
      */
     public static Boolean startWith(String origin, String prefix) {
