@@ -89,8 +89,8 @@ class Client(object):
             dic = e.to_map().copy()
 
             content_type = dic.get('datacontenttype')
-            if content_type not in ('application/json', 'text/json', None) and dic.get('data'):
-                dic['data_base64'] = base64.b64encode(dic.get('data')).decode('utf-8')
+            if content_type not in ('application/json', 'text/json', '', None) and dic.get('data'):
+                dic['data_base64'] = base64.b64encode(dic['data']).decode('utf-8')
                 del dic['data']
             elif dic.get('data'):
                 try:

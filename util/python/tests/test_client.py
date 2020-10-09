@@ -112,40 +112,79 @@ class TestClient(unittest.TestCase):
         self.assertEqual('Mzu+31oD5IDdv3WFBNIi4Y7JZto=', signature)
 
     def test_serialize(self):
+        # JSON_OBJECT_EVENT
         test_model1 = self.CloudEvent(
-            datacontenttype='text/plain',
-            data=b'demo',
-            extensions={'key': 'ok'}
-        )
-        test_model2 = self.CloudEvent(
             datacontenttype='text/json',
             data=b'{"bus": "demo"}',
         )
+        # JSON_OBJECT_NONE_EVENT
+        test_model2 = self.CloudEvent(
+            data=b'{"bus": "demo"}',
+        )
+        # JSON_OBJECT_EMPTY_EVENT
         test_model3 = self.CloudEvent(
+            datacontenttype='',
+            data=b'{"bus": "demo"}',
+        )
+        # JSON_NUMBER_EVENT
+        test_model4 = self.CloudEvent(
+            data=b'{"key": 100}',
+        )
+        # JSON_BOOLEAN_EVENT
+        test_model5 = self.CloudEvent(
+            data=b'{"key": true}',
+        )
+        # JSON_ARRAY_EVENT
+        test_model6 = self.CloudEvent(
             datacontenttype='text/json',
             data=b'[{"bus": "demo"}]',
         )
-        test_model4 = self.CloudEvent(
+        # JSON_STRING_EVENT
+        test_model7 = self.CloudEvent(
             datacontenttype='text/json',
             data=b'demo',
+        )
+        # BASE64_EVENT
+        test_model8 = self.CloudEvent(
+            datacontenttype='text/plain',
+            data=b'{ "bus":"demo" }'
+        )
+        # EXTENSION_EVENT
+        test_model9 = self.CloudEvent(
+            datacontenttype='text/plain',
+            data=b'{ "bus":"demo" }',
+            extensions={
+                'key1': 'value1',
+                'key2': 'value2',
+            }
         )
         events = [
             test_model1,
             test_model2,
             test_model3,
-            test_model4
+            test_model4,
+            test_model5,
+            test_model6,
+            test_model7,
+            test_model8,
+            test_model9,
         ]
         res = Client.serialize(events)
 
-        self.assertEqual('ok', res[0]['key'])
-        self.assertEqual('ZGVtbw==', res[0]['data_base64'])
-        self.assertIsNone(res[0].get('data'))
+        self.assertEqual({"bus": "demo"}, res[0]['data'])
+        self.assertEqual({"bus": "demo"}, res[1]['data'])
+        self.assertEqual({"bus": "demo"}, res[2]['data'])
 
-        self.assertEqual({'bus': 'demo'}, res[1].get('data'))
+        self.assertEqual(100, res[3]['data']['key'])
+        self.assertEqual(True, res[4]['data']['key'])
+        self.assertEqual([{'bus': 'demo'}], res[5]['data'])
+        self.assertEqual('demo', res[6]['data'])
 
-        self.assertEqual([{'bus': 'demo'}], res[2].get('data'))
+        self.assertEqual('eyAiYnVzIjoiZGVtbyIgfQ==', res[7]['data_base64'])
 
-        self.assertEqual('demo', res[3].get('data'))
+        self.assertEqual('eyAiYnVzIjoiZGVtbyIgfQ==', res[8]['data_base64'])
+        self.assertEqual('value1', res[8]['key1'])
+        self.assertEqual('value2', res[8]['key2'])
 
         res = Client.serialize(None)
         self.assertIsNone(res)
