@@ -55,7 +55,7 @@ class ClientTest extends TestCase
             ['datacontenttype'=> 'text/json', 'extensions'=>['foo'=>'bar']],
         ]);
         $this->assertEquals([
-            ['datacontenttype'=>'text/plain', 'data_base64'=>'test1'],
+            ['datacontenttype'=>'text/plain', 'data_base64'=>'dGVzdDE='],
             ['datacontenttype'=> 'text/json', 'foo'=>'bar'],
         ], $result);
     }

@@ -70,7 +70,7 @@ class Client
                 if (isset($v['datacontenttype'])) {
                     $content_type = $v['datacontenttype'];
                     if (!\in_array($content_type, ['application/json', 'text/json']) && !empty($v['data'])) {
-                        $v['data_base64'] = $v['data'];
+                        $v['data_base64'] = \base64_encode($v['data']);
                         unset($v['data']);
                     }
                 }
