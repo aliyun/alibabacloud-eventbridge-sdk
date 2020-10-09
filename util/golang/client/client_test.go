@@ -66,15 +66,35 @@ func Test_Serialize(t *testing.T) {
 			Datacontenttype: tea.String("text/json"),
 			Data:            []byte(`{"test":"ok"}`),
 		},
+		&TestEvent{
+			Datacontenttype: tea.String("text/json"),
+			Data:            []byte(`[{"test":"ok"}]`),
+		},
+		&TestEvent{
+			Datacontenttype: tea.String("text/json"),
+			Data:            []byte("test"),
+		},
+		&TestEvent{
+			Datacontenttype: tea.String("text/json"),
+			Data:            []byte("\"{\"bus\":\"demo\"}\""),
+		},
 	}
 	out := make([]map[string]interface{}, 0)
 	res := Serialize(in)
 	byt, _ := json.Marshal(res)
 	json.Unmarshal(byt, &out)
 	utils.AssertEqual(t, "ok", out[0]["key"].(string))
-	utils.AssertEqual(t, "eyJ0ZXN0Ijoib2sifQ==", out[0]["data_base64"].(string))
+	byt, _ = json.Marshal(out[0])
+	utils.AssertEqual(t, `{"data_base64":"eyJ0ZXN0Ijoib2sifQ==","datacontenttype":"text/plain","key":"ok"}`, string(byt))
 	utils.AssertNil(t, out[0]["data"])
-	utils.AssertEqual(t, map[string]interface{}{"test": "ok"}, out[1]["data"].(map[string]interface{}))
+	byt, _ = json.Marshal(out[1])
+	utils.AssertEqual(t, `{"data":{"test":"ok"},"datacontenttype":"text/json"}`, string(byt))
+	byt, _ = json.Marshal(out[2])
+	utils.AssertEqual(t, `{"data":[{"test":"ok"}],"datacontenttype":"text/json"}`, string(byt))
+	byt, _ = json.Marshal(out[3])
+	utils.AssertEqual(t, `{"data":"test","datacontenttype":"text/json"}`, string(byt))
+	byt, _ = json.Marshal(out[4])
+	utils.AssertEqual(t, `{"data":"\"{\"bus\":\"demo\"}\"","datacontenttype":"text/json"}`, string(byt))
 
 	res = Serialize(nil)
 	utils.AssertNil(t, res)
