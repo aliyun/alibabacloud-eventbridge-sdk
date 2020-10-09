@@ -200,7 +200,7 @@ public class EventBridgeUtil {
      * @return
      */
     private static boolean isJsonContentType(Object contentType) {
-        return contentType == null || contentType.toString()
+        return contentType == null || Strings.isNullOrEmpty(contentType.toString()) || contentType.toString()
             .startsWith("application/json") || contentType.toString()
             .startsWith("text" + "/json");
     }
