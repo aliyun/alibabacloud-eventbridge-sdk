@@ -12,7 +12,7 @@
   "releases": {
     "go": "github.com/alibabacloud-go/eventbridge-util/client:v1.0.4",
     "java": "com.aliyun:eventbridge-util:0.0.3",
-    "python": "alibabacloud_eventbridge_util:0.0.1",
+    "python": "alibabacloud_eventbridge_util:0.0.2",
     "csharp": "AlibabaCloud.EventBridgeUtil:0.0.3",
     "php": "alibabacloud/eventbrgidge-util:^0.1.0"
   },
