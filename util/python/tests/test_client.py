@@ -113,40 +113,28 @@ class TestClient(unittest.TestCase):
 
     def test_serialize(self):
         test_model1 = self.CloudEvent(
-            datacontenttype='application/xml',
-            data=b'base64encode',
-            extensions={
-                    'key1': 'value1',
-                    'key2': 'value2',
-                }
+            datacontenttype='text/plain',
+            data=b'test',
+            extensions={'key': 'ok'}
         )
         test_model2 = self.CloudEvent(
-            datacontenttype='application/xml',
-            data=b'base64encode',
-            extensions={
-                    'key1': 'value1',
-                    'key2': 'value2',
-                }
+            datacontenttype='text/json',
+            data=b'test',
         )
         events = [
             test_model1, test_model2
         ]
         res = Client.serialize(events)
-        tmp = [
-            {
-                'datacontenttype': 'application/xml',
-                'data_base64': 'base64encode',
-                'key1': 'value1',
-                'key2': 'value2',
-            },
-            {
-                'datacontenttype': 'application/xml',
-                'data_base64': 'base64encode',
-                'key1': 'value1',
-                'key2': 'value2',
-            },
-        ]
-        self.assertEqual(tmp, res)
+        self.assertEqual('ok', res[0]['key'])
+        self.assertEqual('dGVzdA==', res[0]['data_base64'])
+        self.assertIsNone(res[0].get('data'))
+        self.assertIsNotNone(res[1].get('data'))
+
+        res = Client.serialize(None)
+        self.assertIsNone(res)
+
+        res = Client.serialize('string')
+        self.assertEqual('string', res)
 
     def test_start_with(self):
         self.assertTrue(Client.start_with('hello world', 'hello'))
