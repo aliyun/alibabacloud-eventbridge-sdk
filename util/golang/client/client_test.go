@@ -74,7 +74,7 @@ func Test_Serialize(t *testing.T) {
 	utils.AssertEqual(t, "ok", out[0]["key"].(string))
 	utils.AssertEqual(t, "dGVzdA==", out[0]["data_base64"].(string))
 	utils.AssertNil(t, out[0]["data"])
-	utils.AssertNotNil(t, out[1]["data"])
+	utils.AssertEqual(t, "test", out[1]["data"].(string))
 
 	res = Serialize(nil)
 	utils.AssertNil(t, res)

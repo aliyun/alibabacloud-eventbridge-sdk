@@ -162,6 +162,12 @@ func Serialize(events interface{}) (_result interface{}) {
 			}
 		}
 
+		if m["data"] != nil {
+			data := m["data"].(string)
+			tmp, _ := base64.StdEncoding.DecodeString(data)
+			m["data"] = string(tmp)
+		}
+
 		if m["extensions"] != nil {
 			extensions := m["extensions"].(map[string]interface{})
 			for k, v := range extensions {
