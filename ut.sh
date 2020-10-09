@@ -1,5 +1,9 @@
 #!/bin/bash
 
+basepath=$(cd `dirname $0`/; pwd)
+
+echo $basepath
+
 function upload_codecov_report {
   # upload_codecov_report <dir> <flag>
   cd "$1" || return 126
@@ -10,21 +14,19 @@ function upload_codecov_report {
 }
 
 function run_php {
-  cd util/php/ || return 126
+  cd $basepath/util/php/ || return 126
   composer --version
   composer install -vvv
   composer test || return 126
-  cd ../../
-  upload_codecov_report php php
+  upload_codecov_report $basepath/util/php php
 }
 
 function run_go {
-  cd util/golang/ || return 126
+  cd $basepath/util/golang/ || return 126
   export GO111MODULE=on
   go mod tidy
   go test -race -coverprofile=coverage.txt -covermode=atomic ./client/... || return 126
-  cd ../../
-  upload_codecov_report golang go
+  upload_codecov_report $basepath/util/golang go
 }
 
 function run_csharp {
@@ -35,18 +37,17 @@ function run_csharp {
   dotnet --info
 
   # install
-  cd util/csharp/tests/ || return 126
+  cd $basepath/util/csharp/tests/ || return 126
   dotnet tool install --global altcover.visualizer
   dotnet restore
   dotnet build
-  cd ../
 
   # run tests
+  cd ../
   dotnet test tests/ /p:AltCover=true || return 126
-  cd ../../
 
   # upload code coverage report
-  upload_codecov_report csharp csharp
+  upload_codecov_report $basepath/util/csharp csharp
 }
 
 function run_python {
@@ -54,14 +55,13 @@ function run_python {
   export PYTHONPATH=$PYTHONPATH:`pwd`/util/python
   echo $PYTHONPATH
   # install
-  cd util/python || return 126
+  cd $basepath/util/python || return 126
   pip install coverage
   pip install alibabacloud-tea
   pip install alibabacloud-tea-util
 
   coverage run --source="./alibabacloud_eventbridge_util" -m pytest tests/test_* || return 126
-  cd ../../
-  upload_codecov_report python python
+  upload_codecov_report $basepath/util/python python
 }
 
 function contains {
