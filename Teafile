@@ -27,7 +27,7 @@
 	"releases": {
 		"java": "com.aliyun:eventbridge:1.2.0",
 		"go": "github.com/alibabacloud-go/eventbridge-sdk/eventbridge:v1.2.3",
-		"csharp": "AlibabaCloud.SDK.Eventbridge:1.2.0",
+		"csharp": "AlibabaCloud.SDK.Eventbridge:1.2.1",
 		"ts": "@alicloud/eventbridge:^1.2.0",
 		"php": "alibabacloud/eventbridge:^1.2.0",
 		"python": "alibabacloud_eventbridge:1.2.0"
