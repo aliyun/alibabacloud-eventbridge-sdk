@@ -1,7 +1,7 @@
 {
   "scope": "alibabacloud",
   "name": "EventBridgeUtil",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "main": "./main.tea",
   "maintainers": [
     {
@@ -11,7 +11,7 @@
   ],
   "releases": {
     "go": "github.com/alibabacloud-go/eventbridge-util/client:v1.0.4",
-    "java": "com.aliyun:eventbridge-util:0.0.3",
+    "java": "com.aliyun:eventbridge-util:0.0.4",
     "python": "alibabacloud_eventbridge_util:0.0.3",
     "csharp": "AlibabaCloud.EventBridgeUtil:0.0.5",
     "php": "alibabacloud/eventbrgidge-util:^0.1.0"

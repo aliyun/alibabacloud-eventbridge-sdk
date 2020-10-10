@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.aliyun</groupId>
     <artifactId>eventbridge-util</artifactId>
-    <version>0.0.3</version>
+    <version>0.0.4</version>
     <packaging>jar</packaging>
     <name>eventbridge-util</name>
     <description>Alibaba Cloud eventbridge Util for Java</description>
