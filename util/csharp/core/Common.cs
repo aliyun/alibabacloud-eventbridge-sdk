@@ -72,13 +72,17 @@ namespace AlibabaCloud.EventBridgeUtil
             foreach (var model in listModel)
             {
                 var map = ((TeaModel) model).ToMap();
-                var contentType = map.Get("datacontenttype").ToSafeString();
+                var contentType = map.Get("datacontenttype").ToSafeString("application/json");
                 var data = map.Get("data");
-
-                if(data != null)
+                if(map.ContainsKey("data"))
                 {
-                    byte[] bytes = (byte[])data;
-                    if(contentType != null && (contentType.StartsWith("application/json") || contentType.StartsWith("text/json")))
+                    map.Remove("data");
+                }
+
+                if (data != null)
+                {
+                    byte[] bytes = (byte[]) data;
+                    if (contentType == "" || contentType.StartsWith("application/json") || contentType.StartsWith("text/json"))
                     {
                         string jsonData = Encoding.UTF8.GetString(bytes);
                         try
@@ -93,17 +97,19 @@ namespace AlibabaCloud.EventBridgeUtil
                     else
                     {
                         map["data_base64"] = System.Convert.ToBase64String(bytes);
-                        map.Remove("data");
                     }
                 }
 
                 if (map.ContainsKey("extensions"))
                 {
                     var iDic = ((IDictionary) map.Get("extensions"));
-                    var mapExtensions = iDic.Keys.Cast<string>().ToDictionary(key => key, key => iDic[key]);
-                    foreach (var keypair in mapExtensions)
+                    if (iDic != null)
                     {
-                        map[keypair.Key] = keypair.Value;
+                        var mapExtensions = iDic.Keys.Cast<string>().ToDictionary(key => key, key => iDic[key]);
+                        foreach (var keypair in mapExtensions)
+                        {
+                            map[keypair.Key] = keypair.Value;
+                        }
                     }
                     map.Remove("extensions");
                 }
