@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TimeZone;
 
 import com.aliyun.eventbridge.models.CloudEvent;
 
@@ -18,6 +19,7 @@ public class EventBuilder {
     private String subject;
     private Date time;
     private byte[] data;
+    private TimeZone timeZone;
     private Map<String, Object> extensions = new HashMap<>();
 
     /**
@@ -47,6 +49,12 @@ public class EventBuilder {
         return this;
     }
 
+    public EventBuilder withTime(Date time, TimeZone zone) {
+        this.time = time;
+        this.timeZone = timeZone;
+        return this;
+    }
+
     public EventBuilder withSubject(String subject) {
         this.subject = subject;
         return this;
@@ -57,7 +65,7 @@ public class EventBuilder {
         return this;
     }
 
-    public EventBuilder withJsonString(String jsonString) {
+    public EventBuilder withJsonStringData(String jsonString) {
         this.data = jsonString.getBytes();
         return this;
     }
@@ -73,7 +81,7 @@ public class EventBuilder {
             .setSource(source != null ? source.toASCIIString() : null)
             .setType(type)
             .setSubject(subject)
-            .setTime(time != null ? Time.zoneTime(time) : null)
+            .setTime(time != null ? Time.zoneTime(time,timeZone) : null)
             .setExtensions(extensions)
             .setData(data);
         //default value

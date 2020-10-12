@@ -28,8 +28,7 @@ import java.util.TimeZone;
 public final class Time {
 
     private static SimpleDateFormat defaultDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
-    public static String defaultZone = TimeZone.getDefault()
-        .getID();
+    public static TimeZone defaultZone = TimeZone.getDefault();
 
     /**
      * build default zone time
@@ -38,7 +37,7 @@ public final class Time {
      * @return
      */
     public static String zoneTime(Date data) {
-        return defaultDateFormat.format(data) + defaultZone;
+        return zoneTime(data, defaultZone);
     }
 
     /**
@@ -48,6 +47,9 @@ public final class Time {
      * @return
      */
     public static String zoneTime(Date data, TimeZone zone) {
+        if (zone == null) {
+            zone = defaultZone;
+        }
         return defaultDateFormat.format(data) + zone.getID();
     }
 }
