@@ -33,7 +33,7 @@ public class PutEventsSample {
             .withType("oss:ObjectCreated:PostObject")
             .withSubject("acs:oss:cn-hangzhou:1234567:xls-papk/game_apk/123.jpg")
             .withTime(new Date())
-            .withJsonString("{ \"E-Mail\": \"${email}\" }")
+            .withJsonStringData("{ \"E-Mail\": \"${email}\" }")
             .withAliyunEventBus("demo-bus")
             .build());
         cloudEventList.add(EventBuilder.builder()
@@ -42,7 +42,7 @@ public class PutEventsSample {
             .withType("oss:ObjectCreated:PostObject")
             .withSubject("acs:oss:cn-hangzhou:1234567:xls-papk/game_apk/123.jpg")
             .withTime(new Date())
-            .withJsonString("{ \"E-Mail\": \"${email}\" }")
+            .withJsonStringData("{ \"E-Mail\": \"${email}\" }")
             .withAliyunEventBus("demo-bus")
             .build());
         PutEventsResponse putEventsResponse = eventBridgeClient.putEvents(cloudEventList);
