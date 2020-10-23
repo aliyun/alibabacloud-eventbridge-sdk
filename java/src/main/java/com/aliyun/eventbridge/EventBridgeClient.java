@@ -166,7 +166,10 @@ public class EventBridgeClient implements EventBridge {
                 if (Tea.isRetryable(e)) {
                     continue;
                 }
-                throw new RuntimeException(e);
+                if (e instanceof TeaException) {
+                    throw e;
+                }
+                throw new TeaException(e.getMessage(), e);
             }
         }
 
