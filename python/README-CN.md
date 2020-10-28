@@ -41,7 +41,7 @@ request = CloudEvent(
     }
 )
 
-resp = client.put_events(request)
+resp = client.put_events([request])
 
 print(resp)
 print('request id:', resp.request_id)
