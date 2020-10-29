@@ -301,15 +301,13 @@ async function listEventBusesWithOptions(request: ListEventBusesRequest, runtime
 }
 
 /**
- * The request of create an EventBus rule on Aliyun
+ * The param of EBTargetParam
  */
-model CreateRuleRequest = {
-  eventBusName: string(name='EventBusName', maxLength=127, minLength=1),
-  description?: string(name='Description'),
-  ruleName: string(name='RuleName'),
-  status?: string(name='Status'),
-  filterPattern?: string(name='FilterPattern'),
-  targets: [ TargetEntry ](name='Targets'),
+model EBTargetParam = {
+  resourceKey: string(name='ResourceKey'),
+  form: string(name='Form'),
+  value?: string(name='Value'),
+  template?: string(name='Template'),
 }
 
 /**
@@ -324,13 +322,15 @@ model TargetEntry = {
 }
 
 /**
- * The param of EBTargetParam
+ * The request of create an EventBus rule on Aliyun
  */
-model EBTargetParam = {
-  resourceKey: string(name='ResourceKey'),
-  form: string(name='Form'),
-  value?: string(name='Value'),
-  template?: string(name='Template'),
+model CreateRuleRequest = {
+  eventBusName: string(name='EventBusName', maxLength=127, minLength=1),
+  description?: string(name='Description'),
+  ruleName: string(name='RuleName'),
+  status?: string(name='Status'),
+  filterPattern?: string(name='FilterPattern'),
+  targets: [ TargetEntry ](name='Targets'),
 }
 
 /**
@@ -506,17 +506,6 @@ model ListRulesRequest = {
 }
 
 /**
- * The response of search EventBus
- */
-model ListRulesResponse = {
-  requestId: string(name='RequestId'),
-  resourceOwnerAccountId: string(name='ResourceOwnerAccountId'),
-  nextToken: string(name='NextToken'),
-  rules: [ EventRuleDTO ](name='Rules'),
-  total: number(name='Total'),
-}
-
-/**
  * The detail of EventBuses rule
  */
 model EventRuleDTO = {
@@ -529,6 +518,18 @@ model EventRuleDTO = {
   targets: [ TargetEntry ](name='Targets'),
   ctime: int64(name='Ctime'),
   mtime: int64(name='Mtime'),
+}
+
+
+/**
+ * The response of search EventBus
+ */
+model ListRulesResponse = {
+  requestId: string(name='RequestId'),
+  resourceOwnerAccountId: string(name='ResourceOwnerAccountId'),
+  nextToken: string(name='NextToken'),
+  rules: [ EventRuleDTO ](name='Rules'),
+  total: number(name='Total'),
 }
 
 /**
@@ -626,6 +627,15 @@ model DeleteTargetsRequest = {
 }
 
 /**
+ * The result detail of target operation
+ */
+model TargetResultEntry = {
+  errorCode: string(name='ErrorCode'),
+  errorMessage: string(name='ErrorMessage'),
+  entryId: string(name='EntryId'),
+}
+
+/**
  * The response of delete Targets
  */
 model DeleteTargetsResponse = {
@@ -633,15 +643,6 @@ model DeleteTargetsResponse = {
   resourceOwnerAccountId: string(name='ResourceOwnerAccountId'),
   errorEntriesCount: number(name='ErrorEntriesCount'),
   errorEntries: [ TargetResultEntry ](name='ErrorEntries'),
-}
-
-/**
- * The result detail of target operation
- */
-model TargetResultEntry = {
-  errorCode: string(name='ErrorCode'),
-  errorMessage: string(name='ErrorMessage'),
-  entryId: string(name='EntryId'),
 }
 
 /**
