@@ -64,6 +64,20 @@ function run_python {
   upload_codecov_report $basepath/util/python python
 }
 
+function run_cpp {
+   #env
+  export CPLUS_INCLUDE_PATH="/usr/local/include/:/usr/include/jsoncpp/:/usr/lib/"
+  sudo add-apt-repository ppa:mhier/libboost-latest -y
+  sudo apt-get update
+  aptitude search boost
+  sudo apt-get install libboost-all-dev
+  sudo apt-get install lcov libcpprest-dev libcurl4-openssl-dev libssl-dev uuid-dev libjson-c-dev libjsoncpp-dev
+  cd util/cpp/
+  sh scripts/codecov.sh
+  cd ../../
+  upload_codecov_report util/cpp/cmake_build cpp
+}
+
 function contains {
   local value=$2
   for i in $1
@@ -95,6 +109,10 @@ elif [ "$lang" == "python" ]
 then
   echo "run python"
   run_python
+elif [ "$lang" == "cpp" ]
+then
+  echo "run_cpp"
+  run_cpp
 fi
 
 exit $?

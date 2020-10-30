@@ -1,0 +1,4 @@
+@PACKAGE_INIT@
+
+include("${CMAKE_CURRENT_LIST_DIR}/alibabacloud_event_bridge_utilTargets.cmake")
+check_required_components("alibabacloud_event_bridge_util")

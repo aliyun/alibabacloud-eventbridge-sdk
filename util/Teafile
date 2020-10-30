@@ -14,7 +14,8 @@
     "java": "com.aliyun:eventbridge-util:0.0.4",
     "python": "alibabacloud_eventbridge_util:0.0.3",
     "csharp": "AlibabaCloud.EventBridgeUtil:0.0.5",
-    "php": "alibabacloud/eventbrgidge-util:^0.1.0"
+    "php": "alibabacloud/eventbrgidge-util:^0.1.0",
+    "cpp": "alibabacloud-sdk-cpp/eventbrgidge-util:master"
   },
   "python": {
     "package": "alibabacloud_eventbridge_util",
@@ -36,6 +37,14 @@
       "name": "alibabacloud/eventbrgidge-util",
       "desc": "Alibaba Cloud EventBridge Utils for PHP",
       "github": "https://github.com/aliyun/eventbrgidge-util"
+    }
+  },
+  "cpp": {
+    "packageInfo": {
+      "git": {
+        "scope": "alibabacloud-sdk-cpp",
+        "project": "eventbrgidge-util"
+      }
     }
   }
 }
