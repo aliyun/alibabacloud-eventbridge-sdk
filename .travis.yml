@@ -1,5 +1,9 @@
 jobs:
   include:
+    - language: cpp
+      dist: bionic
+      compiler: gcc
+      env: TEA_UTIL_ENV="cpp"
     - language: csharp
       mono: none
       dist: xenial
