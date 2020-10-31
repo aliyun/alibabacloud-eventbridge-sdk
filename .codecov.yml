@@ -1,0 +1,3 @@
+ignore:
+  - "util/cpp/tests/"
+  - "util/cpp/src/crypt/"
