@@ -3,14 +3,18 @@
 ![](https://aliyunsdk-pages.alicdn.com/icons/AlibabaCloud.svg)
 
 ## Alibaba Cloud EventBridge SDK
+<a href="https://search.maven.org/search?q=g:%22com.aliyun%22%20AND%20a:%22eventbridge-client%22"><img src="https://img.shields.io/maven-central/v/com.aliyun/eventbridge-client.svg?label=Maven%20Central" alt="Latest Stable Version"/></a>
+
 
 ## 安装
+
+Alibaba Cloud SDK for Java 需要1.7以上的JDK。
 
 ```xml
 <dependency>
    <groupId>com.aliyun</groupId>
    <artifactId>eventbridge-client</artifactId>
-   <version>1.1.2-SNAPSHOT</version>
+   <version>使用maven标签所示版本</version>
 </dependency>
 ```
 
