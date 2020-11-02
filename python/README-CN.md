@@ -2,8 +2,11 @@
 
 ![](https://aliyunsdk-pages.alicdn.com/icons/AlibabaCloud.svg)
 
-## Alibaba Cloud EventBridge Util for Python
+## Alibaba Cloud EventBridge SDK for Python
 
+## 要求
+
+- Python >= 3.4
 
 ## 安装
 
@@ -12,8 +15,8 @@
 如未安装 `pip`, 请先至pip官网 [pip user guide](https://pip.pypa.io/en/stable/installing/ "pip User Guide") 安装pip .
 
 ```bash
-# 安装 alibabacloud_eventbridge_util
-pip install alibabacloud_eventbridge_util
+# 安装 alibabacloud_eventbridge
+pip install alibabacloud_eventbridge
 ```
 
 ## 使用

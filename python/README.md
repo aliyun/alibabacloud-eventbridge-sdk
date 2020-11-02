@@ -1,7 +1,11 @@
 English | [简体中文](README-CN.md)
 ![](https://aliyunsdk-pages.alicdn.com/icons/AlibabaCloud.svg)
 
-## Alibaba Cloud EventBridge Util for Python
+## Alibaba Cloud EventBridge SDK for Python
+
+## Requirements
+
+- Python >= 3.4
 
 ## Installation
 - **Install with pip**
@@ -9,8 +13,8 @@ English | [简体中文](README-CN.md)
 Python SDK uses a common package management tool named `pip`. If pip is not installed, see the [pip user guide](https://pip.pypa.io/en/stable/installing/ "pip User Guide") to install pip.
 
 ```bash
-# Install the alibabacloud_eventbridge_util
-pip install alibabacloud_eventbridge_util
+# Install the alibabacloud_eventbridge
+pip install alibabacloud_eventbridge
 ```
 
 ## Usage
