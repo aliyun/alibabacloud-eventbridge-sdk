@@ -15,16 +15,16 @@ namespace Alibabacloud.Sample
     {
 
         /**
-         * Create client  初始化公共请求参数
-         */
+        * Create client  初始化公共请求参数
+        */
         public static AlibabaCloud.SDK.EventBridge.EventBridgeClient CreateClient()
         {
             AlibabaCloud.SDK.EventBridge.Models.Config config = new AlibabaCloud.SDK.EventBridge.Models.Config();
-            // 您的AccessKey ID
+            // AccessKey ID
             config.AccessKeyId = "<accessKeyId>";
-            // 您的AccessKey Secret
+            // AccessKey Secret
             config.AccessKeySecret = "<accessKeySecret>";
-            // 您的可用区ID
+            // 接入点
             config.Endpoint = "<endpoint>";
             return new AlibabaCloud.SDK.EventBridge.EventBridgeClient(config);
         }
@@ -35,9 +35,9 @@ namespace Alibabacloud.Sample
             {
                 AlibabaCloud.SDK.EventBridge.Models.CreateEventBusRequest createEventBusRequest = new AlibabaCloud.SDK.EventBridge.Models.CreateEventBusRequest();
                 createEventBusRequest.EventBusName = "demo-bus";
-                AlibabaCloud.SDK.EventBridge.Models.CreateEventBusResponse response = client.CreateEventBus(createEventBusRequest);
+                AlibabaCloud.SDK.EventBridge.Models.CreateEventBusResponse resp = client.CreateEventBus(createEventBusRequest);
                 Console.WriteLine("--------------------Create bus success --------------------");
-                Console.WriteLine(AlibabaCloud.TeaUtil.Common.ToJSONString(response.ToMap()));
+                Console.WriteLine(AlibabaCloud.TeaUtil.Common.ToJSONString(resp.ToMap()));
             }
             catch (TeaException error)
             {
@@ -46,7 +46,8 @@ namespace Alibabacloud.Sample
             catch (Exception _error)
             {
                 TeaException error = new TeaException(new Dictionary<string, object>
-                { { "message", _error.Message }
+                {
+                    { "message", _error.Message }
                 });
                 Console.WriteLine(error.Message);
             }
@@ -59,8 +60,9 @@ namespace Alibabacloud.Sample
                 //delete
                 AlibabaCloud.SDK.EventBridge.Models.DeleteEventBusRequest deleteEventBusRequest = new AlibabaCloud.SDK.EventBridge.Models.DeleteEventBusRequest();
                 deleteEventBusRequest.EventBusName = "demo-bus";
-                client.DeleteEventBus(deleteEventBusRequest);
+                AlibabaCloud.SDK.EventBridge.Models.DeleteEventBusResponse resp = client.DeleteEventBus(deleteEventBusRequest);
                 Console.WriteLine("--------------------Delete bus success --------------------");
+                Console.WriteLine(AlibabaCloud.TeaUtil.Common.ToJSONString(resp.ToMap()));
             }
             catch (TeaException error)
             {
@@ -69,7 +71,8 @@ namespace Alibabacloud.Sample
             catch (Exception _error)
             {
                 TeaException error = new TeaException(new Dictionary<string, object>
-                { { "message", _error.Message }
+                {
+                    { "message", _error.Message }
                 });
                 Console.WriteLine(error.Message);
             }
@@ -79,11 +82,11 @@ namespace Alibabacloud.Sample
         {
             try
             {
-                AlibabaCloud.SDK.EventBridge.Models.GetEventBusRequest describeEventBusRequest = new AlibabaCloud.SDK.EventBridge.Models.GetEventBusRequest();
-                describeEventBusRequest.EventBusName = "demo-bus";
-                AlibabaCloud.SDK.EventBridge.Models.GetEventBusResponse deScribeResponse = client.GetEventBus(describeEventBusRequest);
-                Console.WriteLine("--------------------describe bus success --------------------");
-                Console.WriteLine(AlibabaCloud.TeaUtil.Common.ToJSONString(deScribeResponse.ToMap()));
+                AlibabaCloud.SDK.EventBridge.Models.GetEventBusRequest getEventBusRequest = new AlibabaCloud.SDK.EventBridge.Models.GetEventBusRequest();
+                getEventBusRequest.EventBusName = "demo-bus";
+                AlibabaCloud.SDK.EventBridge.Models.GetEventBusResponse resp = client.GetEventBus(getEventBusRequest);
+                Console.WriteLine("--------------------get event bus success --------------------");
+                Console.WriteLine(AlibabaCloud.TeaUtil.Common.ToJSONString(resp.ToMap()));
             }
             catch (TeaException error)
             {
@@ -92,21 +95,22 @@ namespace Alibabacloud.Sample
             catch (Exception _error)
             {
                 TeaException error = new TeaException(new Dictionary<string, object>
-                { { "message", _error.Message }
+                {
+                    { "message", _error.Message }
                 });
                 Console.WriteLine(error.Message);
             }
         }
 
-        public static void ListEventBusSample(AlibabaCloud.SDK.EventBridge.EventBridgeClient client)
+        public static void ListEventBusesSample(AlibabaCloud.SDK.EventBridge.EventBridgeClient client)
         {
             try
             {
                 AlibabaCloud.SDK.EventBridge.Models.ListEventBusesRequest listEventBusesRequest = new AlibabaCloud.SDK.EventBridge.Models.ListEventBusesRequest();
                 listEventBusesRequest.Limit = 100;
-                AlibabaCloud.SDK.EventBridge.Models.ListEventBusesResponse response = client.ListEventBuses(listEventBusesRequest);
+                AlibabaCloud.SDK.EventBridge.Models.ListEventBusesResponse resp = client.ListEventBuses(listEventBusesRequest);
                 Console.WriteLine("--------------------list bus success --------------------");
-                Console.WriteLine(AlibabaCloud.TeaUtil.Common.ToJSONString(response.ToMap()));
+                Console.WriteLine(AlibabaCloud.TeaUtil.Common.ToJSONString(resp.ToMap()));
             }
             catch (TeaException error)
             {
@@ -115,7 +119,8 @@ namespace Alibabacloud.Sample
             catch (Exception _error)
             {
                 TeaException error = new TeaException(new Dictionary<string, object>
-                { { "message", _error.Message }
+                {
+                    { "message", _error.Message }
                 });
                 Console.WriteLine(error.Message);
             }
@@ -127,21 +132,41 @@ namespace Alibabacloud.Sample
             {
                 AlibabaCloud.SDK.EventBridge.Models.CreateRuleRequest createEventRuleRequest = new AlibabaCloud.SDK.EventBridge.Models.CreateRuleRequest();
                 AlibabaCloud.SDK.EventBridge.Models.TargetEntry targetEntry = new AlibabaCloud.SDK.EventBridge.Models.TargetEntry();
-                targetEntry.Id = "1234";
-                targetEntry.Endpoint = "http://www.baidu.com";
+                targetEntry.Id = "dingtalk.target";
+                targetEntry.Endpoint = "https://oapi.dingtalk.com/robot/send?access_token=1019d4a19e2ef6b2f***********396fc5e94814ed8460";
+                targetEntry.Type = "acs.dingtalk";
+                AlibabaCloud.SDK.EventBridge.Models.EBTargetParam param1 = new AlibabaCloud.SDK.EventBridge.Models.EBTargetParam();
+                param1.ResourceKey = "URL";
+                param1.Form = "CONSTANT";
+                param1.Value = "https://oapi.dingtalk.com/robot/send?access_token=1019d4a19e2ef6b2f***********396fc5e94814ed8460";
+                AlibabaCloud.SDK.EventBridge.Models.EBTargetParam param2 = new AlibabaCloud.SDK.EventBridge.Models.EBTargetParam();
+                param2.ResourceKey = "SecretKey";
+                param2.Form = "CONSTANT";
+                param2.Value = "SEC121a71ff304a65b4f7c**************1f4d9f6c1ca514300d15234";
+                AlibabaCloud.SDK.EventBridge.Models.EBTargetParam param3 = new AlibabaCloud.SDK.EventBridge.Models.EBTargetParam();
+                param3.ResourceKey = "Body";
+                param3.Form = "TEMPLATE";
+                param3.Value = "{\n    \"key\":\"$.source\",\n    \"value\":\"$.data\"\n}";
+                param3.Template = "{\"msgtype\": \"text\",\"text\": {\"content\": \"Hello：${key}\"}}";
+                List<AlibabaCloud.SDK.EventBridge.Models.EBTargetParam> paramList = new List<AlibabaCloud.SDK.EventBridge.Models.EBTargetParam>
+                {
+                    param1,
+                    param2,
+                    param3
+                };
+                targetEntry.ParamList = paramList;
                 List<AlibabaCloud.SDK.EventBridge.Models.TargetEntry> targetEntryList = new List<AlibabaCloud.SDK.EventBridge.Models.TargetEntry>
                 {
                     targetEntry
                 };
-                //targetEntryList[0] =targetEntry;
-                createEventRuleRequest.RuleName = "myRule3";
+                createEventRuleRequest.Targets = targetEntryList;
+                createEventRuleRequest.RuleName = "myRule";
                 createEventRuleRequest.EventBusName = "demo-bus";
                 createEventRuleRequest.FilterPattern = "{\"source\":[\"acs.oss\"],\"type\":[\"oss:ObjectCreated:UploadPart\"]}";
                 createEventRuleRequest.Status = "enable";
-                createEventRuleRequest.Targets = targetEntryList;
-                AlibabaCloud.SDK.EventBridge.Models.CreateRuleResponse response = client.CreateRule(createEventRuleRequest);
+                AlibabaCloud.SDK.EventBridge.Models.CreateRuleResponse resp = client.CreateRule(createEventRuleRequest);
                 Console.WriteLine("--------------------create rule success--------------------");
-                Console.WriteLine(AlibabaCloud.TeaUtil.Common.ToJSONString(response.ToMap()));
+                Console.WriteLine(AlibabaCloud.TeaUtil.Common.ToJSONString(resp.ToMap()));
             }
             catch (TeaException error)
             {
@@ -150,7 +175,8 @@ namespace Alibabacloud.Sample
             catch (Exception _error)
             {
                 TeaException error = new TeaException(new Dictionary<string, object>
-                { { "message", _error.Message }
+                {
+                    { "message", _error.Message }
                 });
                 Console.WriteLine(error.Message);
             }
@@ -161,10 +187,11 @@ namespace Alibabacloud.Sample
             try
             {
                 AlibabaCloud.SDK.EventBridge.Models.DeleteRuleRequest deleteRuleRequest = new AlibabaCloud.SDK.EventBridge.Models.DeleteRuleRequest();
-                deleteRuleRequest.RuleName = "myRule3";
+                deleteRuleRequest.RuleName = "myRule";
                 deleteRuleRequest.EventBusName = "demo-bus";
-                client.DeleteRule(deleteRuleRequest);
+                AlibabaCloud.SDK.EventBridge.Models.DeleteRuleResponse resp = client.DeleteRule(deleteRuleRequest);
                 Console.WriteLine("--------------------delete rule success--------------------");
+                Console.WriteLine(AlibabaCloud.TeaUtil.Common.ToJSONString(resp.ToMap()));
             }
             catch (TeaException error)
             {
@@ -173,7 +200,8 @@ namespace Alibabacloud.Sample
             catch (Exception _error)
             {
                 TeaException error = new TeaException(new Dictionary<string, object>
-                { { "message", _error.Message }
+                {
+                    { "message", _error.Message }
                 });
                 Console.WriteLine(error.Message);
             }
@@ -184,10 +212,11 @@ namespace Alibabacloud.Sample
             try
             {
                 AlibabaCloud.SDK.EventBridge.Models.EnableRuleRequest enableEventRuleRequest = new AlibabaCloud.SDK.EventBridge.Models.EnableRuleRequest();
-                enableEventRuleRequest.RuleName = "myRule3";
+                enableEventRuleRequest.RuleName = "myRule";
                 enableEventRuleRequest.EventBusName = "demo-bus";
-                client.EnableRule(enableEventRuleRequest);
+                AlibabaCloud.SDK.EventBridge.Models.EnableRuleResponse resp = client.EnableRule(enableEventRuleRequest);
                 Console.WriteLine("--------------------enable rule success--------------------");
+                Console.WriteLine(AlibabaCloud.TeaUtil.Common.ToJSONString(resp.ToMap()));
             }
             catch (TeaException error)
             {
@@ -196,7 +225,8 @@ namespace Alibabacloud.Sample
             catch (Exception _error)
             {
                 TeaException error = new TeaException(new Dictionary<string, object>
-                { { "message", _error.Message }
+                {
+                    { "message", _error.Message }
                 });
                 Console.WriteLine(error.Message);
             }
@@ -207,10 +237,11 @@ namespace Alibabacloud.Sample
             try
             {
                 AlibabaCloud.SDK.EventBridge.Models.DisableRuleRequest disableEventRuleRequest = new AlibabaCloud.SDK.EventBridge.Models.DisableRuleRequest();
-                disableEventRuleRequest.RuleName = "myRule3";
+                disableEventRuleRequest.RuleName = "myRule";
                 disableEventRuleRequest.EventBusName = "demo-bus";
-                client.DisableRule(disableEventRuleRequest);
+                AlibabaCloud.SDK.EventBridge.Models.DisableRuleResponse resp = client.DisableRule(disableEventRuleRequest);
                 Console.WriteLine("--------------------disable rule success--------------------");
+                Console.WriteLine(AlibabaCloud.TeaUtil.Common.ToJSONString(resp.ToMap()));
             }
             catch (TeaException error)
             {
@@ -219,21 +250,23 @@ namespace Alibabacloud.Sample
             catch (Exception _error)
             {
                 TeaException error = new TeaException(new Dictionary<string, object>
-                { { "message", _error.Message }
+                {
+                    { "message", _error.Message }
                 });
                 Console.WriteLine(error.Message);
             }
         }
 
-        public static void DescribeEventRuleSample(AlibabaCloud.SDK.EventBridge.EventBridgeClient client)
+        public static void GetEventRuleSample(AlibabaCloud.SDK.EventBridge.EventBridgeClient client)
         {
             try
             {
-                AlibabaCloud.SDK.EventBridge.Models.GetRuleRequest describeEventRuleRequest = new AlibabaCloud.SDK.EventBridge.Models.GetRuleRequest();
-                describeEventRuleRequest.RuleName = "myRule3";
-                describeEventRuleRequest.EventBusName = "demo-bus";
-                client.GetRule(describeEventRuleRequest);
-                Console.WriteLine("--------------------describe rule success--------------------");
+                AlibabaCloud.SDK.EventBridge.Models.GetRuleRequest getEventRuleRequest = new AlibabaCloud.SDK.EventBridge.Models.GetRuleRequest();
+                getEventRuleRequest.RuleName = "myRule";
+                getEventRuleRequest.EventBusName = "demo-bus";
+                AlibabaCloud.SDK.EventBridge.Models.GetRuleResponse resp = client.GetRule(getEventRuleRequest);
+                Console.WriteLine("--------------------get rule success--------------------");
+                Console.WriteLine(AlibabaCloud.TeaUtil.Common.ToJSONString(resp.ToMap()));
             }
             catch (TeaException error)
             {
@@ -242,20 +275,22 @@ namespace Alibabacloud.Sample
             catch (Exception _error)
             {
                 TeaException error = new TeaException(new Dictionary<string, object>
-                { { "message", _error.Message }
+                {
+                    { "message", _error.Message }
                 });
                 Console.WriteLine(error.Message);
             }
         }
 
-        public static void ListEventRuleSample(AlibabaCloud.SDK.EventBridge.EventBridgeClient client)
+        public static void ListEventRulesSample(AlibabaCloud.SDK.EventBridge.EventBridgeClient client)
         {
             try
             {
                 AlibabaCloud.SDK.EventBridge.Models.ListRulesRequest listEventRulesRequest = new AlibabaCloud.SDK.EventBridge.Models.ListRulesRequest();
                 listEventRulesRequest.EventBusName = "demo-bus";
-                AlibabaCloud.SDK.EventBridge.Models.ListRulesResponse response = client.ListRules(listEventRulesRequest);
+                AlibabaCloud.SDK.EventBridge.Models.ListRulesResponse resp = client.ListRules(listEventRulesRequest);
                 Console.WriteLine("--------------------listRules rule success--------------------");
+                Console.WriteLine(AlibabaCloud.TeaUtil.Common.ToJSONString(resp.ToMap()));
             }
             catch (TeaException error)
             {
@@ -264,7 +299,8 @@ namespace Alibabacloud.Sample
             catch (Exception _error)
             {
                 TeaException error = new TeaException(new Dictionary<string, object>
-                { { "message", _error.Message }
+                {
+                    { "message", _error.Message }
                 });
                 Console.WriteLine(error.Message);
             }
@@ -276,10 +312,11 @@ namespace Alibabacloud.Sample
             {
                 AlibabaCloud.SDK.EventBridge.Models.UpdateRuleRequest updateEventRuleRequest = new AlibabaCloud.SDK.EventBridge.Models.UpdateRuleRequest();
                 updateEventRuleRequest.EventBusName = "demo-bus";
-                updateEventRuleRequest.RuleName = "myRule3";
+                updateEventRuleRequest.RuleName = "myRule";
                 updateEventRuleRequest.FilterPattern = "{\"source\":[\"acs.oss\"],\"type\":[\"oss:BucketQueried:GetBucketStat\"]}";
-                client.UpdateRule(updateEventRuleRequest);
+                AlibabaCloud.SDK.EventBridge.Models.UpdateRuleResponse resp = client.UpdateRule(updateEventRuleRequest);
                 Console.WriteLine("--------------------update rule success--------------------");
+                Console.WriteLine(AlibabaCloud.TeaUtil.Common.ToJSONString(resp.ToMap()));
             }
             catch (TeaException error)
             {
@@ -288,7 +325,8 @@ namespace Alibabacloud.Sample
             catch (Exception _error)
             {
                 TeaException error = new TeaException(new Dictionary<string, object>
-                { { "message", _error.Message }
+                {
+                    { "message", _error.Message }
                 });
                 Console.WriteLine(error.Message);
             }
@@ -299,18 +337,24 @@ namespace Alibabacloud.Sample
             try
             {
                 AlibabaCloud.SDK.EventBridge.Models.TestEventPatternRequest request = new AlibabaCloud.SDK.EventBridge.Models.TestEventPatternRequest();
-                string pattern = "{\n" + "    \"source\": [\"acs.oss\"],\n" + "    \"data\": {\n" + "      \"b\": [1]\n" + "    }\n" + "}";
-                string jsonData = "{\n" + "        \"id\":\"51efe8e2-841f-4900-8ff5-3c6dfae1060e\",\n" +
-                    "        \"source\":\"acs.oss\",\n" + "        \"type\":\"oss:ObjectCreated:PostObject\",\n" +
-                    "        \"dataschema\":\"http://taobao.com/test.json\",\n" +
-                    "        \"subject\":\"acs:oss:cn-hangzhou:1234567:xls-papk/game_apk/123.jpg\",\n" +
-                    "        \"aliyuneventbusname\":\"demo-bus\",\n" + "        \"data\":{\n" +
-                    "            \"a\":\"test\",\n" + "            \"b\":1\n" + "        }\n" + "}";
+                string pattern = "{\n    \"source\": [\"acs.oss\"],\n    \"data\": {\n      \"b\": [1]\n    }\n}";
+                string jsonData = "{" + 
+"        \"id\":\"51efe8e2-841f-4900-8ff5-3c6dfae1060e\"," + 
+"        \"source\":\"acs.oss\"," + 
+"        \"type\":\"oss:ObjectCreated:PostObject\"," + 
+"        \"dataschema\":\"http://taobao.com/test.json\"," + 
+"        \"subject\":\"acs:oss:cn-hangzhou:1234567:xls-papk/game_apk/123.jpg\"," + 
+"        \"aliyuneventbusname\":\"demo-bus\"," + 
+"        \"data\":{" + 
+"            \"a\":\"test\"," + 
+"            \"b\":1" + 
+"        }" + 
+"}";
                 request.Event = jsonData;
                 request.EventPattern = pattern;
-                AlibabaCloud.SDK.EventBridge.Models.TestEventPatternResponse testEventPatternResponse = client.TestEventPattern(request);
+                AlibabaCloud.SDK.EventBridge.Models.TestEventPatternResponse resp = client.TestEventPattern(request);
                 Console.WriteLine("--------------------test event pattern --------------------");
-                Console.WriteLine(AlibabaCloud.TeaUtil.Common.ToJSONString(testEventPatternResponse.ToMap()));
+                Console.WriteLine(AlibabaCloud.TeaUtil.Common.ToJSONString(resp.ToMap()));
             }
             catch (TeaException error)
             {
@@ -319,7 +363,8 @@ namespace Alibabacloud.Sample
             catch (Exception _error)
             {
                 TeaException error = new TeaException(new Dictionary<string, object>
-                { { "message", _error.Message }
+                {
+                    { "message", _error.Message }
                 });
                 Console.WriteLine(error.Message);
             }
@@ -330,18 +375,24 @@ namespace Alibabacloud.Sample
             try
             {
                 AlibabaCloud.SDK.EventBridge.Models.TestEventPatternRequest request = new AlibabaCloud.SDK.EventBridge.Models.TestEventPatternRequest();
-                string pattern = "{\n" + "    \"source\": [\"acs.oss\"],\n" + "    \"data\": {\n" + "      \"b\": [2]\n" + "    }\n" + "}";
-                string jsonData = "{\n" + "        \"id\":\"51efe8e2-841f-4900-8ff5-3c6dfae1060e\",\n" +
-                    "        \"source\":\"acs.oss\",\n" + "        \"type\":\"oss:ObjectCreated:PostObject\",\n" +
-                    "        \"dataschema\":\"http://taobao.com/test.json\",\n" +
-                    "        \"subject\":\"acs:oss:cn-hangzhou:1234567:xls-papk/game_apk/123.jpg\",\n" +
-                    "        \"aliyuneventbusname\":\"demo-bus\",\n" + "        \"data\":{\n" +
-                    "            \"a\":\"test\",\n" + "            \"b\":1\n" + "        }\n" + "}";
+                string pattern = "{\n    \"source\": [\"acs.oss\"],\n    \"data\": {\n      \"b\": [2]\n    }\n}";
+                string jsonData = "{" + 
+"        \"id\":\"51efe8e2-841f-4900-8ff5-3c6dfae1060e\"," + 
+"        \"source\":\"acs.oss\",        " + 
+"        \"type\":\"oss:ObjectCreated:PostObject\"," + 
+"        \"dataschema\":\"http://taobao.com/test.json\"," + 
+"        \"subject\":\"acs:oss:cn-hangzhou:1234567:xls-papk/game_apk/123.jpg\"," + 
+"        \"aliyuneventbusname\":\"demo-bus\"," + 
+"        \"data\":{" + 
+"            \"a\":\"test\"," + 
+"            \"b\":1" + 
+"        }" + 
+"}";
                 request.Event = jsonData;
                 request.EventPattern = pattern;
-                AlibabaCloud.SDK.EventBridge.Models.TestEventPatternResponse testEventPatternResponse = client.TestEventPattern(request);
+                AlibabaCloud.SDK.EventBridge.Models.TestEventPatternResponse resp = client.TestEventPattern(request);
                 Console.WriteLine("--------------------test event pattern --------------------");
-                Console.WriteLine(AlibabaCloud.TeaUtil.Common.ToJSONString(testEventPatternResponse.ToMap()));
+                Console.WriteLine(AlibabaCloud.TeaUtil.Common.ToJSONString(resp.ToMap()));
             }
             catch (TeaException error)
             {
@@ -350,19 +401,20 @@ namespace Alibabacloud.Sample
             catch (Exception _error)
             {
                 TeaException error = new TeaException(new Dictionary<string, object>
-                { { "message", _error.Message }
+                {
+                    { "message", _error.Message }
                 });
                 Console.WriteLine(error.Message);
             }
         }
 
-        public static void AddTargetsSample(AlibabaCloud.SDK.EventBridge.EventBridgeClient client)
+        public static void CreateTargetsSample(AlibabaCloud.SDK.EventBridge.EventBridgeClient client)
         {
             try
             {
-                AlibabaCloud.SDK.EventBridge.Models.CreateTargetsRequest addTargetsRequest = new AlibabaCloud.SDK.EventBridge.Models.CreateTargetsRequest();
-                addTargetsRequest.EventBusName = "demo-bus";
-                addTargetsRequest.RuleName = "myRule3";
+                AlibabaCloud.SDK.EventBridge.Models.CreateTargetsRequest createTargetsRequest = new AlibabaCloud.SDK.EventBridge.Models.CreateTargetsRequest();
+                createTargetsRequest.EventBusName = "demo-bus";
+                createTargetsRequest.RuleName = "myRule";
                 AlibabaCloud.SDK.EventBridge.Models.TargetEntry targetEntry = new AlibabaCloud.SDK.EventBridge.Models.TargetEntry();
                 targetEntry.Id = "1234";
                 targetEntry.Endpoint = "http://www.baidu.com";
@@ -370,9 +422,9 @@ namespace Alibabacloud.Sample
                 {
                     targetEntry
                 };
-                addTargetsRequest.Targets = list;
-                AlibabaCloud.SDK.EventBridge.Models.CreateTargetsResponse response = client.CreateTargets(addTargetsRequest);
-                Console.WriteLine("--------------------Add targets success--------------------");
+                createTargetsRequest.Targets = list;
+                AlibabaCloud.SDK.EventBridge.Models.CreateTargetsResponse response = client.CreateTargets(createTargetsRequest);
+                Console.WriteLine("--------------------Create targets success--------------------");
                 Console.WriteLine(AlibabaCloud.TeaUtil.Common.ToJSONString(response.ToMap()));
             }
             catch (TeaException error)
@@ -382,7 +434,8 @@ namespace Alibabacloud.Sample
             catch (Exception _error)
             {
                 TeaException error = new TeaException(new Dictionary<string, object>
-                { { "message", _error.Message }
+                {
+                    { "message", _error.Message }
                 });
                 Console.WriteLine(error.Message);
             }
@@ -392,15 +445,15 @@ namespace Alibabacloud.Sample
         {
             try
             {
-                AlibabaCloud.SDK.EventBridge.Models.DeleteTargetsRequest removeTargetsResponse = new AlibabaCloud.SDK.EventBridge.Models.DeleteTargetsRequest();
-                removeTargetsResponse.EventBusName = "demo-bus";
-                removeTargetsResponse.RuleName = "myRule3";
+                AlibabaCloud.SDK.EventBridge.Models.DeleteTargetsRequest removeTargetsRequest = new AlibabaCloud.SDK.EventBridge.Models.DeleteTargetsRequest();
+                removeTargetsRequest.EventBusName = "demo-bus";
+                removeTargetsRequest.RuleName = "myRule";
                 List<string> list = new List<string>
                 {
-                    "1234"
+                    "dingtalk.target"
                 };
-                removeTargetsResponse.TargetIds = list;
-                AlibabaCloud.SDK.EventBridge.Models.DeleteTargetsResponse response = client.DeleteTargets(removeTargetsResponse);
+                removeTargetsRequest.TargetIds = list;
+                AlibabaCloud.SDK.EventBridge.Models.DeleteTargetsResponse response = client.DeleteTargets(removeTargetsRequest);
                 Console.WriteLine("--------------------remove targets success--------------------");
                 Console.WriteLine(AlibabaCloud.TeaUtil.Common.ToJSONString(response.ToMap()));
             }
@@ -411,7 +464,8 @@ namespace Alibabacloud.Sample
             catch (Exception _error)
             {
                 TeaException error = new TeaException(new Dictionary<string, object>
-                { { "message", _error.Message }
+                {
+                    { "message", _error.Message }
                 });
                 Console.WriteLine(error.Message);
             }
@@ -423,7 +477,7 @@ namespace Alibabacloud.Sample
             {
                 AlibabaCloud.SDK.EventBridge.Models.ListTargetsRequest listTargetsRequest = new AlibabaCloud.SDK.EventBridge.Models.ListTargetsRequest();
                 listTargetsRequest.EventBusName = "demo-bus";
-                listTargetsRequest.RuleName = "myRule3";
+                listTargetsRequest.RuleName = "myRule";
                 AlibabaCloud.SDK.EventBridge.Models.ListTargetsResponse response = client.ListTargets(listTargetsRequest);
                 Console.WriteLine("--------------------list targets success--------------------");
                 Console.WriteLine(AlibabaCloud.TeaUtil.Common.ToJSONString(response.ToMap()));
@@ -435,15 +489,16 @@ namespace Alibabacloud.Sample
             catch (Exception _error)
             {
                 TeaException error = new TeaException(new Dictionary<string, object>
-                { { "message", _error.Message }
+                {
+                    { "message", _error.Message }
                 });
                 Console.WriteLine(error.Message);
             }
         }
 
         /**
-         * PutEvents
-         */
+        * PutEvents
+        */
         public static void PutEvents(AlibabaCloud.SDK.EventBridge.EventBridgeClient client)
         {
             AlibabaCloud.SDK.EventBridge.Models.CloudEvent event_ = new AlibabaCloud.SDK.EventBridge.Models.CloudEvent();
@@ -457,7 +512,8 @@ namespace Alibabacloud.Sample
             event_.Subject = "1.0";
             event_.Type = "acs:oss:cn-hangzhou:1234567:xls-papk/game_apk/123.jpg";
             event_.Extensions = new Dictionary<string, object>
-            { { "aliyuneventbusname", "demo-bus" },
+            {
+                {"aliyuneventbusname", "demo-bus"},
             };
             try
             {
@@ -475,7 +531,8 @@ namespace Alibabacloud.Sample
             catch (Exception _error)
             {
                 TeaException error = new TeaException(new Dictionary<string, object>
-                { { "message", _error.Message }
+                {
+                    { "message", _error.Message }
                 });
                 Console.WriteLine(error.Message);
             }
@@ -487,16 +544,16 @@ namespace Alibabacloud.Sample
             Client.CreateEventBusSample(client);
             Client.PutEvents(client);
             Client.GetEventBusSample(client);
-            Client.ListEventBusSample(client);
+            Client.ListEventBusesSample(client);
             Client.CreateEventRuleSample(client);
             Client.EnableEventRuleSample(client);
             Client.DisableEventRuleSample(client);
-            Client.DescribeEventRuleSample(client);
-            Client.ListEventRuleSample(client);
+            Client.GetEventRuleSample(client);
+            Client.ListEventRulesSample(client);
             Client.UpdateEventRuleSample(client);
             Client.TestEventPattern_False(client);
             Client.TestEventPattern_True(client);
-            Client.AddTargetsSample(client);
+            Client.CreateTargetsSample(client);
             Client.ListTargetsSample(client);
             Client.RemoveTargetsSample(client);
             Client.DeleteEventRuleSample(client);

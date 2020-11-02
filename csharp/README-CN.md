@@ -59,8 +59,8 @@ namespace Alibabacloud.Sample
             {
                 event_
             });
-            AlibabaCloud.TeaConsole.Client.Log("--------------------Publish event to the aliyun EventBus--------------------");
-            AlibabaCloud.TeaConsole.Client.Log(AlibabaCloud.TeaUtil.Common.ToJSONString(resp.ToMap()));
+            Console.WriteLine("--------------------Publish event to the aliyun EventBus--------------------");
+            Console.WriteLine(AlibabaCloud.TeaUtil.Common.ToJSONString(resp.ToMap()));
         }
     }
 }
