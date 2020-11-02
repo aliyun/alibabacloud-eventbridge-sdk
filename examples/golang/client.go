@@ -2,8 +2,6 @@
 package main
 
 import (
-	"fmt"
-
 	eventbridge "github.com/alibabacloud-go/eventbridge-sdk/eventbridge"
 	console "github.com/alibabacloud-go/tea-console/client"
 	util "github.com/alibabacloud-go/tea-utils/service"
@@ -15,12 +13,12 @@ import (
  */
 func CreateClient() (_result *eventbridge.Client, _err error) {
 	config := &eventbridge.Config{}
-	// 您的AccessKey ID
-	config.AccessKeyId = tea.String("<accessKeyId>")
-	// 您的AccessKey Secret
-	config.AccessKeySecret = tea.String("<accessKeySecret>")
-	// 您的可用区ID
-	config.Endpoint = tea.String("<endpoint>")
+	// AccessKey ID
+	config.AccessKeyId = tea.String(`<accessKeyId>`)
+	// AccessKey Secret
+	config.AccessKeySecret = tea.String(`<accessKeySecret>`)
+	// 接入点
+	config.Endpoint = tea.String(`<endpoint>`)
 	_result = &eventbridge.Client{}
 	_result, _err = eventbridge.NewClient(config)
 	return _result, _err
@@ -34,19 +32,18 @@ func CreateEventBusSample(client *eventbridge.Client) (_err error) {
 			}
 		}()
 		createEventBusRequest := &eventbridge.CreateEventBusRequest{}
-		createEventBusRequest.EventBusName = tea.String("demo-bus")
-		response, _err := client.CreateEventBus(createEventBusRequest)
+		createEventBusRequest.EventBusName = tea.String(`demo-bus`)
+		resp, _err := client.CreateEventBus(createEventBusRequest)
 		if _err != nil {
 			return _err
 		}
 
-		console.Log(tea.String("--------------------Create bus success --------------------"))
-		console.Log(util.ToJSONString(tea.ToMap(response)))
+		console.Log(tea.String(`--------------------Create bus success --------------------`))
+		console.Log(util.ToJSONString(tea.ToMap(resp)))
 
 		return nil
 	}()
 
-	_err = tryErr
 	if tryErr != nil {
 		var error = &tea.SDKError{}
 		if _t, ok := tryErr.(*tea.SDKError); ok {
@@ -68,17 +65,18 @@ func DeleteEventBusSample(client *eventbridge.Client) (_err error) {
 		}()
 		//delete
 		deleteEventBusRequest := &eventbridge.DeleteEventBusRequest{}
-		deleteEventBusRequest.EventBusName = tea.String("demo-bus")
-		_, _err = client.DeleteEventBus(deleteEventBusRequest)
+		deleteEventBusRequest.EventBusName = tea.String(`demo-bus`)
+		resp, _err := client.DeleteEventBus(deleteEventBusRequest)
 		if _err != nil {
 			return _err
 		}
-		console.Log(tea.String("--------------------Delete bus success --------------------"))
+
+		console.Log(tea.String(`--------------------Delete bus success --------------------`))
+		console.Log(util.ToJSONString(tea.ToMap(resp)))
 
 		return nil
 	}()
 
-	_err = tryErr
 	if tryErr != nil {
 		var error = &tea.SDKError{}
 		if _t, ok := tryErr.(*tea.SDKError); ok {
@@ -98,20 +96,19 @@ func GetEventBusSample(client *eventbridge.Client) (_err error) {
 				_e = r
 			}
 		}()
-		describeEventBusRequest := &eventbridge.GetEventBusRequest{}
-		describeEventBusRequest.EventBusName = tea.String("demo-bus")
-		deScribeResponse, _err := client.GetEventBus(describeEventBusRequest)
+		getEventBusRequest := &eventbridge.GetEventBusRequest{}
+		getEventBusRequest.EventBusName = tea.String(`demo-bus`)
+		resp, _err := client.GetEventBus(getEventBusRequest)
 		if _err != nil {
 			return _err
 		}
 
-		console.Log(tea.String("--------------------describe bus success --------------------"))
-		console.Log(util.ToJSONString(tea.ToMap(deScribeResponse)))
+		console.Log(tea.String(`--------------------get event bus success --------------------`))
+		console.Log(util.ToJSONString(tea.ToMap(resp)))
 
 		return nil
 	}()
 
-	_err = tryErr
 	if tryErr != nil {
 		var error = &tea.SDKError{}
 		if _t, ok := tryErr.(*tea.SDKError); ok {
@@ -124,7 +121,7 @@ func GetEventBusSample(client *eventbridge.Client) (_err error) {
 	return _err
 }
 
-func ListEventBusSample(client *eventbridge.Client) (_err error) {
+func ListEventBusesSample(client *eventbridge.Client) (_err error) {
 	tryErr := func() (_e error) {
 		defer func() {
 			if r := tea.Recover(recover()); r != nil {
@@ -133,18 +130,17 @@ func ListEventBusSample(client *eventbridge.Client) (_err error) {
 		}()
 		listEventBusesRequest := &eventbridge.ListEventBusesRequest{}
 		listEventBusesRequest.Limit = tea.Int(100)
-		response, _err := client.ListEventBuses(listEventBusesRequest)
+		resp, _err := client.ListEventBuses(listEventBusesRequest)
 		if _err != nil {
 			return _err
 		}
 
-		console.Log(tea.String("--------------------list bus success --------------------"))
-		console.Log(util.ToJSONString(tea.ToMap(response)))
+		console.Log(tea.String(`--------------------list bus success --------------------`))
+		console.Log(util.ToJSONString(tea.ToMap(resp)))
 
 		return nil
 	}()
 
-	_err = tryErr
 	if tryErr != nil {
 		var error = &tea.SDKError{}
 		if _t, ok := tryErr.(*tea.SDKError); ok {
@@ -166,27 +162,41 @@ func CreateEventRuleSample(client *eventbridge.Client) (_err error) {
 		}()
 		createEventRuleRequest := &eventbridge.CreateRuleRequest{}
 		targetEntry := &eventbridge.TargetEntry{}
-		targetEntry.Id = tea.String("1234")
-		targetEntry.Endpoint = tea.String("http://www.baidu.com")
+		targetEntry.Id = tea.String(`dingtalk.target`)
+		targetEntry.Endpoint = tea.String(`https://oapi.dingtalk.com/robot/send?access_token=1019d4a19e2ef6b2f***********396fc5e94814ed8460`)
+		targetEntry.Type = tea.String(`acs.dingtalk`)
+		param1 := &eventbridge.EBTargetParam{}
+		param1.ResourceKey = tea.String(`URL`)
+		param1.Form = tea.String(`CONSTANT`)
+		param1.Value = tea.String(`https://oapi.dingtalk.com/robot/send?access_token=1019d4a19e2ef6b2f***********396fc5e94814ed8460`)
+		param2 := &eventbridge.EBTargetParam{}
+		param2.ResourceKey = tea.String(`SecretKey`)
+		param2.Form = tea.String(`CONSTANT`)
+		param2.Value = tea.String(`SEC121a71ff304a65b4f7c**************1f4d9f6c1ca514300d15234`)
+		param3 := &eventbridge.EBTargetParam{}
+		param3.ResourceKey = tea.String(`Body`)
+		param3.Form = tea.String(`TEMPLATE`)
+		param3.Value = tea.String("{\n    \"key\":\"$.source\",\n    \"value\":\"$.data\"\n}")
+		param3.Template = tea.String(`{"msgtype": "text","text": {"content": "Hello：${key}"}}`)
+		paramList := []*eventbridge.EBTargetParam{param1, param2, param3}
+		targetEntry.ParamList = paramList
 		targetEntryList := []*eventbridge.TargetEntry{targetEntry}
-		//targetEntryList[0] =targetEntry;
-		createEventRuleRequest.RuleName = tea.String("myRule3")
-		createEventRuleRequest.EventBusName = tea.String("demo-bus")
-		createEventRuleRequest.FilterPattern = tea.String("{\"source\":[\"acs.oss\"],\"type\":[\"oss:ObjectCreated:UploadPart\"]}")
-		createEventRuleRequest.Status = tea.String("enable")
 		createEventRuleRequest.Targets = targetEntryList
-		response, _err := client.CreateRule(createEventRuleRequest)
+		createEventRuleRequest.RuleName = tea.String(`myRule`)
+		createEventRuleRequest.EventBusName = tea.String(`demo-bus`)
+		createEventRuleRequest.FilterPattern = tea.String("{\"source\":[\"acs.oss\"],\"type\":[\"oss:ObjectCreated:UploadPart\"]}")
+		createEventRuleRequest.Status = tea.String(`enable`)
+		resp, _err := client.CreateRule(createEventRuleRequest)
 		if _err != nil {
 			return _err
 		}
 
-		console.Log(tea.String("--------------------create rule success--------------------"))
-		console.Log(util.ToJSONString(tea.ToMap(response)))
+		console.Log(tea.String(`--------------------create rule success--------------------`))
+		console.Log(util.ToJSONString(tea.ToMap(resp)))
 
 		return nil
 	}()
 
-	_err = tryErr
 	if tryErr != nil {
 		var error = &tea.SDKError{}
 		if _t, ok := tryErr.(*tea.SDKError); ok {
@@ -207,18 +217,19 @@ func DeleteEventRuleSample(client *eventbridge.Client) (_err error) {
 			}
 		}()
 		deleteRuleRequest := &eventbridge.DeleteRuleRequest{}
-		deleteRuleRequest.RuleName = tea.String("myRule3")
-		deleteRuleRequest.EventBusName = tea.String("demo-bus")
-		_, _err = client.DeleteRule(deleteRuleRequest)
+		deleteRuleRequest.RuleName = tea.String(`myRule`)
+		deleteRuleRequest.EventBusName = tea.String(`demo-bus`)
+		resp, _err := client.DeleteRule(deleteRuleRequest)
 		if _err != nil {
 			return _err
 		}
-		console.Log(tea.String("--------------------delete rule success--------------------"))
+
+		console.Log(tea.String(`--------------------delete rule success--------------------`))
+		console.Log(util.ToJSONString(tea.ToMap(resp)))
 
 		return nil
 	}()
 
-	_err = tryErr
 	if tryErr != nil {
 		var error = &tea.SDKError{}
 		if _t, ok := tryErr.(*tea.SDKError); ok {
@@ -239,18 +250,19 @@ func EnableEventRuleSample(client *eventbridge.Client) (_err error) {
 			}
 		}()
 		enableEventRuleRequest := &eventbridge.EnableRuleRequest{}
-		enableEventRuleRequest.RuleName = tea.String("myRule3")
-		enableEventRuleRequest.EventBusName = tea.String("demo-bus")
-		_, _err = client.EnableRule(enableEventRuleRequest)
+		enableEventRuleRequest.RuleName = tea.String(`myRule`)
+		enableEventRuleRequest.EventBusName = tea.String(`demo-bus`)
+		resp, _err := client.EnableRule(enableEventRuleRequest)
 		if _err != nil {
 			return _err
 		}
-		console.Log(tea.String("--------------------enable rule success--------------------"))
+
+		console.Log(tea.String(`--------------------enable rule success--------------------`))
+		console.Log(util.ToJSONString(tea.ToMap(resp)))
 
 		return nil
 	}()
 
-	_err = tryErr
 	if tryErr != nil {
 		var error = &tea.SDKError{}
 		if _t, ok := tryErr.(*tea.SDKError); ok {
@@ -271,18 +283,19 @@ func DisableEventRuleSample(client *eventbridge.Client) (_err error) {
 			}
 		}()
 		disableEventRuleRequest := &eventbridge.DisableRuleRequest{}
-		disableEventRuleRequest.RuleName = tea.String("myRule3")
-		disableEventRuleRequest.EventBusName = tea.String("demo-bus")
-		_, _err = client.DisableRule(disableEventRuleRequest)
+		disableEventRuleRequest.RuleName = tea.String(`myRule`)
+		disableEventRuleRequest.EventBusName = tea.String(`demo-bus`)
+		resp, _err := client.DisableRule(disableEventRuleRequest)
 		if _err != nil {
 			return _err
 		}
-		console.Log(tea.String("--------------------disable rule success--------------------"))
+
+		console.Log(tea.String(`--------------------disable rule success--------------------`))
+		console.Log(util.ToJSONString(tea.ToMap(resp)))
 
 		return nil
 	}()
 
-	_err = tryErr
 	if tryErr != nil {
 		var error = &tea.SDKError{}
 		if _t, ok := tryErr.(*tea.SDKError); ok {
@@ -295,26 +308,27 @@ func DisableEventRuleSample(client *eventbridge.Client) (_err error) {
 	return _err
 }
 
-func DescribeEventRuleSample(client *eventbridge.Client) (_err error) {
+func GetEventRuleSample(client *eventbridge.Client) (_err error) {
 	tryErr := func() (_e error) {
 		defer func() {
 			if r := tea.Recover(recover()); r != nil {
 				_e = r
 			}
 		}()
-		describeEventRuleRequest := &eventbridge.GetRuleRequest{}
-		describeEventRuleRequest.RuleName = tea.String("myRule3")
-		describeEventRuleRequest.EventBusName = tea.String("demo-bus")
-		_, _err = client.GetRule(describeEventRuleRequest)
+		getEventRuleRequest := &eventbridge.GetRuleRequest{}
+		getEventRuleRequest.RuleName = tea.String(`myRule`)
+		getEventRuleRequest.EventBusName = tea.String(`demo-bus`)
+		resp, _err := client.GetRule(getEventRuleRequest)
 		if _err != nil {
 			return _err
 		}
-		console.Log(tea.String("--------------------describe rule success--------------------"))
+
+		console.Log(tea.String(`--------------------get rule success--------------------`))
+		console.Log(util.ToJSONString(tea.ToMap(resp)))
 
 		return nil
 	}()
 
-	_err = tryErr
 	if tryErr != nil {
 		var error = &tea.SDKError{}
 		if _t, ok := tryErr.(*tea.SDKError); ok {
@@ -327,7 +341,7 @@ func DescribeEventRuleSample(client *eventbridge.Client) (_err error) {
 	return _err
 }
 
-func ListEventRuleSample(client *eventbridge.Client) (_err error) {
+func ListEventRulesSample(client *eventbridge.Client) (_err error) {
 	tryErr := func() (_e error) {
 		defer func() {
 			if r := tea.Recover(recover()); r != nil {
@@ -335,18 +349,18 @@ func ListEventRuleSample(client *eventbridge.Client) (_err error) {
 			}
 		}()
 		listEventRulesRequest := &eventbridge.ListRulesRequest{}
-		listEventRulesRequest.EventBusName = tea.String("demo-bus")
+		listEventRulesRequest.EventBusName = tea.String(`demo-bus`)
 		resp, _err := client.ListRules(listEventRulesRequest)
 		if _err != nil {
 			return _err
 		}
-		fmt.Println(resp)
-		console.Log(tea.String("--------------------listRules rule success--------------------"))
+
+		console.Log(tea.String(`--------------------listRules rule success--------------------`))
+		console.Log(util.ToJSONString(tea.ToMap(resp)))
 
 		return nil
 	}()
 
-	_err = tryErr
 	if tryErr != nil {
 		var error = &tea.SDKError{}
 		if _t, ok := tryErr.(*tea.SDKError); ok {
@@ -367,19 +381,20 @@ func UpdateEventRuleSample(client *eventbridge.Client) (_err error) {
 			}
 		}()
 		updateEventRuleRequest := &eventbridge.UpdateRuleRequest{}
-		updateEventRuleRequest.EventBusName = tea.String("demo-bus")
-		updateEventRuleRequest.RuleName = tea.String("myRule3")
+		updateEventRuleRequest.EventBusName = tea.String(`demo-bus`)
+		updateEventRuleRequest.RuleName = tea.String(`myRule`)
 		updateEventRuleRequest.FilterPattern = tea.String("{\"source\":[\"acs.oss\"],\"type\":[\"oss:BucketQueried:GetBucketStat\"]}")
-		_, _err = client.UpdateRule(updateEventRuleRequest)
+		resp, _err := client.UpdateRule(updateEventRuleRequest)
 		if _err != nil {
 			return _err
 		}
-		console.Log(tea.String("--------------------update rule success--------------------"))
+
+		console.Log(tea.String(`--------------------update rule success--------------------`))
+		console.Log(util.ToJSONString(tea.ToMap(resp)))
 
 		return nil
 	}()
 
-	_err = tryErr
 	if tryErr != nil {
 		var error = &tea.SDKError{}
 		if _t, ok := tryErr.(*tea.SDKError); ok {
@@ -400,27 +415,32 @@ func TestEventPattern_False(client *eventbridge.Client) (_err error) {
 			}
 		}()
 		request := &eventbridge.TestEventPatternRequest{}
-		pattern := tea.String("{\n" + "    \"source\": [\"acs.oss\"],\n" + "    \"data\": {\n" + "      \"b\": [1]\n" + "    }\n" + "}")
-		jsonData := tea.String("{\n" + "        \"id\":\"51efe8e2-841f-4900-8ff5-3c6dfae1060e\",\n" +
-			"        \"source\":\"acs.oss\",\n" + "        \"type\":\"oss:ObjectCreated:PostObject\",\n" +
-			"        \"dataschema\":\"http://taobao.com/test.json\",\n" +
-			"        \"subject\":\"acs:oss:cn-hangzhou:1234567:xls-papk/game_apk/123.jpg\",\n" +
-			"        \"aliyuneventbusname\":\"demo-bus\",\n" + "        \"data\":{\n" +
-			"            \"a\":\"test\",\n" + "            \"b\":1\n" + "        }\n" + "}")
+		pattern := tea.String("{\n    \"source\": [\"acs.oss\"],\n    \"data\": {\n      \"b\": [1]\n    }\n}")
+		jsonData := tea.String("{" +
+			"        \"id\":\"51efe8e2-841f-4900-8ff5-3c6dfae1060e\"," +
+			"        \"source\":\"acs.oss\"," +
+			"        \"type\":\"oss:ObjectCreated:PostObject\"," +
+			"        \"dataschema\":\"http://taobao.com/test.json\"," +
+			"        \"subject\":\"acs:oss:cn-hangzhou:1234567:xls-papk/game_apk/123.jpg\"," +
+			"        \"aliyuneventbusname\":\"demo-bus\"," +
+			"        \"data\":{" +
+			"            \"a\":\"test\"," +
+			"            \"b\":1" +
+			"        }" +
+			"}")
 		request.Event = jsonData
 		request.EventPattern = pattern
-		testEventPatternResponse, _err := client.TestEventPattern(request)
+		resp, _err := client.TestEventPattern(request)
 		if _err != nil {
 			return _err
 		}
 
-		console.Log(tea.String("--------------------test event pattern --------------------"))
-		console.Log(util.ToJSONString(tea.ToMap(testEventPatternResponse)))
+		console.Log(tea.String(`--------------------test event pattern --------------------`))
+		console.Log(util.ToJSONString(tea.ToMap(resp)))
 
 		return nil
 	}()
 
-	_err = tryErr
 	if tryErr != nil {
 		var error = &tea.SDKError{}
 		if _t, ok := tryErr.(*tea.SDKError); ok {
@@ -441,27 +461,32 @@ func TestEventPattern_True(client *eventbridge.Client) (_err error) {
 			}
 		}()
 		request := &eventbridge.TestEventPatternRequest{}
-		pattern := tea.String("{\n" + "    \"source\": [\"acs.oss\"],\n" + "    \"data\": {\n" + "      \"b\": [1]\n" + "    }\n" + "}")
-		jsonData := tea.String("{\n" + "        \"id\":\"51efe8e2-841f-4900-8ff5-3c6dfae1060e\",\n" +
-			"        \"source\":\"acs.oss\",\n" + "        \"type\":\"oss:ObjectCreated:PostObject\",\n" +
-			"        \"dataschema\":\"http://taobao.com/test.json\",\n" +
-			"        \"subject\":\"acs:oss:cn-hangzhou:1234567:xls-papk/game_apk/123.jpg\",\n" +
-			"        \"aliyuneventbusname\":\"demo-bus\",\n" + "        \"data\":{\n" +
-			"            \"a\":\"test\",\n" + "            \"b\":1\n" + "        }\n" + "}")
+		pattern := tea.String("{\n    \"source\": [\"acs.oss\"],\n    \"data\": {\n      \"b\": [2]\n" + "    }\n}")
+		jsonData := tea.String("{" +
+			"        \"id\":\"51efe8e2-841f-4900-8ff5-3c6dfae1060e\"," +
+			"        \"source\":\"acs.oss\",        " +
+			"        \"type\":\"oss:ObjectCreated:PostObject\"," +
+			"        \"dataschema\":\"http://taobao.com/test.json\"," +
+			"        \"subject\":\"acs:oss:cn-hangzhou:1234567:xls-papk/game_apk/123.jpg\"," +
+			"        \"aliyuneventbusname\":\"demo-bus\"," +
+			"        \"data\":{" +
+			"            \"a\":\"test\"," +
+			"            \"b\":1" +
+			"        }" +
+			"}")
 		request.Event = jsonData
 		request.EventPattern = pattern
-		testEventPatternResponse, _err := client.TestEventPattern(request)
+		resp, _err := client.TestEventPattern(request)
 		if _err != nil {
 			return _err
 		}
 
-		console.Log(tea.String("--------------------test event pattern --------------------"))
-		console.Log(util.ToJSONString(tea.ToMap(testEventPatternResponse)))
+		console.Log(tea.String(`--------------------test event pattern --------------------`))
+		console.Log(util.ToJSONString(tea.ToMap(resp)))
 
 		return nil
 	}()
 
-	_err = tryErr
 	if tryErr != nil {
 		var error = &tea.SDKError{}
 		if _t, ok := tryErr.(*tea.SDKError); ok {
@@ -474,33 +499,32 @@ func TestEventPattern_True(client *eventbridge.Client) (_err error) {
 	return _err
 }
 
-func AddTargetsSample(client *eventbridge.Client) (_err error) {
+func CreateTargetsSample(client *eventbridge.Client) (_err error) {
 	tryErr := func() (_e error) {
 		defer func() {
 			if r := tea.Recover(recover()); r != nil {
 				_e = r
 			}
 		}()
-		addTargetsRequest := &eventbridge.CreateTargetsRequest{}
-		addTargetsRequest.EventBusName = tea.String("demo-bus")
-		addTargetsRequest.RuleName = tea.String("myRule3")
+		createTargetsRequest := &eventbridge.CreateTargetsRequest{}
+		createTargetsRequest.EventBusName = tea.String(`demo-bus`)
+		createTargetsRequest.RuleName = tea.String(`myRule`)
 		targetEntry := &eventbridge.TargetEntry{}
-		targetEntry.Id = tea.String("1234")
-		targetEntry.Endpoint = tea.String("http://www.baidu.com")
+		targetEntry.Id = tea.String(`1234`)
+		targetEntry.Endpoint = tea.String(`http://www.baidu.com`)
 		list := []*eventbridge.TargetEntry{targetEntry}
-		addTargetsRequest.Targets = list
-		response, _err := client.CreateTargets(addTargetsRequest)
+		createTargetsRequest.Targets = list
+		response, _err := client.CreateTargets(createTargetsRequest)
 		if _err != nil {
 			return _err
 		}
 
-		console.Log(tea.String("--------------------Add targets success--------------------"))
+		console.Log(tea.String(`--------------------Create targets success--------------------`))
 		console.Log(util.ToJSONString(tea.ToMap(response)))
 
 		return nil
 	}()
 
-	_err = tryErr
 	if tryErr != nil {
 		var error = &tea.SDKError{}
 		if _t, ok := tryErr.(*tea.SDKError); ok {
@@ -520,23 +544,22 @@ func RemoveTargetsSample(client *eventbridge.Client) (_err error) {
 				_e = r
 			}
 		}()
-		removeTargetsResponse := &eventbridge.DeleteTargetsRequest{}
-		removeTargetsResponse.EventBusName = tea.String("demo-bus")
-		removeTargetsResponse.RuleName = tea.String("myRule3")
-		list := []*string{tea.String("1234")}
-		removeTargetsResponse.TargetIds = list
-		response, _err := client.DeleteTargets(removeTargetsResponse)
+		removeTargetsRequest := &eventbridge.DeleteTargetsRequest{}
+		removeTargetsRequest.EventBusName = tea.String(`demo-bus`)
+		removeTargetsRequest.RuleName = tea.String(`myRule`)
+		list := []*string{tea.String(`dingtalk.target`)}
+		removeTargetsRequest.TargetIds = list
+		response, _err := client.DeleteTargets(removeTargetsRequest)
 		if _err != nil {
 			return _err
 		}
 
-		console.Log(tea.String("--------------------remove targets success--------------------"))
+		console.Log(tea.String(`--------------------remove targets success--------------------`))
 		console.Log(util.ToJSONString(tea.ToMap(response)))
 
 		return nil
 	}()
 
-	_err = tryErr
 	if tryErr != nil {
 		var error = &tea.SDKError{}
 		if _t, ok := tryErr.(*tea.SDKError); ok {
@@ -557,20 +580,19 @@ func ListTargetsSample(client *eventbridge.Client) (_err error) {
 			}
 		}()
 		listTargetsRequest := &eventbridge.ListTargetsRequest{}
-		listTargetsRequest.EventBusName = tea.String("demo-bus")
-		listTargetsRequest.RuleName = tea.String("myRule3")
+		listTargetsRequest.EventBusName = tea.String(`demo-bus`)
+		listTargetsRequest.RuleName = tea.String(`myRule`)
 		response, _err := client.ListTargets(listTargetsRequest)
 		if _err != nil {
 			return _err
 		}
 
-		console.Log(tea.String("--------------------list targets success--------------------"))
+		console.Log(tea.String(`--------------------list targets success--------------------`))
 		console.Log(util.ToJSONString(tea.ToMap(response)))
 
 		return nil
 	}()
 
-	_err = tryErr
 	if tryErr != nil {
 		var error = &tea.SDKError{}
 		if _t, ok := tryErr.(*tea.SDKError); ok {
@@ -588,17 +610,17 @@ func ListTargetsSample(client *eventbridge.Client) (_err error) {
  */
 func PutEvents(client *eventbridge.Client) (_err error) {
 	event := &eventbridge.CloudEvent{}
-	event.Datacontenttype = tea.String("application/json")
-	event.Data = util.ToBytes(tea.String("test"))
-	event.Id = tea.String("a5074581-7e74-4e4c-868f-47e7afdf8445")
-	event.Source = tea.String("acs.oss")
-	event.Specversion = tea.String("1.0")
-	event.Type = tea.String("oss:ObjectCreated:PostObject")
-	event.Time = tea.String("2020-08-24T13:54:05.965Asia/Shanghai")
-	event.Subject = tea.String("1.0")
-	event.Type = tea.String("acs:oss:cn-hangzhou:1234567:xls-papk/game_apk/123.jpg")
+	event.Datacontenttype = tea.String(`application/json`)
+	event.Data = util.ToBytes(tea.String(`test`))
+	event.Id = tea.String(`a5074581-7e74-4e4c-868f-47e7afdf8445`)
+	event.Source = tea.String(`acs.oss`)
+	event.Specversion = tea.String(`1.0`)
+	event.Type = tea.String(`oss:ObjectCreated:PostObject`)
+	event.Time = tea.String(`2020-08-24T13:54:05.965Asia/Shanghai`)
+	event.Subject = tea.String(`1.0`)
+	event.Type = tea.String(`acs:oss:cn-hangzhou:1234567:xls-papk/game_apk/123.jpg`)
 	event.Extensions = map[string]interface{}{
-		"aliyuneventbusname": "demo-bus",
+		"aliyuneventbusname": `demo-bus`,
 	}
 	tryErr := func() (_e error) {
 		defer func() {
@@ -611,13 +633,12 @@ func PutEvents(client *eventbridge.Client) (_err error) {
 			return _err
 		}
 
-		console.Log(tea.String("--------------------Publish event to the aliyun EventBus--------------------"))
+		console.Log(tea.String(`--------------------Publish event to the aliyun EventBus--------------------`))
 		console.Log(util.ToJSONString(tea.ToMap(resp)))
 
 		return nil
 	}()
 
-	_err = tryErr
 	if tryErr != nil {
 		var error = &tea.SDKError{}
 		if _t, ok := tryErr.(*tea.SDKError); ok {
@@ -648,7 +669,7 @@ func main() {
 	if _err != nil {
 		panic(_err)
 	}
-	_err = ListEventBusSample(client)
+	_err = ListEventBusesSample(client)
 	if _err != nil {
 		panic(_err)
 	}
@@ -664,11 +685,11 @@ func main() {
 	if _err != nil {
 		panic(_err)
 	}
-	_err = DescribeEventRuleSample(client)
+	_err = GetEventRuleSample(client)
 	if _err != nil {
 		panic(_err)
 	}
-	_err = ListEventRuleSample(client)
+	_err = ListEventRulesSample(client)
 	if _err != nil {
 		panic(_err)
 	}
@@ -684,7 +705,7 @@ func main() {
 	if _err != nil {
 		panic(_err)
 	}
-	_err = AddTargetsSample(client)
+	_err = CreateTargetsSample(client)
 	if _err != nil {
 		panic(_err)
 	}
