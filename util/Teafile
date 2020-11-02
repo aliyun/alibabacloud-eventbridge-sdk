@@ -43,7 +43,7 @@
     "packageInfo": {
       "git": {
         "scope": "alibabacloud-sdk-cpp",
-        "project": "eventbrgidge-util"
+        "project": "eventbridge-util"
       }
     }
   }

@@ -5,7 +5,7 @@
 
 ![](https://aliyunsdk-pages.alicdn.com/icons/AlibabaCloud.svg)
 
-Alibabacloud EventBridgeUtil SDK 是基于 `[Darabonba DSL](https://github.com/aliyun/darabonba)` 解决方案，它是一种 OpenAPI 应用的领域特定语言。可以利用它为任意风格的接口生成多语言的 SDK、代码示例、测试用例、接口编排等。
+Alibabacloud EventBridgeUtil SDK 是基于 `[Darabonba DSL](https://github.com/aliyun/darabonba)` 解决方案的，它是一种 OpenAPI 应用领域的特定语言。可以利用它为任意风格的接口生成多语言的 SDK、代码示例、测试用例、接口编排等。
 
 ## Required Dependency Libraries
 
@@ -49,8 +49,8 @@ vcpkg install boost openssl-windows cpprestsdk
 ### Linux
 
 ```bash
-git clone https://github.com/alibabacloud-sdk-cpp/eventbrgidge-util.git
-cd eventbrgidge-util
+git clone https://github.com/alibabacloud-sdk-cpp/eventbridge-util.git
+cd eventbridge-util
 sh scripts/install.sh
 ```
 
@@ -59,7 +59,7 @@ sh scripts/install.sh
 1. 使用 [git-bash](https://git-scm.com/downloads) 执行以下命令，从 Github 克隆源码
 
   ```bash
-  git clone https://github.com/alibabacloud-sdk-cpp/eventbrgidge-util.git
+  git clone https://github.com/alibabacloud-sdk-cpp/eventbridge-util.git
   ```
 2. 使用 Visual Studio 进行编译:
   * 安装 [CMake](https://cmake.org/download/) 和 [Visual Studio](https://visualstudio.microsoft.com/zh-hans/)
@@ -78,7 +78,7 @@ sh scripts/install.sh
 
 ## 问题
 
-[提交 Issue](https://github.com/alibabacloud-sdk-cpp/eventbrgidge-util/issues/new/choose)，不符合指南的问题可能会立即关闭。
+[提交 Issue](https://github.com/alibabacloud-sdk-cpp/eventbridge-util/issues/new/choose)，不符合指南的问题可能会立即关闭。
 
 ## 相关
 
@@ -94,6 +94,6 @@ sh scripts/install.sh
 Copyright (c) 2009-present, Alibaba Cloud All rights reserved.
 
 [open-api]: https://api.aliyun.com
-[latest-release]: https://github.com/alibabacloud-sdk-cpp/eventbrgidge-util/releases
+[latest-release]: https://github.com/alibabacloud-sdk-cpp/eventbridge-util/releases
 [console]: https://home.console.aliyun.com
 [aliyun]: https://www.aliyun.com
