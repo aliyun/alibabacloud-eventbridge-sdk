@@ -58,7 +58,12 @@ jobs:
     - language: python
       python: 3.8
       env: TEA_UTIL_ENV="python"
-
+    - language: node_js
+      node_js: 12
+      env: TEA_UTIL_ENV="ts"
+    - language: node_js
+      node_js: 14
+      env: TEA_UTIL_ENV="ts"
 
 script:
   - bash ut.sh ${TEA_UTIL_ENV}

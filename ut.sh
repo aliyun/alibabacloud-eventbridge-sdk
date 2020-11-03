@@ -45,6 +45,7 @@ function run_csharp {
   # run tests
   cd ../
   dotnet test tests/ /p:AltCover=true || return 126
+  cd ../
 
   # upload code coverage report
   upload_codecov_report $basepath/util/csharp csharp
@@ -78,6 +79,14 @@ function run_cpp {
   upload_codecov_report util/cpp/cmake_build cpp
 }
 
+function run_ts {
+  cd $basepath/util/ts/ || return 126
+  npm install
+  npm run test-cov || return 126
+  cd ../
+  upload_codecov_report ts node_js
+}
+
 function contains {
   local value=$2
   for i in $1
@@ -105,6 +114,10 @@ elif [ "$lang" == "go" ]
 then
   echo "run golang"
   run_go
+elif [ "$lang" == "ts" ]
+then
+  echo "run ts"
+  run_ts
 elif [ "$lang" == "python" ]
 then
   echo "run python"
