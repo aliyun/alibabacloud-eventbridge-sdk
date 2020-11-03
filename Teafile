@@ -70,5 +70,13 @@
 				"LICENSE": "../LICENSE"
 			}
 		}
+	},
+	"cpp": {
+		"packageInfo": {
+			"git": {
+				"scope": "alibabacloud-sdk-cpp",
+				"project": "eventbridge"
+			}
+		}
 	}
 }

@@ -13,6 +13,7 @@
 - [Usage for Python](./python/README-CN.md)
 - [Usage for Java](./java/README-CN.md)
 - [Usage for C#](./csharp/README-CN.md)
+- [Usage for C++](./cpp/README-CN.md)
 
 ## 问题
 
