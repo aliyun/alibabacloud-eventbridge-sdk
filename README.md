@@ -14,6 +14,7 @@ English | [简体中文](README-CN.md)
 - [Usage for Python](./python/README.md)
 - [Usage for Java](./java/README.md)
 - [Usage for C#](./csharp/README.md)
+- [Usage for C++](./cpp/README.md)
 
 ## Issues
 
