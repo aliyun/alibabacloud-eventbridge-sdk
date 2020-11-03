@@ -14,6 +14,7 @@ use AlibabaCloud\SDK\EventBridge\Models\DeleteEventBusRequest;
 use AlibabaCloud\SDK\EventBridge\Models\DeleteRuleRequest;
 use AlibabaCloud\SDK\EventBridge\Models\DeleteTargetsRequest;
 use AlibabaCloud\SDK\EventBridge\Models\DisableRuleRequest;
+use AlibabaCloud\SDK\EventBridge\Models\EBTargetParam;
 use AlibabaCloud\SDK\EventBridge\Models\EnableRuleRequest;
 use AlibabaCloud\SDK\EventBridge\Models\GetEventBusRequest;
 use AlibabaCloud\SDK\EventBridge\Models\GetRuleRequest;
@@ -25,6 +26,7 @@ use AlibabaCloud\SDK\EventBridge\Models\TestEventPatternRequest;
 use AlibabaCloud\SDK\EventBridge\Models\UpdateRuleRequest;
 use AlibabaCloud\Tea\Console\Console;
 use AlibabaCloud\Tea\Exception\TeaError;
+use AlibabaCloud\Tea\Tea;
 use AlibabaCloud\Tea\Utils\Utils;
 use Exception;
 
@@ -38,26 +40,27 @@ class Client
     public static function createClient()
     {
         $config = new Config([]);
-        $config->accessKeyId = \getenv('accessKeyId');
-        $config->accessKeySecret = \getenv('ACCESS_KEY_SECRET');
-        $config->endpoint = \getenv('EVENT_BRIDGE_ENDPOINT');
+        // AccessKey ID
+        $config->accessKeyId = '<accessKeyId>';
+        // AccessKey Secret
+        $config->accessKeySecret = '<accessKeySecret>';
+        // 接入点
+        $config->endpoint = '<endpoint>';
 
         return new Eventbridge($config);
     }
 
     /**
      * @param Eventbridge $client
-     *
-     * @return void
      */
     public static function createEventBusSample($client)
     {
         try {
             $createEventBusRequest               = new CreateEventBusRequest([]);
             $createEventBusRequest->eventBusName = 'demo-bus';
-            $response                            = $client->createEventBus($createEventBusRequest);
+            $resp                                = $client->createEventBus($createEventBusRequest);
             Console::log('--------------------Create bus success --------------------');
-            Console::log(Utils::toJSONString($response->toMap()));
+            Console::log(Utils::toJSONString(Tea::merge($resp)));
         } catch (Exception $error) {
             if (!($error instanceof TeaError)) {
                 $error = new TeaError([], $error->getMessage(), $error->getCode(), $error);
@@ -68,8 +71,6 @@ class Client
 
     /**
      * @param Eventbridge $client
-     *
-     * @return void
      */
     public static function deleteEventBusSample($client)
     {
@@ -77,8 +78,9 @@ class Client
             // delete
             $deleteEventBusRequest               = new DeleteEventBusRequest([]);
             $deleteEventBusRequest->eventBusName = 'demo-bus';
-            $client->deleteEventBus($deleteEventBusRequest);
+            $resp                                = $client->deleteEventBus($deleteEventBusRequest);
             Console::log('--------------------Delete bus success --------------------');
+            Console::log(Utils::toJSONString(Tea::merge($resp)));
         } catch (Exception $error) {
             if (!($error instanceof TeaError)) {
                 $error = new TeaError([], $error->getMessage(), $error->getCode(), $error);
@@ -89,17 +91,15 @@ class Client
 
     /**
      * @param Eventbridge $client
-     *
-     * @return void
      */
     public static function getEventBusSample($client)
     {
         try {
-            $describeEventBusRequest               = new GetEventBusRequest([]);
-            $describeEventBusRequest->eventBusName = 'demo-bus';
-            $deScribeResponse                      = $client->getEventBus($describeEventBusRequest);
-            Console::log('--------------------describe bus success --------------------');
-            Console::log(Utils::toJSONString($deScribeResponse->toMap()));
+            $getEventBusRequest               = new GetEventBusRequest([]);
+            $getEventBusRequest->eventBusName = 'demo-bus';
+            $resp                             = $client->getEventBus($getEventBusRequest);
+            Console::log('--------------------get event bus success --------------------');
+            Console::log(Utils::toJSONString(Tea::merge($resp)));
         } catch (Exception $error) {
             if (!($error instanceof TeaError)) {
                 $error = new TeaError([], $error->getMessage(), $error->getCode(), $error);
@@ -110,17 +110,15 @@ class Client
 
     /**
      * @param Eventbridge $client
-     *
-     * @return void
      */
-    public static function listEventBusSample($client)
+    public static function listEventBusesSample($client)
     {
         try {
             $listEventBusesRequest        = new ListEventBusesRequest([]);
             $listEventBusesRequest->limit = 100;
-            $response                     = $client->listEventBuses($listEventBusesRequest);
+            $resp                         = $client->listEventBuses($listEventBusesRequest);
             Console::log('--------------------list bus success --------------------');
-            Console::log(Utils::toJSONString($response->toMap()));
+            Console::log(Utils::toJSONString(Tea::merge($resp)));
         } catch (Exception $error) {
             if (!($error instanceof TeaError)) {
                 $error = new TeaError([], $error->getMessage(), $error->getCode(), $error);
@@ -131,28 +129,45 @@ class Client
 
     /**
      * @param Eventbridge $client
-     *
-     * @return void
      */
     public static function createEventRuleSample($client)
     {
         try {
             $createEventRuleRequest = new CreateRuleRequest([]);
             $targetEntry            = new TargetEntry([]);
-            $targetEntry->id        = '1234';
-            $targetEntry->endpoint  = 'http://www.baidu.com';
+            $targetEntry->id        = 'dingtalk.target';
+            $targetEntry->endpoint  = 'https://oapi.dingtalk.com/robot/send?access_token=1019d4a19e2ef6b2f***********396fc5e94814ed8460';
+            $targetEntry->type      = 'acs.dingtalk';
+            $param1                 = new EBTargetParam([]);
+            $param1->resourceKey    = 'URL';
+            $param1->form           = 'CONSTANT';
+            $param1->value          = 'https://oapi.dingtalk.com/robot/send?access_token=1019d4a19e2ef6b2f***********396fc5e94814ed8460';
+            $param2                 = new EBTargetParam([]);
+            $param2->resourceKey    = 'SecretKey';
+            $param2->form           = 'CONSTANT';
+            $param2->value          = 'SEC121a71ff304a65b4f7c**************1f4d9f6c1ca514300d15234';
+            $param3                 = new EBTargetParam([]);
+            $param3->resourceKey    = 'Body';
+            $param3->form           = 'TEMPLATE';
+            $param3->value          = "{\n    \"key\":\"\$.source\",\n    \"value\":\"\$.data\"\n}";
+            $param3->template       = '{"msgtype": "text","text": {"content": "Hello：${key}"}}';
+            $paramList              = [
+                $param1,
+                $param2,
+                $param3,
+            ];
+            $targetEntry->paramList = $paramList;
             $targetEntryList        = [
                 $targetEntry,
             ];
-            // targetEntryList[0] =targetEntry;
-            $createEventRuleRequest->ruleName      = 'myRule3';
+            $createEventRuleRequest->targets       = $targetEntryList;
+            $createEventRuleRequest->ruleName      = 'myRule';
             $createEventRuleRequest->eventBusName  = 'demo-bus';
             $createEventRuleRequest->filterPattern = '{"source":["acs.oss"],"type":["oss:ObjectCreated:UploadPart"]}';
             $createEventRuleRequest->status        = 'enable';
-            $createEventRuleRequest->targets       = $targetEntryList;
-            $response                              = $client->createRule($createEventRuleRequest);
+            $resp                                  = $client->createRule($createEventRuleRequest);
             Console::log('--------------------create rule success--------------------');
-            Console::log(Utils::toJSONString($response->toMap()));
+            Console::log(Utils::toJSONString(Tea::merge($resp)));
         } catch (Exception $error) {
             if (!($error instanceof TeaError)) {
                 $error = new TeaError([], $error->getMessage(), $error->getCode(), $error);
@@ -163,17 +178,16 @@ class Client
 
     /**
      * @param Eventbridge $client
-     *
-     * @return void
      */
     public static function deleteEventRuleSample($client)
     {
         try {
             $deleteRuleRequest               = new DeleteRuleRequest([]);
-            $deleteRuleRequest->ruleName     = 'myRule3';
+            $deleteRuleRequest->ruleName     = 'myRule';
             $deleteRuleRequest->eventBusName = 'demo-bus';
-            $client->deleteRule($deleteRuleRequest);
+            $resp                            = $client->deleteRule($deleteRuleRequest);
             Console::log('--------------------delete rule success--------------------');
+            Console::log(Utils::toJSONString(Tea::merge($resp)));
         } catch (Exception $error) {
             if (!($error instanceof TeaError)) {
                 $error = new TeaError([], $error->getMessage(), $error->getCode(), $error);
@@ -184,17 +198,16 @@ class Client
 
     /**
      * @param Eventbridge $client
-     *
-     * @return void
      */
     public static function enableEventRuleSample($client)
     {
         try {
             $enableEventRuleRequest               = new EnableRuleRequest([]);
-            $enableEventRuleRequest->ruleName     = 'myRule3';
+            $enableEventRuleRequest->ruleName     = 'myRule';
             $enableEventRuleRequest->eventBusName = 'demo-bus';
-            $client->enableRule($enableEventRuleRequest);
+            $resp                                 = $client->enableRule($enableEventRuleRequest);
             Console::log('--------------------enable rule success--------------------');
+            Console::log(Utils::toJSONString(Tea::merge($resp)));
         } catch (Exception $error) {
             if (!($error instanceof TeaError)) {
                 $error = new TeaError([], $error->getMessage(), $error->getCode(), $error);
@@ -205,17 +218,16 @@ class Client
 
     /**
      * @param Eventbridge $client
-     *
-     * @return void
      */
     public static function disableEventRuleSample($client)
     {
         try {
             $disableEventRuleRequest               = new DisableRuleRequest([]);
-            $disableEventRuleRequest->ruleName     = 'myRule3';
+            $disableEventRuleRequest->ruleName     = 'myRule';
             $disableEventRuleRequest->eventBusName = 'demo-bus';
-            $client->disableRule($disableEventRuleRequest);
+            $resp                                  = $client->disableRule($disableEventRuleRequest);
             Console::log('--------------------disable rule success--------------------');
+            Console::log(Utils::toJSONString(Tea::merge($resp)));
         } catch (Exception $error) {
             if (!($error instanceof TeaError)) {
                 $error = new TeaError([], $error->getMessage(), $error->getCode(), $error);
@@ -226,17 +238,16 @@ class Client
 
     /**
      * @param Eventbridge $client
-     *
-     * @return void
      */
-    public static function describeEventRuleSample($client)
+    public static function getEventRuleSample($client)
     {
         try {
-            $describeEventRuleRequest               = new GetRuleRequest([]);
-            $describeEventRuleRequest->ruleName     = 'myRule3';
-            $describeEventRuleRequest->eventBusName = 'demo-bus';
-            $client->getRule($describeEventRuleRequest);
-            Console::log('--------------------describe rule success--------------------');
+            $getEventRuleRequest               = new GetRuleRequest([]);
+            $getEventRuleRequest->ruleName     = 'myRule';
+            $getEventRuleRequest->eventBusName = 'demo-bus';
+            $resp                              = $client->getRule($getEventRuleRequest);
+            Console::log('--------------------get rule success--------------------');
+            Console::log(Utils::toJSONString(Tea::merge($resp)));
         } catch (Exception $error) {
             if (!($error instanceof TeaError)) {
                 $error = new TeaError([], $error->getMessage(), $error->getCode(), $error);
@@ -247,16 +258,15 @@ class Client
 
     /**
      * @param Eventbridge $client
-     *
-     * @return void
      */
-    public static function listEventRuleSample($client)
+    public static function listEventRulesSample($client)
     {
         try {
             $listEventRulesRequest               = new ListRulesRequest([]);
             $listEventRulesRequest->eventBusName = 'demo-bus';
-            $response                            = $client->listRules($listEventRulesRequest);
+            $resp                                = $client->listRules($listEventRulesRequest);
             Console::log('--------------------listRules rule success--------------------');
+            Console::log(Utils::toJSONString(Tea::merge($resp)));
         } catch (Exception $error) {
             if (!($error instanceof TeaError)) {
                 $error = new TeaError([], $error->getMessage(), $error->getCode(), $error);
@@ -267,18 +277,17 @@ class Client
 
     /**
      * @param Eventbridge $client
-     *
-     * @return void
      */
     public static function updateEventRuleSample($client)
     {
         try {
             $updateEventRuleRequest                = new UpdateRuleRequest([]);
             $updateEventRuleRequest->eventBusName  = 'demo-bus';
-            $updateEventRuleRequest->ruleName      = 'myRule3';
+            $updateEventRuleRequest->ruleName      = 'myRule';
             $updateEventRuleRequest->filterPattern = '{"source":["acs.oss"],"type":["oss:BucketQueried:GetBucketStat"]}';
-            $client->updateRule($updateEventRuleRequest);
+            $resp                                  = $client->updateRule($updateEventRuleRequest);
             Console::log('--------------------update rule success--------------------');
+            Console::log(Utils::toJSONString(Tea::merge($resp)));
         } catch (Exception $error) {
             if (!($error instanceof TeaError)) {
                 $error = new TeaError([], $error->getMessage(), $error->getCode(), $error);
@@ -289,25 +298,29 @@ class Client
 
     /**
      * @param Eventbridge $client
-     *
-     * @return void
      */
     public static function testEventPattern_False($client)
     {
         try {
             $request  = new TestEventPatternRequest([]);
-            $pattern  = "{\n" + "    \"source\": [\"acs.oss\"],\n" + "    \"data\": {\n" + "      \"b\": [1]\n" + "    }\n" + '}';
-            $jsonData = "{\n" + "        \"id\":\"51efe8e2-841f-4900-8ff5-3c6dfae1060e\",\n" +
-            "        \"source\":\"acs.oss\",\n" + "        \"type\":\"oss:ObjectCreated:PostObject\",\n" +
-            "        \"dataschema\":\"http://taobao.com/test.json\",\n" +
-            "        \"subject\":\"acs:oss:cn-hangzhou:1234567:xls-papk/game_apk/123.jpg\",\n" +
-            "        \"aliyuneventbusname\":\"demo-bus\",\n" + "        \"data\":{\n" +
-            "            \"a\":\"test\",\n" + "            \"b\":1\n" + "        }\n" + '}';
-            $request->event           = $jsonData;
-            $request->eventPattern    = $pattern;
-            $testEventPatternResponse = $client->testEventPattern($request);
+            $pattern  = "{\n    \"source\": [\"acs.oss\"],\n    \"data\": {\n      \"b\": [1]\n    }\n}";
+            $jsonData = '{
+        "id":"51efe8e2-841f-4900-8ff5-3c6dfae1060e",
+        "source":"acs.oss",
+        "type":"oss:ObjectCreated:PostObject",
+        "dataschema":"http://taobao.com/test.json",
+        "subject":"acs:oss:cn-hangzhou:1234567:xls-papk/game_apk/123.jpg",
+        "aliyuneventbusname":"demo-bus",
+        "data":{
+            "a":"test",
+            "b":1
+        }
+}';
+            $request->event        = $jsonData;
+            $request->eventPattern = $pattern;
+            $resp                  = $client->testEventPattern($request);
             Console::log('--------------------test event pattern --------------------');
-            Console::log(Utils::toJSONString($testEventPatternResponse->toMap()));
+            Console::log(Utils::toJSONString(Tea::merge($resp)));
         } catch (Exception $error) {
             if (!($error instanceof TeaError)) {
                 $error = new TeaError([], $error->getMessage(), $error->getCode(), $error);
@@ -318,25 +331,29 @@ class Client
 
     /**
      * @param Eventbridge $client
-     *
-     * @return void
      */
     public static function testEventPattern_True($client)
     {
         try {
             $request  = new TestEventPatternRequest([]);
-            $pattern  = "{\n" + "    \"source\": [\"acs.oss\"],\n" + "    \"data\": {\n" + "      \"b\": [2]\n" + "    }\n" + '}';
-            $jsonData = "{\n" + "        \"id\":\"51efe8e2-841f-4900-8ff5-3c6dfae1060e\",\n" +
-            "        \"source\":\"acs.oss\",\n" + "        \"type\":\"oss:ObjectCreated:PostObject\",\n" +
-            "        \"dataschema\":\"http://taobao.com/test.json\",\n" +
-            "        \"subject\":\"acs:oss:cn-hangzhou:1234567:xls-papk/game_apk/123.jpg\",\n" +
-            "        \"aliyuneventbusname\":\"demo-bus\",\n" + "        \"data\":{\n" +
-            "            \"a\":\"test\",\n" + "            \"b\":1\n" + "        }\n" + '}';
-            $request->event           = $jsonData;
-            $request->eventPattern    = $pattern;
-            $testEventPatternResponse = $client->testEventPattern($request);
+            $pattern  = "{\n    \"source\": [\"acs.oss\"],\n    \"data\": {\n      \"b\": [2]\n    }\n}";
+            $jsonData = '{
+        "id":"51efe8e2-841f-4900-8ff5-3c6dfae1060e",
+        "source":"acs.oss",        
+        "type":"oss:ObjectCreated:PostObject",
+        "dataschema":"http://taobao.com/test.json",
+        "subject":"acs:oss:cn-hangzhou:1234567:xls-papk/game_apk/123.jpg",
+        "aliyuneventbusname":"demo-bus",
+        "data":{
+            "a":"test",
+            "b":1
+        }
+}';
+            $request->event        = $jsonData;
+            $request->eventPattern = $pattern;
+            $resp                  = $client->testEventPattern($request);
             Console::log('--------------------test event pattern --------------------');
-            Console::log(Utils::toJSONString($testEventPatternResponse->toMap()));
+            Console::log(Utils::toJSONString(Tea::merge($resp)));
         } catch (Exception $error) {
             if (!($error instanceof TeaError)) {
                 $error = new TeaError([], $error->getMessage(), $error->getCode(), $error);
@@ -347,25 +364,23 @@ class Client
 
     /**
      * @param Eventbridge $client
-     *
-     * @return void
      */
-    public static function addTargetsSample($client)
+    public static function createTargetsSample($client)
     {
         try {
-            $addTargetsRequest               = new CreateTargetsRequest([]);
-            $addTargetsRequest->eventBusName = 'demo-bus';
-            $addTargetsRequest->ruleName     = 'myRule3';
-            $targetEntry                     = new TargetEntry([]);
-            $targetEntry->id                 = '1234';
-            $targetEntry->endpoint           = 'http://www.baidu.com';
-            $list                            = [
+            $createTargetsRequest               = new CreateTargetsRequest([]);
+            $createTargetsRequest->eventBusName = 'demo-bus';
+            $createTargetsRequest->ruleName     = 'myRule';
+            $targetEntry                        = new TargetEntry([]);
+            $targetEntry->id                    = '1234';
+            $targetEntry->endpoint              = 'http://www.baidu.com';
+            $list                               = [
                 $targetEntry,
             ];
-            $addTargetsRequest->targets = $list;
-            $response                   = $client->createTargets($addTargetsRequest);
-            Console::log('--------------------Add targets success--------------------');
-            Console::log(Utils::toJSONString($response->toMap()));
+            $createTargetsRequest->targets = $list;
+            $response                      = $client->createTargets($createTargetsRequest);
+            Console::log('--------------------Create targets success--------------------');
+            Console::log(Utils::toJSONString(Tea::merge($response)));
         } catch (Exception $error) {
             if (!($error instanceof TeaError)) {
                 $error = new TeaError([], $error->getMessage(), $error->getCode(), $error);
@@ -376,22 +391,20 @@ class Client
 
     /**
      * @param Eventbridge $client
-     *
-     * @return void
      */
     public static function removeTargetsSample($client)
     {
         try {
-            $removeTargetsResponse               = new DeleteTargetsRequest([]);
-            $removeTargetsResponse->eventBusName = 'demo-bus';
-            $removeTargetsResponse->ruleName     = 'myRule3';
-            $list                                = [
-                '1234',
+            $removeTargetsRequest               = new DeleteTargetsRequest([]);
+            $removeTargetsRequest->eventBusName = 'demo-bus';
+            $removeTargetsRequest->ruleName     = 'myRule';
+            $list                               = [
+                'dingtalk.target',
             ];
-            $removeTargetsResponse->targetIds = $list;
-            $response                         = $client->deleteTargets($removeTargetsResponse);
+            $removeTargetsRequest->targetIds = $list;
+            $response                        = $client->deleteTargets($removeTargetsRequest);
             Console::log('--------------------remove targets success--------------------');
-            Console::log(Utils::toJSONString($response->toMap()));
+            Console::log(Utils::toJSONString(Tea::merge($response)));
         } catch (Exception $error) {
             if (!($error instanceof TeaError)) {
                 $error = new TeaError([], $error->getMessage(), $error->getCode(), $error);
@@ -402,18 +415,16 @@ class Client
 
     /**
      * @param Eventbridge $client
-     *
-     * @return void
      */
     public static function listTargetsSample($client)
     {
         try {
             $listTargetsRequest               = new ListTargetsRequest([]);
             $listTargetsRequest->eventBusName = 'demo-bus';
-            $listTargetsRequest->ruleName     = 'myRule3';
+            $listTargetsRequest->ruleName     = 'myRule';
             $response                         = $client->listTargets($listTargetsRequest);
             Console::log('--------------------list targets success--------------------');
-            Console::log(Utils::toJSONString($response->toMap()));
+            Console::log(Utils::toJSONString(Tea::merge($response)));
         } catch (Exception $error) {
             if (!($error instanceof TeaError)) {
                 $error = new TeaError([], $error->getMessage(), $error->getCode(), $error);
@@ -426,8 +437,6 @@ class Client
      * PutEvents.
      *
      * @param Eventbridge $client
-     *
-     * @return void
      */
     public static function PutEvents($client)
     {
@@ -444,12 +453,13 @@ class Client
         $event->extensions      = [
             'aliyuneventbusname' => 'demo-bus',
         ];
+
         try {
             $resp = $client->putEvents([
                 $event,
             ]);
             Console::log('--------------------Publish event to the aliyun EventBus--------------------');
-            Console::log(Utils::toJSONString($resp->toMap()));
+            Console::log(Utils::toJSONString(Tea::merge($resp)));
         } catch (Exception $error) {
             if (!($error instanceof TeaError)) {
                 $error = new TeaError([], $error->getMessage(), $error->getCode(), $error);
@@ -460,8 +470,6 @@ class Client
 
     /**
      * @param string[] $args
-     *
-     * @return void
      */
     public static function main($args)
     {
@@ -469,16 +477,16 @@ class Client
         self::createEventBusSample($client);
         self::PutEvents($client);
         self::getEventBusSample($client);
-        self::listEventBusSample($client);
+        self::listEventBusesSample($client);
         self::createEventRuleSample($client);
         self::enableEventRuleSample($client);
         self::disableEventRuleSample($client);
-        self::describeEventRuleSample($client);
-        self::listEventRuleSample($client);
+        self::getEventRuleSample($client);
+        self::listEventRulesSample($client);
         self::updateEventRuleSample($client);
         self::testEventPattern_False($client);
         self::testEventPattern_True($client);
-        self::addTargetsSample($client);
+        self::createTargetsSample($client);
         self::listTargetsSample($client);
         self::removeTargetsSample($client);
         self::deleteEventRuleSample($client);

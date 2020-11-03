@@ -1,5 +1,5 @@
 {
-  "name": "alibabacloud/eventbridge",
+  "name": "alibabacloud/eventbridge-example",
   "description": "Alibaba Cloud EventBridge Sample Library for PHP",
   "type": "library",
   "license": "Apache-2.0",
