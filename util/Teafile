@@ -15,7 +15,8 @@
     "python": "alibabacloud_eventbridge_util:0.0.3",
     "csharp": "AlibabaCloud.EventBridgeUtil:0.0.5",
     "php": "alibabacloud/eventbrgidge-util:^0.1.0",
-    "cpp": "alibabacloud-sdk-cpp/eventbrgidge-util:master"
+    "cpp": "alibabacloud-sdk-cpp/eventbrgidge-util:master",
+    "ts": "@alicloud/eventbridge-util:^1.0.0"
   },
   "python": {
     "package": "alibabacloud_eventbridge_util",
