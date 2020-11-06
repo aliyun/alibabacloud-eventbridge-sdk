@@ -1,4 +1,4 @@
-find_package(alibabacloud_event_bridge_util ${alibabacloud_event_bridge_util_MINIMUM_REQUIRED} QUIET COMPONENTS ${alibabacloud_event_bridge_util_COMPONENTS_REQUIRED})
+find_package(alibabacloud_event_bridge_util QUIET)
 
 if(alibabacloud_event_bridge_util_FOUND)
   message(STATUS "Found alibabacloud_event_bridge_util version ${alibabacloud_event_bridge_util_VERSION}")
@@ -12,14 +12,14 @@ else()
     GIT_TAG master
     CMAKE_ARGS
       -DENABLE_UNIT_TESTS:BOOL="0")
-  
+
   FetchContent_GetProperties(_alibabacloud_event_bridge_util)
   if(NOT _alibabacloud_event_bridge_util_POPULATED)
     FetchContent_Populate(_alibabacloud_event_bridge_util)
     message(STATUS "Added alibabacloud_event_bridge_util source : ${_alibabacloud_event_bridge_util_SOURCE_DIR}")
     message(STATUS "Added alibabacloud_event_bridge_util binary : ${_alibabacloud_event_bridge_util_BINARY_DIR}")
     add_subdirectory(
-      ${_alibabacloud_event_bridge_util_SOURCE_DIR} 
+      ${_alibabacloud_event_bridge_util_SOURCE_DIR}
       ${_alibabacloud_event_bridge_util_BINARY_DIR}
     )
   endif()

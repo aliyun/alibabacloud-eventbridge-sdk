@@ -19,7 +19,8 @@ namespace Alibabacloud_EventBridge {
 class Config : public Darabonba::Model {
 public:
   Config() {}
-  explicit Config(const std::map<string, boost::any> &config) : Darabonba::Model(config) {
+  explicit Config(const std::map<string, boost::any> &config)
+      : Darabonba::Model(config) {
     fromMap(config);
   };
 
@@ -70,13 +71,16 @@ public:
 
   void fromMap(map<string, boost::any> m) override {
     if (m.find("accessKeyId") != m.end()) {
-      accessKeyId = make_shared<string>(boost::any_cast<string>(m["accessKeyId"]));
+      accessKeyId =
+          make_shared<string>(boost::any_cast<string>(m["accessKeyId"]));
     }
     if (m.find("accessKeySecret") != m.end()) {
-      accessKeySecret = make_shared<string>(boost::any_cast<string>(m["accessKeySecret"]));
+      accessKeySecret =
+          make_shared<string>(boost::any_cast<string>(m["accessKeySecret"]));
     }
     if (m.find("securityToken") != m.end()) {
-      securityToken = make_shared<string>(boost::any_cast<string>(m["securityToken"]));
+      securityToken =
+          make_shared<string>(boost::any_cast<string>(m["securityToken"]));
     }
     if (m.find("protocol") != m.end()) {
       protocol = make_shared<string>(boost::any_cast<string>(m["protocol"]));
@@ -88,13 +92,15 @@ public:
       readTimeout = make_shared<int>(boost::any_cast<int>(m["readTimeout"]));
     }
     if (m.find("connectTimeout") != m.end()) {
-      connectTimeout = make_shared<int>(boost::any_cast<int>(m["connectTimeout"]));
+      connectTimeout =
+          make_shared<int>(boost::any_cast<int>(m["connectTimeout"]));
     }
     if (m.find("httpProxy") != m.end()) {
       httpProxy = make_shared<string>(boost::any_cast<string>(m["httpProxy"]));
     }
     if (m.find("httpsProxy") != m.end()) {
-      httpsProxy = make_shared<string>(boost::any_cast<string>(m["httpsProxy"]));
+      httpsProxy =
+          make_shared<string>(boost::any_cast<string>(m["httpsProxy"]));
     }
     if (m.find("endpoint") != m.end()) {
       endpoint = make_shared<string>(boost::any_cast<string>(m["endpoint"]));
@@ -126,7 +132,8 @@ public:
 class PutEventsResponseEntry : public Darabonba::Model {
 public:
   PutEventsResponseEntry() {}
-  explicit PutEventsResponseEntry(const std::map<string, boost::any> &config) : Darabonba::Model(config) {
+  explicit PutEventsResponseEntry(const std::map<string, boost::any> &config)
+      : Darabonba::Model(config) {
     fromMap(config);
   };
 
@@ -160,7 +167,8 @@ public:
       errorCode = make_shared<string>(boost::any_cast<string>(m["ErrorCode"]));
     }
     if (m.find("ErrorMessage") != m.end()) {
-      errorMessage = make_shared<string>(boost::any_cast<string>(m["ErrorMessage"]));
+      errorMessage =
+          make_shared<string>(boost::any_cast<string>(m["ErrorMessage"]));
     }
   }
 
@@ -174,26 +182,33 @@ public:
 class CloudEvent : public Darabonba::Model {
 public:
   CloudEvent() {}
-  explicit CloudEvent(const std::map<string, boost::any> &config) : Darabonba::Model(config) {
+  explicit CloudEvent(const std::map<string, boost::any> &config)
+      : Darabonba::Model(config) {
     fromMap(config);
   };
 
   void validate() override {
     if (!id) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("id is required.")));
+      BOOST_THROW_EXCEPTION(
+          boost::enable_error_info(std::runtime_error("id is required.")));
     }
     if (!source) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("source is required.")));
+      BOOST_THROW_EXCEPTION(
+          boost::enable_error_info(std::runtime_error("source is required.")));
     }
     Darabonba::Model::validateMaxLength("source", source, 128);
     if (!type) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("type is required.")));
+      BOOST_THROW_EXCEPTION(
+          boost::enable_error_info(std::runtime_error("type is required.")));
     }
     Darabonba::Model::validateMaxLength("type", type, 64);
     Darabonba::Model::validateMaxLength("time", time, 64);
-    Darabonba::Model::validatePattern("time", time, "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{3}[\\\\s\\\\S]*");
+    Darabonba::Model::validatePattern("time", time,
+                                      "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-"
+                                      "9]{2}:[0-9]{2}.[0-9]{3}[\\\\s\\\\S]*");
     if (!extensions) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("extensions is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("extensions is required.")));
     }
   }
 
@@ -240,16 +255,19 @@ public:
       source = make_shared<string>(boost::any_cast<string>(m["source"]));
     }
     if (m.find("specversion") != m.end()) {
-      specversion = make_shared<string>(boost::any_cast<string>(m["specversion"]));
+      specversion =
+          make_shared<string>(boost::any_cast<string>(m["specversion"]));
     }
     if (m.find("type") != m.end()) {
       type = make_shared<string>(boost::any_cast<string>(m["type"]));
     }
     if (m.find("datacontenttype") != m.end()) {
-      datacontenttype = make_shared<string>(boost::any_cast<string>(m["datacontenttype"]));
+      datacontenttype =
+          make_shared<string>(boost::any_cast<string>(m["datacontenttype"]));
     }
     if (m.find("dataschema") != m.end()) {
-      dataschema = make_shared<string>(boost::any_cast<string>(m["dataschema"]));
+      dataschema =
+          make_shared<string>(boost::any_cast<string>(m["dataschema"]));
     }
     if (m.find("subject") != m.end()) {
       subject = make_shared<string>(boost::any_cast<string>(m["subject"]));
@@ -258,15 +276,17 @@ public:
       time = make_shared<string>(boost::any_cast<string>(m["time"]));
     }
     if (m.find("extensions") != m.end()) {
-      map<string, boost::any> map1 = boost::any_cast<map<string, boost::any>>(m["extensions"]);
+      map<string, boost::any> map1 =
+          boost::any_cast<map<string, boost::any>>(m["extensions"]);
       map<string, boost::any> toMap1;
-      for (auto item:map1) {
-         toMap1[item.first] = boost::any_cast<boost::any>(item.second);
+      for (auto item : map1) {
+        toMap1[item.first] = boost::any_cast<boost::any>(item.second);
       }
       extensions = make_shared<map<string, boost::any>>(toMap1);
     }
     if (m.find("data") != m.end()) {
-      data = make_shared<vector<uint8_t>>(boost::any_cast<vector<uint8_t>>(m["data"]));
+      data = make_shared<vector<uint8_t>>(
+          boost::any_cast<vector<uint8_t>>(m["data"]));
     }
   }
 
@@ -286,16 +306,19 @@ public:
 class PutEventsResponse : public Darabonba::Model {
 public:
   PutEventsResponse() {}
-  explicit PutEventsResponse(const std::map<string, boost::any> &config) : Darabonba::Model(config) {
+  explicit PutEventsResponse(const std::map<string, boost::any> &config)
+      : Darabonba::Model(config) {
     fromMap(config);
   };
 
   void validate() override {
     if (!requestId) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("requestId is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("requestId is required.")));
     }
     if (!resourceOwnerAccountId) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("resourceOwnerAccountId is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("resourceOwnerAccountId is required.")));
     }
   }
 
@@ -312,7 +335,7 @@ public:
     }
     if (entryList) {
       vector<boost::any> temp1;
-      for(auto item1:*entryList){
+      for (auto item1 : *entryList) {
         temp1.push_back(boost::any(item1.toMap()));
       }
       res["EntryList"] = boost::any(temp1);
@@ -325,15 +348,17 @@ public:
       requestId = make_shared<string>(boost::any_cast<string>(m["RequestId"]));
     }
     if (m.find("ResourceOwnerAccountId") != m.end()) {
-      resourceOwnerAccountId = make_shared<string>(boost::any_cast<string>(m["ResourceOwnerAccountId"]));
+      resourceOwnerAccountId = make_shared<string>(
+          boost::any_cast<string>(m["ResourceOwnerAccountId"]));
     }
     if (m.find("FailedEntryCount") != m.end()) {
-      failedEntryCount = make_shared<int>(boost::any_cast<int>(m["FailedEntryCount"]));
+      failedEntryCount =
+          make_shared<int>(boost::any_cast<int>(m["FailedEntryCount"]));
     }
     if (m.find("EntryList") != m.end()) {
       if (typeid(vector<boost::any>).name() == m["EntryList"].type().name()) {
         vector<PutEventsResponseEntry> expect1;
-        for(auto item1:boost::any_cast<vector<boost::any>>(m["EntryList"])){
+        for (auto item1 : boost::any_cast<vector<boost::any>>(m["EntryList"])) {
           if (typeid(map<string, boost::any>).name() == item1.type().name()) {
             PutEventsResponseEntry model2;
             model2.fromMap(boost::any_cast<map<string, boost::any>>(item1));
@@ -355,13 +380,15 @@ public:
 class CreateEventBusRequest : public Darabonba::Model {
 public:
   CreateEventBusRequest() {}
-  explicit CreateEventBusRequest(const std::map<string, boost::any> &config) : Darabonba::Model(config) {
+  explicit CreateEventBusRequest(const std::map<string, boost::any> &config)
+      : Darabonba::Model(config) {
     fromMap(config);
   };
 
   void validate() override {
     if (!eventBusName) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("eventBusName is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("eventBusName is required.")));
     }
     Darabonba::Model::validateMaxLength("eventBusName", eventBusName, 127);
     Darabonba::Model::validateMinLength("eventBusName", eventBusName, 1);
@@ -380,10 +407,12 @@ public:
 
   void fromMap(map<string, boost::any> m) override {
     if (m.find("EventBusName") != m.end()) {
-      eventBusName = make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
+      eventBusName =
+          make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
     }
     if (m.find("Description") != m.end()) {
-      description = make_shared<string>(boost::any_cast<string>(m["Description"]));
+      description =
+          make_shared<string>(boost::any_cast<string>(m["Description"]));
     }
   }
 
@@ -395,16 +424,19 @@ public:
 class CreateEventBusResponse : public Darabonba::Model {
 public:
   CreateEventBusResponse() {}
-  explicit CreateEventBusResponse(const std::map<string, boost::any> &config) : Darabonba::Model(config) {
+  explicit CreateEventBusResponse(const std::map<string, boost::any> &config)
+      : Darabonba::Model(config) {
     fromMap(config);
   };
 
   void validate() override {
     if (!requestId) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("requestId is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("requestId is required.")));
     }
     if (!resourceOwnerAccountId) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("resourceOwnerAccountId is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("resourceOwnerAccountId is required.")));
     }
   }
 
@@ -427,10 +459,12 @@ public:
       requestId = make_shared<string>(boost::any_cast<string>(m["RequestId"]));
     }
     if (m.find("ResourceOwnerAccountId") != m.end()) {
-      resourceOwnerAccountId = make_shared<string>(boost::any_cast<string>(m["ResourceOwnerAccountId"]));
+      resourceOwnerAccountId = make_shared<string>(
+          boost::any_cast<string>(m["ResourceOwnerAccountId"]));
     }
     if (m.find("EventBusARN") != m.end()) {
-      eventBusARN = make_shared<string>(boost::any_cast<string>(m["EventBusARN"]));
+      eventBusARN =
+          make_shared<string>(boost::any_cast<string>(m["EventBusARN"]));
     }
   }
 
@@ -443,13 +477,15 @@ public:
 class DeleteEventBusRequest : public Darabonba::Model {
 public:
   DeleteEventBusRequest() {}
-  explicit DeleteEventBusRequest(const std::map<string, boost::any> &config) : Darabonba::Model(config) {
+  explicit DeleteEventBusRequest(const std::map<string, boost::any> &config)
+      : Darabonba::Model(config) {
     fromMap(config);
   };
 
   void validate() override {
     if (!eventBusName) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("eventBusName is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("eventBusName is required.")));
     }
   }
 
@@ -463,7 +499,8 @@ public:
 
   void fromMap(map<string, boost::any> m) override {
     if (m.find("EventBusName") != m.end()) {
-      eventBusName = make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
+      eventBusName =
+          make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
     }
   }
 
@@ -474,16 +511,19 @@ public:
 class DeleteEventBusResponse : public Darabonba::Model {
 public:
   DeleteEventBusResponse() {}
-  explicit DeleteEventBusResponse(const std::map<string, boost::any> &config) : Darabonba::Model(config) {
+  explicit DeleteEventBusResponse(const std::map<string, boost::any> &config)
+      : Darabonba::Model(config) {
     fromMap(config);
   };
 
   void validate() override {
     if (!requestId) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("requestId is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("requestId is required.")));
     }
     if (!resourceOwnerAccountId) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("resourceOwnerAccountId is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("resourceOwnerAccountId is required.")));
     }
   }
 
@@ -503,7 +543,8 @@ public:
       requestId = make_shared<string>(boost::any_cast<string>(m["RequestId"]));
     }
     if (m.find("ResourceOwnerAccountId") != m.end()) {
-      resourceOwnerAccountId = make_shared<string>(boost::any_cast<string>(m["ResourceOwnerAccountId"]));
+      resourceOwnerAccountId = make_shared<string>(
+          boost::any_cast<string>(m["ResourceOwnerAccountId"]));
     }
   }
 
@@ -515,13 +556,15 @@ public:
 class GetEventBusRequest : public Darabonba::Model {
 public:
   GetEventBusRequest() {}
-  explicit GetEventBusRequest(const std::map<string, boost::any> &config) : Darabonba::Model(config) {
+  explicit GetEventBusRequest(const std::map<string, boost::any> &config)
+      : Darabonba::Model(config) {
     fromMap(config);
   };
 
   void validate() override {
     if (!eventBusName) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("eventBusName is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("eventBusName is required.")));
     }
   }
 
@@ -535,7 +578,8 @@ public:
 
   void fromMap(map<string, boost::any> m) override {
     if (m.find("EventBusName") != m.end()) {
-      eventBusName = make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
+      eventBusName =
+          make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
     }
   }
 
@@ -546,28 +590,35 @@ public:
 class GetEventBusResponse : public Darabonba::Model {
 public:
   GetEventBusResponse() {}
-  explicit GetEventBusResponse(const std::map<string, boost::any> &config) : Darabonba::Model(config) {
+  explicit GetEventBusResponse(const std::map<string, boost::any> &config)
+      : Darabonba::Model(config) {
     fromMap(config);
   };
 
   void validate() override {
     if (!requestId) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("requestId is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("requestId is required.")));
     }
     if (!resourceOwnerAccountId) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("resourceOwnerAccountId is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("resourceOwnerAccountId is required.")));
     }
     if (!eventBusARN) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("eventBusARN is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("eventBusARN is required.")));
     }
     if (!eventBusName) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("eventBusName is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("eventBusName is required.")));
     }
     if (!description) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("description is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("description is required.")));
     }
     if (!createTimestamp) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("createTimestamp is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("createTimestamp is required.")));
     }
   }
 
@@ -599,19 +650,24 @@ public:
       requestId = make_shared<string>(boost::any_cast<string>(m["RequestId"]));
     }
     if (m.find("ResourceOwnerAccountId") != m.end()) {
-      resourceOwnerAccountId = make_shared<string>(boost::any_cast<string>(m["ResourceOwnerAccountId"]));
+      resourceOwnerAccountId = make_shared<string>(
+          boost::any_cast<string>(m["ResourceOwnerAccountId"]));
     }
     if (m.find("EventBusARN") != m.end()) {
-      eventBusARN = make_shared<string>(boost::any_cast<string>(m["EventBusARN"]));
+      eventBusARN =
+          make_shared<string>(boost::any_cast<string>(m["EventBusARN"]));
     }
     if (m.find("EventBusName") != m.end()) {
-      eventBusName = make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
+      eventBusName =
+          make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
     }
     if (m.find("Description") != m.end()) {
-      description = make_shared<string>(boost::any_cast<string>(m["Description"]));
+      description =
+          make_shared<string>(boost::any_cast<string>(m["Description"]));
     }
     if (m.find("CreateTimestamp") != m.end()) {
-      createTimestamp = make_shared<long>(boost::any_cast<long>(m["CreateTimestamp"]));
+      createTimestamp =
+          make_shared<long>(boost::any_cast<long>(m["CreateTimestamp"]));
     }
   }
 
@@ -627,7 +683,8 @@ public:
 class ListEventBusesRequest : public Darabonba::Model {
 public:
   ListEventBusesRequest() {}
-  explicit ListEventBusesRequest(const std::map<string, boost::any> &config) : Darabonba::Model(config) {
+  explicit ListEventBusesRequest(const std::map<string, boost::any> &config)
+      : Darabonba::Model(config) {
     fromMap(config);
   };
 
@@ -649,7 +706,8 @@ public:
 
   void fromMap(map<string, boost::any> m) override {
     if (m.find("NamePrefix") != m.end()) {
-      namePrefix = make_shared<string>(boost::any_cast<string>(m["NamePrefix"]));
+      namePrefix =
+          make_shared<string>(boost::any_cast<string>(m["NamePrefix"]));
     }
     if (m.find("Limit") != m.end()) {
       limit = make_shared<int>(boost::any_cast<int>(m["Limit"]));
@@ -668,22 +726,27 @@ public:
 class EventBusEntry : public Darabonba::Model {
 public:
   EventBusEntry() {}
-  explicit EventBusEntry(const std::map<string, boost::any> &config) : Darabonba::Model(config) {
+  explicit EventBusEntry(const std::map<string, boost::any> &config)
+      : Darabonba::Model(config) {
     fromMap(config);
   };
 
   void validate() override {
     if (!eventBusName) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("eventBusName is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("eventBusName is required.")));
     }
     if (!eventBusARN) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("eventBusARN is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("eventBusARN is required.")));
     }
     if (!description) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("description is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("description is required.")));
     }
     if (!createTimestamp) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("createTimestamp is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("createTimestamp is required.")));
     }
   }
 
@@ -706,16 +769,20 @@ public:
 
   void fromMap(map<string, boost::any> m) override {
     if (m.find("EventBusName") != m.end()) {
-      eventBusName = make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
+      eventBusName =
+          make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
     }
     if (m.find("EventBusARN") != m.end()) {
-      eventBusARN = make_shared<string>(boost::any_cast<string>(m["EventBusARN"]));
+      eventBusARN =
+          make_shared<string>(boost::any_cast<string>(m["EventBusARN"]));
     }
     if (m.find("Description") != m.end()) {
-      description = make_shared<string>(boost::any_cast<string>(m["Description"]));
+      description =
+          make_shared<string>(boost::any_cast<string>(m["Description"]));
     }
     if (m.find("CreateTimestamp") != m.end()) {
-      createTimestamp = make_shared<long>(boost::any_cast<long>(m["CreateTimestamp"]));
+      createTimestamp =
+          make_shared<long>(boost::any_cast<long>(m["CreateTimestamp"]));
     }
   }
 
@@ -729,25 +796,31 @@ public:
 class ListEventBusesResponse : public Darabonba::Model {
 public:
   ListEventBusesResponse() {}
-  explicit ListEventBusesResponse(const std::map<string, boost::any> &config) : Darabonba::Model(config) {
+  explicit ListEventBusesResponse(const std::map<string, boost::any> &config)
+      : Darabonba::Model(config) {
     fromMap(config);
   };
 
   void validate() override {
     if (!requestId) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("requestId is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("requestId is required.")));
     }
     if (!resourceOwnerAccountId) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("resourceOwnerAccountId is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("resourceOwnerAccountId is required.")));
     }
     if (!eventBuses) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("eventBuses is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("eventBuses is required.")));
     }
     if (!nextToken) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("nextToken is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("nextToken is required.")));
     }
     if (!total) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("total is required.")));
+      BOOST_THROW_EXCEPTION(
+          boost::enable_error_info(std::runtime_error("total is required.")));
     }
   }
 
@@ -761,7 +834,7 @@ public:
     }
     if (eventBuses) {
       vector<boost::any> temp1;
-      for(auto item1:*eventBuses){
+      for (auto item1 : *eventBuses) {
         temp1.push_back(boost::any(item1.toMap()));
       }
       res["EventBuses"] = boost::any(temp1);
@@ -780,12 +853,14 @@ public:
       requestId = make_shared<string>(boost::any_cast<string>(m["RequestId"]));
     }
     if (m.find("ResourceOwnerAccountId") != m.end()) {
-      resourceOwnerAccountId = make_shared<string>(boost::any_cast<string>(m["ResourceOwnerAccountId"]));
+      resourceOwnerAccountId = make_shared<string>(
+          boost::any_cast<string>(m["ResourceOwnerAccountId"]));
     }
     if (m.find("EventBuses") != m.end()) {
       if (typeid(vector<boost::any>).name() == m["EventBuses"].type().name()) {
         vector<EventBusEntry> expect1;
-        for(auto item1:boost::any_cast<vector<boost::any>>(m["EventBuses"])){
+        for (auto item1 :
+             boost::any_cast<vector<boost::any>>(m["EventBuses"])) {
           if (typeid(map<string, boost::any>).name() == item1.type().name()) {
             EventBusEntry model2;
             model2.fromMap(boost::any_cast<map<string, boost::any>>(item1));
@@ -814,16 +889,19 @@ public:
 class EBTargetParam : public Darabonba::Model {
 public:
   EBTargetParam() {}
-  explicit EBTargetParam(const std::map<string, boost::any> &config) : Darabonba::Model(config) {
+  explicit EBTargetParam(const std::map<string, boost::any> &config)
+      : Darabonba::Model(config) {
     fromMap(config);
   };
 
   void validate() override {
     if (!resourceKey) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("resourceKey is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("resourceKey is required.")));
     }
     if (!form) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("form is required.")));
+      BOOST_THROW_EXCEPTION(
+          boost::enable_error_info(std::runtime_error("form is required.")));
     }
   }
 
@@ -846,7 +924,8 @@ public:
 
   void fromMap(map<string, boost::any> m) override {
     if (m.find("ResourceKey") != m.end()) {
-      resourceKey = make_shared<string>(boost::any_cast<string>(m["ResourceKey"]));
+      resourceKey =
+          make_shared<string>(boost::any_cast<string>(m["ResourceKey"]));
     }
     if (m.find("Form") != m.end()) {
       form = make_shared<string>(boost::any_cast<string>(m["Form"]));
@@ -869,19 +948,23 @@ public:
 class TargetEntry : public Darabonba::Model {
 public:
   TargetEntry() {}
-  explicit TargetEntry(const std::map<string, boost::any> &config) : Darabonba::Model(config) {
+  explicit TargetEntry(const std::map<string, boost::any> &config)
+      : Darabonba::Model(config) {
     fromMap(config);
   };
 
   void validate() override {
     if (!id) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("id is required.")));
+      BOOST_THROW_EXCEPTION(
+          boost::enable_error_info(std::runtime_error("id is required.")));
     }
     if (!type) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("type is required.")));
+      BOOST_THROW_EXCEPTION(
+          boost::enable_error_info(std::runtime_error("type is required.")));
     }
     if (!endpoint) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("endpoint is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("endpoint is required.")));
     }
   }
 
@@ -901,7 +984,7 @@ public:
     }
     if (paramList) {
       vector<boost::any> temp1;
-      for(auto item1:*paramList){
+      for (auto item1 : *paramList) {
         temp1.push_back(boost::any(item1.toMap()));
       }
       res["ParamList"] = boost::any(temp1);
@@ -920,12 +1003,13 @@ public:
       endpoint = make_shared<string>(boost::any_cast<string>(m["Endpoint"]));
     }
     if (m.find("PushRetryStrategy") != m.end()) {
-      pushRetryStrategy = make_shared<string>(boost::any_cast<string>(m["PushRetryStrategy"]));
+      pushRetryStrategy =
+          make_shared<string>(boost::any_cast<string>(m["PushRetryStrategy"]));
     }
     if (m.find("ParamList") != m.end()) {
       if (typeid(vector<boost::any>).name() == m["ParamList"].type().name()) {
         vector<EBTargetParam> expect1;
-        for(auto item1:boost::any_cast<vector<boost::any>>(m["ParamList"])){
+        for (auto item1 : boost::any_cast<vector<boost::any>>(m["ParamList"])) {
           if (typeid(map<string, boost::any>).name() == item1.type().name()) {
             EBTargetParam model2;
             model2.fromMap(boost::any_cast<map<string, boost::any>>(item1));
@@ -948,21 +1032,25 @@ public:
 class CreateRuleRequest : public Darabonba::Model {
 public:
   CreateRuleRequest() {}
-  explicit CreateRuleRequest(const std::map<string, boost::any> &config) : Darabonba::Model(config) {
+  explicit CreateRuleRequest(const std::map<string, boost::any> &config)
+      : Darabonba::Model(config) {
     fromMap(config);
   };
 
   void validate() override {
     if (!eventBusName) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("eventBusName is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("eventBusName is required.")));
     }
     Darabonba::Model::validateMaxLength("eventBusName", eventBusName, 127);
     Darabonba::Model::validateMinLength("eventBusName", eventBusName, 1);
     if (!ruleName) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("ruleName is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("ruleName is required.")));
     }
     if (!targets) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("targets is required.")));
+      BOOST_THROW_EXCEPTION(
+          boost::enable_error_info(std::runtime_error("targets is required.")));
     }
   }
 
@@ -985,7 +1073,7 @@ public:
     }
     if (targets) {
       vector<boost::any> temp1;
-      for(auto item1:*targets){
+      for (auto item1 : *targets) {
         temp1.push_back(boost::any(item1.toMap()));
       }
       res["Targets"] = boost::any(temp1);
@@ -995,10 +1083,12 @@ public:
 
   void fromMap(map<string, boost::any> m) override {
     if (m.find("EventBusName") != m.end()) {
-      eventBusName = make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
+      eventBusName =
+          make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
     }
     if (m.find("Description") != m.end()) {
-      description = make_shared<string>(boost::any_cast<string>(m["Description"]));
+      description =
+          make_shared<string>(boost::any_cast<string>(m["Description"]));
     }
     if (m.find("RuleName") != m.end()) {
       ruleName = make_shared<string>(boost::any_cast<string>(m["RuleName"]));
@@ -1007,12 +1097,13 @@ public:
       status = make_shared<string>(boost::any_cast<string>(m["Status"]));
     }
     if (m.find("FilterPattern") != m.end()) {
-      filterPattern = make_shared<string>(boost::any_cast<string>(m["FilterPattern"]));
+      filterPattern =
+          make_shared<string>(boost::any_cast<string>(m["FilterPattern"]));
     }
     if (m.find("Targets") != m.end()) {
       if (typeid(vector<boost::any>).name() == m["Targets"].type().name()) {
         vector<TargetEntry> expect1;
-        for(auto item1:boost::any_cast<vector<boost::any>>(m["Targets"])){
+        for (auto item1 : boost::any_cast<vector<boost::any>>(m["Targets"])) {
           if (typeid(map<string, boost::any>).name() == item1.type().name()) {
             TargetEntry model2;
             model2.fromMap(boost::any_cast<map<string, boost::any>>(item1));
@@ -1036,19 +1127,23 @@ public:
 class CreateRuleResponse : public Darabonba::Model {
 public:
   CreateRuleResponse() {}
-  explicit CreateRuleResponse(const std::map<string, boost::any> &config) : Darabonba::Model(config) {
+  explicit CreateRuleResponse(const std::map<string, boost::any> &config)
+      : Darabonba::Model(config) {
     fromMap(config);
   };
 
   void validate() override {
     if (!requestId) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("requestId is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("requestId is required.")));
     }
     if (!resourceOwnerAccountId) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("resourceOwnerAccountId is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("resourceOwnerAccountId is required.")));
     }
     if (!ruleARN) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("ruleARN is required.")));
+      BOOST_THROW_EXCEPTION(
+          boost::enable_error_info(std::runtime_error("ruleARN is required.")));
     }
   }
 
@@ -1071,7 +1166,8 @@ public:
       requestId = make_shared<string>(boost::any_cast<string>(m["RequestId"]));
     }
     if (m.find("ResourceOwnerAccountId") != m.end()) {
-      resourceOwnerAccountId = make_shared<string>(boost::any_cast<string>(m["ResourceOwnerAccountId"]));
+      resourceOwnerAccountId = make_shared<string>(
+          boost::any_cast<string>(m["ResourceOwnerAccountId"]));
     }
     if (m.find("RuleARN") != m.end()) {
       ruleARN = make_shared<string>(boost::any_cast<string>(m["RuleARN"]));
@@ -1087,16 +1183,19 @@ public:
 class DeleteRuleRequest : public Darabonba::Model {
 public:
   DeleteRuleRequest() {}
-  explicit DeleteRuleRequest(const std::map<string, boost::any> &config) : Darabonba::Model(config) {
+  explicit DeleteRuleRequest(const std::map<string, boost::any> &config)
+      : Darabonba::Model(config) {
     fromMap(config);
   };
 
   void validate() override {
     if (!eventBusName) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("eventBusName is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("eventBusName is required.")));
     }
     if (!ruleName) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("ruleName is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("ruleName is required.")));
     }
   }
 
@@ -1113,7 +1212,8 @@ public:
 
   void fromMap(map<string, boost::any> m) override {
     if (m.find("EventBusName") != m.end()) {
-      eventBusName = make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
+      eventBusName =
+          make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
     }
     if (m.find("RuleName") != m.end()) {
       ruleName = make_shared<string>(boost::any_cast<string>(m["RuleName"]));
@@ -1128,16 +1228,19 @@ public:
 class DeleteRuleResponse : public Darabonba::Model {
 public:
   DeleteRuleResponse() {}
-  explicit DeleteRuleResponse(const std::map<string, boost::any> &config) : Darabonba::Model(config) {
+  explicit DeleteRuleResponse(const std::map<string, boost::any> &config)
+      : Darabonba::Model(config) {
     fromMap(config);
   };
 
   void validate() override {
     if (!requestId) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("requestId is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("requestId is required.")));
     }
     if (!resourceOwnerAccountId) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("resourceOwnerAccountId is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("resourceOwnerAccountId is required.")));
     }
   }
 
@@ -1157,7 +1260,8 @@ public:
       requestId = make_shared<string>(boost::any_cast<string>(m["RequestId"]));
     }
     if (m.find("ResourceOwnerAccountId") != m.end()) {
-      resourceOwnerAccountId = make_shared<string>(boost::any_cast<string>(m["ResourceOwnerAccountId"]));
+      resourceOwnerAccountId = make_shared<string>(
+          boost::any_cast<string>(m["ResourceOwnerAccountId"]));
     }
   }
 
@@ -1169,16 +1273,19 @@ public:
 class DisableRuleRequest : public Darabonba::Model {
 public:
   DisableRuleRequest() {}
-  explicit DisableRuleRequest(const std::map<string, boost::any> &config) : Darabonba::Model(config) {
+  explicit DisableRuleRequest(const std::map<string, boost::any> &config)
+      : Darabonba::Model(config) {
     fromMap(config);
   };
 
   void validate() override {
     if (!eventBusName) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("eventBusName is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("eventBusName is required.")));
     }
     if (!ruleName) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("ruleName is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("ruleName is required.")));
     }
   }
 
@@ -1195,7 +1302,8 @@ public:
 
   void fromMap(map<string, boost::any> m) override {
     if (m.find("EventBusName") != m.end()) {
-      eventBusName = make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
+      eventBusName =
+          make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
     }
     if (m.find("RuleName") != m.end()) {
       ruleName = make_shared<string>(boost::any_cast<string>(m["RuleName"]));
@@ -1210,16 +1318,19 @@ public:
 class DisableRuleResponse : public Darabonba::Model {
 public:
   DisableRuleResponse() {}
-  explicit DisableRuleResponse(const std::map<string, boost::any> &config) : Darabonba::Model(config) {
+  explicit DisableRuleResponse(const std::map<string, boost::any> &config)
+      : Darabonba::Model(config) {
     fromMap(config);
   };
 
   void validate() override {
     if (!requestId) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("requestId is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("requestId is required.")));
     }
     if (!resourceOwnerAccountId) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("resourceOwnerAccountId is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("resourceOwnerAccountId is required.")));
     }
   }
 
@@ -1239,7 +1350,8 @@ public:
       requestId = make_shared<string>(boost::any_cast<string>(m["RequestId"]));
     }
     if (m.find("ResourceOwnerAccountId") != m.end()) {
-      resourceOwnerAccountId = make_shared<string>(boost::any_cast<string>(m["ResourceOwnerAccountId"]));
+      resourceOwnerAccountId = make_shared<string>(
+          boost::any_cast<string>(m["ResourceOwnerAccountId"]));
     }
   }
 
@@ -1251,16 +1363,19 @@ public:
 class EnableRuleRequest : public Darabonba::Model {
 public:
   EnableRuleRequest() {}
-  explicit EnableRuleRequest(const std::map<string, boost::any> &config) : Darabonba::Model(config) {
+  explicit EnableRuleRequest(const std::map<string, boost::any> &config)
+      : Darabonba::Model(config) {
     fromMap(config);
   };
 
   void validate() override {
     if (!eventBusName) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("eventBusName is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("eventBusName is required.")));
     }
     if (!ruleName) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("ruleName is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("ruleName is required.")));
     }
   }
 
@@ -1277,7 +1392,8 @@ public:
 
   void fromMap(map<string, boost::any> m) override {
     if (m.find("EventBusName") != m.end()) {
-      eventBusName = make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
+      eventBusName =
+          make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
     }
     if (m.find("RuleName") != m.end()) {
       ruleName = make_shared<string>(boost::any_cast<string>(m["RuleName"]));
@@ -1292,16 +1408,19 @@ public:
 class EnableRuleResponse : public Darabonba::Model {
 public:
   EnableRuleResponse() {}
-  explicit EnableRuleResponse(const std::map<string, boost::any> &config) : Darabonba::Model(config) {
+  explicit EnableRuleResponse(const std::map<string, boost::any> &config)
+      : Darabonba::Model(config) {
     fromMap(config);
   };
 
   void validate() override {
     if (!requestId) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("requestId is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("requestId is required.")));
     }
     if (!resourceOwnerAccountId) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("resourceOwnerAccountId is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("resourceOwnerAccountId is required.")));
     }
   }
 
@@ -1321,7 +1440,8 @@ public:
       requestId = make_shared<string>(boost::any_cast<string>(m["RequestId"]));
     }
     if (m.find("ResourceOwnerAccountId") != m.end()) {
-      resourceOwnerAccountId = make_shared<string>(boost::any_cast<string>(m["ResourceOwnerAccountId"]));
+      resourceOwnerAccountId = make_shared<string>(
+          boost::any_cast<string>(m["ResourceOwnerAccountId"]));
     }
   }
 
@@ -1333,16 +1453,19 @@ public:
 class GetRuleRequest : public Darabonba::Model {
 public:
   GetRuleRequest() {}
-  explicit GetRuleRequest(const std::map<string, boost::any> &config) : Darabonba::Model(config) {
+  explicit GetRuleRequest(const std::map<string, boost::any> &config)
+      : Darabonba::Model(config) {
     fromMap(config);
   };
 
   void validate() override {
     if (!eventBusName) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("eventBusName is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("eventBusName is required.")));
     }
     if (!ruleName) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("ruleName is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("ruleName is required.")));
     }
   }
 
@@ -1359,7 +1482,8 @@ public:
 
   void fromMap(map<string, boost::any> m) override {
     if (m.find("EventBusName") != m.end()) {
-      eventBusName = make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
+      eventBusName =
+          make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
     }
     if (m.find("RuleName") != m.end()) {
       ruleName = make_shared<string>(boost::any_cast<string>(m["RuleName"]));
@@ -1374,43 +1498,55 @@ public:
 class GetRuleResponse : public Darabonba::Model {
 public:
   GetRuleResponse() {}
-  explicit GetRuleResponse(const std::map<string, boost::any> &config) : Darabonba::Model(config) {
+  explicit GetRuleResponse(const std::map<string, boost::any> &config)
+      : Darabonba::Model(config) {
     fromMap(config);
   };
 
   void validate() override {
     if (!requestId) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("requestId is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("requestId is required.")));
     }
     if (!resourceOwnerAccountId) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("resourceOwnerAccountId is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("resourceOwnerAccountId is required.")));
     }
     if (!eventBusName) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("eventBusName is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("eventBusName is required.")));
     }
     if (!ruleARN) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("ruleARN is required.")));
+      BOOST_THROW_EXCEPTION(
+          boost::enable_error_info(std::runtime_error("ruleARN is required.")));
     }
     if (!ruleName) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("ruleName is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("ruleName is required.")));
     }
     if (!description) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("description is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("description is required.")));
     }
     if (!status) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("status is required.")));
+      BOOST_THROW_EXCEPTION(
+          boost::enable_error_info(std::runtime_error("status is required.")));
     }
     if (!filterPattern) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("filterPattern is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("filterPattern is required.")));
     }
     if (!targets) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("targets is required.")));
+      BOOST_THROW_EXCEPTION(
+          boost::enable_error_info(std::runtime_error("targets is required.")));
     }
     if (!ctime) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("ctime is required.")));
+      BOOST_THROW_EXCEPTION(
+          boost::enable_error_info(std::runtime_error("ctime is required.")));
     }
     if (!mtime) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("mtime is required.")));
+      BOOST_THROW_EXCEPTION(
+          boost::enable_error_info(std::runtime_error("mtime is required.")));
     }
   }
 
@@ -1442,7 +1578,7 @@ public:
     }
     if (targets) {
       vector<boost::any> temp1;
-      for(auto item1:*targets){
+      for (auto item1 : *targets) {
         temp1.push_back(boost::any(item1.toMap()));
       }
       res["Targets"] = boost::any(temp1);
@@ -1461,10 +1597,12 @@ public:
       requestId = make_shared<string>(boost::any_cast<string>(m["RequestId"]));
     }
     if (m.find("ResourceOwnerAccountId") != m.end()) {
-      resourceOwnerAccountId = make_shared<string>(boost::any_cast<string>(m["ResourceOwnerAccountId"]));
+      resourceOwnerAccountId = make_shared<string>(
+          boost::any_cast<string>(m["ResourceOwnerAccountId"]));
     }
     if (m.find("EventBusName") != m.end()) {
-      eventBusName = make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
+      eventBusName =
+          make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
     }
     if (m.find("RuleARN") != m.end()) {
       ruleARN = make_shared<string>(boost::any_cast<string>(m["RuleARN"]));
@@ -1473,18 +1611,20 @@ public:
       ruleName = make_shared<string>(boost::any_cast<string>(m["RuleName"]));
     }
     if (m.find("Description") != m.end()) {
-      description = make_shared<string>(boost::any_cast<string>(m["Description"]));
+      description =
+          make_shared<string>(boost::any_cast<string>(m["Description"]));
     }
     if (m.find("Status") != m.end()) {
       status = make_shared<string>(boost::any_cast<string>(m["Status"]));
     }
     if (m.find("FilterPattern") != m.end()) {
-      filterPattern = make_shared<string>(boost::any_cast<string>(m["FilterPattern"]));
+      filterPattern =
+          make_shared<string>(boost::any_cast<string>(m["FilterPattern"]));
     }
     if (m.find("Targets") != m.end()) {
       if (typeid(vector<boost::any>).name() == m["Targets"].type().name()) {
         vector<TargetEntry> expect1;
-        for(auto item1:boost::any_cast<vector<boost::any>>(m["Targets"])){
+        for (auto item1 : boost::any_cast<vector<boost::any>>(m["Targets"])) {
           if (typeid(map<string, boost::any>).name() == item1.type().name()) {
             TargetEntry model2;
             model2.fromMap(boost::any_cast<map<string, boost::any>>(item1));
@@ -1519,13 +1659,15 @@ public:
 class ListRulesRequest : public Darabonba::Model {
 public:
   ListRulesRequest() {}
-  explicit ListRulesRequest(const std::map<string, boost::any> &config) : Darabonba::Model(config) {
+  explicit ListRulesRequest(const std::map<string, boost::any> &config)
+      : Darabonba::Model(config) {
     fromMap(config);
   };
 
   void validate() override {
     if (!eventBusName) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("eventBusName is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("eventBusName is required.")));
     }
   }
 
@@ -1548,10 +1690,12 @@ public:
 
   void fromMap(map<string, boost::any> m) override {
     if (m.find("EventBusName") != m.end()) {
-      eventBusName = make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
+      eventBusName =
+          make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
     }
     if (m.find("RuleNamePrefix") != m.end()) {
-      ruleNamePrefix = make_shared<string>(boost::any_cast<string>(m["RuleNamePrefix"]));
+      ruleNamePrefix =
+          make_shared<string>(boost::any_cast<string>(m["RuleNamePrefix"]));
     }
     if (m.find("Limit") != m.end()) {
       limit = make_shared<int>(boost::any_cast<int>(m["Limit"]));
@@ -1571,37 +1715,47 @@ public:
 class EventRuleDTO : public Darabonba::Model {
 public:
   EventRuleDTO() {}
-  explicit EventRuleDTO(const std::map<string, boost::any> &config) : Darabonba::Model(config) {
+  explicit EventRuleDTO(const std::map<string, boost::any> &config)
+      : Darabonba::Model(config) {
     fromMap(config);
   };
 
   void validate() override {
     if (!ruleARN) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("ruleARN is required.")));
+      BOOST_THROW_EXCEPTION(
+          boost::enable_error_info(std::runtime_error("ruleARN is required.")));
     }
     if (!eventBusName) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("eventBusName is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("eventBusName is required.")));
     }
     if (!ruleName) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("ruleName is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("ruleName is required.")));
     }
     if (!description) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("description is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("description is required.")));
     }
     if (!status) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("status is required.")));
+      BOOST_THROW_EXCEPTION(
+          boost::enable_error_info(std::runtime_error("status is required.")));
     }
     if (!filterPattern) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("filterPattern is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("filterPattern is required.")));
     }
     if (!targets) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("targets is required.")));
+      BOOST_THROW_EXCEPTION(
+          boost::enable_error_info(std::runtime_error("targets is required.")));
     }
     if (!ctime) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("ctime is required.")));
+      BOOST_THROW_EXCEPTION(
+          boost::enable_error_info(std::runtime_error("ctime is required.")));
     }
     if (!mtime) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("mtime is required.")));
+      BOOST_THROW_EXCEPTION(
+          boost::enable_error_info(std::runtime_error("mtime is required.")));
     }
   }
 
@@ -1627,7 +1781,7 @@ public:
     }
     if (targets) {
       vector<boost::any> temp1;
-      for(auto item1:*targets){
+      for (auto item1 : *targets) {
         temp1.push_back(boost::any(item1.toMap()));
       }
       res["Targets"] = boost::any(temp1);
@@ -1646,24 +1800,27 @@ public:
       ruleARN = make_shared<string>(boost::any_cast<string>(m["RuleARN"]));
     }
     if (m.find("EventBusName") != m.end()) {
-      eventBusName = make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
+      eventBusName =
+          make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
     }
     if (m.find("RuleName") != m.end()) {
       ruleName = make_shared<string>(boost::any_cast<string>(m["RuleName"]));
     }
     if (m.find("Description") != m.end()) {
-      description = make_shared<string>(boost::any_cast<string>(m["Description"]));
+      description =
+          make_shared<string>(boost::any_cast<string>(m["Description"]));
     }
     if (m.find("Status") != m.end()) {
       status = make_shared<string>(boost::any_cast<string>(m["Status"]));
     }
     if (m.find("FilterPattern") != m.end()) {
-      filterPattern = make_shared<string>(boost::any_cast<string>(m["FilterPattern"]));
+      filterPattern =
+          make_shared<string>(boost::any_cast<string>(m["FilterPattern"]));
     }
     if (m.find("Targets") != m.end()) {
       if (typeid(vector<boost::any>).name() == m["Targets"].type().name()) {
         vector<TargetEntry> expect1;
-        for(auto item1:boost::any_cast<vector<boost::any>>(m["Targets"])){
+        for (auto item1 : boost::any_cast<vector<boost::any>>(m["Targets"])) {
           if (typeid(map<string, boost::any>).name() == item1.type().name()) {
             TargetEntry model2;
             model2.fromMap(boost::any_cast<map<string, boost::any>>(item1));
@@ -1696,25 +1853,31 @@ public:
 class ListRulesResponse : public Darabonba::Model {
 public:
   ListRulesResponse() {}
-  explicit ListRulesResponse(const std::map<string, boost::any> &config) : Darabonba::Model(config) {
+  explicit ListRulesResponse(const std::map<string, boost::any> &config)
+      : Darabonba::Model(config) {
     fromMap(config);
   };
 
   void validate() override {
     if (!requestId) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("requestId is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("requestId is required.")));
     }
     if (!resourceOwnerAccountId) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("resourceOwnerAccountId is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("resourceOwnerAccountId is required.")));
     }
     if (!nextToken) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("nextToken is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("nextToken is required.")));
     }
     if (!rules) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("rules is required.")));
+      BOOST_THROW_EXCEPTION(
+          boost::enable_error_info(std::runtime_error("rules is required.")));
     }
     if (!total) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("total is required.")));
+      BOOST_THROW_EXCEPTION(
+          boost::enable_error_info(std::runtime_error("total is required.")));
     }
   }
 
@@ -1731,7 +1894,7 @@ public:
     }
     if (rules) {
       vector<boost::any> temp1;
-      for(auto item1:*rules){
+      for (auto item1 : *rules) {
         temp1.push_back(boost::any(item1.toMap()));
       }
       res["Rules"] = boost::any(temp1);
@@ -1747,7 +1910,8 @@ public:
       requestId = make_shared<string>(boost::any_cast<string>(m["RequestId"]));
     }
     if (m.find("ResourceOwnerAccountId") != m.end()) {
-      resourceOwnerAccountId = make_shared<string>(boost::any_cast<string>(m["ResourceOwnerAccountId"]));
+      resourceOwnerAccountId = make_shared<string>(
+          boost::any_cast<string>(m["ResourceOwnerAccountId"]));
     }
     if (m.find("NextToken") != m.end()) {
       nextToken = make_shared<string>(boost::any_cast<string>(m["NextToken"]));
@@ -1755,7 +1919,7 @@ public:
     if (m.find("Rules") != m.end()) {
       if (typeid(vector<boost::any>).name() == m["Rules"].type().name()) {
         vector<EventRuleDTO> expect1;
-        for(auto item1:boost::any_cast<vector<boost::any>>(m["Rules"])){
+        for (auto item1 : boost::any_cast<vector<boost::any>>(m["Rules"])) {
           if (typeid(map<string, boost::any>).name() == item1.type().name()) {
             EventRuleDTO model2;
             model2.fromMap(boost::any_cast<map<string, boost::any>>(item1));
@@ -1781,16 +1945,19 @@ public:
 class UpdateRuleRequest : public Darabonba::Model {
 public:
   UpdateRuleRequest() {}
-  explicit UpdateRuleRequest(const std::map<string, boost::any> &config) : Darabonba::Model(config) {
+  explicit UpdateRuleRequest(const std::map<string, boost::any> &config)
+      : Darabonba::Model(config) {
     fromMap(config);
   };
 
   void validate() override {
     if (!eventBusName) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("eventBusName is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("eventBusName is required.")));
     }
     if (!ruleName) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("ruleName is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("ruleName is required.")));
     }
   }
 
@@ -1816,19 +1983,22 @@ public:
 
   void fromMap(map<string, boost::any> m) override {
     if (m.find("EventBusName") != m.end()) {
-      eventBusName = make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
+      eventBusName =
+          make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
     }
     if (m.find("RuleName") != m.end()) {
       ruleName = make_shared<string>(boost::any_cast<string>(m["RuleName"]));
     }
     if (m.find("Description") != m.end()) {
-      description = make_shared<string>(boost::any_cast<string>(m["Description"]));
+      description =
+          make_shared<string>(boost::any_cast<string>(m["Description"]));
     }
     if (m.find("Status") != m.end()) {
       status = make_shared<string>(boost::any_cast<string>(m["Status"]));
     }
     if (m.find("FilterPattern") != m.end()) {
-      filterPattern = make_shared<string>(boost::any_cast<string>(m["FilterPattern"]));
+      filterPattern =
+          make_shared<string>(boost::any_cast<string>(m["FilterPattern"]));
     }
   }
 
@@ -1843,16 +2013,19 @@ public:
 class UpdateRuleResponse : public Darabonba::Model {
 public:
   UpdateRuleResponse() {}
-  explicit UpdateRuleResponse(const std::map<string, boost::any> &config) : Darabonba::Model(config) {
+  explicit UpdateRuleResponse(const std::map<string, boost::any> &config)
+      : Darabonba::Model(config) {
     fromMap(config);
   };
 
   void validate() override {
     if (!requestId) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("requestId is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("requestId is required.")));
     }
     if (!resourceOwnerAccountId) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("resourceOwnerAccountId is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("resourceOwnerAccountId is required.")));
     }
   }
 
@@ -1872,7 +2045,8 @@ public:
       requestId = make_shared<string>(boost::any_cast<string>(m["RequestId"]));
     }
     if (m.find("ResourceOwnerAccountId") != m.end()) {
-      resourceOwnerAccountId = make_shared<string>(boost::any_cast<string>(m["ResourceOwnerAccountId"]));
+      resourceOwnerAccountId = make_shared<string>(
+          boost::any_cast<string>(m["ResourceOwnerAccountId"]));
     }
   }
 
@@ -1884,19 +2058,23 @@ public:
 class CreateTargetsRequest : public Darabonba::Model {
 public:
   CreateTargetsRequest() {}
-  explicit CreateTargetsRequest(const std::map<string, boost::any> &config) : Darabonba::Model(config) {
+  explicit CreateTargetsRequest(const std::map<string, boost::any> &config)
+      : Darabonba::Model(config) {
     fromMap(config);
   };
 
   void validate() override {
     if (!eventBusName) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("eventBusName is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("eventBusName is required.")));
     }
     if (!ruleName) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("ruleName is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("ruleName is required.")));
     }
     if (!targets) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("targets is required.")));
+      BOOST_THROW_EXCEPTION(
+          boost::enable_error_info(std::runtime_error("targets is required.")));
     }
   }
 
@@ -1910,7 +2088,7 @@ public:
     }
     if (targets) {
       vector<boost::any> temp1;
-      for(auto item1:*targets){
+      for (auto item1 : *targets) {
         temp1.push_back(boost::any(item1.toMap()));
       }
       res["Targets"] = boost::any(temp1);
@@ -1920,7 +2098,8 @@ public:
 
   void fromMap(map<string, boost::any> m) override {
     if (m.find("EventBusName") != m.end()) {
-      eventBusName = make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
+      eventBusName =
+          make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
     }
     if (m.find("RuleName") != m.end()) {
       ruleName = make_shared<string>(boost::any_cast<string>(m["RuleName"]));
@@ -1928,7 +2107,7 @@ public:
     if (m.find("Targets") != m.end()) {
       if (typeid(vector<boost::any>).name() == m["Targets"].type().name()) {
         vector<TargetEntry> expect1;
-        for(auto item1:boost::any_cast<vector<boost::any>>(m["Targets"])){
+        for (auto item1 : boost::any_cast<vector<boost::any>>(m["Targets"])) {
           if (typeid(map<string, boost::any>).name() == item1.type().name()) {
             TargetEntry model2;
             model2.fromMap(boost::any_cast<map<string, boost::any>>(item1));
@@ -1949,19 +2128,23 @@ public:
 class CreateTargetsResponse : public Darabonba::Model {
 public:
   CreateTargetsResponse() {}
-  explicit CreateTargetsResponse(const std::map<string, boost::any> &config) : Darabonba::Model(config) {
+  explicit CreateTargetsResponse(const std::map<string, boost::any> &config)
+      : Darabonba::Model(config) {
     fromMap(config);
   };
 
   void validate() override {
     if (!requestId) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("requestId is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("requestId is required.")));
     }
     if (!resourceOwnerAccountId) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("resourceOwnerAccountId is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("resourceOwnerAccountId is required.")));
     }
     if (!eventBusARN) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("eventBusARN is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("eventBusARN is required.")));
     }
   }
 
@@ -1984,10 +2167,12 @@ public:
       requestId = make_shared<string>(boost::any_cast<string>(m["RequestId"]));
     }
     if (m.find("ResourceOwnerAccountId") != m.end()) {
-      resourceOwnerAccountId = make_shared<string>(boost::any_cast<string>(m["ResourceOwnerAccountId"]));
+      resourceOwnerAccountId = make_shared<string>(
+          boost::any_cast<string>(m["ResourceOwnerAccountId"]));
     }
     if (m.find("EventBusARN") != m.end()) {
-      eventBusARN = make_shared<string>(boost::any_cast<string>(m["EventBusARN"]));
+      eventBusARN =
+          make_shared<string>(boost::any_cast<string>(m["EventBusARN"]));
     }
   }
 
@@ -2000,19 +2185,23 @@ public:
 class DeleteTargetsRequest : public Darabonba::Model {
 public:
   DeleteTargetsRequest() {}
-  explicit DeleteTargetsRequest(const std::map<string, boost::any> &config) : Darabonba::Model(config) {
+  explicit DeleteTargetsRequest(const std::map<string, boost::any> &config)
+      : Darabonba::Model(config) {
     fromMap(config);
   };
 
   void validate() override {
     if (!eventBusName) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("eventBusName is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("eventBusName is required.")));
     }
     if (!ruleName) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("ruleName is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("ruleName is required.")));
     }
     if (!targetIds) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("targetIds is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("targetIds is required.")));
     }
   }
 
@@ -2032,7 +2221,8 @@ public:
 
   void fromMap(map<string, boost::any> m) override {
     if (m.find("EventBusName") != m.end()) {
-      eventBusName = make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
+      eventBusName =
+          make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
     }
     if (m.find("RuleName") != m.end()) {
       ruleName = make_shared<string>(boost::any_cast<string>(m["RuleName"]));
@@ -2040,9 +2230,10 @@ public:
     if (m.find("TargetIds") != m.end()) {
       vector<string> toVec1;
       if (typeid(vector<boost::any>).name() == m["TargetIds"].type().name()) {
-        vector<boost::any> vec1 = boost::any_cast<vector<boost::any>>(m["TargetIds"]);
-        for (auto item:vec1) {
-           toVec1.push_back(boost::any_cast<string>(item));
+        vector<boost::any> vec1 =
+            boost::any_cast<vector<boost::any>>(m["TargetIds"]);
+        for (auto item : vec1) {
+          toVec1.push_back(boost::any_cast<string>(item));
         }
       }
       targetIds = make_shared<vector<string>>(toVec1);
@@ -2058,19 +2249,23 @@ public:
 class TargetResultEntry : public Darabonba::Model {
 public:
   TargetResultEntry() {}
-  explicit TargetResultEntry(const std::map<string, boost::any> &config) : Darabonba::Model(config) {
+  explicit TargetResultEntry(const std::map<string, boost::any> &config)
+      : Darabonba::Model(config) {
     fromMap(config);
   };
 
   void validate() override {
     if (!errorCode) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("errorCode is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("errorCode is required.")));
     }
     if (!errorMessage) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("errorMessage is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("errorMessage is required.")));
     }
     if (!entryId) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("entryId is required.")));
+      BOOST_THROW_EXCEPTION(
+          boost::enable_error_info(std::runtime_error("entryId is required.")));
     }
   }
 
@@ -2093,7 +2288,8 @@ public:
       errorCode = make_shared<string>(boost::any_cast<string>(m["ErrorCode"]));
     }
     if (m.find("ErrorMessage") != m.end()) {
-      errorMessage = make_shared<string>(boost::any_cast<string>(m["ErrorMessage"]));
+      errorMessage =
+          make_shared<string>(boost::any_cast<string>(m["ErrorMessage"]));
     }
     if (m.find("EntryId") != m.end()) {
       entryId = make_shared<string>(boost::any_cast<string>(m["EntryId"]));
@@ -2109,22 +2305,27 @@ public:
 class DeleteTargetsResponse : public Darabonba::Model {
 public:
   DeleteTargetsResponse() {}
-  explicit DeleteTargetsResponse(const std::map<string, boost::any> &config) : Darabonba::Model(config) {
+  explicit DeleteTargetsResponse(const std::map<string, boost::any> &config)
+      : Darabonba::Model(config) {
     fromMap(config);
   };
 
   void validate() override {
     if (!requestId) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("requestId is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("requestId is required.")));
     }
     if (!resourceOwnerAccountId) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("resourceOwnerAccountId is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("resourceOwnerAccountId is required.")));
     }
     if (!errorEntriesCount) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("errorEntriesCount is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("errorEntriesCount is required.")));
     }
     if (!errorEntries) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("errorEntries is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("errorEntries is required.")));
     }
   }
 
@@ -2141,7 +2342,7 @@ public:
     }
     if (errorEntries) {
       vector<boost::any> temp1;
-      for(auto item1:*errorEntries){
+      for (auto item1 : *errorEntries) {
         temp1.push_back(boost::any(item1.toMap()));
       }
       res["ErrorEntries"] = boost::any(temp1);
@@ -2154,15 +2355,19 @@ public:
       requestId = make_shared<string>(boost::any_cast<string>(m["RequestId"]));
     }
     if (m.find("ResourceOwnerAccountId") != m.end()) {
-      resourceOwnerAccountId = make_shared<string>(boost::any_cast<string>(m["ResourceOwnerAccountId"]));
+      resourceOwnerAccountId = make_shared<string>(
+          boost::any_cast<string>(m["ResourceOwnerAccountId"]));
     }
     if (m.find("ErrorEntriesCount") != m.end()) {
-      errorEntriesCount = make_shared<int>(boost::any_cast<int>(m["ErrorEntriesCount"]));
+      errorEntriesCount =
+          make_shared<int>(boost::any_cast<int>(m["ErrorEntriesCount"]));
     }
     if (m.find("ErrorEntries") != m.end()) {
-      if (typeid(vector<boost::any>).name() == m["ErrorEntries"].type().name()) {
+      if (typeid(vector<boost::any>).name() ==
+          m["ErrorEntries"].type().name()) {
         vector<TargetResultEntry> expect1;
-        for(auto item1:boost::any_cast<vector<boost::any>>(m["ErrorEntries"])){
+        for (auto item1 :
+             boost::any_cast<vector<boost::any>>(m["ErrorEntries"])) {
           if (typeid(map<string, boost::any>).name() == item1.type().name()) {
             TargetResultEntry model2;
             model2.fromMap(boost::any_cast<map<string, boost::any>>(item1));
@@ -2184,16 +2389,19 @@ public:
 class ListTargetsRequest : public Darabonba::Model {
 public:
   ListTargetsRequest() {}
-  explicit ListTargetsRequest(const std::map<string, boost::any> &config) : Darabonba::Model(config) {
+  explicit ListTargetsRequest(const std::map<string, boost::any> &config)
+      : Darabonba::Model(config) {
     fromMap(config);
   };
 
   void validate() override {
     if (!eventBusName) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("eventBusName is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("eventBusName is required.")));
     }
     if (!ruleName) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("ruleName is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("ruleName is required.")));
     }
   }
 
@@ -2213,7 +2421,8 @@ public:
 
   void fromMap(map<string, boost::any> m) override {
     if (m.find("EventBusName") != m.end()) {
-      eventBusName = make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
+      eventBusName =
+          make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
     }
     if (m.find("RuleName") != m.end()) {
       ruleName = make_shared<string>(boost::any_cast<string>(m["RuleName"]));
@@ -2232,19 +2441,23 @@ public:
 class ListTargetsResponse : public Darabonba::Model {
 public:
   ListTargetsResponse() {}
-  explicit ListTargetsResponse(const std::map<string, boost::any> &config) : Darabonba::Model(config) {
+  explicit ListTargetsResponse(const std::map<string, boost::any> &config)
+      : Darabonba::Model(config) {
     fromMap(config);
   };
 
   void validate() override {
     if (!requestId) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("requestId is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("requestId is required.")));
     }
     if (!resourceOwnerAccountId) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("resourceOwnerAccountId is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("resourceOwnerAccountId is required.")));
     }
     if (!targets) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("targets is required.")));
+      BOOST_THROW_EXCEPTION(
+          boost::enable_error_info(std::runtime_error("targets is required.")));
     }
   }
 
@@ -2258,7 +2471,7 @@ public:
     }
     if (targets) {
       vector<boost::any> temp1;
-      for(auto item1:*targets){
+      for (auto item1 : *targets) {
         temp1.push_back(boost::any(item1.toMap()));
       }
       res["Targets"] = boost::any(temp1);
@@ -2271,12 +2484,13 @@ public:
       requestId = make_shared<string>(boost::any_cast<string>(m["RequestId"]));
     }
     if (m.find("ResourceOwnerAccountId") != m.end()) {
-      resourceOwnerAccountId = make_shared<string>(boost::any_cast<string>(m["ResourceOwnerAccountId"]));
+      resourceOwnerAccountId = make_shared<string>(
+          boost::any_cast<string>(m["ResourceOwnerAccountId"]));
     }
     if (m.find("Targets") != m.end()) {
       if (typeid(vector<boost::any>).name() == m["Targets"].type().name()) {
         vector<TargetEntry> expect1;
-        for(auto item1:boost::any_cast<vector<boost::any>>(m["Targets"])){
+        for (auto item1 : boost::any_cast<vector<boost::any>>(m["Targets"])) {
           if (typeid(map<string, boost::any>).name() == item1.type().name()) {
             TargetEntry model2;
             model2.fromMap(boost::any_cast<map<string, boost::any>>(item1));
@@ -2297,17 +2511,20 @@ public:
 class TestEventPatternRequest : public Darabonba::Model {
 public:
   TestEventPatternRequest() {}
-  explicit TestEventPatternRequest(const std::map<string, boost::any> &config) : Darabonba::Model(config) {
+  explicit TestEventPatternRequest(const std::map<string, boost::any> &config)
+      : Darabonba::Model(config) {
     fromMap(config);
   };
 
   void validate() override {
     if (!event) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("event is required.")));
+      BOOST_THROW_EXCEPTION(
+          boost::enable_error_info(std::runtime_error("event is required.")));
     }
     Darabonba::Model::validateMaxLength("event", event, 2048);
     if (!eventPattern) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("eventPattern is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("eventPattern is required.")));
     }
     Darabonba::Model::validateMaxLength("eventPattern", eventPattern, 2048);
   }
@@ -2328,7 +2545,8 @@ public:
       event = make_shared<string>(boost::any_cast<string>(m["Event"]));
     }
     if (m.find("EventPattern") != m.end()) {
-      eventPattern = make_shared<string>(boost::any_cast<string>(m["EventPattern"]));
+      eventPattern =
+          make_shared<string>(boost::any_cast<string>(m["EventPattern"]));
     }
   }
 
@@ -2340,19 +2558,23 @@ public:
 class TestEventPatternResponse : public Darabonba::Model {
 public:
   TestEventPatternResponse() {}
-  explicit TestEventPatternResponse(const std::map<string, boost::any> &config) : Darabonba::Model(config) {
+  explicit TestEventPatternResponse(const std::map<string, boost::any> &config)
+      : Darabonba::Model(config) {
     fromMap(config);
   };
 
   void validate() override {
     if (!requestId) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("requestId is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("requestId is required.")));
     }
     if (!resourceOwnerAccountId) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("resourceOwnerAccountId is required.")));
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("resourceOwnerAccountId is required.")));
     }
     if (!result) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(std::runtime_error("result is required.")));
+      BOOST_THROW_EXCEPTION(
+          boost::enable_error_info(std::runtime_error("result is required.")));
     }
   }
 
@@ -2375,7 +2597,8 @@ public:
       requestId = make_shared<string>(boost::any_cast<string>(m["RequestId"]));
     }
     if (m.find("ResourceOwnerAccountId") != m.end()) {
-      resourceOwnerAccountId = make_shared<string>(boost::any_cast<string>(m["ResourceOwnerAccountId"]));
+      resourceOwnerAccountId = make_shared<string>(
+          boost::any_cast<string>(m["ResourceOwnerAccountId"]));
     }
     if (m.find("Result") != m.end()) {
       result = make_shared<bool>(boost::any_cast<bool>(m["Result"]));
@@ -2400,46 +2623,80 @@ public:
   shared_ptr<string> _endpoint{};
   shared_ptr<string> _regionId{};
   shared_ptr<Alibabacloud_Credential::Client> _credential{};
-  explicit Client(const shared_ptr<Config>& config);
-  map<string, boost::any> doRequest(shared_ptr<string> action,
-                                    shared_ptr<string> protocol,
-                                    shared_ptr<string> method,
-                                    shared_ptr<string> pathname,
-                                    shared_ptr<map<string, string>> query,
-                                    const boost::any &body,
-                                    shared_ptr<Darabonba_Util::RuntimeOptions> runtime);
+  explicit Client(const shared_ptr<Config> &config);
+  map<string, boost::any>
+  doRequest(shared_ptr<string> action, shared_ptr<string> protocol,
+            shared_ptr<string> method, shared_ptr<string> pathname,
+            shared_ptr<map<string, string>> query, const boost::any &body,
+            shared_ptr<Darabonba_Util::RuntimeOptions> runtime);
   PutEventsResponse putEvents(shared_ptr<vector<CloudEvent>> eventList);
-  PutEventsResponse putEventsWithOptions(shared_ptr<vector<CloudEvent>> eventList, shared_ptr<Darabonba_Util::RuntimeOptions> runtime);
-  CreateEventBusResponse createEventBus(shared_ptr<CreateEventBusRequest> request);
-  CreateEventBusResponse createEventBusWithOptions(shared_ptr<CreateEventBusRequest> request, shared_ptr<Darabonba_Util::RuntimeOptions> runtime);
-  DeleteEventBusResponse deleteEventBus(shared_ptr<DeleteEventBusRequest> request);
-  DeleteEventBusResponse deleteEventBusWithOptions(shared_ptr<DeleteEventBusRequest> request, shared_ptr<Darabonba_Util::RuntimeOptions> runtime);
+  PutEventsResponse
+  putEventsWithOptions(shared_ptr<vector<CloudEvent>> eventList,
+                       shared_ptr<Darabonba_Util::RuntimeOptions> runtime);
+  CreateEventBusResponse
+  createEventBus(shared_ptr<CreateEventBusRequest> request);
+  CreateEventBusResponse
+  createEventBusWithOptions(shared_ptr<CreateEventBusRequest> request,
+                            shared_ptr<Darabonba_Util::RuntimeOptions> runtime);
+  DeleteEventBusResponse
+  deleteEventBus(shared_ptr<DeleteEventBusRequest> request);
+  DeleteEventBusResponse
+  deleteEventBusWithOptions(shared_ptr<DeleteEventBusRequest> request,
+                            shared_ptr<Darabonba_Util::RuntimeOptions> runtime);
   GetEventBusResponse getEventBus(shared_ptr<GetEventBusRequest> request);
-  GetEventBusResponse getEventBusWithOptions(shared_ptr<GetEventBusRequest> request, shared_ptr<Darabonba_Util::RuntimeOptions> runtime);
-  ListEventBusesResponse listEventBuses(shared_ptr<ListEventBusesRequest> request);
-  ListEventBusesResponse listEventBusesWithOptions(shared_ptr<ListEventBusesRequest> request, shared_ptr<Darabonba_Util::RuntimeOptions> runtime);
+  GetEventBusResponse
+  getEventBusWithOptions(shared_ptr<GetEventBusRequest> request,
+                         shared_ptr<Darabonba_Util::RuntimeOptions> runtime);
+  ListEventBusesResponse
+  listEventBuses(shared_ptr<ListEventBusesRequest> request);
+  ListEventBusesResponse
+  listEventBusesWithOptions(shared_ptr<ListEventBusesRequest> request,
+                            shared_ptr<Darabonba_Util::RuntimeOptions> runtime);
   CreateRuleResponse createRule(shared_ptr<CreateRuleRequest> request);
-  CreateRuleResponse createRuleWithOptions(shared_ptr<CreateRuleRequest> request, shared_ptr<Darabonba_Util::RuntimeOptions> runtime);
+  CreateRuleResponse
+  createRuleWithOptions(shared_ptr<CreateRuleRequest> request,
+                        shared_ptr<Darabonba_Util::RuntimeOptions> runtime);
   DeleteRuleResponse deleteRule(shared_ptr<DeleteRuleRequest> request);
-  DeleteRuleResponse deleteRuleWithOptions(shared_ptr<DeleteRuleRequest> request, shared_ptr<Darabonba_Util::RuntimeOptions> runtime);
+  DeleteRuleResponse
+  deleteRuleWithOptions(shared_ptr<DeleteRuleRequest> request,
+                        shared_ptr<Darabonba_Util::RuntimeOptions> runtime);
   DisableRuleResponse disableRule(shared_ptr<DisableRuleRequest> request);
-  DisableRuleResponse disableRuleWithOptions(shared_ptr<DisableRuleRequest> request, shared_ptr<Darabonba_Util::RuntimeOptions> runtime);
+  DisableRuleResponse
+  disableRuleWithOptions(shared_ptr<DisableRuleRequest> request,
+                         shared_ptr<Darabonba_Util::RuntimeOptions> runtime);
   EnableRuleResponse enableRule(shared_ptr<EnableRuleRequest> request);
-  EnableRuleResponse enableRuleWithOptions(shared_ptr<EnableRuleRequest> request, shared_ptr<Darabonba_Util::RuntimeOptions> runtime);
+  EnableRuleResponse
+  enableRuleWithOptions(shared_ptr<EnableRuleRequest> request,
+                        shared_ptr<Darabonba_Util::RuntimeOptions> runtime);
   GetRuleResponse getRule(shared_ptr<GetRuleRequest> request);
-  GetRuleResponse getRuleWithOptions(shared_ptr<GetRuleRequest> request, shared_ptr<Darabonba_Util::RuntimeOptions> runtime);
+  GetRuleResponse
+  getRuleWithOptions(shared_ptr<GetRuleRequest> request,
+                     shared_ptr<Darabonba_Util::RuntimeOptions> runtime);
   ListRulesResponse listRules(shared_ptr<ListRulesRequest> request);
-  ListRulesResponse listRulesWithOptions(shared_ptr<ListRulesRequest> request, shared_ptr<Darabonba_Util::RuntimeOptions> runtime);
+  ListRulesResponse
+  listRulesWithOptions(shared_ptr<ListRulesRequest> request,
+                       shared_ptr<Darabonba_Util::RuntimeOptions> runtime);
   UpdateRuleResponse updateRule(shared_ptr<UpdateRuleRequest> request);
-  UpdateRuleResponse updateRuleWithOptions(shared_ptr<UpdateRuleRequest> request, shared_ptr<Darabonba_Util::RuntimeOptions> runtime);
+  UpdateRuleResponse
+  updateRuleWithOptions(shared_ptr<UpdateRuleRequest> request,
+                        shared_ptr<Darabonba_Util::RuntimeOptions> runtime);
   CreateTargetsResponse createTargets(shared_ptr<CreateTargetsRequest> request);
-  CreateTargetsResponse createTargetsWithOptions(shared_ptr<CreateTargetsRequest> request, shared_ptr<Darabonba_Util::RuntimeOptions> runtime);
+  CreateTargetsResponse
+  createTargetsWithOptions(shared_ptr<CreateTargetsRequest> request,
+                           shared_ptr<Darabonba_Util::RuntimeOptions> runtime);
   DeleteTargetsResponse deleteTargets(shared_ptr<DeleteTargetsRequest> request);
-  DeleteTargetsResponse deleteTargetsWithOptions(shared_ptr<DeleteTargetsRequest> request, shared_ptr<Darabonba_Util::RuntimeOptions> runtime);
+  DeleteTargetsResponse
+  deleteTargetsWithOptions(shared_ptr<DeleteTargetsRequest> request,
+                           shared_ptr<Darabonba_Util::RuntimeOptions> runtime);
   ListTargetsResponse listTargets(shared_ptr<ListTargetsRequest> request);
-  ListTargetsResponse listTargetsWithOptions(shared_ptr<ListTargetsRequest> request, shared_ptr<Darabonba_Util::RuntimeOptions> runtime);
-  TestEventPatternResponse testEventPattern(shared_ptr<TestEventPatternRequest> request);
-  TestEventPatternResponse testEventPatternWithOptions(shared_ptr<TestEventPatternRequest> request, shared_ptr<Darabonba_Util::RuntimeOptions> runtime);
+  ListTargetsResponse
+  listTargetsWithOptions(shared_ptr<ListTargetsRequest> request,
+                         shared_ptr<Darabonba_Util::RuntimeOptions> runtime);
+  TestEventPatternResponse
+  testEventPattern(shared_ptr<TestEventPatternRequest> request);
+  TestEventPatternResponse testEventPatternWithOptions(
+      shared_ptr<TestEventPatternRequest> request,
+      shared_ptr<Darabonba_Util::RuntimeOptions> runtime);
 
   ~Client() = default;
 };
