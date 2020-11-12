@@ -280,7 +280,7 @@ public:
           boost::any_cast<map<string, boost::any>>(m["extensions"]);
       map<string, boost::any> toMap1;
       for (auto item : map1) {
-        toMap1[item.first] = boost::any_cast<boost::any>(item.second);
+        toMap1[item.first] = item.second;
       }
       extensions = make_shared<map<string, boost::any>>(toMap1);
     }

@@ -18,7 +18,7 @@ using namespace std;
 using namespace Alibabacloud_EventBridge;
 
 Alibabacloud_EventBridge::Client::Client(const shared_ptr<Config> &config) {
-  if (Darabonba_Util::Client::isUnset(config)) {
+  if (Darabonba_Util::Client::isUnset<Config>(config)) {
     BOOST_THROW_EXCEPTION(Darabonba::Error(
         map<string, string>({{"code", "ParameterMissing"},
                              {"message", "'config' can not be unset"}})));
@@ -31,17 +31,22 @@ Alibabacloud_EventBridge::Client::Client(const shared_ptr<Config> &config) {
       credentialType = make_shared<string>("sts");
     }
     shared_ptr<Alibabacloud_Credential::Config> credentialConfig =
-        make_shared<Alibabacloud_Credential::Config>(map<string, string>(
-            {{"accessKeyId",
-              !config->accessKeyId ? string() : *config->accessKeyId},
-             {"type", !credentialType ? string() : *credentialType},
-             {"accessKeySecret",
-              !config->accessKeySecret ? string() : *config->accessKeySecret},
-             {"securityToken",
-              !config->securityToken ? string() : *config->securityToken}}));
+        make_shared<Alibabacloud_Credential::Config>(map<string, boost::any>(
+            {{"accessKeyId", !config->accessKeyId
+                                 ? boost::any()
+                                 : boost::any(*config->accessKeyId)},
+             {"type",
+              !credentialType ? boost::any() : boost::any(*credentialType)},
+             {"accessKeySecret", !config->accessKeySecret
+                                     ? boost::any()
+                                     : boost::any(*config->accessKeySecret)},
+             {"securityToken", !config->securityToken
+                                   ? boost::any()
+                                   : boost::any(*config->securityToken)}}));
     _credential =
         make_shared<Alibabacloud_Credential::Client>(credentialConfig);
-  } else if (!Darabonba_Util::Client::isUnset(config->credential)) {
+  } else if (!Darabonba_Util::Client::isUnset<Alibabacloud_Credential::Client>(
+                 config->credential)) {
     _credential = config->credential;
   } else {
     BOOST_THROW_EXCEPTION(Darabonba::Error(map<string, string>(
@@ -78,39 +83,37 @@ map<string, boost::any> Alibabacloud_EventBridge::Client::doRequest(
     shared_ptr<map<string, string>> query, const boost::any &body,
     shared_ptr<Darabonba_Util::RuntimeOptions> runtime) {
   runtime->validate();
-  shared_ptr<map<string, boost::any>> runtime_ =
-      make_shared<map<string, boost::any>>(map<string, boost::any>(
-          {{"timeouted", boost::any("retry")},
-           {"readTimeout", boost::any(Darabonba_Util::Client::defaultNumber(
-                               runtime->readTimeout, _readTimeout))},
-           {"connectTimeout", boost::any(Darabonba_Util::Client::defaultNumber(
-                                  runtime->connectTimeout, _connectTimeout))},
-           {"httpProxy", boost::any(Darabonba_Util::Client::defaultString(
-                             runtime->httpProxy, _httpProxy))},
-           {"httpsProxy", boost::any(Darabonba_Util::Client::defaultString(
-                              runtime->httpsProxy, _httpsProxy))},
-           {"noProxy", boost::any(Darabonba_Util::Client::defaultString(
-                           runtime->noProxy, _noProxy))},
-           {"maxIdleConns", boost::any(Darabonba_Util::Client::defaultNumber(
-                                runtime->maxIdleConns, _maxIdleConns))},
-           {"retry", boost::any(map<string, boost::any>(
-                         {{"retryable", !runtime->autoretry
-                                            ? boost::any()
-                                            : boost::any(*runtime->autoretry)},
-                          {"maxAttempts",
-                           boost::any(Darabonba_Util::Client::defaultNumber(
-                               runtime->maxAttempts, make_shared<int>(3)))}}))},
-           {"backoff",
-            boost::any(map<string, boost::any>(
-                {{"policy",
-                  boost::any(Darabonba_Util::Client::defaultString(
-                      runtime->backoffPolicy, make_shared<string>("no")))},
-                 {"period",
-                  boost::any(Darabonba_Util::Client::defaultNumber(
-                      runtime->backoffPeriod, make_shared<int>(1)))}}))},
-           {"ignoreSSL", !runtime->ignoreSSL
-                             ? boost::any()
-                             : boost::any(*runtime->ignoreSSL)}}));
+  shared_ptr<map<string, boost::any>> runtime_ = make_shared<
+      map<string, boost::any>>(map<string, boost::any>(
+      {{"timeouted", boost::any(string("retry"))},
+       {"readTimeout", boost::any(Darabonba_Util::Client::defaultNumber(
+                           runtime->readTimeout, _readTimeout))},
+       {"connectTimeout", boost::any(Darabonba_Util::Client::defaultNumber(
+                              runtime->connectTimeout, _connectTimeout))},
+       {"httpProxy", boost::any(string(Darabonba_Util::Client::defaultString(
+                         runtime->httpProxy, _httpProxy)))},
+       {"httpsProxy", boost::any(string(Darabonba_Util::Client::defaultString(
+                          runtime->httpsProxy, _httpsProxy)))},
+       {"noProxy", boost::any(string(Darabonba_Util::Client::defaultString(
+                       runtime->noProxy, _noProxy)))},
+       {"maxIdleConns", boost::any(Darabonba_Util::Client::defaultNumber(
+                            runtime->maxIdleConns, _maxIdleConns))},
+       {"retry", boost::any(map<string, boost::any>(
+                     {{"retryable", !runtime->autoretry
+                                        ? boost::any()
+                                        : boost::any(*runtime->autoretry)},
+                      {"maxAttempts",
+                       boost::any(Darabonba_Util::Client::defaultNumber(
+                           runtime->maxAttempts, make_shared<int>(3)))}}))},
+       {"backoff",
+        boost::any(map<string, boost::any>(
+            {{"policy",
+              boost::any(string(Darabonba_Util::Client::defaultString(
+                  runtime->backoffPolicy, make_shared<string>("no"))))},
+             {"period", boost::any(Darabonba_Util::Client::defaultNumber(
+                            runtime->backoffPeriod, make_shared<int>(1)))}}))},
+       {"ignoreSSL", !runtime->ignoreSSL ? boost::any()
+                                         : boost::any(*runtime->ignoreSSL)}}));
   shared_ptr<Darabonba::Request> _lastRequest;
   shared_ptr<std::exception> _lastException;
   shared_ptr<int> _now = make_shared<int>(0);
@@ -144,11 +147,11 @@ map<string, boost::any> Alibabacloud_EventBridge::Client::doRequest(
           {"user-agent",
            Darabonba_Util::Client::getUserAgent(
                make_shared<string>(" aliyun-eventbridge-sdk/1.2.0"))}};
-      if (!Darabonba_Util::Client::isUnset(_regionId)) {
+      if (!Darabonba_Util::Client::isUnset<string>(_regionId)) {
         request_->headers.insert(
             pair<string, string>("x-eventbridge-regionId", *_regionId));
       }
-      if (!Darabonba_Util::Client::isUnset(make_shared<boost::any>(body))) {
+      if (!Darabonba_Util::Client::isUnset<boost::any>(body)) {
         request_->body =
             Darabonba::Converter::toStream(Darabonba_Util::Client::toJSONString(
                 make_shared<boost::any>(body)));
@@ -161,7 +164,7 @@ map<string, boost::any> Alibabacloud_EventBridge::Client::doRequest(
             "content-type",
             "application/cloudevents-batch+json; charset=utf-8"));
       }
-      if (!Darabonba_Util::Client::isUnset(query)) {
+      if (!Darabonba_Util::Client::isUnset<map<string, string>>(query)) {
         request_->query = *query;
       }
       shared_ptr<string> accessKeyId =
@@ -229,10 +232,10 @@ PutEventsResponse Alibabacloud_EventBridge::Client::putEventsWithOptions(
     shared_ptr<vector<CloudEvent>> eventList,
     shared_ptr<Darabonba_Util::RuntimeOptions> runtime) {
   for (auto cloudEvent : *eventList) {
-    if (Darabonba_Util::Client::isUnset(cloudEvent.specversion)) {
+    if (Darabonba_Util::Client::isUnset<string>(cloudEvent.specversion)) {
       cloudEvent.specversion = make_shared<string>("1.0");
     }
-    if (Darabonba_Util::Client::isUnset(cloudEvent.datacontenttype)) {
+    if (Darabonba_Util::Client::isUnset<string>(cloudEvent.datacontenttype)) {
       cloudEvent.datacontenttype =
           make_shared<string>("application/json; charset=utf-8");
     }
