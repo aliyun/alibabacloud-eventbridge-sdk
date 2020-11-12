@@ -5,9 +5,9 @@
 
 ![](https://aliyunsdk-pages.alicdn.com/icons/AlibabaCloud.svg)
 
-Alibabacloud EventBridgeUtil SDK 是基于 `[Darabonba DSL](https://github.com/aliyun/darabonba)` 解决方案的，它是一种 OpenAPI 应用领域的特定语言。可以利用它为任意风格的接口生成多语言的 SDK、代码示例、测试用例、接口编排等。
+Alibabacloud EventBridgeUtil SDK 是基于 [`Darabonba DSL`](https://github.com/aliyun/darabonba) 解决方案的，它是一种 OpenAPI 应用领域的特定语言。可以利用它为任意风格的接口生成多语言的 SDK、代码示例、测试用例、接口编排等。
 
-## Required Dependency Libraries
+## 必备的依赖库
 
 - [Boost](https://www.boost.org/users/download/)
 - [CPPRestSDK](https://github.com/microsoft/cpprestsdk/releases)
@@ -45,6 +45,8 @@ sudo apt-get install libcpprest-dev libcurl4-openssl-dev libssl-dev
 ```bash
 vcpkg install boost openssl-windows cpprestsdk
 ```
+
+## 安装
 
 ### Linux
 
