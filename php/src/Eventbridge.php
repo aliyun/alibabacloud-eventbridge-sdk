@@ -5,9 +5,9 @@
 namespace AlibabaCloud\SDK\EventBridge;
 
 use AlibabaCloud\Credentials\Credential;
+use AlibabaCloud\Credentials\Credential\Config;
 use AlibabaCloud\EventBridgeUtil\Client;
 use AlibabaCloud\SDK\EventBridge\Models\CloudEvent;
-use AlibabaCloud\SDK\EventBridge\Models\Config;
 use AlibabaCloud\SDK\EventBridge\Models\CreateEventBusRequest;
 use AlibabaCloud\SDK\EventBridge\Models\CreateEventBusResponse;
 use AlibabaCloud\SDK\EventBridge\Models\CreateRuleRequest;
@@ -89,7 +89,7 @@ class Eventbridge
             if (!Utils::empty_($config->securityToken)) {
                 $credentialType = 'sts';
             }
-            $credentialConfig = new \AlibabaCloud\Credentials\Credential\Config([
+            $credentialConfig = new Config([
                 'accessKeyId'     => $config->accessKeyId,
                 'type'            => $credentialType,
                 'accessKeySecret' => $config->accessKeySecret,
@@ -308,7 +308,7 @@ class Eventbridge
     {
         Utils::validateModel($request);
 
-        return CreateEventBusResponse::fromMap($this->doRequest('createEventBus', 'HTTP', 'POST', '/openapi/createEventBus', null, $request->toMap(), $runtime));
+        return CreateEventBusResponse::fromMap($this->doRequest('createEventBus', 'HTTP', 'POST', '/openapi/createEventBus', null, Tea::merge($request), $runtime));
     }
 
     /**
@@ -337,7 +337,7 @@ class Eventbridge
     {
         Utils::validateModel($request);
 
-        return DeleteEventBusResponse::fromMap($this->doRequest('deleteEventBus', 'HTTP', 'POST', '/openapi/deleteEventBus', null, $request->toMap(), $runtime));
+        return DeleteEventBusResponse::fromMap($this->doRequest('deleteEventBus', 'HTTP', 'POST', '/openapi/deleteEventBus', null, Tea::merge($request), $runtime));
     }
 
     /**
@@ -366,7 +366,7 @@ class Eventbridge
     {
         Utils::validateModel($request);
 
-        return GetEventBusResponse::fromMap($this->doRequest('getEventBus', 'HTTP', 'POST', '/openapi/getEventBus', null, $request->toMap(), $runtime));
+        return GetEventBusResponse::fromMap($this->doRequest('getEventBus', 'HTTP', 'POST', '/openapi/getEventBus', null, Tea::merge($request), $runtime));
     }
 
     /**
@@ -395,7 +395,7 @@ class Eventbridge
     {
         Utils::validateModel($request);
 
-        return ListEventBusesResponse::fromMap($this->doRequest('listEventBuses', 'HTTP', 'POST', '/openapi/listEventBuses', null, $request->toMap(), $runtime));
+        return ListEventBusesResponse::fromMap($this->doRequest('listEventBuses', 'HTTP', 'POST', '/openapi/listEventBuses', null, Tea::merge($request), $runtime));
     }
 
     /**
@@ -424,7 +424,7 @@ class Eventbridge
     {
         Utils::validateModel($request);
 
-        return CreateRuleResponse::fromMap($this->doRequest('createRule', 'HTTP', 'POST', '/openapi/createRule', null, $request->toMap(), $runtime));
+        return CreateRuleResponse::fromMap($this->doRequest('createRule', 'HTTP', 'POST', '/openapi/createRule', null, Tea::merge($request), $runtime));
     }
 
     /**
@@ -453,7 +453,7 @@ class Eventbridge
     {
         Utils::validateModel($request);
 
-        return DeleteRuleResponse::fromMap($this->doRequest('deleteRule', 'HTTP', 'POST', '/openapi/deleteRule', null, $request->toMap(), $runtime));
+        return DeleteRuleResponse::fromMap($this->doRequest('deleteRule', 'HTTP', 'POST', '/openapi/deleteRule', null, Tea::merge($request), $runtime));
     }
 
     /**
@@ -482,7 +482,7 @@ class Eventbridge
     {
         Utils::validateModel($request);
 
-        return DisableRuleResponse::fromMap($this->doRequest('disableRule', 'HTTP', 'POST', '/openapi/disableRule', null, $request->toMap(), $runtime));
+        return DisableRuleResponse::fromMap($this->doRequest('disableRule', 'HTTP', 'POST', '/openapi/disableRule', null, Tea::merge($request), $runtime));
     }
 
     /**
@@ -511,7 +511,7 @@ class Eventbridge
     {
         Utils::validateModel($request);
 
-        return EnableRuleResponse::fromMap($this->doRequest('enableRule', 'HTTP', 'POST', '/openapi/enableRule', null, $request->toMap(), $runtime));
+        return EnableRuleResponse::fromMap($this->doRequest('enableRule', 'HTTP', 'POST', '/openapi/enableRule', null, Tea::merge($request), $runtime));
     }
 
     /**
@@ -540,7 +540,7 @@ class Eventbridge
     {
         Utils::validateModel($request);
 
-        return GetRuleResponse::fromMap($this->doRequest('getRule', 'HTTP', 'POST', '/openapi/getRule', null, $request->toMap(), $runtime));
+        return GetRuleResponse::fromMap($this->doRequest('getRule', 'HTTP', 'POST', '/openapi/getRule', null, Tea::merge($request), $runtime));
     }
 
     /**
@@ -569,7 +569,7 @@ class Eventbridge
     {
         Utils::validateModel($request);
 
-        return ListRulesResponse::fromMap($this->doRequest('listRules', 'HTTP', 'POST', '/openapi/listRules', null, $request->toMap(), $runtime));
+        return ListRulesResponse::fromMap($this->doRequest('listRules', 'HTTP', 'POST', '/openapi/listRules', null, Tea::merge($request), $runtime));
     }
 
     /**
@@ -598,7 +598,7 @@ class Eventbridge
     {
         Utils::validateModel($request);
 
-        return UpdateRuleResponse::fromMap($this->doRequest('updateRule', 'HTTP', 'POST', '/openapi/updateRule', null, $request->toMap(), $runtime));
+        return UpdateRuleResponse::fromMap($this->doRequest('updateRule', 'HTTP', 'POST', '/openapi/updateRule', null, Tea::merge($request), $runtime));
     }
 
     /**
@@ -627,7 +627,7 @@ class Eventbridge
     {
         Utils::validateModel($request);
 
-        return CreateTargetsResponse::fromMap($this->doRequest('createTargets', 'HTTP', 'POST', '/openapi/createTargets', null, $request->toMap(), $runtime));
+        return CreateTargetsResponse::fromMap($this->doRequest('createTargets', 'HTTP', 'POST', '/openapi/createTargets', null, Tea::merge($request), $runtime));
     }
 
     /**
@@ -656,7 +656,7 @@ class Eventbridge
     {
         Utils::validateModel($request);
 
-        return DeleteTargetsResponse::fromMap($this->doRequest('deleteTargets', 'HTTP', 'POST', '/openapi/deleteTargets', null, $request->toMap(), $runtime));
+        return DeleteTargetsResponse::fromMap($this->doRequest('deleteTargets', 'HTTP', 'POST', '/openapi/deleteTargets', null, Tea::merge($request), $runtime));
     }
 
     /**
@@ -685,7 +685,7 @@ class Eventbridge
     {
         Utils::validateModel($request);
 
-        return ListTargetsResponse::fromMap($this->doRequest('listTargets', 'HTTP', 'POST', '/openapi/listTargets', null, $request->toMap(), $runtime));
+        return ListTargetsResponse::fromMap($this->doRequest('listTargets', 'HTTP', 'POST', '/openapi/listTargets', null, Tea::merge($request), $runtime));
     }
 
     /**
@@ -714,6 +714,6 @@ class Eventbridge
     {
         Utils::validateModel($request);
 
-        return TestEventPatternResponse::fromMap($this->doRequest('testEventPattern', 'HTTP', 'POST', '/openapi/testEventPattern', null, $request->toMap(), $runtime));
+        return TestEventPatternResponse::fromMap($this->doRequest('testEventPattern', 'HTTP', 'POST', '/openapi/testEventPattern', null, Tea::merge($request), $runtime));
     }
 }
