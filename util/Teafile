@@ -1,7 +1,7 @@
 {
   "scope": "alibabacloud",
   "name": "EventBridgeUtil",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "main": "./main.tea",
   "maintainers": [
     {
@@ -14,8 +14,8 @@
     "java": "com.aliyun:eventbridge-util:0.0.4",
     "python": "alibabacloud_eventbridge_util:0.0.3",
     "csharp": "AlibabaCloud.EventBridgeUtil:0.0.5",
-    "php": "alibabacloud/eventbrgidge-util:^0.1.0",
-    "cpp": "alibabacloud-sdk-cpp/eventbrgidge-util:master",
+    "php": "alibabacloud/eventbridge-util:^0.1.0",
+    "cpp": "alibabacloud-sdk-cpp/eventbridge-util:master",
     "ts": "@alicloud/eventbridge-util:^1.0.0"
   },
   "python": {
@@ -35,7 +35,7 @@
     "clientName": "Client",
     "withTest": 1,
     "packageInfo": {
-      "name": "alibabacloud/eventbrgidge-util",
+      "name": "alibabacloud/eventbridge-util",
       "desc": "Alibaba Cloud EventBridge Utils for PHP",
       "github": "https://github.com/aliyun/eventbrgidge-util"
     }
