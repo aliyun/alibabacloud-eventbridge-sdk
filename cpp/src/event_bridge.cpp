@@ -5,7 +5,6 @@
 #include <alibabacloud/event_bridge.hpp>
 #include <alibabacloud/event_bridge_util.hpp>
 #include <boost/any.hpp>
-#include <boost/lexical_cast.hpp>
 #include <boost/throw_exception.hpp>
 #include <darabonba/core.hpp>
 #include <darabonba/util.hpp>
@@ -183,10 +182,9 @@ map<string, boost::any> Alibabacloud_EventBridge::Client::doRequest(
           Alibabacloud_EventBridgeUtil::Client::getStringToSign(request_));
       request_->headers.insert(pair<string, string>(
           "authorization",
-          string("acs:" + *accessKeyId + ":" +
-                 Alibabacloud_EventBridgeUtil::Client::getSignature(
-                     stringToSign, accessKeySecret) +
-                 "")));
+          string("acs:") + string(*accessKeyId) + string(":") +
+              string(Alibabacloud_EventBridgeUtil::Client::getSignature(
+                  stringToSign, accessKeySecret))));
       _lastRequest = request_;
       shared_ptr<Darabonba::Response> response_ =
           make_shared<Darabonba::Response>(
@@ -202,10 +200,9 @@ map<string, boost::any> Alibabacloud_EventBridge::Client::doRequest(
               make_shared<int>(response_->statusCode))) {
         BOOST_THROW_EXCEPTION(Darabonba::Error(map<string, boost::any>(
             {{"code", (*tmp)["code"]},
-             {"message",
-              boost::any(string(
-                  "[EventBridgeError] " +
-                  Darabonba::Converter::toString((*tmp)["message"]) + ""))},
+             {"message", boost::any(string("[EventBridgeError] ") +
+                                    string(Darabonba::Converter::toString(
+                                        (*tmp)["message"])))},
              {"data", !tmp ? boost::any() : boost::any(*tmp)}})));
       }
       return *tmp;
@@ -244,10 +241,12 @@ PutEventsResponse Alibabacloud_EventBridge::Client::putEventsWithOptions(
   shared_ptr<boost::any> body = make_shared<boost::any>(
       Alibabacloud_EventBridgeUtil::Client::serialize(eventList));
   return PutEventsResponse(
-      doRequest(make_shared<string>("putEvents"), make_shared<string>("HTTP"),
-                make_shared<string>("POST"),
-                make_shared<string>(string("/openapi/putEvents")), nullptr,
-                body, runtime));
+      {{"undefined",
+        boost::any(doRequest(make_shared<string>("putEvents"),
+                             make_shared<string>("HTTP"),
+                             make_shared<string>("POST"),
+                             make_shared<string>(string("/openapi/putEvents")),
+                             nullptr, body, runtime))}});
 }
 
 CreateEventBusResponse Alibabacloud_EventBridge::Client::createEventBus(
@@ -262,11 +261,14 @@ Alibabacloud_EventBridge::Client::createEventBusWithOptions(
     shared_ptr<CreateEventBusRequest> request,
     shared_ptr<Darabonba_Util::RuntimeOptions> runtime) {
   Darabonba_Util::Client::validateModel(request);
-  return CreateEventBusResponse(doRequest(
-      make_shared<string>("createEventBus"), make_shared<string>("HTTP"),
-      make_shared<string>("POST"),
-      make_shared<string>(string("/openapi/createEventBus")), nullptr,
-      make_shared<map<string, boost::any>>(request->toMap()), runtime));
+  return CreateEventBusResponse(
+      {{"undefined",
+        boost::any(doRequest(
+            make_shared<string>("createEventBus"), make_shared<string>("HTTP"),
+            make_shared<string>("POST"),
+            make_shared<string>(string("/openapi/createEventBus")), nullptr,
+            make_shared<map<string, boost::any>>(request->toMap()),
+            runtime))}});
 }
 
 DeleteEventBusResponse Alibabacloud_EventBridge::Client::deleteEventBus(
@@ -281,11 +283,14 @@ Alibabacloud_EventBridge::Client::deleteEventBusWithOptions(
     shared_ptr<DeleteEventBusRequest> request,
     shared_ptr<Darabonba_Util::RuntimeOptions> runtime) {
   Darabonba_Util::Client::validateModel(request);
-  return DeleteEventBusResponse(doRequest(
-      make_shared<string>("deleteEventBus"), make_shared<string>("HTTP"),
-      make_shared<string>("POST"),
-      make_shared<string>(string("/openapi/deleteEventBus")), nullptr,
-      make_shared<map<string, boost::any>>(request->toMap()), runtime));
+  return DeleteEventBusResponse(
+      {{"undefined",
+        boost::any(doRequest(
+            make_shared<string>("deleteEventBus"), make_shared<string>("HTTP"),
+            make_shared<string>("POST"),
+            make_shared<string>(string("/openapi/deleteEventBus")), nullptr,
+            make_shared<map<string, boost::any>>(request->toMap()),
+            runtime))}});
 }
 
 GetEventBusResponse Alibabacloud_EventBridge::Client::getEventBus(
@@ -299,11 +304,14 @@ GetEventBusResponse Alibabacloud_EventBridge::Client::getEventBusWithOptions(
     shared_ptr<GetEventBusRequest> request,
     shared_ptr<Darabonba_Util::RuntimeOptions> runtime) {
   Darabonba_Util::Client::validateModel(request);
-  return GetEventBusResponse(doRequest(
-      make_shared<string>("getEventBus"), make_shared<string>("HTTP"),
-      make_shared<string>("POST"),
-      make_shared<string>(string("/openapi/getEventBus")), nullptr,
-      make_shared<map<string, boost::any>>(request->toMap()), runtime));
+  return GetEventBusResponse(
+      {{"undefined",
+        boost::any(doRequest(
+            make_shared<string>("getEventBus"), make_shared<string>("HTTP"),
+            make_shared<string>("POST"),
+            make_shared<string>(string("/openapi/getEventBus")), nullptr,
+            make_shared<map<string, boost::any>>(request->toMap()),
+            runtime))}});
 }
 
 ListEventBusesResponse Alibabacloud_EventBridge::Client::listEventBuses(
@@ -318,11 +326,14 @@ Alibabacloud_EventBridge::Client::listEventBusesWithOptions(
     shared_ptr<ListEventBusesRequest> request,
     shared_ptr<Darabonba_Util::RuntimeOptions> runtime) {
   Darabonba_Util::Client::validateModel(request);
-  return ListEventBusesResponse(doRequest(
-      make_shared<string>("listEventBuses"), make_shared<string>("HTTP"),
-      make_shared<string>("POST"),
-      make_shared<string>(string("/openapi/listEventBuses")), nullptr,
-      make_shared<map<string, boost::any>>(request->toMap()), runtime));
+  return ListEventBusesResponse(
+      {{"undefined",
+        boost::any(doRequest(
+            make_shared<string>("listEventBuses"), make_shared<string>("HTTP"),
+            make_shared<string>("POST"),
+            make_shared<string>(string("/openapi/listEventBuses")), nullptr,
+            make_shared<map<string, boost::any>>(request->toMap()),
+            runtime))}});
 }
 
 CreateRuleResponse Alibabacloud_EventBridge::Client::createRule(
@@ -336,11 +347,14 @@ CreateRuleResponse Alibabacloud_EventBridge::Client::createRuleWithOptions(
     shared_ptr<CreateRuleRequest> request,
     shared_ptr<Darabonba_Util::RuntimeOptions> runtime) {
   Darabonba_Util::Client::validateModel(request);
-  return CreateRuleResponse(doRequest(
-      make_shared<string>("createRule"), make_shared<string>("HTTP"),
-      make_shared<string>("POST"),
-      make_shared<string>(string("/openapi/createRule")), nullptr,
-      make_shared<map<string, boost::any>>(request->toMap()), runtime));
+  return CreateRuleResponse(
+      {{"undefined",
+        boost::any(doRequest(
+            make_shared<string>("createRule"), make_shared<string>("HTTP"),
+            make_shared<string>("POST"),
+            make_shared<string>(string("/openapi/createRule")), nullptr,
+            make_shared<map<string, boost::any>>(request->toMap()),
+            runtime))}});
 }
 
 DeleteRuleResponse Alibabacloud_EventBridge::Client::deleteRule(
@@ -354,11 +368,14 @@ DeleteRuleResponse Alibabacloud_EventBridge::Client::deleteRuleWithOptions(
     shared_ptr<DeleteRuleRequest> request,
     shared_ptr<Darabonba_Util::RuntimeOptions> runtime) {
   Darabonba_Util::Client::validateModel(request);
-  return DeleteRuleResponse(doRequest(
-      make_shared<string>("deleteRule"), make_shared<string>("HTTP"),
-      make_shared<string>("POST"),
-      make_shared<string>(string("/openapi/deleteRule")), nullptr,
-      make_shared<map<string, boost::any>>(request->toMap()), runtime));
+  return DeleteRuleResponse(
+      {{"undefined",
+        boost::any(doRequest(
+            make_shared<string>("deleteRule"), make_shared<string>("HTTP"),
+            make_shared<string>("POST"),
+            make_shared<string>(string("/openapi/deleteRule")), nullptr,
+            make_shared<map<string, boost::any>>(request->toMap()),
+            runtime))}});
 }
 
 DisableRuleResponse Alibabacloud_EventBridge::Client::disableRule(
@@ -372,11 +389,14 @@ DisableRuleResponse Alibabacloud_EventBridge::Client::disableRuleWithOptions(
     shared_ptr<DisableRuleRequest> request,
     shared_ptr<Darabonba_Util::RuntimeOptions> runtime) {
   Darabonba_Util::Client::validateModel(request);
-  return DisableRuleResponse(doRequest(
-      make_shared<string>("disableRule"), make_shared<string>("HTTP"),
-      make_shared<string>("POST"),
-      make_shared<string>(string("/openapi/disableRule")), nullptr,
-      make_shared<map<string, boost::any>>(request->toMap()), runtime));
+  return DisableRuleResponse(
+      {{"undefined",
+        boost::any(doRequest(
+            make_shared<string>("disableRule"), make_shared<string>("HTTP"),
+            make_shared<string>("POST"),
+            make_shared<string>(string("/openapi/disableRule")), nullptr,
+            make_shared<map<string, boost::any>>(request->toMap()),
+            runtime))}});
 }
 
 EnableRuleResponse Alibabacloud_EventBridge::Client::enableRule(
@@ -390,11 +410,14 @@ EnableRuleResponse Alibabacloud_EventBridge::Client::enableRuleWithOptions(
     shared_ptr<EnableRuleRequest> request,
     shared_ptr<Darabonba_Util::RuntimeOptions> runtime) {
   Darabonba_Util::Client::validateModel(request);
-  return EnableRuleResponse(doRequest(
-      make_shared<string>("enableRule"), make_shared<string>("HTTP"),
-      make_shared<string>("POST"),
-      make_shared<string>(string("/openapi/enableRule")), nullptr,
-      make_shared<map<string, boost::any>>(request->toMap()), runtime));
+  return EnableRuleResponse(
+      {{"undefined",
+        boost::any(doRequest(
+            make_shared<string>("enableRule"), make_shared<string>("HTTP"),
+            make_shared<string>("POST"),
+            make_shared<string>(string("/openapi/enableRule")), nullptr,
+            make_shared<map<string, boost::any>>(request->toMap()),
+            runtime))}});
 }
 
 GetRuleResponse
@@ -408,11 +431,14 @@ GetRuleResponse Alibabacloud_EventBridge::Client::getRuleWithOptions(
     shared_ptr<GetRuleRequest> request,
     shared_ptr<Darabonba_Util::RuntimeOptions> runtime) {
   Darabonba_Util::Client::validateModel(request);
-  return GetRuleResponse(doRequest(
-      make_shared<string>("getRule"), make_shared<string>("HTTP"),
-      make_shared<string>("POST"),
-      make_shared<string>(string("/openapi/getRule")), nullptr,
-      make_shared<map<string, boost::any>>(request->toMap()), runtime));
+  return GetRuleResponse(
+      {{"undefined",
+        boost::any(
+            doRequest(make_shared<string>("getRule"),
+                      make_shared<string>("HTTP"), make_shared<string>("POST"),
+                      make_shared<string>(string("/openapi/getRule")), nullptr,
+                      make_shared<map<string, boost::any>>(request->toMap()),
+                      runtime))}});
 }
 
 ListRulesResponse Alibabacloud_EventBridge::Client::listRules(
@@ -426,11 +452,14 @@ ListRulesResponse Alibabacloud_EventBridge::Client::listRulesWithOptions(
     shared_ptr<ListRulesRequest> request,
     shared_ptr<Darabonba_Util::RuntimeOptions> runtime) {
   Darabonba_Util::Client::validateModel(request);
-  return ListRulesResponse(doRequest(
-      make_shared<string>("listRules"), make_shared<string>("HTTP"),
-      make_shared<string>("POST"),
-      make_shared<string>(string("/openapi/listRules")), nullptr,
-      make_shared<map<string, boost::any>>(request->toMap()), runtime));
+  return ListRulesResponse(
+      {{"undefined",
+        boost::any(doRequest(
+            make_shared<string>("listRules"), make_shared<string>("HTTP"),
+            make_shared<string>("POST"),
+            make_shared<string>(string("/openapi/listRules")), nullptr,
+            make_shared<map<string, boost::any>>(request->toMap()),
+            runtime))}});
 }
 
 UpdateRuleResponse Alibabacloud_EventBridge::Client::updateRule(
@@ -444,11 +473,14 @@ UpdateRuleResponse Alibabacloud_EventBridge::Client::updateRuleWithOptions(
     shared_ptr<UpdateRuleRequest> request,
     shared_ptr<Darabonba_Util::RuntimeOptions> runtime) {
   Darabonba_Util::Client::validateModel(request);
-  return UpdateRuleResponse(doRequest(
-      make_shared<string>("updateRule"), make_shared<string>("HTTP"),
-      make_shared<string>("POST"),
-      make_shared<string>(string("/openapi/updateRule")), nullptr,
-      make_shared<map<string, boost::any>>(request->toMap()), runtime));
+  return UpdateRuleResponse(
+      {{"undefined",
+        boost::any(doRequest(
+            make_shared<string>("updateRule"), make_shared<string>("HTTP"),
+            make_shared<string>("POST"),
+            make_shared<string>(string("/openapi/updateRule")), nullptr,
+            make_shared<map<string, boost::any>>(request->toMap()),
+            runtime))}});
 }
 
 CreateTargetsResponse Alibabacloud_EventBridge::Client::createTargets(
@@ -463,11 +495,14 @@ Alibabacloud_EventBridge::Client::createTargetsWithOptions(
     shared_ptr<CreateTargetsRequest> request,
     shared_ptr<Darabonba_Util::RuntimeOptions> runtime) {
   Darabonba_Util::Client::validateModel(request);
-  return CreateTargetsResponse(doRequest(
-      make_shared<string>("createTargets"), make_shared<string>("HTTP"),
-      make_shared<string>("POST"),
-      make_shared<string>(string("/openapi/createTargets")), nullptr,
-      make_shared<map<string, boost::any>>(request->toMap()), runtime));
+  return CreateTargetsResponse(
+      {{"undefined",
+        boost::any(doRequest(
+            make_shared<string>("createTargets"), make_shared<string>("HTTP"),
+            make_shared<string>("POST"),
+            make_shared<string>(string("/openapi/createTargets")), nullptr,
+            make_shared<map<string, boost::any>>(request->toMap()),
+            runtime))}});
 }
 
 DeleteTargetsResponse Alibabacloud_EventBridge::Client::deleteTargets(
@@ -482,11 +517,14 @@ Alibabacloud_EventBridge::Client::deleteTargetsWithOptions(
     shared_ptr<DeleteTargetsRequest> request,
     shared_ptr<Darabonba_Util::RuntimeOptions> runtime) {
   Darabonba_Util::Client::validateModel(request);
-  return DeleteTargetsResponse(doRequest(
-      make_shared<string>("deleteTargets"), make_shared<string>("HTTP"),
-      make_shared<string>("POST"),
-      make_shared<string>(string("/openapi/deleteTargets")), nullptr,
-      make_shared<map<string, boost::any>>(request->toMap()), runtime));
+  return DeleteTargetsResponse(
+      {{"undefined",
+        boost::any(doRequest(
+            make_shared<string>("deleteTargets"), make_shared<string>("HTTP"),
+            make_shared<string>("POST"),
+            make_shared<string>(string("/openapi/deleteTargets")), nullptr,
+            make_shared<map<string, boost::any>>(request->toMap()),
+            runtime))}});
 }
 
 ListTargetsResponse Alibabacloud_EventBridge::Client::listTargets(
@@ -500,11 +538,14 @@ ListTargetsResponse Alibabacloud_EventBridge::Client::listTargetsWithOptions(
     shared_ptr<ListTargetsRequest> request,
     shared_ptr<Darabonba_Util::RuntimeOptions> runtime) {
   Darabonba_Util::Client::validateModel(request);
-  return ListTargetsResponse(doRequest(
-      make_shared<string>("listTargets"), make_shared<string>("HTTP"),
-      make_shared<string>("POST"),
-      make_shared<string>(string("/openapi/listTargets")), nullptr,
-      make_shared<map<string, boost::any>>(request->toMap()), runtime));
+  return ListTargetsResponse(
+      {{"undefined",
+        boost::any(doRequest(
+            make_shared<string>("listTargets"), make_shared<string>("HTTP"),
+            make_shared<string>("POST"),
+            make_shared<string>(string("/openapi/listTargets")), nullptr,
+            make_shared<map<string, boost::any>>(request->toMap()),
+            runtime))}});
 }
 
 TestEventPatternResponse Alibabacloud_EventBridge::Client::testEventPattern(
@@ -519,9 +560,12 @@ Alibabacloud_EventBridge::Client::testEventPatternWithOptions(
     shared_ptr<TestEventPatternRequest> request,
     shared_ptr<Darabonba_Util::RuntimeOptions> runtime) {
   Darabonba_Util::Client::validateModel(request);
-  return TestEventPatternResponse(doRequest(
-      make_shared<string>("testEventPattern"), make_shared<string>("HTTP"),
-      make_shared<string>("POST"),
-      make_shared<string>(string("/openapi/testEventPattern")), nullptr,
-      make_shared<map<string, boost::any>>(request->toMap()), runtime));
+  return TestEventPatternResponse(
+      {{"undefined",
+        boost::any(doRequest(
+            make_shared<string>("testEventPattern"),
+            make_shared<string>("HTTP"), make_shared<string>("POST"),
+            make_shared<string>(string("/openapi/testEventPattern")), nullptr,
+            make_shared<map<string, boost::any>>(request->toMap()),
+            runtime))}});
 }
