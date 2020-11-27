@@ -71,10 +71,6 @@ public:
     if (httpsProxy) {
       res["httpsProxy"] = boost::any(*httpsProxy);
     }
-    if (credential) {
-      res["credential"] = credential ? boost::any(credential->toMap())
-                                     : boost::any(map<string, boost::any>({}));
-    }
     if (endpoint) {
       res["endpoint"] = boost::any(*endpoint);
     }
@@ -119,14 +115,6 @@ public:
     if (m.find("httpsProxy") != m.end() && !m["httpsProxy"].empty()) {
       httpsProxy =
           make_shared<string>(boost::any_cast<string>(m["httpsProxy"]));
-    }
-    if (m.find("credential") != m.end() && !m["credential"].empty()) {
-      if (typeid(map<string, boost::any>) == m["credential"].type()) {
-        Alibabacloud_Credential::Client model1;
-        model1.fromMap(
-            boost::any_cast<map<string, boost::any>>(m["credential"]));
-        credential = make_shared<Alibabacloud_Credential::Client>(model1);
-      }
     }
     if (m.find("endpoint") != m.end() && !m["endpoint"].empty()) {
       endpoint = make_shared<string>(boost::any_cast<string>(m["endpoint"]));
