@@ -31,6 +31,9 @@ public class GetEventBusResponse extends TeaModel {
     @Validation(required = true)
     public Long createTimestamp;
 
+    @NameInMap("Tags")
+    public java.util.Map<String, String> tags;
+
     public static GetEventBusResponse build(java.util.Map<String, ?> map) {
         GetEventBusResponse self = new GetEventBusResponse();
         return TeaModel.build(map, self);
@@ -82,6 +85,14 @@ public class GetEventBusResponse extends TeaModel {
     }
     public Long getCreateTimestamp() {
         return this.createTimestamp;
+    }
+
+    public GetEventBusResponse setTags(java.util.Map<String, String> tags) {
+        this.tags = tags;
+        return this;
+    }
+    public java.util.Map<String, String> getTags() {
+        return this.tags;
     }
 
 }

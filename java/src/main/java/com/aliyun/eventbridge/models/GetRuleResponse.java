@@ -51,6 +51,9 @@ public class GetRuleResponse extends TeaModel {
     @Validation(required = true)
     public Long mtime;
 
+    @NameInMap("Tags")
+    public java.util.Map<String, String> tags;
+
     public static GetRuleResponse build(java.util.Map<String, ?> map) {
         GetRuleResponse self = new GetRuleResponse();
         return TeaModel.build(map, self);
@@ -142,6 +145,14 @@ public class GetRuleResponse extends TeaModel {
     }
     public Long getMtime() {
         return this.mtime;
+    }
+
+    public GetRuleResponse setTags(java.util.Map<String, String> tags) {
+        this.tags = tags;
+        return this;
+    }
+    public java.util.Map<String, String> getTags() {
+        return this.tags;
     }
 
 }
