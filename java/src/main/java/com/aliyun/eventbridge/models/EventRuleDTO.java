@@ -43,6 +43,9 @@ public class EventRuleDTO extends TeaModel {
     @Validation(required = true)
     public Long mtime;
 
+    @NameInMap("Tags")
+    public java.util.Map<String, String> tags;
+
     public static EventRuleDTO build(java.util.Map<String, ?> map) {
         EventRuleDTO self = new EventRuleDTO();
         return TeaModel.build(map, self);
@@ -118,6 +121,14 @@ public class EventRuleDTO extends TeaModel {
     }
     public Long getMtime() {
         return this.mtime;
+    }
+
+    public EventRuleDTO setTags(java.util.Map<String, String> tags) {
+        this.tags = tags;
+        return this;
+    }
+    public java.util.Map<String, String> getTags() {
+        return this.tags;
     }
 
 }

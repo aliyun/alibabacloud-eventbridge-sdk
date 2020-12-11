@@ -28,6 +28,9 @@ public class CreateRuleRequest extends TeaModel {
     @Validation(required = true)
     public java.util.List<TargetEntry> targets;
 
+    @NameInMap("Tags")
+    public java.util.Map<String, String> tags;
+
     public static CreateRuleRequest build(java.util.Map<String, ?> map) {
         CreateRuleRequest self = new CreateRuleRequest();
         return TeaModel.build(map, self);
@@ -79,6 +82,14 @@ public class CreateRuleRequest extends TeaModel {
     }
     public java.util.List<TargetEntry> getTargets() {
         return this.targets;
+    }
+
+    public CreateRuleRequest setTags(java.util.Map<String, String> tags) {
+        this.tags = tags;
+        return this;
+    }
+    public java.util.Map<String, String> getTags() {
+        return this.tags;
     }
 
 }

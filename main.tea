@@ -161,6 +161,7 @@ async function putEventsWithOptions(eventList: [ CloudEvent ], runtime: Util.Run
 model CreateEventBusRequest = {
   eventBusName: string(name='EventBusName', maxLength=127, minLength=1),
   description?: string(name='Description'),
+  tags?: map[string]string(name='Tags'),
 }
 
 /**
@@ -236,6 +237,7 @@ model GetEventBusResponse = {
   eventBusName: string(name='EventBusName'),
   description: string(name='Description'),
   createTimestamp: int64(name='CreateTimestamp'),
+  tags?: map[string]string(name='Tags'),
 }
 
 /**
@@ -271,6 +273,7 @@ model EventBusEntry = {
   eventBusARN: string(name='EventBusARN'),
   description: string(name='Description'),
   createTimestamp: int64(name='CreateTimestamp'),
+  tags?: map[string]string(name='Tags'),
 }
 
 /**
@@ -310,6 +313,7 @@ model CreateRuleRequest = {
   status?: string(name='Status'),
   filterPattern?: string(name='FilterPattern'),
   targets: [ TargetEntry ](name='Targets'),
+  tags?: map[string]string(name='Tags'),
 }
 
 /**
@@ -477,6 +481,7 @@ model GetRuleResponse = {
   targets: [ TargetEntry ](name='Targets'),
   ctime: int64(name='Ctime'),
   mtime: int64(name='Mtime'),
+  tags?: map[string]string(name='Tags'),
 }
 
 /**
@@ -529,6 +534,7 @@ model EventRuleDTO = {
   targets: [ TargetEntry ](name='Targets'),
   ctime: int64(name='Ctime'),
   mtime: int64(name='Mtime'),
+  tags?: map[string]string(name='Tags'),
 }
 
 /**
@@ -556,6 +562,7 @@ model UpdateRuleRequest = {
   description?: string(name='Description'),
   status?: string(name='Status'),
   filterPattern?: string(name='FilterPattern'),
+  tags?: map[string]string(name='Tags'),
 }
 
 /**
