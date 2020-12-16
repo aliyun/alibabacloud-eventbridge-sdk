@@ -156,7 +156,7 @@ public class EventBridgeClient implements EventBridge {
                 if (com.aliyun.teautil.Common.is4xx(response_.statusCode) || com.aliyun.teautil.Common.is5xx(response_.statusCode)) {
                     throw new TeaException(TeaConverter.buildMap(
                         new TeaPair("code", tmp.get("code")),
-                        new TeaPair("message", "[EventBridgeError] " + tmp.get("message") + ""),
+                        new TeaPair("message", "[EventBridgeError-" + tmp.get("requestId") + "] " + tmp.get("message") + ""),
                         new TeaPair("data", tmp)
                     ));
                 }
