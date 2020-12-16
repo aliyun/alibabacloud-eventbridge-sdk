@@ -20,9 +20,15 @@ class CreateEventBusRequest extends Model
      * @var string
      */
     public $description;
+
+    /**
+     * @var string[]
+     */
+    public $tags;
     protected $_name = [
         'eventBusName' => 'EventBusName',
         'description'  => 'Description',
+        'tags'         => 'Tags',
     ];
 
     public function validate()
@@ -41,6 +47,9 @@ class CreateEventBusRequest extends Model
         if (null !== $this->description) {
             $res['Description'] = $this->description;
         }
+        if (null !== $this->tags) {
+            $res['Tags'] = $this->tags;
+        }
 
         return $res;
     }
@@ -58,6 +67,9 @@ class CreateEventBusRequest extends Model
         }
         if (isset($map['Description'])) {
             $model->description = $map['Description'];
+        }
+        if (isset($map['Tags'])) {
+            $model->tags = $map['Tags'];
         }
 
         return $model;

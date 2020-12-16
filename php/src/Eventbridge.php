@@ -221,7 +221,7 @@ class Eventbridge
                 if (Utils::is4xx($_response->statusCode) || Utils::is5xx($_response->statusCode)) {
                     throw new TeaError([
                         'code'    => @$tmp['code'],
-                        'message' => '[EventBridgeError] ' . (string) (@$tmp['message']) . '',
+                        'message' => '[EventBridgeError-' . (string) (@$tmp['requestId']) . '] ' . (string) (@$tmp['message']) . '',
                         'data'    => $tmp,
                     ]);
                 }

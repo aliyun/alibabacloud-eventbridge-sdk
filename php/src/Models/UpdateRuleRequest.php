@@ -35,12 +35,18 @@ class UpdateRuleRequest extends Model
      * @var string
      */
     public $filterPattern;
+
+    /**
+     * @var string[]
+     */
+    public $tags;
     protected $_name = [
         'eventBusName'  => 'EventBusName',
         'ruleName'      => 'RuleName',
         'description'   => 'Description',
         'status'        => 'Status',
         'filterPattern' => 'FilterPattern',
+        'tags'          => 'Tags',
     ];
 
     public function validate()
@@ -66,6 +72,9 @@ class UpdateRuleRequest extends Model
         }
         if (null !== $this->filterPattern) {
             $res['FilterPattern'] = $this->filterPattern;
+        }
+        if (null !== $this->tags) {
+            $res['Tags'] = $this->tags;
         }
 
         return $res;
@@ -93,6 +102,9 @@ class UpdateRuleRequest extends Model
         }
         if (isset($map['FilterPattern'])) {
             $model->filterPattern = $map['FilterPattern'];
+        }
+        if (isset($map['Tags'])) {
+            $model->tags = $map['Tags'];
         }
 
         return $model;
