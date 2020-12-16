@@ -270,8 +270,9 @@ func (s *PutEventsResponse) SetEntryList(v []*PutEventsResponseEntry) *PutEvents
  * The request of create EventBus
  */
 type CreateEventBusRequest struct {
-	EventBusName *string `json:"EventBusName,omitempty" xml:"EventBusName,omitempty" require:"true" maxLength:"127" minLength:"1"`
-	Description  *string `json:"Description,omitempty" xml:"Description,omitempty"`
+	EventBusName *string            `json:"EventBusName,omitempty" xml:"EventBusName,omitempty" require:"true" maxLength:"127" minLength:"1"`
+	Description  *string            `json:"Description,omitempty" xml:"Description,omitempty"`
+	Tags         map[string]*string `json:"Tags,omitempty" xml:"Tags,omitempty"`
 }
 
 func (s CreateEventBusRequest) String() string {
@@ -289,6 +290,11 @@ func (s *CreateEventBusRequest) SetEventBusName(v string) *CreateEventBusRequest
 
 func (s *CreateEventBusRequest) SetDescription(v string) *CreateEventBusRequest {
 	s.Description = &v
+	return s
+}
+
+func (s *CreateEventBusRequest) SetTags(v map[string]*string) *CreateEventBusRequest {
+	s.Tags = v
 	return s
 }
 
@@ -394,12 +400,13 @@ func (s *GetEventBusRequest) SetEventBusName(v string) *GetEventBusRequest {
  * The response of get the detail of EventBus
  */
 type GetEventBusResponse struct {
-	RequestId              *string `json:"RequestId,omitempty" xml:"RequestId,omitempty" require:"true"`
-	ResourceOwnerAccountId *string `json:"ResourceOwnerAccountId,omitempty" xml:"ResourceOwnerAccountId,omitempty" require:"true"`
-	EventBusARN            *string `json:"EventBusARN,omitempty" xml:"EventBusARN,omitempty" require:"true"`
-	EventBusName           *string `json:"EventBusName,omitempty" xml:"EventBusName,omitempty" require:"true"`
-	Description            *string `json:"Description,omitempty" xml:"Description,omitempty" require:"true"`
-	CreateTimestamp        *int64  `json:"CreateTimestamp,omitempty" xml:"CreateTimestamp,omitempty" require:"true"`
+	RequestId              *string            `json:"RequestId,omitempty" xml:"RequestId,omitempty" require:"true"`
+	ResourceOwnerAccountId *string            `json:"ResourceOwnerAccountId,omitempty" xml:"ResourceOwnerAccountId,omitempty" require:"true"`
+	EventBusARN            *string            `json:"EventBusARN,omitempty" xml:"EventBusARN,omitempty" require:"true"`
+	EventBusName           *string            `json:"EventBusName,omitempty" xml:"EventBusName,omitempty" require:"true"`
+	Description            *string            `json:"Description,omitempty" xml:"Description,omitempty" require:"true"`
+	CreateTimestamp        *int64             `json:"CreateTimestamp,omitempty" xml:"CreateTimestamp,omitempty" require:"true"`
+	Tags                   map[string]*string `json:"Tags,omitempty" xml:"Tags,omitempty"`
 }
 
 func (s GetEventBusResponse) String() string {
@@ -440,6 +447,11 @@ func (s *GetEventBusResponse) SetCreateTimestamp(v int64) *GetEventBusResponse {
 	return s
 }
 
+func (s *GetEventBusResponse) SetTags(v map[string]*string) *GetEventBusResponse {
+	s.Tags = v
+	return s
+}
+
 /**
  * The request of list all the EventBus which meet the search criteria
  */
@@ -476,10 +488,11 @@ func (s *ListEventBusesRequest) SetNextToken(v string) *ListEventBusesRequest {
  * The detail of EventBuses
  */
 type EventBusEntry struct {
-	EventBusName    *string `json:"EventBusName,omitempty" xml:"EventBusName,omitempty" require:"true"`
-	EventBusARN     *string `json:"EventBusARN,omitempty" xml:"EventBusARN,omitempty" require:"true"`
-	Description     *string `json:"Description,omitempty" xml:"Description,omitempty" require:"true"`
-	CreateTimestamp *int64  `json:"CreateTimestamp,omitempty" xml:"CreateTimestamp,omitempty" require:"true"`
+	EventBusName    *string            `json:"EventBusName,omitempty" xml:"EventBusName,omitempty" require:"true"`
+	EventBusARN     *string            `json:"EventBusARN,omitempty" xml:"EventBusARN,omitempty" require:"true"`
+	Description     *string            `json:"Description,omitempty" xml:"Description,omitempty" require:"true"`
+	CreateTimestamp *int64             `json:"CreateTimestamp,omitempty" xml:"CreateTimestamp,omitempty" require:"true"`
+	Tags            map[string]*string `json:"Tags,omitempty" xml:"Tags,omitempty"`
 }
 
 func (s EventBusEntry) String() string {
@@ -507,6 +520,11 @@ func (s *EventBusEntry) SetDescription(v string) *EventBusEntry {
 
 func (s *EventBusEntry) SetCreateTimestamp(v int64) *EventBusEntry {
 	s.CreateTimestamp = &v
+	return s
+}
+
+func (s *EventBusEntry) SetTags(v map[string]*string) *EventBusEntry {
+	s.Tags = v
 	return s
 }
 
@@ -558,12 +576,13 @@ func (s *ListEventBusesResponse) SetTotal(v int) *ListEventBusesResponse {
  * The request of create an EventBus rule on Aliyun
  */
 type CreateRuleRequest struct {
-	EventBusName  *string        `json:"EventBusName,omitempty" xml:"EventBusName,omitempty" require:"true" maxLength:"127" minLength:"1"`
-	Description   *string        `json:"Description,omitempty" xml:"Description,omitempty"`
-	RuleName      *string        `json:"RuleName,omitempty" xml:"RuleName,omitempty" require:"true"`
-	Status        *string        `json:"Status,omitempty" xml:"Status,omitempty"`
-	FilterPattern *string        `json:"FilterPattern,omitempty" xml:"FilterPattern,omitempty"`
-	Targets       []*TargetEntry `json:"Targets,omitempty" xml:"Targets,omitempty" require:"true" type:"Repeated"`
+	EventBusName  *string            `json:"EventBusName,omitempty" xml:"EventBusName,omitempty" require:"true" maxLength:"127" minLength:"1"`
+	Description   *string            `json:"Description,omitempty" xml:"Description,omitempty"`
+	RuleName      *string            `json:"RuleName,omitempty" xml:"RuleName,omitempty" require:"true"`
+	Status        *string            `json:"Status,omitempty" xml:"Status,omitempty"`
+	FilterPattern *string            `json:"FilterPattern,omitempty" xml:"FilterPattern,omitempty"`
+	Targets       []*TargetEntry     `json:"Targets,omitempty" xml:"Targets,omitempty" require:"true" type:"Repeated"`
+	Tags          map[string]*string `json:"Tags,omitempty" xml:"Tags,omitempty"`
 }
 
 func (s CreateRuleRequest) String() string {
@@ -601,6 +620,11 @@ func (s *CreateRuleRequest) SetFilterPattern(v string) *CreateRuleRequest {
 
 func (s *CreateRuleRequest) SetTargets(v []*TargetEntry) *CreateRuleRequest {
 	s.Targets = v
+	return s
+}
+
+func (s *CreateRuleRequest) SetTags(v map[string]*string) *CreateRuleRequest {
+	s.Tags = v
 	return s
 }
 
@@ -904,17 +928,18 @@ func (s *GetRuleRequest) SetRuleName(v string) *GetRuleRequest {
  * The response of Get EventBus
  */
 type GetRuleResponse struct {
-	RequestId              *string        `json:"RequestId,omitempty" xml:"RequestId,omitempty" require:"true"`
-	ResourceOwnerAccountId *string        `json:"ResourceOwnerAccountId,omitempty" xml:"ResourceOwnerAccountId,omitempty" require:"true"`
-	EventBusName           *string        `json:"EventBusName,omitempty" xml:"EventBusName,omitempty" require:"true"`
-	RuleARN                *string        `json:"RuleARN,omitempty" xml:"RuleARN,omitempty" require:"true"`
-	RuleName               *string        `json:"RuleName,omitempty" xml:"RuleName,omitempty" require:"true"`
-	Description            *string        `json:"Description,omitempty" xml:"Description,omitempty" require:"true"`
-	Status                 *string        `json:"Status,omitempty" xml:"Status,omitempty" require:"true"`
-	FilterPattern          *string        `json:"FilterPattern,omitempty" xml:"FilterPattern,omitempty" require:"true"`
-	Targets                []*TargetEntry `json:"Targets,omitempty" xml:"Targets,omitempty" require:"true" type:"Repeated"`
-	Ctime                  *int64         `json:"Ctime,omitempty" xml:"Ctime,omitempty" require:"true"`
-	Mtime                  *int64         `json:"Mtime,omitempty" xml:"Mtime,omitempty" require:"true"`
+	RequestId              *string            `json:"RequestId,omitempty" xml:"RequestId,omitempty" require:"true"`
+	ResourceOwnerAccountId *string            `json:"ResourceOwnerAccountId,omitempty" xml:"ResourceOwnerAccountId,omitempty" require:"true"`
+	EventBusName           *string            `json:"EventBusName,omitempty" xml:"EventBusName,omitempty" require:"true"`
+	RuleARN                *string            `json:"RuleARN,omitempty" xml:"RuleARN,omitempty" require:"true"`
+	RuleName               *string            `json:"RuleName,omitempty" xml:"RuleName,omitempty" require:"true"`
+	Description            *string            `json:"Description,omitempty" xml:"Description,omitempty" require:"true"`
+	Status                 *string            `json:"Status,omitempty" xml:"Status,omitempty" require:"true"`
+	FilterPattern          *string            `json:"FilterPattern,omitempty" xml:"FilterPattern,omitempty" require:"true"`
+	Targets                []*TargetEntry     `json:"Targets,omitempty" xml:"Targets,omitempty" require:"true" type:"Repeated"`
+	Ctime                  *int64             `json:"Ctime,omitempty" xml:"Ctime,omitempty" require:"true"`
+	Mtime                  *int64             `json:"Mtime,omitempty" xml:"Mtime,omitempty" require:"true"`
+	Tags                   map[string]*string `json:"Tags,omitempty" xml:"Tags,omitempty"`
 }
 
 func (s GetRuleResponse) String() string {
@@ -977,6 +1002,11 @@ func (s *GetRuleResponse) SetCtime(v int64) *GetRuleResponse {
 
 func (s *GetRuleResponse) SetMtime(v int64) *GetRuleResponse {
 	s.Mtime = &v
+	return s
+}
+
+func (s *GetRuleResponse) SetTags(v map[string]*string) *GetRuleResponse {
+	s.Tags = v
 	return s
 }
 
@@ -1066,15 +1096,16 @@ func (s *ListRulesResponse) SetTotal(v int) *ListRulesResponse {
  * The detail of EventBuses rule
  */
 type EventRuleDTO struct {
-	RuleARN       *string        `json:"RuleARN,omitempty" xml:"RuleARN,omitempty" require:"true"`
-	EventBusName  *string        `json:"EventBusName,omitempty" xml:"EventBusName,omitempty" require:"true"`
-	RuleName      *string        `json:"RuleName,omitempty" xml:"RuleName,omitempty" require:"true"`
-	Description   *string        `json:"Description,omitempty" xml:"Description,omitempty" require:"true"`
-	Status        *string        `json:"Status,omitempty" xml:"Status,omitempty" require:"true"`
-	FilterPattern *string        `json:"FilterPattern,omitempty" xml:"FilterPattern,omitempty" require:"true"`
-	Targets       []*TargetEntry `json:"Targets,omitempty" xml:"Targets,omitempty" require:"true" type:"Repeated"`
-	Ctime         *int64         `json:"Ctime,omitempty" xml:"Ctime,omitempty" require:"true"`
-	Mtime         *int64         `json:"Mtime,omitempty" xml:"Mtime,omitempty" require:"true"`
+	RuleARN       *string            `json:"RuleARN,omitempty" xml:"RuleARN,omitempty" require:"true"`
+	EventBusName  *string            `json:"EventBusName,omitempty" xml:"EventBusName,omitempty" require:"true"`
+	RuleName      *string            `json:"RuleName,omitempty" xml:"RuleName,omitempty" require:"true"`
+	Description   *string            `json:"Description,omitempty" xml:"Description,omitempty" require:"true"`
+	Status        *string            `json:"Status,omitempty" xml:"Status,omitempty" require:"true"`
+	FilterPattern *string            `json:"FilterPattern,omitempty" xml:"FilterPattern,omitempty" require:"true"`
+	Targets       []*TargetEntry     `json:"Targets,omitempty" xml:"Targets,omitempty" require:"true" type:"Repeated"`
+	Ctime         *int64             `json:"Ctime,omitempty" xml:"Ctime,omitempty" require:"true"`
+	Mtime         *int64             `json:"Mtime,omitempty" xml:"Mtime,omitempty" require:"true"`
+	Tags          map[string]*string `json:"Tags,omitempty" xml:"Tags,omitempty"`
 }
 
 func (s EventRuleDTO) String() string {
@@ -1130,15 +1161,21 @@ func (s *EventRuleDTO) SetMtime(v int64) *EventRuleDTO {
 	return s
 }
 
+func (s *EventRuleDTO) SetTags(v map[string]*string) *EventRuleDTO {
+	s.Tags = v
+	return s
+}
+
 /**
  * The request of update the EventBus rule
  */
 type UpdateRuleRequest struct {
-	EventBusName  *string `json:"EventBusName,omitempty" xml:"EventBusName,omitempty" require:"true"`
-	RuleName      *string `json:"RuleName,omitempty" xml:"RuleName,omitempty" require:"true"`
-	Description   *string `json:"Description,omitempty" xml:"Description,omitempty"`
-	Status        *string `json:"Status,omitempty" xml:"Status,omitempty"`
-	FilterPattern *string `json:"FilterPattern,omitempty" xml:"FilterPattern,omitempty"`
+	EventBusName  *string            `json:"EventBusName,omitempty" xml:"EventBusName,omitempty" require:"true"`
+	RuleName      *string            `json:"RuleName,omitempty" xml:"RuleName,omitempty" require:"true"`
+	Description   *string            `json:"Description,omitempty" xml:"Description,omitempty"`
+	Status        *string            `json:"Status,omitempty" xml:"Status,omitempty"`
+	FilterPattern *string            `json:"FilterPattern,omitempty" xml:"FilterPattern,omitempty"`
+	Tags          map[string]*string `json:"Tags,omitempty" xml:"Tags,omitempty"`
 }
 
 func (s UpdateRuleRequest) String() string {
@@ -1171,6 +1208,11 @@ func (s *UpdateRuleRequest) SetStatus(v string) *UpdateRuleRequest {
 
 func (s *UpdateRuleRequest) SetFilterPattern(v string) *UpdateRuleRequest {
 	s.FilterPattern = &v
+	return s
+}
+
+func (s *UpdateRuleRequest) SetTags(v map[string]*string) *UpdateRuleRequest {
+	s.Tags = v
 	return s
 }
 
@@ -1689,7 +1731,7 @@ func (client *Client) DoRequest(action *string, protocol *string, method *string
 			if tea.BoolValue(util.Is4xx(response_.StatusCode)) || tea.BoolValue(util.Is5xx(response_.StatusCode)) {
 				_err = tea.NewSDKError(map[string]interface{}{
 					"code":    tmp["code"],
-					"message": "[EventBridgeError] " + tea.ToString(tmp["message"]),
+					"message": "[EventBridgeError-" + tea.ToString(tmp["requestId"]) + "] " + tea.ToString(tmp["message"]),
 					"data":    tmp,
 				})
 				return _result, _err

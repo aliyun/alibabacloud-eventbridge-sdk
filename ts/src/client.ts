@@ -182,10 +182,12 @@ export class PutEventsResponse extends $tea.Model {
 export class CreateEventBusRequest extends $tea.Model {
   eventBusName: string;
   description?: string;
+  tags?: { [key: string]: string };
   static names(): { [key: string]: string } {
     return {
       eventBusName: 'EventBusName',
       description: 'Description',
+      tags: 'Tags',
     };
   }
 
@@ -193,6 +195,7 @@ export class CreateEventBusRequest extends $tea.Model {
     return {
       eventBusName: 'string',
       description: 'string',
+      tags: { 'type': 'map', 'keyType': 'string', 'valueType': 'string' },
     };
   }
 
@@ -308,6 +311,7 @@ export class GetEventBusResponse extends $tea.Model {
   eventBusName: string;
   description: string;
   createTimestamp: number;
+  tags?: { [key: string]: string };
   static names(): { [key: string]: string } {
     return {
       requestId: 'RequestId',
@@ -316,6 +320,7 @@ export class GetEventBusResponse extends $tea.Model {
       eventBusName: 'EventBusName',
       description: 'Description',
       createTimestamp: 'CreateTimestamp',
+      tags: 'Tags',
     };
   }
 
@@ -327,6 +332,7 @@ export class GetEventBusResponse extends $tea.Model {
       eventBusName: 'string',
       description: 'string',
       createTimestamp: 'number',
+      tags: { 'type': 'map', 'keyType': 'string', 'valueType': 'string' },
     };
   }
 
@@ -371,12 +377,14 @@ export class EventBusEntry extends $tea.Model {
   eventBusARN: string;
   description: string;
   createTimestamp: number;
+  tags?: { [key: string]: string };
   static names(): { [key: string]: string } {
     return {
       eventBusName: 'EventBusName',
       eventBusARN: 'EventBusARN',
       description: 'Description',
       createTimestamp: 'CreateTimestamp',
+      tags: 'Tags',
     };
   }
 
@@ -386,6 +394,7 @@ export class EventBusEntry extends $tea.Model {
       eventBusARN: 'string',
       description: 'string',
       createTimestamp: 'number',
+      tags: { 'type': 'map', 'keyType': 'string', 'valueType': 'string' },
     };
   }
 
@@ -438,6 +447,7 @@ export class CreateRuleRequest extends $tea.Model {
   status?: string;
   filterPattern?: string;
   targets: TargetEntry[];
+  tags?: { [key: string]: string };
   static names(): { [key: string]: string } {
     return {
       eventBusName: 'EventBusName',
@@ -446,6 +456,7 @@ export class CreateRuleRequest extends $tea.Model {
       status: 'Status',
       filterPattern: 'FilterPattern',
       targets: 'Targets',
+      tags: 'Tags',
     };
   }
 
@@ -457,6 +468,7 @@ export class CreateRuleRequest extends $tea.Model {
       status: 'string',
       filterPattern: 'string',
       targets: { 'type': 'array', 'itemType': TargetEntry },
+      tags: { 'type': 'map', 'keyType': 'string', 'valueType': 'string' },
     };
   }
 
@@ -748,6 +760,7 @@ export class GetRuleResponse extends $tea.Model {
   targets: TargetEntry[];
   ctime: number;
   mtime: number;
+  tags?: { [key: string]: string };
   static names(): { [key: string]: string } {
     return {
       requestId: 'RequestId',
@@ -761,6 +774,7 @@ export class GetRuleResponse extends $tea.Model {
       targets: 'Targets',
       ctime: 'Ctime',
       mtime: 'Mtime',
+      tags: 'Tags',
     };
   }
 
@@ -777,6 +791,7 @@ export class GetRuleResponse extends $tea.Model {
       targets: { 'type': 'array', 'itemType': TargetEntry },
       ctime: 'number',
       mtime: 'number',
+      tags: { 'type': 'map', 'keyType': 'string', 'valueType': 'string' },
     };
   }
 
@@ -863,6 +878,7 @@ export class EventRuleDTO extends $tea.Model {
   targets: TargetEntry[];
   ctime: number;
   mtime: number;
+  tags?: { [key: string]: string };
   static names(): { [key: string]: string } {
     return {
       ruleARN: 'RuleARN',
@@ -874,6 +890,7 @@ export class EventRuleDTO extends $tea.Model {
       targets: 'Targets',
       ctime: 'Ctime',
       mtime: 'Mtime',
+      tags: 'Tags',
     };
   }
 
@@ -888,6 +905,7 @@ export class EventRuleDTO extends $tea.Model {
       targets: { 'type': 'array', 'itemType': TargetEntry },
       ctime: 'number',
       mtime: 'number',
+      tags: { 'type': 'map', 'keyType': 'string', 'valueType': 'string' },
     };
   }
 
@@ -905,6 +923,7 @@ export class UpdateRuleRequest extends $tea.Model {
   description?: string;
   status?: string;
   filterPattern?: string;
+  tags?: { [key: string]: string };
   static names(): { [key: string]: string } {
     return {
       eventBusName: 'EventBusName',
@@ -912,6 +931,7 @@ export class UpdateRuleRequest extends $tea.Model {
       description: 'Description',
       status: 'Status',
       filterPattern: 'FilterPattern',
+      tags: 'Tags',
     };
   }
 
@@ -922,6 +942,7 @@ export class UpdateRuleRequest extends $tea.Model {
       description: 'string',
       status: 'string',
       filterPattern: 'string',
+      tags: { 'type': 'map', 'keyType': 'string', 'valueType': 'string' },
     };
   }
 
@@ -1372,7 +1393,7 @@ export default class Client {
         if (Util.is4xx(response_.statusCode) || Util.is5xx(response_.statusCode)) {
           throw $tea.newError({
             code: tmp["code"],
-            message: `[EventBridgeError] ${tmp["message"]}`,
+            message: `[EventBridgeError-${tmp["requestId"]}] ${tmp["message"]}`,
             data: tmp,
           });
         }
