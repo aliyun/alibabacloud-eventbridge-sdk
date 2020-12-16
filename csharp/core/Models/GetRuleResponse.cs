@@ -56,6 +56,10 @@ namespace AlibabaCloud.SDK.EventBridge.Models
         [Validation(Required=true)]
         public long? Mtime { get; set; }
 
+        [NameInMap("Tags")]
+        [Validation(Required=false)]
+        public Dictionary<string, string> Tags { get; set; }
+
     }
 
 }
