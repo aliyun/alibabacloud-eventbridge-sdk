@@ -40,6 +40,11 @@ class CreateRuleRequest extends Model
      * @var TargetEntry[]
      */
     public $targets;
+
+    /**
+     * @var string[]
+     */
+    public $tags;
     protected $_name = [
         'eventBusName'  => 'EventBusName',
         'description'   => 'Description',
@@ -47,6 +52,7 @@ class CreateRuleRequest extends Model
         'status'        => 'Status',
         'filterPattern' => 'FilterPattern',
         'targets'       => 'Targets',
+        'tags'          => 'Tags',
     ];
 
     public function validate()
@@ -85,6 +91,9 @@ class CreateRuleRequest extends Model
                 }
             }
         }
+        if (null !== $this->tags) {
+            $res['Tags'] = $this->tags;
+        }
 
         return $res;
     }
@@ -120,6 +129,9 @@ class CreateRuleRequest extends Model
                     $model->targets[$n++] = null !== $item ? TargetEntry::fromMap($item) : $item;
                 }
             }
+        }
+        if (isset($map['Tags'])) {
+            $model->tags = $map['Tags'];
         }
 
         return $model;

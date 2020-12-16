@@ -30,11 +30,17 @@ class EventBusEntry extends Model
      * @var int
      */
     public $createTimestamp;
+
+    /**
+     * @var string[]
+     */
+    public $tags;
     protected $_name = [
         'eventBusName'    => 'EventBusName',
         'eventBusARN'     => 'EventBusARN',
         'description'     => 'Description',
         'createTimestamp' => 'CreateTimestamp',
+        'tags'            => 'Tags',
     ];
 
     public function validate()
@@ -60,6 +66,9 @@ class EventBusEntry extends Model
         if (null !== $this->createTimestamp) {
             $res['CreateTimestamp'] = $this->createTimestamp;
         }
+        if (null !== $this->tags) {
+            $res['Tags'] = $this->tags;
+        }
 
         return $res;
     }
@@ -83,6 +92,9 @@ class EventBusEntry extends Model
         }
         if (isset($map['CreateTimestamp'])) {
             $model->createTimestamp = $map['CreateTimestamp'];
+        }
+        if (isset($map['Tags'])) {
+            $model->tags = $map['Tags'];
         }
 
         return $model;

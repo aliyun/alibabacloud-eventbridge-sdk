@@ -65,6 +65,11 @@ class GetRuleResponse extends Model
      * @var int
      */
     public $mtime;
+
+    /**
+     * @var string[]
+     */
+    public $tags;
     protected $_name = [
         'requestId'              => 'RequestId',
         'resourceOwnerAccountId' => 'ResourceOwnerAccountId',
@@ -77,6 +82,7 @@ class GetRuleResponse extends Model
         'targets'                => 'Targets',
         'ctime'                  => 'Ctime',
         'mtime'                  => 'Mtime',
+        'tags'                   => 'Tags',
     ];
 
     public function validate()
@@ -136,6 +142,9 @@ class GetRuleResponse extends Model
         if (null !== $this->mtime) {
             $res['Mtime'] = $this->mtime;
         }
+        if (null !== $this->tags) {
+            $res['Tags'] = $this->tags;
+        }
 
         return $res;
     }
@@ -186,6 +195,9 @@ class GetRuleResponse extends Model
         }
         if (isset($map['Mtime'])) {
             $model->mtime = $map['Mtime'];
+        }
+        if (isset($map['Tags'])) {
+            $model->tags = $map['Tags'];
         }
 
         return $model;
