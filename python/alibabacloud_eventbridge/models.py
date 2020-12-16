@@ -47,35 +47,61 @@ class Config(TeaModel):
 
     def to_map(self):
         result = {}
-        result['accessKeyId'] = self.access_key_id
-        result['accessKeySecret'] = self.access_key_secret
-        result['securityToken'] = self.security_token
-        result['protocol'] = self.protocol
-        result['regionId'] = self.region_id
-        result['readTimeout'] = self.read_timeout
-        result['connectTimeout'] = self.connect_timeout
-        result['httpProxy'] = self.http_proxy
-        result['httpsProxy'] = self.https_proxy
-        result['credential'] = self.credential
-        result['endpoint'] = self.endpoint
-        result['noProxy'] = self.no_proxy
-        result['maxIdleConns'] = self.max_idle_conns
+        if self.access_key_id is not None:
+            result['accessKeyId'] = self.access_key_id
+        if self.access_key_secret is not None:
+            result['accessKeySecret'] = self.access_key_secret
+        if self.security_token is not None:
+            result['securityToken'] = self.security_token
+        if self.protocol is not None:
+            result['protocol'] = self.protocol
+        if self.region_id is not None:
+            result['regionId'] = self.region_id
+        if self.read_timeout is not None:
+            result['readTimeout'] = self.read_timeout
+        if self.connect_timeout is not None:
+            result['connectTimeout'] = self.connect_timeout
+        if self.http_proxy is not None:
+            result['httpProxy'] = self.http_proxy
+        if self.https_proxy is not None:
+            result['httpsProxy'] = self.https_proxy
+        if self.credential is not None:
+            result['credential'] = self.credential
+        if self.endpoint is not None:
+            result['endpoint'] = self.endpoint
+        if self.no_proxy is not None:
+            result['noProxy'] = self.no_proxy
+        if self.max_idle_conns is not None:
+            result['maxIdleConns'] = self.max_idle_conns
         return result
 
     def from_map(self, map={}):
-        self.access_key_id = map.get('accessKeyId')
-        self.access_key_secret = map.get('accessKeySecret')
-        self.security_token = map.get('securityToken')
-        self.protocol = map.get('protocol')
-        self.region_id = map.get('regionId')
-        self.read_timeout = map.get('readTimeout')
-        self.connect_timeout = map.get('connectTimeout')
-        self.http_proxy = map.get('httpProxy')
-        self.https_proxy = map.get('httpsProxy')
-        self.credential = map.get('credential')
-        self.endpoint = map.get('endpoint')
-        self.no_proxy = map.get('noProxy')
-        self.max_idle_conns = map.get('maxIdleConns')
+        if map.get('accessKeyId') is not None:
+            self.access_key_id = map.get('accessKeyId')
+        if map.get('accessKeySecret') is not None:
+            self.access_key_secret = map.get('accessKeySecret')
+        if map.get('securityToken') is not None:
+            self.security_token = map.get('securityToken')
+        if map.get('protocol') is not None:
+            self.protocol = map.get('protocol')
+        if map.get('regionId') is not None:
+            self.region_id = map.get('regionId')
+        if map.get('readTimeout') is not None:
+            self.read_timeout = map.get('readTimeout')
+        if map.get('connectTimeout') is not None:
+            self.connect_timeout = map.get('connectTimeout')
+        if map.get('httpProxy') is not None:
+            self.http_proxy = map.get('httpProxy')
+        if map.get('httpsProxy') is not None:
+            self.https_proxy = map.get('httpsProxy')
+        if map.get('credential') is not None:
+            self.credential = map.get('credential')
+        if map.get('endpoint') is not None:
+            self.endpoint = map.get('endpoint')
+        if map.get('noProxy') is not None:
+            self.no_proxy = map.get('noProxy')
+        if map.get('maxIdleConns') is not None:
+            self.max_idle_conns = map.get('maxIdleConns')
         return self
 
 
@@ -94,17 +120,25 @@ class PutEventsResponseEntry(TeaModel):
 
     def to_map(self):
         result = {}
-        result['EventId'] = self.event_id
-        result['TraceId'] = self.trace_id
-        result['ErrorCode'] = self.error_code
-        result['ErrorMessage'] = self.error_message
+        if self.event_id is not None:
+            result['EventId'] = self.event_id
+        if self.trace_id is not None:
+            result['TraceId'] = self.trace_id
+        if self.error_code is not None:
+            result['ErrorCode'] = self.error_code
+        if self.error_message is not None:
+            result['ErrorMessage'] = self.error_message
         return result
 
     def from_map(self, map={}):
-        self.event_id = map.get('EventId')
-        self.trace_id = map.get('TraceId')
-        self.error_code = map.get('ErrorCode')
-        self.error_message = map.get('ErrorMessage')
+        if map.get('EventId') is not None:
+            self.event_id = map.get('EventId')
+        if map.get('TraceId') is not None:
+            self.trace_id = map.get('TraceId')
+        if map.get('ErrorCode') is not None:
+            self.error_code = map.get('ErrorCode')
+        if map.get('ErrorMessage') is not None:
+            self.error_message = map.get('ErrorMessage')
         return self
 
 
@@ -140,29 +174,49 @@ class CloudEvent(TeaModel):
 
     def to_map(self):
         result = {}
-        result['id'] = self.id
-        result['source'] = self.source
-        result['specversion'] = self.specversion
-        result['type'] = self.type
-        result['datacontenttype'] = self.datacontenttype
-        result['dataschema'] = self.dataschema
-        result['subject'] = self.subject
-        result['time'] = self.time
-        result['extensions'] = self.extensions
-        result['data'] = self.data
+        if self.id is not None:
+            result['id'] = self.id
+        if self.source is not None:
+            result['source'] = self.source
+        if self.specversion is not None:
+            result['specversion'] = self.specversion
+        if self.type is not None:
+            result['type'] = self.type
+        if self.datacontenttype is not None:
+            result['datacontenttype'] = self.datacontenttype
+        if self.dataschema is not None:
+            result['dataschema'] = self.dataschema
+        if self.subject is not None:
+            result['subject'] = self.subject
+        if self.time is not None:
+            result['time'] = self.time
+        if self.extensions is not None:
+            result['extensions'] = self.extensions
+        if self.data is not None:
+            result['data'] = self.data
         return result
 
     def from_map(self, map={}):
-        self.id = map.get('id')
-        self.source = map.get('source')
-        self.specversion = map.get('specversion')
-        self.type = map.get('type')
-        self.datacontenttype = map.get('datacontenttype')
-        self.dataschema = map.get('dataschema')
-        self.subject = map.get('subject')
-        self.time = map.get('time')
-        self.extensions = map.get('extensions')
-        self.data = map.get('data')
+        if map.get('id') is not None:
+            self.id = map.get('id')
+        if map.get('source') is not None:
+            self.source = map.get('source')
+        if map.get('specversion') is not None:
+            self.specversion = map.get('specversion')
+        if map.get('type') is not None:
+            self.type = map.get('type')
+        if map.get('datacontenttype') is not None:
+            self.datacontenttype = map.get('datacontenttype')
+        if map.get('dataschema') is not None:
+            self.dataschema = map.get('dataschema')
+        if map.get('subject') is not None:
+            self.subject = map.get('subject')
+        if map.get('time') is not None:
+            self.time = map.get('time')
+        if map.get('extensions') is not None:
+            self.extensions = map.get('extensions')
+        if map.get('data') is not None:
+            self.data = map.get('data')
         return self
 
 
@@ -186,28 +240,30 @@ class PutEventsResponse(TeaModel):
 
     def to_map(self):
         result = {}
-        result['RequestId'] = self.request_id
-        result['ResourceOwnerAccountId'] = self.resource_owner_account_id
-        result['FailedEntryCount'] = self.failed_entry_count
+        if self.request_id is not None:
+            result['RequestId'] = self.request_id
+        if self.resource_owner_account_id is not None:
+            result['ResourceOwnerAccountId'] = self.resource_owner_account_id
+        if self.failed_entry_count is not None:
+            result['FailedEntryCount'] = self.failed_entry_count
         result['EntryList'] = []
         if self.entry_list is not None:
             for k in self.entry_list:
                 result['EntryList'].append(k.to_map() if k else None)
-        else:
-            result['EntryList'] = None
         return result
 
     def from_map(self, map={}):
-        self.request_id = map.get('RequestId')
-        self.resource_owner_account_id = map.get('ResourceOwnerAccountId')
-        self.failed_entry_count = map.get('FailedEntryCount')
+        if map.get('RequestId') is not None:
+            self.request_id = map.get('RequestId')
+        if map.get('ResourceOwnerAccountId') is not None:
+            self.resource_owner_account_id = map.get('ResourceOwnerAccountId')
+        if map.get('FailedEntryCount') is not None:
+            self.failed_entry_count = map.get('FailedEntryCount')
         self.entry_list = []
         if map.get('EntryList') is not None:
             for k in map.get('EntryList'):
                 temp_model = PutEventsResponseEntry()
                 self.entry_list.append(temp_model.from_map(k))
-        else:
-            self.entry_list = None
         return self
 
 
@@ -215,9 +271,10 @@ class CreateEventBusRequest(TeaModel):
     """
     The request of create EventBus
     """
-    def __init__(self, event_bus_name=None, description=None):
+    def __init__(self, event_bus_name=None, description=None, tags=None):
         self.event_bus_name = event_bus_name  # type: str
         self.description = description  # type: str
+        self.tags = tags                # type: Dict[str, str]
 
     def validate(self):
         self.validate_required(self.event_bus_name, 'event_bus_name')
@@ -226,13 +283,21 @@ class CreateEventBusRequest(TeaModel):
 
     def to_map(self):
         result = {}
-        result['EventBusName'] = self.event_bus_name
-        result['Description'] = self.description
+        if self.event_bus_name is not None:
+            result['EventBusName'] = self.event_bus_name
+        if self.description is not None:
+            result['Description'] = self.description
+        if self.tags is not None:
+            result['Tags'] = self.tags
         return result
 
     def from_map(self, map={}):
-        self.event_bus_name = map.get('EventBusName')
-        self.description = map.get('Description')
+        if map.get('EventBusName') is not None:
+            self.event_bus_name = map.get('EventBusName')
+        if map.get('Description') is not None:
+            self.description = map.get('Description')
+        if map.get('Tags') is not None:
+            self.tags = map.get('Tags')
         return self
 
 
@@ -251,15 +316,21 @@ class CreateEventBusResponse(TeaModel):
 
     def to_map(self):
         result = {}
-        result['RequestId'] = self.request_id
-        result['ResourceOwnerAccountId'] = self.resource_owner_account_id
-        result['EventBusARN'] = self.event_bus_arn
+        if self.request_id is not None:
+            result['RequestId'] = self.request_id
+        if self.resource_owner_account_id is not None:
+            result['ResourceOwnerAccountId'] = self.resource_owner_account_id
+        if self.event_bus_arn is not None:
+            result['EventBusARN'] = self.event_bus_arn
         return result
 
     def from_map(self, map={}):
-        self.request_id = map.get('RequestId')
-        self.resource_owner_account_id = map.get('ResourceOwnerAccountId')
-        self.event_bus_arn = map.get('EventBusARN')
+        if map.get('RequestId') is not None:
+            self.request_id = map.get('RequestId')
+        if map.get('ResourceOwnerAccountId') is not None:
+            self.resource_owner_account_id = map.get('ResourceOwnerAccountId')
+        if map.get('EventBusARN') is not None:
+            self.event_bus_arn = map.get('EventBusARN')
         return self
 
 
@@ -275,11 +346,13 @@ class DeleteEventBusRequest(TeaModel):
 
     def to_map(self):
         result = {}
-        result['EventBusName'] = self.event_bus_name
+        if self.event_bus_name is not None:
+            result['EventBusName'] = self.event_bus_name
         return result
 
     def from_map(self, map={}):
-        self.event_bus_name = map.get('EventBusName')
+        if map.get('EventBusName') is not None:
+            self.event_bus_name = map.get('EventBusName')
         return self
 
 
@@ -297,13 +370,17 @@ class DeleteEventBusResponse(TeaModel):
 
     def to_map(self):
         result = {}
-        result['RequestId'] = self.request_id
-        result['ResourceOwnerAccountId'] = self.resource_owner_account_id
+        if self.request_id is not None:
+            result['RequestId'] = self.request_id
+        if self.resource_owner_account_id is not None:
+            result['ResourceOwnerAccountId'] = self.resource_owner_account_id
         return result
 
     def from_map(self, map={}):
-        self.request_id = map.get('RequestId')
-        self.resource_owner_account_id = map.get('ResourceOwnerAccountId')
+        if map.get('RequestId') is not None:
+            self.request_id = map.get('RequestId')
+        if map.get('ResourceOwnerAccountId') is not None:
+            self.resource_owner_account_id = map.get('ResourceOwnerAccountId')
         return self
 
 
@@ -319,11 +396,13 @@ class GetEventBusRequest(TeaModel):
 
     def to_map(self):
         result = {}
-        result['EventBusName'] = self.event_bus_name
+        if self.event_bus_name is not None:
+            result['EventBusName'] = self.event_bus_name
         return result
 
     def from_map(self, map={}):
-        self.event_bus_name = map.get('EventBusName')
+        if map.get('EventBusName') is not None:
+            self.event_bus_name = map.get('EventBusName')
         return self
 
 
@@ -332,13 +411,14 @@ class GetEventBusResponse(TeaModel):
     The response of get the detail of EventBus
     """
     def __init__(self, request_id=None, resource_owner_account_id=None, event_bus_arn=None, event_bus_name=None,
-                 description=None, create_timestamp=None):
+                 description=None, create_timestamp=None, tags=None):
         self.request_id = request_id    # type: str
         self.resource_owner_account_id = resource_owner_account_id  # type: str
         self.event_bus_arn = event_bus_arn  # type: str
         self.event_bus_name = event_bus_name  # type: str
         self.description = description  # type: str
         self.create_timestamp = create_timestamp  # type: int
+        self.tags = tags                # type: Dict[str, str]
 
     def validate(self):
         self.validate_required(self.request_id, 'request_id')
@@ -350,21 +430,37 @@ class GetEventBusResponse(TeaModel):
 
     def to_map(self):
         result = {}
-        result['RequestId'] = self.request_id
-        result['ResourceOwnerAccountId'] = self.resource_owner_account_id
-        result['EventBusARN'] = self.event_bus_arn
-        result['EventBusName'] = self.event_bus_name
-        result['Description'] = self.description
-        result['CreateTimestamp'] = self.create_timestamp
+        if self.request_id is not None:
+            result['RequestId'] = self.request_id
+        if self.resource_owner_account_id is not None:
+            result['ResourceOwnerAccountId'] = self.resource_owner_account_id
+        if self.event_bus_arn is not None:
+            result['EventBusARN'] = self.event_bus_arn
+        if self.event_bus_name is not None:
+            result['EventBusName'] = self.event_bus_name
+        if self.description is not None:
+            result['Description'] = self.description
+        if self.create_timestamp is not None:
+            result['CreateTimestamp'] = self.create_timestamp
+        if self.tags is not None:
+            result['Tags'] = self.tags
         return result
 
     def from_map(self, map={}):
-        self.request_id = map.get('RequestId')
-        self.resource_owner_account_id = map.get('ResourceOwnerAccountId')
-        self.event_bus_arn = map.get('EventBusARN')
-        self.event_bus_name = map.get('EventBusName')
-        self.description = map.get('Description')
-        self.create_timestamp = map.get('CreateTimestamp')
+        if map.get('RequestId') is not None:
+            self.request_id = map.get('RequestId')
+        if map.get('ResourceOwnerAccountId') is not None:
+            self.resource_owner_account_id = map.get('ResourceOwnerAccountId')
+        if map.get('EventBusARN') is not None:
+            self.event_bus_arn = map.get('EventBusARN')
+        if map.get('EventBusName') is not None:
+            self.event_bus_name = map.get('EventBusName')
+        if map.get('Description') is not None:
+            self.description = map.get('Description')
+        if map.get('CreateTimestamp') is not None:
+            self.create_timestamp = map.get('CreateTimestamp')
+        if map.get('Tags') is not None:
+            self.tags = map.get('Tags')
         return self
 
 
@@ -382,15 +478,21 @@ class ListEventBusesRequest(TeaModel):
 
     def to_map(self):
         result = {}
-        result['NamePrefix'] = self.name_prefix
-        result['Limit'] = self.limit
-        result['NextToken'] = self.next_token
+        if self.name_prefix is not None:
+            result['NamePrefix'] = self.name_prefix
+        if self.limit is not None:
+            result['Limit'] = self.limit
+        if self.next_token is not None:
+            result['NextToken'] = self.next_token
         return result
 
     def from_map(self, map={}):
-        self.name_prefix = map.get('NamePrefix')
-        self.limit = map.get('Limit')
-        self.next_token = map.get('NextToken')
+        if map.get('NamePrefix') is not None:
+            self.name_prefix = map.get('NamePrefix')
+        if map.get('Limit') is not None:
+            self.limit = map.get('Limit')
+        if map.get('NextToken') is not None:
+            self.next_token = map.get('NextToken')
         return self
 
 
@@ -398,11 +500,12 @@ class EventBusEntry(TeaModel):
     """
     The detail of EventBuses
     """
-    def __init__(self, event_bus_name=None, event_bus_arn=None, description=None, create_timestamp=None):
+    def __init__(self, event_bus_name=None, event_bus_arn=None, description=None, create_timestamp=None, tags=None):
         self.event_bus_name = event_bus_name  # type: str
         self.event_bus_arn = event_bus_arn  # type: str
         self.description = description  # type: str
         self.create_timestamp = create_timestamp  # type: int
+        self.tags = tags                # type: Dict[str, str]
 
     def validate(self):
         self.validate_required(self.event_bus_name, 'event_bus_name')
@@ -412,17 +515,29 @@ class EventBusEntry(TeaModel):
 
     def to_map(self):
         result = {}
-        result['EventBusName'] = self.event_bus_name
-        result['EventBusARN'] = self.event_bus_arn
-        result['Description'] = self.description
-        result['CreateTimestamp'] = self.create_timestamp
+        if self.event_bus_name is not None:
+            result['EventBusName'] = self.event_bus_name
+        if self.event_bus_arn is not None:
+            result['EventBusARN'] = self.event_bus_arn
+        if self.description is not None:
+            result['Description'] = self.description
+        if self.create_timestamp is not None:
+            result['CreateTimestamp'] = self.create_timestamp
+        if self.tags is not None:
+            result['Tags'] = self.tags
         return result
 
     def from_map(self, map={}):
-        self.event_bus_name = map.get('EventBusName')
-        self.event_bus_arn = map.get('EventBusARN')
-        self.description = map.get('Description')
-        self.create_timestamp = map.get('CreateTimestamp')
+        if map.get('EventBusName') is not None:
+            self.event_bus_name = map.get('EventBusName')
+        if map.get('EventBusARN') is not None:
+            self.event_bus_arn = map.get('EventBusARN')
+        if map.get('Description') is not None:
+            self.description = map.get('Description')
+        if map.get('CreateTimestamp') is not None:
+            self.create_timestamp = map.get('CreateTimestamp')
+        if map.get('Tags') is not None:
+            self.tags = map.get('Tags')
         return self
 
 
@@ -451,30 +566,34 @@ class ListEventBusesResponse(TeaModel):
 
     def to_map(self):
         result = {}
-        result['RequestId'] = self.request_id
-        result['ResourceOwnerAccountId'] = self.resource_owner_account_id
+        if self.request_id is not None:
+            result['RequestId'] = self.request_id
+        if self.resource_owner_account_id is not None:
+            result['ResourceOwnerAccountId'] = self.resource_owner_account_id
         result['EventBuses'] = []
         if self.event_buses is not None:
             for k in self.event_buses:
                 result['EventBuses'].append(k.to_map() if k else None)
-        else:
-            result['EventBuses'] = None
-        result['NextToken'] = self.next_token
-        result['Total'] = self.total
+        if self.next_token is not None:
+            result['NextToken'] = self.next_token
+        if self.total is not None:
+            result['Total'] = self.total
         return result
 
     def from_map(self, map={}):
-        self.request_id = map.get('RequestId')
-        self.resource_owner_account_id = map.get('ResourceOwnerAccountId')
+        if map.get('RequestId') is not None:
+            self.request_id = map.get('RequestId')
+        if map.get('ResourceOwnerAccountId') is not None:
+            self.resource_owner_account_id = map.get('ResourceOwnerAccountId')
         self.event_buses = []
         if map.get('EventBuses') is not None:
             for k in map.get('EventBuses'):
                 temp_model = EventBusEntry()
                 self.event_buses.append(temp_model.from_map(k))
-        else:
-            self.event_buses = None
-        self.next_token = map.get('NextToken')
-        self.total = map.get('Total')
+        if map.get('NextToken') is not None:
+            self.next_token = map.get('NextToken')
+        if map.get('Total') is not None:
+            self.total = map.get('Total')
         return self
 
 
@@ -483,13 +602,14 @@ class CreateRuleRequest(TeaModel):
     The request of create an EventBus rule on Aliyun
     """
     def __init__(self, event_bus_name=None, description=None, rule_name=None, status=None, filter_pattern=None,
-                 targets=None):
+                 targets=None, tags=None):
         self.event_bus_name = event_bus_name  # type: str
         self.description = description  # type: str
         self.rule_name = rule_name      # type: str
         self.status = status            # type: str
         self.filter_pattern = filter_pattern  # type: str
         self.targets = targets          # type: List[TargetEntry]
+        self.tags = tags                # type: Dict[str, str]
 
     def validate(self):
         self.validate_required(self.event_bus_name, 'event_bus_name')
@@ -504,32 +624,42 @@ class CreateRuleRequest(TeaModel):
 
     def to_map(self):
         result = {}
-        result['EventBusName'] = self.event_bus_name
-        result['Description'] = self.description
-        result['RuleName'] = self.rule_name
-        result['Status'] = self.status
-        result['FilterPattern'] = self.filter_pattern
+        if self.event_bus_name is not None:
+            result['EventBusName'] = self.event_bus_name
+        if self.description is not None:
+            result['Description'] = self.description
+        if self.rule_name is not None:
+            result['RuleName'] = self.rule_name
+        if self.status is not None:
+            result['Status'] = self.status
+        if self.filter_pattern is not None:
+            result['FilterPattern'] = self.filter_pattern
         result['Targets'] = []
         if self.targets is not None:
             for k in self.targets:
                 result['Targets'].append(k.to_map() if k else None)
-        else:
-            result['Targets'] = None
+        if self.tags is not None:
+            result['Tags'] = self.tags
         return result
 
     def from_map(self, map={}):
-        self.event_bus_name = map.get('EventBusName')
-        self.description = map.get('Description')
-        self.rule_name = map.get('RuleName')
-        self.status = map.get('Status')
-        self.filter_pattern = map.get('FilterPattern')
+        if map.get('EventBusName') is not None:
+            self.event_bus_name = map.get('EventBusName')
+        if map.get('Description') is not None:
+            self.description = map.get('Description')
+        if map.get('RuleName') is not None:
+            self.rule_name = map.get('RuleName')
+        if map.get('Status') is not None:
+            self.status = map.get('Status')
+        if map.get('FilterPattern') is not None:
+            self.filter_pattern = map.get('FilterPattern')
         self.targets = []
         if map.get('Targets') is not None:
             for k in map.get('Targets'):
                 temp_model = TargetEntry()
                 self.targets.append(temp_model.from_map(k))
-        else:
-            self.targets = None
+        if map.get('Tags') is not None:
+            self.tags = map.get('Tags')
         return self
 
 
@@ -555,30 +685,34 @@ class TargetEntry(TeaModel):
 
     def to_map(self):
         result = {}
-        result['Id'] = self.id
-        result['Type'] = self.type
-        result['Endpoint'] = self.endpoint
-        result['PushRetryStrategy'] = self.push_retry_strategy
+        if self.id is not None:
+            result['Id'] = self.id
+        if self.type is not None:
+            result['Type'] = self.type
+        if self.endpoint is not None:
+            result['Endpoint'] = self.endpoint
+        if self.push_retry_strategy is not None:
+            result['PushRetryStrategy'] = self.push_retry_strategy
         result['ParamList'] = []
         if self.param_list is not None:
             for k in self.param_list:
                 result['ParamList'].append(k.to_map() if k else None)
-        else:
-            result['ParamList'] = None
         return result
 
     def from_map(self, map={}):
-        self.id = map.get('Id')
-        self.type = map.get('Type')
-        self.endpoint = map.get('Endpoint')
-        self.push_retry_strategy = map.get('PushRetryStrategy')
+        if map.get('Id') is not None:
+            self.id = map.get('Id')
+        if map.get('Type') is not None:
+            self.type = map.get('Type')
+        if map.get('Endpoint') is not None:
+            self.endpoint = map.get('Endpoint')
+        if map.get('PushRetryStrategy') is not None:
+            self.push_retry_strategy = map.get('PushRetryStrategy')
         self.param_list = []
         if map.get('ParamList') is not None:
             for k in map.get('ParamList'):
                 temp_model = EBTargetParam()
                 self.param_list.append(temp_model.from_map(k))
-        else:
-            self.param_list = None
         return self
 
 
@@ -598,17 +732,25 @@ class EBTargetParam(TeaModel):
 
     def to_map(self):
         result = {}
-        result['ResourceKey'] = self.resource_key
-        result['Form'] = self.form
-        result['Value'] = self.value
-        result['Template'] = self.template
+        if self.resource_key is not None:
+            result['ResourceKey'] = self.resource_key
+        if self.form is not None:
+            result['Form'] = self.form
+        if self.value is not None:
+            result['Value'] = self.value
+        if self.template is not None:
+            result['Template'] = self.template
         return result
 
     def from_map(self, map={}):
-        self.resource_key = map.get('ResourceKey')
-        self.form = map.get('Form')
-        self.value = map.get('Value')
-        self.template = map.get('Template')
+        if map.get('ResourceKey') is not None:
+            self.resource_key = map.get('ResourceKey')
+        if map.get('Form') is not None:
+            self.form = map.get('Form')
+        if map.get('Value') is not None:
+            self.value = map.get('Value')
+        if map.get('Template') is not None:
+            self.template = map.get('Template')
         return self
 
 
@@ -628,15 +770,21 @@ class CreateRuleResponse(TeaModel):
 
     def to_map(self):
         result = {}
-        result['RequestId'] = self.request_id
-        result['ResourceOwnerAccountId'] = self.resource_owner_account_id
-        result['RuleARN'] = self.rule_arn
+        if self.request_id is not None:
+            result['RequestId'] = self.request_id
+        if self.resource_owner_account_id is not None:
+            result['ResourceOwnerAccountId'] = self.resource_owner_account_id
+        if self.rule_arn is not None:
+            result['RuleARN'] = self.rule_arn
         return result
 
     def from_map(self, map={}):
-        self.request_id = map.get('RequestId')
-        self.resource_owner_account_id = map.get('ResourceOwnerAccountId')
-        self.rule_arn = map.get('RuleARN')
+        if map.get('RequestId') is not None:
+            self.request_id = map.get('RequestId')
+        if map.get('ResourceOwnerAccountId') is not None:
+            self.resource_owner_account_id = map.get('ResourceOwnerAccountId')
+        if map.get('RuleARN') is not None:
+            self.rule_arn = map.get('RuleARN')
         return self
 
 
@@ -654,13 +802,17 @@ class DeleteRuleRequest(TeaModel):
 
     def to_map(self):
         result = {}
-        result['EventBusName'] = self.event_bus_name
-        result['RuleName'] = self.rule_name
+        if self.event_bus_name is not None:
+            result['EventBusName'] = self.event_bus_name
+        if self.rule_name is not None:
+            result['RuleName'] = self.rule_name
         return result
 
     def from_map(self, map={}):
-        self.event_bus_name = map.get('EventBusName')
-        self.rule_name = map.get('RuleName')
+        if map.get('EventBusName') is not None:
+            self.event_bus_name = map.get('EventBusName')
+        if map.get('RuleName') is not None:
+            self.rule_name = map.get('RuleName')
         return self
 
 
@@ -678,13 +830,17 @@ class DeleteRuleResponse(TeaModel):
 
     def to_map(self):
         result = {}
-        result['RequestId'] = self.request_id
-        result['ResourceOwnerAccountId'] = self.resource_owner_account_id
+        if self.request_id is not None:
+            result['RequestId'] = self.request_id
+        if self.resource_owner_account_id is not None:
+            result['ResourceOwnerAccountId'] = self.resource_owner_account_id
         return result
 
     def from_map(self, map={}):
-        self.request_id = map.get('RequestId')
-        self.resource_owner_account_id = map.get('ResourceOwnerAccountId')
+        if map.get('RequestId') is not None:
+            self.request_id = map.get('RequestId')
+        if map.get('ResourceOwnerAccountId') is not None:
+            self.resource_owner_account_id = map.get('ResourceOwnerAccountId')
         return self
 
 
@@ -702,13 +858,17 @@ class DisableRuleRequest(TeaModel):
 
     def to_map(self):
         result = {}
-        result['EventBusName'] = self.event_bus_name
-        result['RuleName'] = self.rule_name
+        if self.event_bus_name is not None:
+            result['EventBusName'] = self.event_bus_name
+        if self.rule_name is not None:
+            result['RuleName'] = self.rule_name
         return result
 
     def from_map(self, map={}):
-        self.event_bus_name = map.get('EventBusName')
-        self.rule_name = map.get('RuleName')
+        if map.get('EventBusName') is not None:
+            self.event_bus_name = map.get('EventBusName')
+        if map.get('RuleName') is not None:
+            self.rule_name = map.get('RuleName')
         return self
 
 
@@ -726,13 +886,17 @@ class DisableRuleResponse(TeaModel):
 
     def to_map(self):
         result = {}
-        result['RequestId'] = self.request_id
-        result['ResourceOwnerAccountId'] = self.resource_owner_account_id
+        if self.request_id is not None:
+            result['RequestId'] = self.request_id
+        if self.resource_owner_account_id is not None:
+            result['ResourceOwnerAccountId'] = self.resource_owner_account_id
         return result
 
     def from_map(self, map={}):
-        self.request_id = map.get('RequestId')
-        self.resource_owner_account_id = map.get('ResourceOwnerAccountId')
+        if map.get('RequestId') is not None:
+            self.request_id = map.get('RequestId')
+        if map.get('ResourceOwnerAccountId') is not None:
+            self.resource_owner_account_id = map.get('ResourceOwnerAccountId')
         return self
 
 
@@ -750,13 +914,17 @@ class EnableRuleRequest(TeaModel):
 
     def to_map(self):
         result = {}
-        result['EventBusName'] = self.event_bus_name
-        result['RuleName'] = self.rule_name
+        if self.event_bus_name is not None:
+            result['EventBusName'] = self.event_bus_name
+        if self.rule_name is not None:
+            result['RuleName'] = self.rule_name
         return result
 
     def from_map(self, map={}):
-        self.event_bus_name = map.get('EventBusName')
-        self.rule_name = map.get('RuleName')
+        if map.get('EventBusName') is not None:
+            self.event_bus_name = map.get('EventBusName')
+        if map.get('RuleName') is not None:
+            self.rule_name = map.get('RuleName')
         return self
 
 
@@ -774,13 +942,17 @@ class EnableRuleResponse(TeaModel):
 
     def to_map(self):
         result = {}
-        result['RequestId'] = self.request_id
-        result['ResourceOwnerAccountId'] = self.resource_owner_account_id
+        if self.request_id is not None:
+            result['RequestId'] = self.request_id
+        if self.resource_owner_account_id is not None:
+            result['ResourceOwnerAccountId'] = self.resource_owner_account_id
         return result
 
     def from_map(self, map={}):
-        self.request_id = map.get('RequestId')
-        self.resource_owner_account_id = map.get('ResourceOwnerAccountId')
+        if map.get('RequestId') is not None:
+            self.request_id = map.get('RequestId')
+        if map.get('ResourceOwnerAccountId') is not None:
+            self.resource_owner_account_id = map.get('ResourceOwnerAccountId')
         return self
 
 
@@ -798,13 +970,17 @@ class GetRuleRequest(TeaModel):
 
     def to_map(self):
         result = {}
-        result['EventBusName'] = self.event_bus_name
-        result['RuleName'] = self.rule_name
+        if self.event_bus_name is not None:
+            result['EventBusName'] = self.event_bus_name
+        if self.rule_name is not None:
+            result['RuleName'] = self.rule_name
         return result
 
     def from_map(self, map={}):
-        self.event_bus_name = map.get('EventBusName')
-        self.rule_name = map.get('RuleName')
+        if map.get('EventBusName') is not None:
+            self.event_bus_name = map.get('EventBusName')
+        if map.get('RuleName') is not None:
+            self.rule_name = map.get('RuleName')
         return self
 
 
@@ -813,7 +989,8 @@ class GetRuleResponse(TeaModel):
     The response of Get EventBus
     """
     def __init__(self, request_id=None, resource_owner_account_id=None, event_bus_name=None, rule_arn=None,
-                 rule_name=None, description=None, status=None, filter_pattern=None, targets=None, ctime=None, mtime=None):
+                 rule_name=None, description=None, status=None, filter_pattern=None, targets=None, ctime=None, mtime=None,
+                 tags=None):
         self.request_id = request_id    # type: str
         self.resource_owner_account_id = resource_owner_account_id  # type: str
         self.event_bus_name = event_bus_name  # type: str
@@ -825,6 +1002,7 @@ class GetRuleResponse(TeaModel):
         self.targets = targets          # type: List[TargetEntry]
         self.ctime = ctime              # type: int
         self.mtime = mtime              # type: int
+        self.tags = tags                # type: Dict[str, str]
 
     def validate(self):
         self.validate_required(self.request_id, 'request_id')
@@ -845,42 +1023,62 @@ class GetRuleResponse(TeaModel):
 
     def to_map(self):
         result = {}
-        result['RequestId'] = self.request_id
-        result['ResourceOwnerAccountId'] = self.resource_owner_account_id
-        result['EventBusName'] = self.event_bus_name
-        result['RuleARN'] = self.rule_arn
-        result['RuleName'] = self.rule_name
-        result['Description'] = self.description
-        result['Status'] = self.status
-        result['FilterPattern'] = self.filter_pattern
+        if self.request_id is not None:
+            result['RequestId'] = self.request_id
+        if self.resource_owner_account_id is not None:
+            result['ResourceOwnerAccountId'] = self.resource_owner_account_id
+        if self.event_bus_name is not None:
+            result['EventBusName'] = self.event_bus_name
+        if self.rule_arn is not None:
+            result['RuleARN'] = self.rule_arn
+        if self.rule_name is not None:
+            result['RuleName'] = self.rule_name
+        if self.description is not None:
+            result['Description'] = self.description
+        if self.status is not None:
+            result['Status'] = self.status
+        if self.filter_pattern is not None:
+            result['FilterPattern'] = self.filter_pattern
         result['Targets'] = []
         if self.targets is not None:
             for k in self.targets:
                 result['Targets'].append(k.to_map() if k else None)
-        else:
-            result['Targets'] = None
-        result['Ctime'] = self.ctime
-        result['Mtime'] = self.mtime
+        if self.ctime is not None:
+            result['Ctime'] = self.ctime
+        if self.mtime is not None:
+            result['Mtime'] = self.mtime
+        if self.tags is not None:
+            result['Tags'] = self.tags
         return result
 
     def from_map(self, map={}):
-        self.request_id = map.get('RequestId')
-        self.resource_owner_account_id = map.get('ResourceOwnerAccountId')
-        self.event_bus_name = map.get('EventBusName')
-        self.rule_arn = map.get('RuleARN')
-        self.rule_name = map.get('RuleName')
-        self.description = map.get('Description')
-        self.status = map.get('Status')
-        self.filter_pattern = map.get('FilterPattern')
+        if map.get('RequestId') is not None:
+            self.request_id = map.get('RequestId')
+        if map.get('ResourceOwnerAccountId') is not None:
+            self.resource_owner_account_id = map.get('ResourceOwnerAccountId')
+        if map.get('EventBusName') is not None:
+            self.event_bus_name = map.get('EventBusName')
+        if map.get('RuleARN') is not None:
+            self.rule_arn = map.get('RuleARN')
+        if map.get('RuleName') is not None:
+            self.rule_name = map.get('RuleName')
+        if map.get('Description') is not None:
+            self.description = map.get('Description')
+        if map.get('Status') is not None:
+            self.status = map.get('Status')
+        if map.get('FilterPattern') is not None:
+            self.filter_pattern = map.get('FilterPattern')
         self.targets = []
         if map.get('Targets') is not None:
             for k in map.get('Targets'):
                 temp_model = TargetEntry()
                 self.targets.append(temp_model.from_map(k))
-        else:
-            self.targets = None
-        self.ctime = map.get('Ctime')
-        self.mtime = map.get('Mtime')
+        if map.get('Ctime') is not None:
+            self.ctime = map.get('Ctime')
+        if map.get('Mtime') is not None:
+            self.mtime = map.get('Mtime')
+        if map.get('Tags') is not None:
+            self.tags = map.get('Tags')
         return self
 
 
@@ -899,17 +1097,25 @@ class ListRulesRequest(TeaModel):
 
     def to_map(self):
         result = {}
-        result['EventBusName'] = self.event_bus_name
-        result['RuleNamePrefix'] = self.rule_name_prefix
-        result['Limit'] = self.limit
-        result['NextToken'] = self.next_token
+        if self.event_bus_name is not None:
+            result['EventBusName'] = self.event_bus_name
+        if self.rule_name_prefix is not None:
+            result['RuleNamePrefix'] = self.rule_name_prefix
+        if self.limit is not None:
+            result['Limit'] = self.limit
+        if self.next_token is not None:
+            result['NextToken'] = self.next_token
         return result
 
     def from_map(self, map={}):
-        self.event_bus_name = map.get('EventBusName')
-        self.rule_name_prefix = map.get('RuleNamePrefix')
-        self.limit = map.get('Limit')
-        self.next_token = map.get('NextToken')
+        if map.get('EventBusName') is not None:
+            self.event_bus_name = map.get('EventBusName')
+        if map.get('RuleNamePrefix') is not None:
+            self.rule_name_prefix = map.get('RuleNamePrefix')
+        if map.get('Limit') is not None:
+            self.limit = map.get('Limit')
+        if map.get('NextToken') is not None:
+            self.next_token = map.get('NextToken')
         return self
 
 
@@ -937,30 +1143,34 @@ class ListRulesResponse(TeaModel):
 
     def to_map(self):
         result = {}
-        result['RequestId'] = self.request_id
-        result['ResourceOwnerAccountId'] = self.resource_owner_account_id
-        result['NextToken'] = self.next_token
+        if self.request_id is not None:
+            result['RequestId'] = self.request_id
+        if self.resource_owner_account_id is not None:
+            result['ResourceOwnerAccountId'] = self.resource_owner_account_id
+        if self.next_token is not None:
+            result['NextToken'] = self.next_token
         result['Rules'] = []
         if self.rules is not None:
             for k in self.rules:
                 result['Rules'].append(k.to_map() if k else None)
-        else:
-            result['Rules'] = None
-        result['Total'] = self.total
+        if self.total is not None:
+            result['Total'] = self.total
         return result
 
     def from_map(self, map={}):
-        self.request_id = map.get('RequestId')
-        self.resource_owner_account_id = map.get('ResourceOwnerAccountId')
-        self.next_token = map.get('NextToken')
+        if map.get('RequestId') is not None:
+            self.request_id = map.get('RequestId')
+        if map.get('ResourceOwnerAccountId') is not None:
+            self.resource_owner_account_id = map.get('ResourceOwnerAccountId')
+        if map.get('NextToken') is not None:
+            self.next_token = map.get('NextToken')
         self.rules = []
         if map.get('Rules') is not None:
             for k in map.get('Rules'):
                 temp_model = EventRuleDTO()
                 self.rules.append(temp_model.from_map(k))
-        else:
-            self.rules = None
-        self.total = map.get('Total')
+        if map.get('Total') is not None:
+            self.total = map.get('Total')
         return self
 
 
@@ -969,7 +1179,7 @@ class EventRuleDTO(TeaModel):
     The detail of EventBuses rule
     """
     def __init__(self, rule_arn=None, event_bus_name=None, rule_name=None, description=None, status=None,
-                 filter_pattern=None, targets=None, ctime=None, mtime=None):
+                 filter_pattern=None, targets=None, ctime=None, mtime=None, tags=None):
         self.rule_arn = rule_arn        # type: str
         self.event_bus_name = event_bus_name  # type: str
         self.rule_name = rule_name      # type: str
@@ -979,6 +1189,7 @@ class EventRuleDTO(TeaModel):
         self.targets = targets          # type: List[TargetEntry]
         self.ctime = ctime              # type: int
         self.mtime = mtime              # type: int
+        self.tags = tags                # type: Dict[str, str]
 
     def validate(self):
         self.validate_required(self.rule_arn, 'rule_arn')
@@ -997,38 +1208,54 @@ class EventRuleDTO(TeaModel):
 
     def to_map(self):
         result = {}
-        result['RuleARN'] = self.rule_arn
-        result['EventBusName'] = self.event_bus_name
-        result['RuleName'] = self.rule_name
-        result['Description'] = self.description
-        result['Status'] = self.status
-        result['FilterPattern'] = self.filter_pattern
+        if self.rule_arn is not None:
+            result['RuleARN'] = self.rule_arn
+        if self.event_bus_name is not None:
+            result['EventBusName'] = self.event_bus_name
+        if self.rule_name is not None:
+            result['RuleName'] = self.rule_name
+        if self.description is not None:
+            result['Description'] = self.description
+        if self.status is not None:
+            result['Status'] = self.status
+        if self.filter_pattern is not None:
+            result['FilterPattern'] = self.filter_pattern
         result['Targets'] = []
         if self.targets is not None:
             for k in self.targets:
                 result['Targets'].append(k.to_map() if k else None)
-        else:
-            result['Targets'] = None
-        result['Ctime'] = self.ctime
-        result['Mtime'] = self.mtime
+        if self.ctime is not None:
+            result['Ctime'] = self.ctime
+        if self.mtime is not None:
+            result['Mtime'] = self.mtime
+        if self.tags is not None:
+            result['Tags'] = self.tags
         return result
 
     def from_map(self, map={}):
-        self.rule_arn = map.get('RuleARN')
-        self.event_bus_name = map.get('EventBusName')
-        self.rule_name = map.get('RuleName')
-        self.description = map.get('Description')
-        self.status = map.get('Status')
-        self.filter_pattern = map.get('FilterPattern')
+        if map.get('RuleARN') is not None:
+            self.rule_arn = map.get('RuleARN')
+        if map.get('EventBusName') is not None:
+            self.event_bus_name = map.get('EventBusName')
+        if map.get('RuleName') is not None:
+            self.rule_name = map.get('RuleName')
+        if map.get('Description') is not None:
+            self.description = map.get('Description')
+        if map.get('Status') is not None:
+            self.status = map.get('Status')
+        if map.get('FilterPattern') is not None:
+            self.filter_pattern = map.get('FilterPattern')
         self.targets = []
         if map.get('Targets') is not None:
             for k in map.get('Targets'):
                 temp_model = TargetEntry()
                 self.targets.append(temp_model.from_map(k))
-        else:
-            self.targets = None
-        self.ctime = map.get('Ctime')
-        self.mtime = map.get('Mtime')
+        if map.get('Ctime') is not None:
+            self.ctime = map.get('Ctime')
+        if map.get('Mtime') is not None:
+            self.mtime = map.get('Mtime')
+        if map.get('Tags') is not None:
+            self.tags = map.get('Tags')
         return self
 
 
@@ -1036,12 +1263,14 @@ class UpdateRuleRequest(TeaModel):
     """
     The request of update the EventBus rule
     """
-    def __init__(self, event_bus_name=None, rule_name=None, description=None, status=None, filter_pattern=None):
+    def __init__(self, event_bus_name=None, rule_name=None, description=None, status=None, filter_pattern=None,
+                 tags=None):
         self.event_bus_name = event_bus_name  # type: str
         self.rule_name = rule_name      # type: str
         self.description = description  # type: str
         self.status = status            # type: str
         self.filter_pattern = filter_pattern  # type: str
+        self.tags = tags                # type: Dict[str, str]
 
     def validate(self):
         self.validate_required(self.event_bus_name, 'event_bus_name')
@@ -1049,19 +1278,33 @@ class UpdateRuleRequest(TeaModel):
 
     def to_map(self):
         result = {}
-        result['EventBusName'] = self.event_bus_name
-        result['RuleName'] = self.rule_name
-        result['Description'] = self.description
-        result['Status'] = self.status
-        result['FilterPattern'] = self.filter_pattern
+        if self.event_bus_name is not None:
+            result['EventBusName'] = self.event_bus_name
+        if self.rule_name is not None:
+            result['RuleName'] = self.rule_name
+        if self.description is not None:
+            result['Description'] = self.description
+        if self.status is not None:
+            result['Status'] = self.status
+        if self.filter_pattern is not None:
+            result['FilterPattern'] = self.filter_pattern
+        if self.tags is not None:
+            result['Tags'] = self.tags
         return result
 
     def from_map(self, map={}):
-        self.event_bus_name = map.get('EventBusName')
-        self.rule_name = map.get('RuleName')
-        self.description = map.get('Description')
-        self.status = map.get('Status')
-        self.filter_pattern = map.get('FilterPattern')
+        if map.get('EventBusName') is not None:
+            self.event_bus_name = map.get('EventBusName')
+        if map.get('RuleName') is not None:
+            self.rule_name = map.get('RuleName')
+        if map.get('Description') is not None:
+            self.description = map.get('Description')
+        if map.get('Status') is not None:
+            self.status = map.get('Status')
+        if map.get('FilterPattern') is not None:
+            self.filter_pattern = map.get('FilterPattern')
+        if map.get('Tags') is not None:
+            self.tags = map.get('Tags')
         return self
 
 
@@ -1079,13 +1322,17 @@ class UpdateRuleResponse(TeaModel):
 
     def to_map(self):
         result = {}
-        result['RequestId'] = self.request_id
-        result['ResourceOwnerAccountId'] = self.resource_owner_account_id
+        if self.request_id is not None:
+            result['RequestId'] = self.request_id
+        if self.resource_owner_account_id is not None:
+            result['ResourceOwnerAccountId'] = self.resource_owner_account_id
         return result
 
     def from_map(self, map={}):
-        self.request_id = map.get('RequestId')
-        self.resource_owner_account_id = map.get('ResourceOwnerAccountId')
+        if map.get('RequestId') is not None:
+            self.request_id = map.get('RequestId')
+        if map.get('ResourceOwnerAccountId') is not None:
+            self.resource_owner_account_id = map.get('ResourceOwnerAccountId')
         return self
 
 
@@ -1109,26 +1356,26 @@ class CreateTargetsRequest(TeaModel):
 
     def to_map(self):
         result = {}
-        result['EventBusName'] = self.event_bus_name
-        result['RuleName'] = self.rule_name
+        if self.event_bus_name is not None:
+            result['EventBusName'] = self.event_bus_name
+        if self.rule_name is not None:
+            result['RuleName'] = self.rule_name
         result['Targets'] = []
         if self.targets is not None:
             for k in self.targets:
                 result['Targets'].append(k.to_map() if k else None)
-        else:
-            result['Targets'] = None
         return result
 
     def from_map(self, map={}):
-        self.event_bus_name = map.get('EventBusName')
-        self.rule_name = map.get('RuleName')
+        if map.get('EventBusName') is not None:
+            self.event_bus_name = map.get('EventBusName')
+        if map.get('RuleName') is not None:
+            self.rule_name = map.get('RuleName')
         self.targets = []
         if map.get('Targets') is not None:
             for k in map.get('Targets'):
                 temp_model = TargetEntry()
                 self.targets.append(temp_model.from_map(k))
-        else:
-            self.targets = None
         return self
 
 
@@ -1148,15 +1395,21 @@ class CreateTargetsResponse(TeaModel):
 
     def to_map(self):
         result = {}
-        result['RequestId'] = self.request_id
-        result['ResourceOwnerAccountId'] = self.resource_owner_account_id
-        result['EventBusARN'] = self.event_bus_arn
+        if self.request_id is not None:
+            result['RequestId'] = self.request_id
+        if self.resource_owner_account_id is not None:
+            result['ResourceOwnerAccountId'] = self.resource_owner_account_id
+        if self.event_bus_arn is not None:
+            result['EventBusARN'] = self.event_bus_arn
         return result
 
     def from_map(self, map={}):
-        self.request_id = map.get('RequestId')
-        self.resource_owner_account_id = map.get('ResourceOwnerAccountId')
-        self.event_bus_arn = map.get('EventBusARN')
+        if map.get('RequestId') is not None:
+            self.request_id = map.get('RequestId')
+        if map.get('ResourceOwnerAccountId') is not None:
+            self.resource_owner_account_id = map.get('ResourceOwnerAccountId')
+        if map.get('EventBusARN') is not None:
+            self.event_bus_arn = map.get('EventBusARN')
         return self
 
 
@@ -1176,15 +1429,21 @@ class DeleteTargetsRequest(TeaModel):
 
     def to_map(self):
         result = {}
-        result['EventBusName'] = self.event_bus_name
-        result['RuleName'] = self.rule_name
-        result['TargetIds'] = self.target_ids
+        if self.event_bus_name is not None:
+            result['EventBusName'] = self.event_bus_name
+        if self.rule_name is not None:
+            result['RuleName'] = self.rule_name
+        if self.target_ids is not None:
+            result['TargetIds'] = self.target_ids
         return result
 
     def from_map(self, map={}):
-        self.event_bus_name = map.get('EventBusName')
-        self.rule_name = map.get('RuleName')
-        self.target_ids = map.get('TargetIds')
+        if map.get('EventBusName') is not None:
+            self.event_bus_name = map.get('EventBusName')
+        if map.get('RuleName') is not None:
+            self.rule_name = map.get('RuleName')
+        if map.get('TargetIds') is not None:
+            self.target_ids = map.get('TargetIds')
         return self
 
 
@@ -1211,28 +1470,30 @@ class DeleteTargetsResponse(TeaModel):
 
     def to_map(self):
         result = {}
-        result['RequestId'] = self.request_id
-        result['ResourceOwnerAccountId'] = self.resource_owner_account_id
-        result['ErrorEntriesCount'] = self.error_entries_count
+        if self.request_id is not None:
+            result['RequestId'] = self.request_id
+        if self.resource_owner_account_id is not None:
+            result['ResourceOwnerAccountId'] = self.resource_owner_account_id
+        if self.error_entries_count is not None:
+            result['ErrorEntriesCount'] = self.error_entries_count
         result['ErrorEntries'] = []
         if self.error_entries is not None:
             for k in self.error_entries:
                 result['ErrorEntries'].append(k.to_map() if k else None)
-        else:
-            result['ErrorEntries'] = None
         return result
 
     def from_map(self, map={}):
-        self.request_id = map.get('RequestId')
-        self.resource_owner_account_id = map.get('ResourceOwnerAccountId')
-        self.error_entries_count = map.get('ErrorEntriesCount')
+        if map.get('RequestId') is not None:
+            self.request_id = map.get('RequestId')
+        if map.get('ResourceOwnerAccountId') is not None:
+            self.resource_owner_account_id = map.get('ResourceOwnerAccountId')
+        if map.get('ErrorEntriesCount') is not None:
+            self.error_entries_count = map.get('ErrorEntriesCount')
         self.error_entries = []
         if map.get('ErrorEntries') is not None:
             for k in map.get('ErrorEntries'):
                 temp_model = TargetResultEntry()
                 self.error_entries.append(temp_model.from_map(k))
-        else:
-            self.error_entries = None
         return self
 
 
@@ -1252,15 +1513,21 @@ class TargetResultEntry(TeaModel):
 
     def to_map(self):
         result = {}
-        result['ErrorCode'] = self.error_code
-        result['ErrorMessage'] = self.error_message
-        result['EntryId'] = self.entry_id
+        if self.error_code is not None:
+            result['ErrorCode'] = self.error_code
+        if self.error_message is not None:
+            result['ErrorMessage'] = self.error_message
+        if self.entry_id is not None:
+            result['EntryId'] = self.entry_id
         return result
 
     def from_map(self, map={}):
-        self.error_code = map.get('ErrorCode')
-        self.error_message = map.get('ErrorMessage')
-        self.entry_id = map.get('EntryId')
+        if map.get('ErrorCode') is not None:
+            self.error_code = map.get('ErrorCode')
+        if map.get('ErrorMessage') is not None:
+            self.error_message = map.get('ErrorMessage')
+        if map.get('EntryId') is not None:
+            self.entry_id = map.get('EntryId')
         return self
 
 
@@ -1279,15 +1546,21 @@ class ListTargetsRequest(TeaModel):
 
     def to_map(self):
         result = {}
-        result['EventBusName'] = self.event_bus_name
-        result['RuleName'] = self.rule_name
-        result['Limit'] = self.limit
+        if self.event_bus_name is not None:
+            result['EventBusName'] = self.event_bus_name
+        if self.rule_name is not None:
+            result['RuleName'] = self.rule_name
+        if self.limit is not None:
+            result['Limit'] = self.limit
         return result
 
     def from_map(self, map={}):
-        self.event_bus_name = map.get('EventBusName')
-        self.rule_name = map.get('RuleName')
-        self.limit = map.get('Limit')
+        if map.get('EventBusName') is not None:
+            self.event_bus_name = map.get('EventBusName')
+        if map.get('RuleName') is not None:
+            self.rule_name = map.get('RuleName')
+        if map.get('Limit') is not None:
+            self.limit = map.get('Limit')
         return self
 
 
@@ -1311,26 +1584,26 @@ class ListTargetsResponse(TeaModel):
 
     def to_map(self):
         result = {}
-        result['RequestId'] = self.request_id
-        result['ResourceOwnerAccountId'] = self.resource_owner_account_id
+        if self.request_id is not None:
+            result['RequestId'] = self.request_id
+        if self.resource_owner_account_id is not None:
+            result['ResourceOwnerAccountId'] = self.resource_owner_account_id
         result['Targets'] = []
         if self.targets is not None:
             for k in self.targets:
                 result['Targets'].append(k.to_map() if k else None)
-        else:
-            result['Targets'] = None
         return result
 
     def from_map(self, map={}):
-        self.request_id = map.get('RequestId')
-        self.resource_owner_account_id = map.get('ResourceOwnerAccountId')
+        if map.get('RequestId') is not None:
+            self.request_id = map.get('RequestId')
+        if map.get('ResourceOwnerAccountId') is not None:
+            self.resource_owner_account_id = map.get('ResourceOwnerAccountId')
         self.targets = []
         if map.get('Targets') is not None:
             for k in map.get('Targets'):
                 temp_model = TargetEntry()
                 self.targets.append(temp_model.from_map(k))
-        else:
-            self.targets = None
         return self
 
 
@@ -1352,13 +1625,17 @@ class TestEventPatternRequest(TeaModel):
 
     def to_map(self):
         result = {}
-        result['Event'] = self.event
-        result['EventPattern'] = self.event_pattern
+        if self.event is not None:
+            result['Event'] = self.event
+        if self.event_pattern is not None:
+            result['EventPattern'] = self.event_pattern
         return result
 
     def from_map(self, map={}):
-        self.event = map.get('Event')
-        self.event_pattern = map.get('EventPattern')
+        if map.get('Event') is not None:
+            self.event = map.get('Event')
+        if map.get('EventPattern') is not None:
+            self.event_pattern = map.get('EventPattern')
         return self
 
 
@@ -1378,13 +1655,19 @@ class TestEventPatternResponse(TeaModel):
 
     def to_map(self):
         result = {}
-        result['RequestId'] = self.request_id
-        result['ResourceOwnerAccountId'] = self.resource_owner_account_id
-        result['Result'] = self.result
+        if self.request_id is not None:
+            result['RequestId'] = self.request_id
+        if self.resource_owner_account_id is not None:
+            result['ResourceOwnerAccountId'] = self.resource_owner_account_id
+        if self.result is not None:
+            result['Result'] = self.result
         return result
 
     def from_map(self, map={}):
-        self.request_id = map.get('RequestId')
-        self.resource_owner_account_id = map.get('ResourceOwnerAccountId')
-        self.result = map.get('Result')
+        if map.get('RequestId') is not None:
+            self.request_id = map.get('RequestId')
+        if map.get('ResourceOwnerAccountId') is not None:
+            self.resource_owner_account_id = map.get('ResourceOwnerAccountId')
+        if map.get('Result') is not None:
+            self.result = map.get('Result')
         return self
