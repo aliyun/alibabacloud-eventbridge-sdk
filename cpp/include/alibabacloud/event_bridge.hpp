@@ -386,6 +386,7 @@ class CreateEventBusRequest : public Darabonba::Model {
 public:
   shared_ptr<string> eventBusName{};
   shared_ptr<string> description{};
+  shared_ptr<map<string, string>> tags{};
 
   CreateEventBusRequest() {}
 
@@ -411,6 +412,9 @@ public:
     if (description) {
       res["Description"] = boost::any(*description);
     }
+    if (tags) {
+      res["Tags"] = boost::any(*tags);
+    }
     return res;
   }
 
@@ -422,6 +426,15 @@ public:
     if (m.find("Description") != m.end() && !m["Description"].empty()) {
       description =
           make_shared<string>(boost::any_cast<string>(m["Description"]));
+    }
+    if (m.find("Tags") != m.end() && !m["Tags"].empty()) {
+      map<string, string> map1 =
+          boost::any_cast<map<string, string>>(m["Tags"]);
+      map<string, string> toMap1;
+      for (auto item : map1) {
+        toMap1[item.first] = item.second;
+      }
+      tags = make_shared<map<string, string>>(toMap1);
     }
   }
 
@@ -607,6 +620,7 @@ public:
   shared_ptr<string> eventBusName{};
   shared_ptr<string> description{};
   shared_ptr<long> createTimestamp{};
+  shared_ptr<map<string, string>> tags{};
 
   GetEventBusResponse() {}
 
@@ -662,6 +676,9 @@ public:
     if (createTimestamp) {
       res["CreateTimestamp"] = boost::any(*createTimestamp);
     }
+    if (tags) {
+      res["Tags"] = boost::any(*tags);
+    }
     return res;
   }
 
@@ -689,6 +706,15 @@ public:
     if (m.find("CreateTimestamp") != m.end() && !m["CreateTimestamp"].empty()) {
       createTimestamp =
           make_shared<long>(boost::any_cast<long>(m["CreateTimestamp"]));
+    }
+    if (m.find("Tags") != m.end() && !m["Tags"].empty()) {
+      map<string, string> map1 =
+          boost::any_cast<map<string, string>>(m["Tags"]);
+      map<string, string> toMap1;
+      for (auto item : map1) {
+        toMap1[item.first] = item.second;
+      }
+      tags = make_shared<map<string, string>>(toMap1);
     }
   }
 
@@ -744,6 +770,7 @@ public:
   shared_ptr<string> eventBusARN{};
   shared_ptr<string> description{};
   shared_ptr<long> createTimestamp{};
+  shared_ptr<map<string, string>> tags{};
 
   EventBusEntry() {}
 
@@ -785,6 +812,9 @@ public:
     if (createTimestamp) {
       res["CreateTimestamp"] = boost::any(*createTimestamp);
     }
+    if (tags) {
+      res["Tags"] = boost::any(*tags);
+    }
     return res;
   }
 
@@ -804,6 +834,15 @@ public:
     if (m.find("CreateTimestamp") != m.end() && !m["CreateTimestamp"].empty()) {
       createTimestamp =
           make_shared<long>(boost::any_cast<long>(m["CreateTimestamp"]));
+    }
+    if (m.find("Tags") != m.end() && !m["Tags"].empty()) {
+      map<string, string> map1 =
+          boost::any_cast<map<string, string>>(m["Tags"]);
+      map<string, string> toMap1;
+      for (auto item : map1) {
+        toMap1[item.first] = item.second;
+      }
+      tags = make_shared<map<string, string>>(toMap1);
     }
   }
 
@@ -1058,6 +1097,7 @@ public:
   shared_ptr<string> status{};
   shared_ptr<string> filterPattern{};
   shared_ptr<vector<TargetEntry>> targets{};
+  shared_ptr<map<string, string>> tags{};
 
   CreateRuleRequest() {}
 
@@ -1107,6 +1147,9 @@ public:
       }
       res["Targets"] = boost::any(temp1);
     }
+    if (tags) {
+      res["Tags"] = boost::any(*tags);
+    }
     return res;
   }
 
@@ -1141,6 +1184,15 @@ public:
         }
         targets = make_shared<vector<TargetEntry>>(expect1);
       }
+    }
+    if (m.find("Tags") != m.end() && !m["Tags"].empty()) {
+      map<string, string> map1 =
+          boost::any_cast<map<string, string>>(m["Tags"]);
+      map<string, string> toMap1;
+      for (auto item : map1) {
+        toMap1[item.first] = item.second;
+      }
+      tags = make_shared<map<string, string>>(toMap1);
     }
   }
 
@@ -1542,6 +1594,7 @@ public:
   shared_ptr<vector<TargetEntry>> targets{};
   shared_ptr<long> ctime{};
   shared_ptr<long> mtime{};
+  shared_ptr<map<string, string>> tags{};
 
   GetRuleResponse() {}
 
@@ -1636,6 +1689,9 @@ public:
     if (mtime) {
       res["Mtime"] = boost::any(*mtime);
     }
+    if (tags) {
+      res["Tags"] = boost::any(*tags);
+    }
     return res;
   }
 
@@ -1687,6 +1743,15 @@ public:
     }
     if (m.find("Mtime") != m.end() && !m["Mtime"].empty()) {
       mtime = make_shared<long>(boost::any_cast<long>(m["Mtime"]));
+    }
+    if (m.find("Tags") != m.end() && !m["Tags"].empty()) {
+      map<string, string> map1 =
+          boost::any_cast<map<string, string>>(m["Tags"]);
+      map<string, string> toMap1;
+      for (auto item : map1) {
+        toMap1[item.first] = item.second;
+      }
+      tags = make_shared<map<string, string>>(toMap1);
     }
   }
 
@@ -1760,6 +1825,7 @@ public:
   shared_ptr<vector<TargetEntry>> targets{};
   shared_ptr<long> ctime{};
   shared_ptr<long> mtime{};
+  shared_ptr<map<string, string>> tags{};
 
   EventRuleDTO() {}
 
@@ -1840,6 +1906,9 @@ public:
     if (mtime) {
       res["Mtime"] = boost::any(*mtime);
     }
+    if (tags) {
+      res["Tags"] = boost::any(*tags);
+    }
     return res;
   }
 
@@ -1883,6 +1952,15 @@ public:
     }
     if (m.find("Mtime") != m.end() && !m["Mtime"].empty()) {
       mtime = make_shared<long>(boost::any_cast<long>(m["Mtime"]));
+    }
+    if (m.find("Tags") != m.end() && !m["Tags"].empty()) {
+      map<string, string> map1 =
+          boost::any_cast<map<string, string>>(m["Tags"]);
+      map<string, string> toMap1;
+      for (auto item : map1) {
+        toMap1[item.first] = item.second;
+      }
+      tags = make_shared<map<string, string>>(toMap1);
     }
   }
 
@@ -1989,6 +2067,7 @@ public:
   shared_ptr<string> description{};
   shared_ptr<string> status{};
   shared_ptr<string> filterPattern{};
+  shared_ptr<map<string, string>> tags{};
 
   UpdateRuleRequest() {}
 
@@ -2025,6 +2104,9 @@ public:
     if (filterPattern) {
       res["FilterPattern"] = boost::any(*filterPattern);
     }
+    if (tags) {
+      res["Tags"] = boost::any(*tags);
+    }
     return res;
   }
 
@@ -2046,6 +2128,15 @@ public:
     if (m.find("FilterPattern") != m.end() && !m["FilterPattern"].empty()) {
       filterPattern =
           make_shared<string>(boost::any_cast<string>(m["FilterPattern"]));
+    }
+    if (m.find("Tags") != m.end() && !m["Tags"].empty()) {
+      map<string, string> map1 =
+          boost::any_cast<map<string, string>>(m["Tags"]);
+      map<string, string> toMap1;
+      for (auto item : map1) {
+        toMap1[item.first] = item.second;
+      }
+      tags = make_shared<map<string, string>>(toMap1);
     }
   }
 

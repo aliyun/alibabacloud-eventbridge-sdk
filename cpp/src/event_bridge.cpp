@@ -200,9 +200,12 @@ map<string, boost::any> Alibabacloud_EventBridge::Client::doRequest(
               make_shared<int>(response_->statusCode))) {
         BOOST_THROW_EXCEPTION(Darabonba::Error(map<string, boost::any>(
             {{"code", (*tmp)["code"]},
-             {"message", boost::any(string("[EventBridgeError] ") +
-                                    string(Darabonba::Converter::toString(
-                                        (*tmp)["message"])))},
+             {"message",
+              boost::any(
+                  string("[EventBridgeError-") +
+                  string(Darabonba::Converter::toString((*tmp)["requestId"])) +
+                  string("] ") +
+                  string(Darabonba::Converter::toString((*tmp)["message"])))},
              {"data", !tmp ? boost::any() : boost::any(*tmp)}})));
       }
       return *tmp;
