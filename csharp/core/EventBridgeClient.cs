@@ -199,7 +199,7 @@ namespace AlibabaCloud.SDK.EventBridge
                         throw new TeaException(new Dictionary<string, object>
                         {
                             {"code", tmp.Get("code")},
-                            {"message", "[EventBridgeError] " + tmp.Get("message")},
+                            {"message", "[EventBridgeError-" + tmp.Get("requestId") + "] " + tmp.Get("message")},
                             {"data", tmp},
                         });
                     }
@@ -323,7 +323,7 @@ namespace AlibabaCloud.SDK.EventBridge
                         throw new TeaException(new Dictionary<string, object>
                         {
                             {"code", tmp.Get("code")},
-                            {"message", "[EventBridgeError] " + tmp.Get("message")},
+                            {"message", "[EventBridgeError-" + tmp.Get("requestId") + "] " + tmp.Get("message")},
                             {"data", tmp},
                         });
                     }
