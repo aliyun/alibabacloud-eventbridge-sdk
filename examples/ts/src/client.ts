@@ -248,12 +248,32 @@ export default class Client {
       createTargetsRequest.eventBusName = "demo-bus";
       createTargetsRequest.ruleName = "myRule";
       let targetEntry = new $EventBridge.TargetEntry({ });
-      targetEntry.id = "1234";
-      targetEntry.endpoint = "http://www.baidu.com";
-      let list : $EventBridge.TargetEntry[] = [
+      targetEntry.id = "dingtalk.target";
+      targetEntry.endpoint = "https://oapi.dingtalk.com/robot/send?access_token=1019d4a19e2ef6b2f***********396fc5e94814ed8460";
+      targetEntry.type = "acs.dingtalk";
+      let param1 = new $EventBridge.EBTargetParam({ });
+      param1.resourceKey = "URL";
+      param1.form = "CONSTANT";
+      param1.value = "https://oapi.dingtalk.com/robot/send?access_token=1019d4a19e2ef6b2f***********396fc5e94814ed8460";
+      let param2 = new $EventBridge.EBTargetParam({ });
+      param2.resourceKey = "SecretKey";
+      param2.form = "CONSTANT";
+      param2.value = "SEC121a71ff304a65b4f7c**************1f4d9f6c1ca514300d15234";
+      let param3 = new $EventBridge.EBTargetParam({ });
+      param3.resourceKey = "Body";
+      param3.form = "TEMPLATE";
+      param3.value = `{\n    \"key\":\"$.source\",\n    \"value\":\"$.data\"\n}`;
+      param3.template = "{\"msgtype\": \"text\",\"text\": {\"content\": \"Hello：${key}\"}}";
+      let paramList = [
+        param1,
+        param2,
+        param3
+      ];
+      targetEntry.paramList = paramList;
+      let targetEntryList = [
         targetEntry
       ];
-      createTargetsRequest.targets = list;
+      createTargetsRequest.targets = targetEntryList;
       let response = await client.createTargets(createTargetsRequest);
       Console.log("--------------------Create targets success--------------------");
       Console.log(Util.toJSONString($tea.toMap(response)));
