@@ -1010,12 +1010,14 @@ export class CreateTargetsRequest extends $tea.Model {
 export class CreateTargetsResponse extends $tea.Model {
   requestId: string;
   resourceOwnerAccountId: string;
-  eventBusARN: string;
+  errorEntriesCount: number;
+  errorEntries: TargetResultEntry[];
   static names(): { [key: string]: string } {
     return {
       requestId: 'RequestId',
       resourceOwnerAccountId: 'ResourceOwnerAccountId',
-      eventBusARN: 'EventBusARN',
+      errorEntriesCount: 'ErrorEntriesCount',
+      errorEntries: 'ErrorEntries',
     };
   }
 
@@ -1023,7 +1025,8 @@ export class CreateTargetsResponse extends $tea.Model {
     return {
       requestId: 'string',
       resourceOwnerAccountId: 'string',
-      eventBusARN: 'string',
+      errorEntriesCount: 'number',
+      errorEntries: { 'type': 'array', 'itemType': TargetResultEntry },
     };
   }
 

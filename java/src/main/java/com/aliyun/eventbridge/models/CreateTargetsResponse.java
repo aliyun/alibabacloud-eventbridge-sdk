@@ -15,9 +15,13 @@ public class CreateTargetsResponse extends TeaModel {
     @Validation(required = true)
     public String resourceOwnerAccountId;
 
-    @NameInMap("EventBusARN")
+    @NameInMap("ErrorEntriesCount")
     @Validation(required = true)
-    public String eventBusARN;
+    public Integer errorEntriesCount;
+
+    @NameInMap("ErrorEntries")
+    @Validation(required = true)
+    public java.util.List<TargetResultEntry> errorEntries;
 
     public static CreateTargetsResponse build(java.util.Map<String, ?> map) {
         CreateTargetsResponse self = new CreateTargetsResponse();
@@ -40,12 +44,20 @@ public class CreateTargetsResponse extends TeaModel {
         return this.resourceOwnerAccountId;
     }
 
-    public CreateTargetsResponse setEventBusARN(String eventBusARN) {
-        this.eventBusARN = eventBusARN;
+    public CreateTargetsResponse setErrorEntriesCount(Integer errorEntriesCount) {
+        this.errorEntriesCount = errorEntriesCount;
         return this;
     }
-    public String getEventBusARN() {
-        return this.eventBusARN;
+    public Integer getErrorEntriesCount() {
+        return this.errorEntriesCount;
+    }
+
+    public CreateTargetsResponse setErrorEntries(java.util.List<TargetResultEntry> errorEntries) {
+        this.errorEntries = errorEntries;
+        return this;
+    }
+    public java.util.List<TargetResultEntry> getErrorEntries() {
+        return this.errorEntries;
     }
 
 }

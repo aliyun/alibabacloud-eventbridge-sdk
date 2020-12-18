@@ -1278,9 +1278,10 @@ func (s *CreateTargetsRequest) SetTargets(v []*TargetEntry) *CreateTargetsReques
  * The response of create Targets
  */
 type CreateTargetsResponse struct {
-	RequestId              *string `json:"RequestId,omitempty" xml:"RequestId,omitempty" require:"true"`
-	ResourceOwnerAccountId *string `json:"ResourceOwnerAccountId,omitempty" xml:"ResourceOwnerAccountId,omitempty" require:"true"`
-	EventBusARN            *string `json:"EventBusARN,omitempty" xml:"EventBusARN,omitempty" require:"true"`
+	RequestId              *string              `json:"RequestId,omitempty" xml:"RequestId,omitempty" require:"true"`
+	ResourceOwnerAccountId *string              `json:"ResourceOwnerAccountId,omitempty" xml:"ResourceOwnerAccountId,omitempty" require:"true"`
+	ErrorEntriesCount      *int                 `json:"ErrorEntriesCount,omitempty" xml:"ErrorEntriesCount,omitempty" require:"true"`
+	ErrorEntries           []*TargetResultEntry `json:"ErrorEntries,omitempty" xml:"ErrorEntries,omitempty" require:"true" type:"Repeated"`
 }
 
 func (s CreateTargetsResponse) String() string {
@@ -1301,8 +1302,13 @@ func (s *CreateTargetsResponse) SetResourceOwnerAccountId(v string) *CreateTarge
 	return s
 }
 
-func (s *CreateTargetsResponse) SetEventBusARN(v string) *CreateTargetsResponse {
-	s.EventBusARN = &v
+func (s *CreateTargetsResponse) SetErrorEntriesCount(v int) *CreateTargetsResponse {
+	s.ErrorEntriesCount = &v
+	return s
+}
+
+func (s *CreateTargetsResponse) SetErrorEntries(v []*TargetResultEntry) *CreateTargetsResponse {
+	s.ErrorEntries = v
 	return s
 }
 
