@@ -22,20 +22,27 @@ class CreateTargetsResponse extends Model
     public $resourceOwnerAccountId;
 
     /**
-     * @var string
+     * @var int
      */
-    public $eventBusARN;
+    public $errorEntriesCount;
+
+    /**
+     * @var TargetResultEntry[]
+     */
+    public $errorEntries;
     protected $_name = [
         'requestId'              => 'RequestId',
         'resourceOwnerAccountId' => 'ResourceOwnerAccountId',
-        'eventBusARN'            => 'EventBusARN',
+        'errorEntriesCount'      => 'ErrorEntriesCount',
+        'errorEntries'           => 'ErrorEntries',
     ];
 
     public function validate()
     {
         Model::validateRequired('requestId', $this->requestId, true);
         Model::validateRequired('resourceOwnerAccountId', $this->resourceOwnerAccountId, true);
-        Model::validateRequired('eventBusARN', $this->eventBusARN, true);
+        Model::validateRequired('errorEntriesCount', $this->errorEntriesCount, true);
+        Model::validateRequired('errorEntries', $this->errorEntries, true);
     }
 
     public function toMap()
@@ -47,8 +54,17 @@ class CreateTargetsResponse extends Model
         if (null !== $this->resourceOwnerAccountId) {
             $res['ResourceOwnerAccountId'] = $this->resourceOwnerAccountId;
         }
-        if (null !== $this->eventBusARN) {
-            $res['EventBusARN'] = $this->eventBusARN;
+        if (null !== $this->errorEntriesCount) {
+            $res['ErrorEntriesCount'] = $this->errorEntriesCount;
+        }
+        if (null !== $this->errorEntries) {
+            $res['ErrorEntries'] = [];
+            if (null !== $this->errorEntries && \is_array($this->errorEntries)) {
+                $n = 0;
+                foreach ($this->errorEntries as $item) {
+                    $res['ErrorEntries'][$n++] = null !== $item ? $item->toMap() : $item;
+                }
+            }
         }
 
         return $res;
@@ -68,8 +84,17 @@ class CreateTargetsResponse extends Model
         if (isset($map['ResourceOwnerAccountId'])) {
             $model->resourceOwnerAccountId = $map['ResourceOwnerAccountId'];
         }
-        if (isset($map['EventBusARN'])) {
-            $model->eventBusARN = $map['EventBusARN'];
+        if (isset($map['ErrorEntriesCount'])) {
+            $model->errorEntriesCount = $map['ErrorEntriesCount'];
+        }
+        if (isset($map['ErrorEntries'])) {
+            if (!empty($map['ErrorEntries'])) {
+                $model->errorEntries = [];
+                $n                   = 0;
+                foreach ($map['ErrorEntries'] as $item) {
+                    $model->errorEntries[$n++] = null !== $item ? TargetResultEntry::fromMap($item) : $item;
+                }
+            }
         }
 
         return $model;
