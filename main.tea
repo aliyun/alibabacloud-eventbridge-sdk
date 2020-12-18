@@ -604,7 +604,8 @@ model CreateTargetsRequest = {
 model CreateTargetsResponse = {
   requestId: string(name='RequestId'),
   resourceOwnerAccountId: string(name='ResourceOwnerAccountId'),
-  eventBusARN: string(name='EventBusARN'),
+  errorEntriesCount: number(name='ErrorEntriesCount'),
+  errorEntries: [TargetResultEntry](name='ErrorEntries'),
 }
 
 /**
