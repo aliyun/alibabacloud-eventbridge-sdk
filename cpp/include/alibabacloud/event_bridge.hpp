@@ -2260,11 +2260,69 @@ public:
 
   virtual ~CreateTargetsRequest() = default;
 };
+class TargetResultEntry : public Darabonba::Model {
+public:
+  shared_ptr<string> errorCode{};
+  shared_ptr<string> errorMessage{};
+  shared_ptr<string> entryId{};
+
+  TargetResultEntry() {}
+
+  explicit TargetResultEntry(const std::map<string, boost::any> &config)
+      : Darabonba::Model(config) {
+    fromMap(config);
+  };
+
+  void validate() override {
+    if (!errorCode) {
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("errorCode is required.")));
+    }
+    if (!errorMessage) {
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("errorMessage is required.")));
+    }
+    if (!entryId) {
+      BOOST_THROW_EXCEPTION(
+          boost::enable_error_info(std::runtime_error("entryId is required.")));
+    }
+  }
+
+  map<string, boost::any> toMap() override {
+    map<string, boost::any> res;
+    if (errorCode) {
+      res["ErrorCode"] = boost::any(*errorCode);
+    }
+    if (errorMessage) {
+      res["ErrorMessage"] = boost::any(*errorMessage);
+    }
+    if (entryId) {
+      res["EntryId"] = boost::any(*entryId);
+    }
+    return res;
+  }
+
+  void fromMap(map<string, boost::any> m) override {
+    if (m.find("ErrorCode") != m.end() && !m["ErrorCode"].empty()) {
+      errorCode = make_shared<string>(boost::any_cast<string>(m["ErrorCode"]));
+    }
+    if (m.find("ErrorMessage") != m.end() && !m["ErrorMessage"].empty()) {
+      errorMessage =
+          make_shared<string>(boost::any_cast<string>(m["ErrorMessage"]));
+    }
+    if (m.find("EntryId") != m.end() && !m["EntryId"].empty()) {
+      entryId = make_shared<string>(boost::any_cast<string>(m["EntryId"]));
+    }
+  }
+
+  virtual ~TargetResultEntry() = default;
+};
 class CreateTargetsResponse : public Darabonba::Model {
 public:
   shared_ptr<string> requestId{};
   shared_ptr<string> resourceOwnerAccountId{};
-  shared_ptr<string> eventBusARN{};
+  shared_ptr<int> errorEntriesCount{};
+  shared_ptr<vector<TargetResultEntry>> errorEntries{};
 
   CreateTargetsResponse() {}
 
@@ -2282,9 +2340,13 @@ public:
       BOOST_THROW_EXCEPTION(boost::enable_error_info(
           std::runtime_error("resourceOwnerAccountId is required.")));
     }
-    if (!eventBusARN) {
+    if (!errorEntriesCount) {
       BOOST_THROW_EXCEPTION(boost::enable_error_info(
-          std::runtime_error("eventBusARN is required.")));
+          std::runtime_error("errorEntriesCount is required.")));
+    }
+    if (!errorEntries) {
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("errorEntries is required.")));
     }
   }
 
@@ -2296,8 +2358,15 @@ public:
     if (resourceOwnerAccountId) {
       res["ResourceOwnerAccountId"] = boost::any(*resourceOwnerAccountId);
     }
-    if (eventBusARN) {
-      res["EventBusARN"] = boost::any(*eventBusARN);
+    if (errorEntriesCount) {
+      res["ErrorEntriesCount"] = boost::any(*errorEntriesCount);
+    }
+    if (errorEntries) {
+      vector<boost::any> temp1;
+      for (auto item1 : *errorEntries) {
+        temp1.push_back(boost::any(item1.toMap()));
+      }
+      res["ErrorEntries"] = boost::any(temp1);
     }
     return res;
   }
@@ -2311,9 +2380,24 @@ public:
       resourceOwnerAccountId = make_shared<string>(
           boost::any_cast<string>(m["ResourceOwnerAccountId"]));
     }
-    if (m.find("EventBusARN") != m.end() && !m["EventBusARN"].empty()) {
-      eventBusARN =
-          make_shared<string>(boost::any_cast<string>(m["EventBusARN"]));
+    if (m.find("ErrorEntriesCount") != m.end() &&
+        !m["ErrorEntriesCount"].empty()) {
+      errorEntriesCount =
+          make_shared<int>(boost::any_cast<int>(m["ErrorEntriesCount"]));
+    }
+    if (m.find("ErrorEntries") != m.end() && !m["ErrorEntries"].empty()) {
+      if (typeid(vector<boost::any>) == m["ErrorEntries"].type()) {
+        vector<TargetResultEntry> expect1;
+        for (auto item1 :
+             boost::any_cast<vector<boost::any>>(m["ErrorEntries"])) {
+          if (typeid(map<string, boost::any>) == item1.type()) {
+            TargetResultEntry model2;
+            model2.fromMap(boost::any_cast<map<string, boost::any>>(item1));
+            expect1.push_back(model2);
+          }
+        }
+        errorEntries = make_shared<vector<TargetResultEntry>>(expect1);
+      }
     }
   }
 
@@ -2383,63 +2467,6 @@ public:
   }
 
   virtual ~DeleteTargetsRequest() = default;
-};
-class TargetResultEntry : public Darabonba::Model {
-public:
-  shared_ptr<string> errorCode{};
-  shared_ptr<string> errorMessage{};
-  shared_ptr<string> entryId{};
-
-  TargetResultEntry() {}
-
-  explicit TargetResultEntry(const std::map<string, boost::any> &config)
-      : Darabonba::Model(config) {
-    fromMap(config);
-  };
-
-  void validate() override {
-    if (!errorCode) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(
-          std::runtime_error("errorCode is required.")));
-    }
-    if (!errorMessage) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(
-          std::runtime_error("errorMessage is required.")));
-    }
-    if (!entryId) {
-      BOOST_THROW_EXCEPTION(
-          boost::enable_error_info(std::runtime_error("entryId is required.")));
-    }
-  }
-
-  map<string, boost::any> toMap() override {
-    map<string, boost::any> res;
-    if (errorCode) {
-      res["ErrorCode"] = boost::any(*errorCode);
-    }
-    if (errorMessage) {
-      res["ErrorMessage"] = boost::any(*errorMessage);
-    }
-    if (entryId) {
-      res["EntryId"] = boost::any(*entryId);
-    }
-    return res;
-  }
-
-  void fromMap(map<string, boost::any> m) override {
-    if (m.find("ErrorCode") != m.end() && !m["ErrorCode"].empty()) {
-      errorCode = make_shared<string>(boost::any_cast<string>(m["ErrorCode"]));
-    }
-    if (m.find("ErrorMessage") != m.end() && !m["ErrorMessage"].empty()) {
-      errorMessage =
-          make_shared<string>(boost::any_cast<string>(m["ErrorMessage"]));
-    }
-    if (m.find("EntryId") != m.end() && !m["EntryId"].empty()) {
-      entryId = make_shared<string>(boost::any_cast<string>(m["EntryId"]));
-    }
-  }
-
-  virtual ~TargetResultEntry() = default;
 };
 class DeleteTargetsResponse : public Darabonba::Model {
 public:
