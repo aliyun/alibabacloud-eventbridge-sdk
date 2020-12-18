@@ -30,7 +30,7 @@
 		"csharp": "AlibabaCloud.SDK.Eventbridge:1.2.2",
 		"ts": "@alicloud/eventbridge:^1.2.2",
 		"php": "alibabacloud/eventbridge:^1.2.1",
-		"python": "alibabacloud_eventbridge:1.2.1"
+		"python": "alibabacloud_eventbridge:1.2.2"
 	},
 	"libraries": {
 		"Credential": "alibabacloud:Credential:*",
