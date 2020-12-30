@@ -114,7 +114,7 @@ model CloudEvent {
   datacontenttype?: string(name='datacontenttype'),
   dataschema?: string(name='dataschema'),
   subject?: string(name='subject'),
-  time?: string(name='time', maxLength=64, pattern='[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{3}[\\\\s\\\\S]*'),
+  time?: string(name='time', maxLength=64),
   extensions: map[string]any(name='extensions'),
   data?: bytes(name='data'),
 }
