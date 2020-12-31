@@ -82,7 +82,6 @@ class CloudEvent extends Model
         Model::validateMaxLength('source', $this->source, 128);
         Model::validateMaxLength('type', $this->type, 64);
         Model::validateMaxLength('time', $this->time, 64);
-        Model::validatePattern('time', $this->time, '[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{3}[\\s\\S]*');
     }
 
     public function toMap()
