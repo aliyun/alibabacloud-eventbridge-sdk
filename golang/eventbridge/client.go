@@ -165,7 +165,7 @@ type CloudEvent struct {
 	Datacontenttype *string                `json:"datacontenttype,omitempty" xml:"datacontenttype,omitempty"`
 	Dataschema      *string                `json:"dataschema,omitempty" xml:"dataschema,omitempty"`
 	Subject         *string                `json:"subject,omitempty" xml:"subject,omitempty"`
-	Time            *string                `json:"time,omitempty" xml:"time,omitempty" maxLength:"64" pattern:"[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{3}[\\s\\S]*"`
+	Time            *string                `json:"time,omitempty" xml:"time,omitempty" maxLength:"64"`
 	Extensions      map[string]interface{} `json:"extensions,omitempty" xml:"extensions,omitempty" require:"true"`
 	Data            []byte                 `json:"data,omitempty" xml:"data,omitempty"`
 }

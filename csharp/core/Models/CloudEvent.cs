@@ -41,7 +41,7 @@ namespace AlibabaCloud.SDK.EventBridge.Models
         public string Subject { get; set; }
 
         [NameInMap("time")]
-        [Validation(Required=false, MaxLength=64, Pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{3}[\\s\\S]*")]
+        [Validation(Required=false, MaxLength=64)]
         public string Time { get; set; }
 
         [NameInMap("extensions")]

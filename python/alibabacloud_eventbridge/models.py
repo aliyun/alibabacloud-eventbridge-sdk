@@ -200,7 +200,6 @@ class CloudEvent(TeaModel):
             self.validate_max_length(self.type, 'type', 64)
         if self.time is not None:
             self.validate_max_length(self.time, 'time', 64)
-            self.validate_pattern(self.time, 'time', '[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{3}[\\s\\S]*')
         self.validate_required(self.extensions, 'extensions')
 
     def to_map(self):
