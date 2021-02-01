@@ -21,12 +21,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import static com.aliyun.eventbridge.signature.SignatureConstants.DEFAULT_CHARSET;
+import static com.aliyun.eventbridge.signature.SignatureConstants.EB_SWITCH_CHECK_TIMESTAMP;
 import static com.aliyun.eventbridge.signature.SignatureConstants.HEADER_X_EVENTBRIDGE_SIGNATURE;
 import static com.aliyun.eventbridge.signature.SignatureConstants.HEADER_X_EVENTBRIDGE_SIGNATURE_METHOD;
 import static com.aliyun.eventbridge.signature.SignatureConstants.HEADER_X_EVENTBRIDGE_SIGNATURE_SECRET;
 import static com.aliyun.eventbridge.signature.SignatureConstants.HEADER_X_EVENTBRIDGE_SIGNATURE_TIMESTAMP;
 import static com.aliyun.eventbridge.signature.SignatureConstants.HEADER_X_EVENTBRIDGE_SIGNATURE_URL;
 import static com.aliyun.eventbridge.signature.SignatureConstants.HEADER_X_EVENTBRIDGE_SIGNATURE_VERSION;
+import static com.aliyun.eventbridge.signature.SignatureConstants.SIGNATURE_EXPIRE_TIME;
+import static com.aliyun.eventbridge.signature.SignatureConstants.SUPPORT_SIGNATURE_METHODS;
 
 public class SignatureVerify {
 
@@ -62,12 +65,34 @@ public class SignatureVerify {
 
     private static boolean checkParam(String urlWithQueryString, Map<String, String> headerMap) {
         if (Strings.isNullOrEmpty(urlWithQueryString)) {
-            return Boolean.FALSE;
+            throw new RuntimeException("The url With query string is null or empty!");
         }
-        if (!headerMap.containsKey(HEADER_X_EVENTBRIDGE_SIGNATURE_TIMESTAMP) || !headerMap.containsKey(
-            HEADER_X_EVENTBRIDGE_SIGNATURE_METHOD) || !headerMap.containsKey(HEADER_X_EVENTBRIDGE_SIGNATURE_VERSION)
-            || !headerMap.containsKey(HEADER_X_EVENTBRIDGE_SIGNATURE_URL)) {
-            return Boolean.FALSE;
+        if (!headerMap.containsKey(HEADER_X_EVENTBRIDGE_SIGNATURE_TIMESTAMP)) {
+            throw new RuntimeException("The timestamp of header is null or empty!");
+        }
+
+        if (!headerMap.containsKey(HEADER_X_EVENTBRIDGE_SIGNATURE_METHOD)) {
+            throw new RuntimeException("The signature method of header is null or empty!");
+        }
+
+        if (!headerMap.containsKey(HEADER_X_EVENTBRIDGE_SIGNATURE_VERSION)) {
+            throw new RuntimeException("The signature version of header is null or empty!");
+        }
+
+        if (!headerMap.containsKey(HEADER_X_EVENTBRIDGE_SIGNATURE_URL)) {
+            throw new RuntimeException("The signature url of header is null or empty!");
+        }
+
+        if (!SUPPORT_SIGNATURE_METHODS.contains(headerMap.get(HEADER_X_EVENTBRIDGE_SIGNATURE_METHOD))) {
+            throw new RuntimeException("The signature method not support, please upgrade to the latest version.");
+        }
+
+        if (Strings.isNullOrEmpty(System.getProperty(EB_SWITCH_CHECK_TIMESTAMP))) {
+            if (System.currentTimeMillis() - Long.parseLong(headerMap.get(HEADER_X_EVENTBRIDGE_SIGNATURE_TIMESTAMP))
+                >= SIGNATURE_EXPIRE_TIME) {
+                throw new RuntimeException(
+                    "The request is expired. which time is " + headerMap.get(HEADER_X_EVENTBRIDGE_SIGNATURE_TIMESTAMP));
+            }
         }
         return Boolean.TRUE;
     }

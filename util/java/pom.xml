@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.aliyun</groupId>
     <artifactId>eventbridge-util</artifactId>
-    <version>0.0.4</version>
+    <version>0.0.5</version>
     <packaging>jar</packaging>
     <name>eventbridge-util</name>
     <description>Alibaba Cloud eventbridge Util for Java</description>
@@ -66,11 +66,6 @@
             <version>1.3.2</version>
         </dependency>
         <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpcomponents-core</artifactId>
-            <version>4.4.13</version>
-        </dependency>
-        <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>1.7.30</version>
@@ -81,7 +76,7 @@
             <version>4.4.13</version>
         </dependency>
         <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
+            <groupId>org.apache.httpcomponents</groupId >
             <artifactId>httpclient</artifactId>
             <version>4.5.13</version>
         </dependency>

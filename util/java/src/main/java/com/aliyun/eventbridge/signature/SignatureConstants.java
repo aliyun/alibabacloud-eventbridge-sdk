@@ -1,13 +1,15 @@
 package com.aliyun.eventbridge.signature;
 
 import java.nio.charset.Charset;
+import java.util.Set;
+
+import com.google.common.collect.Sets;
 
 public class SignatureConstants {
     /**
      * Default charset
      */
     public static final Charset DEFAULT_CHARSET = Charset.forName("UTF-8");
-
 
     /**
      * the current timestamp, If the receiver exceeds 60 seconds, it is considered expired.
@@ -44,5 +46,20 @@ public class SignatureConstants {
      * the separator of stringToSign
      */
     public static String SEPARATOR_OF_STRING_TO_SIGN = "\n";
+
+    /**
+     * the expire time of signature is 60000ms
+     */
+    public static int SIGNATURE_EXPIRE_TIME = 60000;
+
+    /**
+     * the switch of check timestamp
+     */
+    public static String EB_SWITCH_CHECK_TIMESTAMP = "EB_SWITCH_CHECK_TIMESTAMP";
+
+    /**
+     * the support signature methods sets.
+     */
+    public static Set<String> SUPPORT_SIGNATURE_METHODS = Sets.newHashSet("HMAC-SHA1");
 
 }
