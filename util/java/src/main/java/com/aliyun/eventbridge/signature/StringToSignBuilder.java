@@ -5,11 +5,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.google.common.base.Strings;
 import org.apache.http.Header;
 import org.apache.http.message.BasicHeader;
 
-import static com.aliyun.eventbridge.signature.SignatureConstants.*;
+import static com.aliyun.eventbridge.signature.SignatureConstants.HEADER_X_EVENTBRIDGE_SIGNATURE_METHOD;
+import static com.aliyun.eventbridge.signature.SignatureConstants.HEADER_X_EVENTBRIDGE_SIGNATURE_TIMESTAMP;
+import static com.aliyun.eventbridge.signature.SignatureConstants.HEADER_X_EVENTBRIDGE_SIGNATURE_TOKEN;
+import static com.aliyun.eventbridge.signature.SignatureConstants.HEADER_X_EVENTBRIDGE_SIGNATURE_URL;
+import static com.aliyun.eventbridge.signature.SignatureConstants.HEADER_X_EVENTBRIDGE_SIGNATURE_VERSION;
+import static com.aliyun.eventbridge.signature.SignatureConstants.SEPARATOR_OF_STRING_TO_SIGN;
 
 public class StringToSignBuilder {
 
@@ -42,9 +46,9 @@ public class StringToSignBuilder {
             headerMap.get(HEADER_X_EVENTBRIDGE_SIGNATURE_METHOD)));
         headers.add(new BasicHeader(HEADER_X_EVENTBRIDGE_SIGNATURE_VERSION,
             headerMap.get(HEADER_X_EVENTBRIDGE_SIGNATURE_VERSION)));
-        headers.add(new BasicHeader(HEADER_X_EVENTBRIDGE_SIGNATURE_URL,
-            headerMap.get(HEADER_X_EVENTBRIDGE_SIGNATURE_URL)));
-        if (!Strings.isNullOrEmpty(HEADER_X_EVENTBRIDGE_SIGNATURE_TOKEN)) {
+        headers.add(
+            new BasicHeader(HEADER_X_EVENTBRIDGE_SIGNATURE_URL, headerMap.get(HEADER_X_EVENTBRIDGE_SIGNATURE_URL)));
+        if (headerMap.containsKey(HEADER_X_EVENTBRIDGE_SIGNATURE_TOKEN)) {
             headers.add(new BasicHeader(HEADER_X_EVENTBRIDGE_SIGNATURE_TOKEN,
                 headerMap.get(HEADER_X_EVENTBRIDGE_SIGNATURE_TOKEN)));
         }
