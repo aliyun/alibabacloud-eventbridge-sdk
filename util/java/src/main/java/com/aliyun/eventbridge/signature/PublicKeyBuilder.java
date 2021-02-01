@@ -45,7 +45,6 @@ public class PublicKeyBuilder {
      */
     private static String downloadCert(URI certUrl) {
         try {
-            verifyCertUrl(certUrl);
             HttpResponse response = client.execute(new HttpGet(certUrl));
             if (response.getStatusLine()
                 .getStatusCode() / 100 == 2) {
@@ -83,15 +82,6 @@ public class PublicKeyBuilder {
         } finally {
             output.close();
         }
-    }
-
-    /**
-     * Verify the certUrl is valid.
-     *
-     * @param certUrl
-     */
-    private static void verifyCertUrl(URI certUrl) {
-        return;
     }
 
     /**
