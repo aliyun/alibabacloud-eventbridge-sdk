@@ -690,6 +690,112 @@ class ListEventBusesResponse(TeaModel):
         return self
 
 
+class EBTargetParam(TeaModel):
+    """
+    The param of EBTargetParam
+    """
+    def __init__(
+        self,
+        resource_key: str = None,
+        form: str = None,
+        value: str = None,
+        template: str = None,
+    ):
+        self.resource_key = resource_key
+        self.form = form
+        self.value = value
+        self.template = template
+
+    def validate(self):
+        self.validate_required(self.resource_key, 'resource_key')
+        self.validate_required(self.form, 'form')
+
+    def to_map(self):
+        result = dict()
+        if self.resource_key is not None:
+            result['ResourceKey'] = self.resource_key
+        if self.form is not None:
+            result['Form'] = self.form
+        if self.value is not None:
+            result['Value'] = self.value
+        if self.template is not None:
+            result['Template'] = self.template
+        return result
+
+    def from_map(self, m: dict = None):
+        m = m or dict()
+        if m.get('ResourceKey') is not None:
+            self.resource_key = m.get('ResourceKey')
+        if m.get('Form') is not None:
+            self.form = m.get('Form')
+        if m.get('Value') is not None:
+            self.value = m.get('Value')
+        if m.get('Template') is not None:
+            self.template = m.get('Template')
+        return self
+
+
+class TargetEntry(TeaModel):
+    """
+    The detail of TargetEntry
+    """
+    def __init__(
+        self,
+        id: str = None,
+        type: str = None,
+        endpoint: str = None,
+        push_retry_strategy: str = None,
+        param_list: List[EBTargetParam] = None,
+    ):
+        self.id = id
+        self.type = type
+        self.endpoint = endpoint
+        self.push_retry_strategy = push_retry_strategy
+        self.param_list = param_list
+
+    def validate(self):
+        self.validate_required(self.id, 'id')
+        self.validate_required(self.type, 'type')
+        self.validate_required(self.endpoint, 'endpoint')
+        if self.param_list:
+            for k in self.param_list:
+                if k:
+                    k.validate()
+
+    def to_map(self):
+        result = dict()
+        if self.id is not None:
+            result['Id'] = self.id
+        if self.type is not None:
+            result['Type'] = self.type
+        if self.endpoint is not None:
+            result['Endpoint'] = self.endpoint
+        if self.push_retry_strategy is not None:
+            result['PushRetryStrategy'] = self.push_retry_strategy
+        result['ParamList'] = []
+        if self.param_list is not None:
+            for k in self.param_list:
+                result['ParamList'].append(k.to_map() if k else None)
+        return result
+
+    def from_map(self, m: dict = None):
+        m = m or dict()
+        if m.get('Id') is not None:
+            self.id = m.get('Id')
+        if m.get('Type') is not None:
+            self.type = m.get('Type')
+        if m.get('Endpoint') is not None:
+            self.endpoint = m.get('Endpoint')
+        if m.get('PushRetryStrategy') is not None:
+            self.push_retry_strategy = m.get('PushRetryStrategy')
+        self.param_list = []
+        if m.get('ParamList') is not None:
+            for k in m.get('ParamList'):
+                temp_model = EBTargetParam()
+                self.param_list.append(temp_model.from_map(k))
+        return self
+
+
 class CreateRuleRequest(TeaModel):
     """
     The request of create an EventBus rule on Aliyun
@@ -762,112 +868,6 @@ class CreateRuleRequest(TeaModel):
                 self.targets.append(temp_model.from_map(k))
         if m.get('Tags') is not None:
             self.tags = m.get('Tags')
-        return self
-
-
-class TargetEntry(TeaModel):
-    """
-    The detail of TargetEntry
-    """
-    def __init__(
-        self,
-        id: str = None,
-        type: str = None,
-        endpoint: str = None,
-        push_retry_strategy: str = None,
-        param_list: List[EBTargetParam] = None,
-    ):
-        self.id = id
-        self.type = type
-        self.endpoint = endpoint
-        self.push_retry_strategy = push_retry_strategy
-        self.param_list = param_list
-
-    def validate(self):
-        self.validate_required(self.id, 'id')
-        self.validate_required(self.type, 'type')
-        self.validate_required(self.endpoint, 'endpoint')
-        if self.param_list:
-            for k in self.param_list:
-                if k:
-                    k.validate()
-
-    def to_map(self):
-        result = dict()
-        if self.id is not None:
-            result['Id'] = self.id
-        if self.type is not None:
-            result['Type'] = self.type
-        if self.endpoint is not None:
-            result['Endpoint'] = self.endpoint
-        if self.push_retry_strategy is not None:
-            result['PushRetryStrategy'] = self.push_retry_strategy
-        result['ParamList'] = []
-        if self.param_list is not None:
-            for k in self.param_list:
-                result['ParamList'].append(k.to_map() if k else None)
-        return result
-
-    def from_map(self, m: dict = None):
-        m = m or dict()
-        if m.get('Id') is not None:
-            self.id = m.get('Id')
-        if m.get('Type') is not None:
-            self.type = m.get('Type')
-        if m.get('Endpoint') is not None:
-            self.endpoint = m.get('Endpoint')
-        if m.get('PushRetryStrategy') is not None:
-            self.push_retry_strategy = m.get('PushRetryStrategy')
-        self.param_list = []
-        if m.get('ParamList') is not None:
-            for k in m.get('ParamList'):
-                temp_model = EBTargetParam()
-                self.param_list.append(temp_model.from_map(k))
-        return self
-
-
-class EBTargetParam(TeaModel):
-    """
-    The param of EBTargetParam
-    """
-    def __init__(
-        self,
-        resource_key: str = None,
-        form: str = None,
-        value: str = None,
-        template: str = None,
-    ):
-        self.resource_key = resource_key
-        self.form = form
-        self.value = value
-        self.template = template
-
-    def validate(self):
-        self.validate_required(self.resource_key, 'resource_key')
-        self.validate_required(self.form, 'form')
-
-    def to_map(self):
-        result = dict()
-        if self.resource_key is not None:
-            result['ResourceKey'] = self.resource_key
-        if self.form is not None:
-            result['Form'] = self.form
-        if self.value is not None:
-            result['Value'] = self.value
-        if self.template is not None:
-            result['Template'] = self.template
-        return result
-
-    def from_map(self, m: dict = None):
-        m = m or dict()
-        if m.get('ResourceKey') is not None:
-            self.resource_key = m.get('ResourceKey')
-        if m.get('Form') is not None:
-            self.form = m.get('Form')
-        if m.get('Value') is not None:
-            self.value = m.get('Value')
-        if m.get('Template') is not None:
-            self.template = m.get('Template')
         return self
 
 
@@ -1297,69 +1297,6 @@ class ListRulesRequest(TeaModel):
         return self
 
 
-class ListRulesResponse(TeaModel):
-    """
-    The response of search EventBus
-    """
-    def __init__(
-        self,
-        request_id: str = None,
-        resource_owner_account_id: str = None,
-        next_token: str = None,
-        rules: List[EventRuleDTO] = None,
-        total: int = None,
-    ):
-        self.request_id = request_id
-        self.resource_owner_account_id = resource_owner_account_id
-        self.next_token = next_token
-        self.rules = rules
-        self.total = total
-
-    def validate(self):
-        self.validate_required(self.request_id, 'request_id')
-        self.validate_required(self.resource_owner_account_id, 'resource_owner_account_id')
-        self.validate_required(self.next_token, 'next_token')
-        self.validate_required(self.rules, 'rules')
-        if self.rules:
-            for k in self.rules:
-                if k:
-                    k.validate()
-        self.validate_required(self.total, 'total')
-
-    def to_map(self):
-        result = dict()
-        if self.request_id is not None:
-            result['RequestId'] = self.request_id
-        if self.resource_owner_account_id is not None:
-            result['ResourceOwnerAccountId'] = self.resource_owner_account_id
-        if self.next_token is not None:
-            result['NextToken'] = self.next_token
-        result['Rules'] = []
-        if self.rules is not None:
-            for k in self.rules:
-                result['Rules'].append(k.to_map() if k else None)
-        if self.total is not None:
-            result['Total'] = self.total
-        return result
-
-    def from_map(self, m: dict = None):
-        m = m or dict()
-        if m.get('RequestId') is not None:
-            self.request_id = m.get('RequestId')
-        if m.get('ResourceOwnerAccountId') is not None:
-            self.resource_owner_account_id = m.get('ResourceOwnerAccountId')
-        if m.get('NextToken') is not None:
-            self.next_token = m.get('NextToken')
-        self.rules = []
-        if m.get('Rules') is not None:
-            for k in m.get('Rules'):
-                temp_model = EventRuleDTO()
-                self.rules.append(temp_model.from_map(k))
-        if m.get('Total') is not None:
-            self.total = m.get('Total')
-        return self
-
-
 class EventRuleDTO(TeaModel):
     """
     The detail of EventBuses rule
@@ -1454,6 +1391,69 @@ class EventRuleDTO(TeaModel):
             self.mtime = m.get('Mtime')
         if m.get('Tags') is not None:
             self.tags = m.get('Tags')
+        return self
+
+
+class ListRulesResponse(TeaModel):
+    """
+    The response of search EventBus
+    """
+    def __init__(
+        self,
+        request_id: str = None,
+        resource_owner_account_id: str = None,
+        next_token: str = None,
+        rules: List[EventRuleDTO] = None,
+        total: int = None,
+    ):
+        self.request_id = request_id
+        self.resource_owner_account_id = resource_owner_account_id
+        self.next_token = next_token
+        self.rules = rules
+        self.total = total
+
+    def validate(self):
+        self.validate_required(self.request_id, 'request_id')
+        self.validate_required(self.resource_owner_account_id, 'resource_owner_account_id')
+        self.validate_required(self.next_token, 'next_token')
+        self.validate_required(self.rules, 'rules')
+        if self.rules:
+            for k in self.rules:
+                if k:
+                    k.validate()
+        self.validate_required(self.total, 'total')
+
+    def to_map(self):
+        result = dict()
+        if self.request_id is not None:
+            result['RequestId'] = self.request_id
+        if self.resource_owner_account_id is not None:
+            result['ResourceOwnerAccountId'] = self.resource_owner_account_id
+        if self.next_token is not None:
+            result['NextToken'] = self.next_token
+        result['Rules'] = []
+        if self.rules is not None:
+            for k in self.rules:
+                result['Rules'].append(k.to_map() if k else None)
+        if self.total is not None:
+            result['Total'] = self.total
+        return result
+
+    def from_map(self, m: dict = None):
+        m = m or dict()
+        if m.get('RequestId') is not None:
+            self.request_id = m.get('RequestId')
+        if m.get('ResourceOwnerAccountId') is not None:
+            self.resource_owner_account_id = m.get('ResourceOwnerAccountId')
+        if m.get('NextToken') is not None:
+            self.next_token = m.get('NextToken')
+        self.rules = []
+        if m.get('Rules') is not None:
+            for k in m.get('Rules'):
+                temp_model = EventRuleDTO()
+                self.rules.append(temp_model.from_map(k))
+        if m.get('Total') is not None:
+            self.total = m.get('Total')
         return self
 
 
@@ -1593,6 +1593,46 @@ class CreateTargetsRequest(TeaModel):
             for k in m.get('Targets'):
                 temp_model = TargetEntry()
                 self.targets.append(temp_model.from_map(k))
+        return self
+
+
+class TargetResultEntry(TeaModel):
+    """
+    The result detail of target operation
+    """
+    def __init__(
+        self,
+        error_code: str = None,
+        error_message: str = None,
+        entry_id: str = None,
+    ):
+        self.error_code = error_code
+        self.error_message = error_message
+        self.entry_id = entry_id
+
+    def validate(self):
+        self.validate_required(self.error_code, 'error_code')
+        self.validate_required(self.error_message, 'error_message')
+        self.validate_required(self.entry_id, 'entry_id')
+
+    def to_map(self):
+        result = dict()
+        if self.error_code is not None:
+            result['ErrorCode'] = self.error_code
+        if self.error_message is not None:
+            result['ErrorMessage'] = self.error_message
+        if self.entry_id is not None:
+            result['EntryId'] = self.entry_id
+        return result
+
+    def from_map(self, m: dict = None):
+        m = m or dict()
+        if m.get('ErrorCode') is not None:
+            self.error_code = m.get('ErrorCode')
+        if m.get('ErrorMessage') is not None:
+            self.error_message = m.get('ErrorMessage')
+        if m.get('EntryId') is not None:
+            self.entry_id = m.get('EntryId')
         return self
 
 
@@ -1745,46 +1785,6 @@ class DeleteTargetsResponse(TeaModel):
             for k in m.get('ErrorEntries'):
                 temp_model = TargetResultEntry()
                 self.error_entries.append(temp_model.from_map(k))
-        return self
-
-
-class TargetResultEntry(TeaModel):
-    """
-    The result detail of target operation
-    """
-    def __init__(
-        self,
-        error_code: str = None,
-        error_message: str = None,
-        entry_id: str = None,
-    ):
-        self.error_code = error_code
-        self.error_message = error_message
-        self.entry_id = entry_id
-
-    def validate(self):
-        self.validate_required(self.error_code, 'error_code')
-        self.validate_required(self.error_message, 'error_message')
-        self.validate_required(self.entry_id, 'entry_id')
-
-    def to_map(self):
-        result = dict()
-        if self.error_code is not None:
-            result['ErrorCode'] = self.error_code
-        if self.error_message is not None:
-            result['ErrorMessage'] = self.error_message
-        if self.entry_id is not None:
-            result['EntryId'] = self.entry_id
-        return result
-
-    def from_map(self, m: dict = None):
-        m = m or dict()
-        if m.get('ErrorCode') is not None:
-            self.error_code = m.get('ErrorCode')
-        if m.get('ErrorMessage') is not None:
-            self.error_message = m.get('ErrorMessage')
-        if m.get('EntryId') is not None:
-            self.entry_id = m.get('EntryId')
         return self
 
 
@@ -1950,6 +1950,350 @@ class TestEventPatternResponse(TeaModel):
             self.resource_owner_account_id = m.get('ResourceOwnerAccountId')
         if m.get('Result') is not None:
             self.result = m.get('Result')
+        return self
+
+
+class QueryEventTracesRequest(TeaModel):
+    def __init__(
+        self,
+        event_bus_name: str = None,
+        event_id: str = None,
+    ):
+        self.event_bus_name = event_bus_name
+        self.event_id = event_id
+
+    def validate(self):
+        self.validate_required(self.event_bus_name, 'event_bus_name')
+        self.validate_required(self.event_id, 'event_id')
+
+    def to_map(self):
+        result = dict()
+        if self.event_bus_name is not None:
+            result['EventBusName'] = self.event_bus_name
+        if self.event_id is not None:
+            result['EventId'] = self.event_id
+        return result
+
+    def from_map(self, m: dict = None):
+        m = m or dict()
+        if m.get('EventBusName') is not None:
+            self.event_bus_name = m.get('EventBusName')
+        if m.get('EventId') is not None:
+            self.event_id = m.get('EventId')
+        return self
+
+
+class EventTrace(TeaModel):
+    def __init__(
+        self,
+        resource_owner_id: str = None,
+        action: str = None,
+        event_id: str = None,
+        event_bus_name: str = None,
+        action_time: str = None,
+    ):
+        self.resource_owner_id = resource_owner_id
+        self.action = action
+        self.event_id = event_id
+        self.event_bus_name = event_bus_name
+        self.action_time = action_time
+
+    def validate(self):
+        self.validate_required(self.resource_owner_id, 'resource_owner_id')
+        self.validate_required(self.action, 'action')
+        self.validate_required(self.event_id, 'event_id')
+        self.validate_required(self.event_bus_name, 'event_bus_name')
+        self.validate_required(self.action_time, 'action_time')
+
+    def to_map(self):
+        result = dict()
+        if self.resource_owner_id is not None:
+            result['ResourceOwnerId'] = self.resource_owner_id
+        if self.action is not None:
+            result['Action'] = self.action
+        if self.event_id is not None:
+            result['EventId'] = self.event_id
+        if self.event_bus_name is not None:
+            result['EventBusName'] = self.event_bus_name
+        if self.action_time is not None:
+            result['ActionTime'] = self.action_time
+        return result
+
+    def from_map(self, m: dict = None):
+        m = m or dict()
+        if m.get('ResourceOwnerId') is not None:
+            self.resource_owner_id = m.get('ResourceOwnerId')
+        if m.get('Action') is not None:
+            self.action = m.get('Action')
+        if m.get('EventId') is not None:
+            self.event_id = m.get('EventId')
+        if m.get('EventBusName') is not None:
+            self.event_bus_name = m.get('EventBusName')
+        if m.get('ActionTime') is not None:
+            self.action_time = m.get('ActionTime')
+        return self
+
+
+class QueryEventTracesResponse(TeaModel):
+    def __init__(
+        self,
+        event_trace_list: List[EventTrace] = None,
+    ):
+        self.event_trace_list = event_trace_list
+
+    def validate(self):
+        self.validate_required(self.event_trace_list, 'event_trace_list')
+        if self.event_trace_list:
+            for k in self.event_trace_list:
+                if k:
+                    k.validate()
+
+    def to_map(self):
+        result = dict()
+        result['EventTraceList'] = []
+        if self.event_trace_list is not None:
+            for k in self.event_trace_list:
+                result['EventTraceList'].append(k.to_map() if k else None)
+        return result
+
+    def from_map(self, m: dict = None):
+        m = m or dict()
+        self.event_trace_list = []
+        if m.get('EventTraceList') is not None:
+            for k in m.get('EventTraceList'):
+                temp_model = EventTrace()
+                self.event_trace_list.append(temp_model.from_map(k))
+        return self
+
+
+class QueryEventByEventIdRequest(TeaModel):
+    def __init__(
+        self,
+        event_bus_name: str = None,
+        event_source: str = None,
+        event_id: str = None,
+    ):
+        self.event_bus_name = event_bus_name
+        self.event_source = event_source
+        self.event_id = event_id
+
+    def validate(self):
+        self.validate_required(self.event_bus_name, 'event_bus_name')
+        self.validate_required(self.event_source, 'event_source')
+        self.validate_required(self.event_id, 'event_id')
+
+    def to_map(self):
+        result = dict()
+        if self.event_bus_name is not None:
+            result['EventBusName'] = self.event_bus_name
+        if self.event_source is not None:
+            result['EventSource'] = self.event_source
+        if self.event_id is not None:
+            result['EventId'] = self.event_id
+        return result
+
+    def from_map(self, m: dict = None):
+        m = m or dict()
+        if m.get('EventBusName') is not None:
+            self.event_bus_name = m.get('EventBusName')
+        if m.get('EventSource') is not None:
+            self.event_source = m.get('EventSource')
+        if m.get('EventId') is not None:
+            self.event_id = m.get('EventId')
+        return self
+
+
+class TracedEvent(TeaModel):
+    def __init__(
+        self,
+        event_received_time: str = None,
+        event_source: str = None,
+        event_id: str = None,
+        event_bus_name: str = None,
+    ):
+        self.event_received_time = event_received_time
+        self.event_source = event_source
+        self.event_id = event_id
+        self.event_bus_name = event_bus_name
+
+    def validate(self):
+        self.validate_required(self.event_received_time, 'event_received_time')
+        self.validate_required(self.event_source, 'event_source')
+        self.validate_required(self.event_id, 'event_id')
+        self.validate_required(self.event_bus_name, 'event_bus_name')
+
+    def to_map(self):
+        result = dict()
+        if self.event_received_time is not None:
+            result['eventReceivedTime'] = self.event_received_time
+        if self.event_source is not None:
+            result['EventSource'] = self.event_source
+        if self.event_id is not None:
+            result['EventId'] = self.event_id
+        if self.event_bus_name is not None:
+            result['EventBusName'] = self.event_bus_name
+        return result
+
+    def from_map(self, m: dict = None):
+        m = m or dict()
+        if m.get('eventReceivedTime') is not None:
+            self.event_received_time = m.get('eventReceivedTime')
+        if m.get('EventSource') is not None:
+            self.event_source = m.get('EventSource')
+        if m.get('EventId') is not None:
+            self.event_id = m.get('EventId')
+        if m.get('EventBusName') is not None:
+            self.event_bus_name = m.get('EventBusName')
+        return self
+
+
+class QueryEventByEventIdResponse(TeaModel):
+    def __init__(
+        self,
+        traced_events: List[EventTrace] = None,
+        next_token: str = None,
+        total: int = None,
+    ):
+        self.traced_events = traced_events
+        self.next_token = next_token
+        self.total = total
+
+    def validate(self):
+        self.validate_required(self.traced_events, 'traced_events')
+        if self.traced_events:
+            for k in self.traced_events:
+                if k:
+                    k.validate()
+        self.validate_required(self.next_token, 'next_token')
+        self.validate_required(self.total, 'total')
+
+    def to_map(self):
+        result = dict()
+        result['TracedEvents'] = []
+        if self.traced_events is not None:
+            for k in self.traced_events:
+                result['TracedEvents'].append(k.to_map() if k else None)
+        if self.next_token is not None:
+            result['NextToken'] = self.next_token
+        if self.total is not None:
+            result['Total'] = self.total
+        return result
+
+    def from_map(self, m: dict = None):
+        m = m or dict()
+        self.traced_events = []
+        if m.get('TracedEvents') is not None:
+            for k in m.get('TracedEvents'):
+                temp_model = EventTrace()
+                self.traced_events.append(temp_model.from_map(k))
+        if m.get('NextToken') is not None:
+            self.next_token = m.get('NextToken')
+        if m.get('Total') is not None:
+            self.total = m.get('Total')
+        return self
+
+
+class QueryEventsByPeriodRequest(TeaModel):
+    def __init__(
+        self,
+        event_bus_name: str = None,
+        event_source: str = None,
+        start_time: str = None,
+        end_time: str = None,
+        limit: str = None,
+        next_token: str = None,
+    ):
+        self.event_bus_name = event_bus_name
+        self.event_source = event_source
+        self.start_time = start_time
+        self.end_time = end_time
+        self.limit = limit
+        self.next_token = next_token
+
+    def validate(self):
+        self.validate_required(self.event_bus_name, 'event_bus_name')
+        self.validate_required(self.event_source, 'event_source')
+        self.validate_required(self.start_time, 'start_time')
+        self.validate_required(self.end_time, 'end_time')
+        self.validate_required(self.limit, 'limit')
+        self.validate_required(self.next_token, 'next_token')
+
+    def to_map(self):
+        result = dict()
+        if self.event_bus_name is not None:
+            result['EventBusName'] = self.event_bus_name
+        if self.event_source is not None:
+            result['EventSource'] = self.event_source
+        if self.start_time is not None:
+            result['StartTime'] = self.start_time
+        if self.end_time is not None:
+            result['EndTime'] = self.end_time
+        if self.limit is not None:
+            result['Limit'] = self.limit
+        if self.next_token is not None:
+            result['NextToken'] = self.next_token
+        return result
+
+    def from_map(self, m: dict = None):
+        m = m or dict()
+        if m.get('EventBusName') is not None:
+            self.event_bus_name = m.get('EventBusName')
+        if m.get('EventSource') is not None:
+            self.event_source = m.get('EventSource')
+        if m.get('StartTime') is not None:
+            self.start_time = m.get('StartTime')
+        if m.get('EndTime') is not None:
+            self.end_time = m.get('EndTime')
+        if m.get('Limit') is not None:
+            self.limit = m.get('Limit')
+        if m.get('NextToken') is not None:
+            self.next_token = m.get('NextToken')
+        return self
+
+
+class QueryEventsByPeriodResponse(TeaModel):
+    def __init__(
+        self,
+        traced_events: List[EventTrace] = None,
+        next_token: str = None,
+        total: int = None,
+    ):
+        self.traced_events = traced_events
+        self.next_token = next_token
+        self.total = total
+
+    def validate(self):
+        self.validate_required(self.traced_events, 'traced_events')
+        if self.traced_events:
+            for k in self.traced_events:
+                if k:
+                    k.validate()
+        self.validate_required(self.next_token, 'next_token')
+        self.validate_required(self.total, 'total')
+
+    def to_map(self):
+        result = dict()
+        result['TracedEvents'] = []
+        if self.traced_events is not None:
+            for k in self.traced_events:
+                result['TracedEvents'].append(k.to_map() if k else None)
+        if self.next_token is not None:
+            result['NextToken'] = self.next_token
+        if self.total is not None:
+            result['Total'] = self.total
+        return result
+
+    def from_map(self, m: dict = None):
+        m = m or dict()
+        self.traced_events = []
+        if m.get('TracedEvents') is not None:
+            for k in m.get('TracedEvents'):
+                temp_model = EventTrace()
+                self.traced_events.append(temp_model.from_map(k))
+        if m.get('NextToken') is not None:
+            self.next_token = m.get('NextToken')
+        if m.get('Total') is not None:
+            self.total = m.get('Total')
         return self
 
 

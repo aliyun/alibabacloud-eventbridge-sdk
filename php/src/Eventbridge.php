@@ -35,6 +35,12 @@ use AlibabaCloud\SDK\EventBridge\Models\ListRulesResponse;
 use AlibabaCloud\SDK\EventBridge\Models\ListTargetsRequest;
 use AlibabaCloud\SDK\EventBridge\Models\ListTargetsResponse;
 use AlibabaCloud\SDK\EventBridge\Models\PutEventsResponse;
+use AlibabaCloud\SDK\EventBridge\Models\QueryEventByEventIdRequest;
+use AlibabaCloud\SDK\EventBridge\Models\QueryEventByEventIdResponse;
+use AlibabaCloud\SDK\EventBridge\Models\QueryEventsByPeriodRequest;
+use AlibabaCloud\SDK\EventBridge\Models\QueryEventsByPeriodResponse;
+use AlibabaCloud\SDK\EventBridge\Models\QueryEventTracesRequest;
+use AlibabaCloud\SDK\EventBridge\Models\QueryEventTracesResponse;
 use AlibabaCloud\SDK\EventBridge\Models\TestEventPatternRequest;
 use AlibabaCloud\SDK\EventBridge\Models\TestEventPatternResponse;
 use AlibabaCloud\SDK\EventBridge\Models\UpdateRuleRequest;
@@ -715,5 +721,92 @@ class Eventbridge
         Utils::validateModel($request);
 
         return TestEventPatternResponse::fromMap($this->doRequest('testEventPattern', 'HTTP', 'POST', '/openapi/testEventPattern', null, Tea::merge($request), $runtime));
+    }
+
+    /**
+     * Tests whether the specified event pattern matches the provided event.
+     *
+     * @param QueryEventTracesRequest $request
+     *
+     * @return QueryEventTracesResponse
+     */
+    public function queryEventTraces($request)
+    {
+        $runtime = new RuntimeOptions([]);
+
+        return $this->queryEventTracesWithOptions($request, $runtime);
+    }
+
+    /**
+     * Query the event traces by the event Id.
+     *
+     * @param QueryEventTracesRequest $request
+     * @param RuntimeOptions          $runtime
+     *
+     * @return QueryEventTracesResponse
+     */
+    public function queryEventTracesWithOptions($request, $runtime)
+    {
+        Utils::validateModel($request);
+
+        return QueryEventTracesResponse::fromMap($this->doRequest('queryEventTraces', 'HTTP', 'POST', '/openapi/queryEventTraces', null, Tea::merge($request), $runtime));
+    }
+
+    /**
+     * Tests whether the specified event pattern matches the provided event.
+     *
+     * @param QueryEventByEventIdRequest $request
+     *
+     * @return QueryEventByEventIdResponse
+     */
+    public function queryEventByEventId($request)
+    {
+        $runtime = new RuntimeOptions([]);
+
+        return $this->queryEventByEventIdWithOptions($request, $runtime);
+    }
+
+    /**
+     * Query the event traces by the event Id.
+     *
+     * @param QueryEventByEventIdRequest $request
+     * @param RuntimeOptions             $runtime
+     *
+     * @return QueryEventByEventIdResponse
+     */
+    public function queryEventByEventIdWithOptions($request, $runtime)
+    {
+        Utils::validateModel($request);
+
+        return QueryEventByEventIdResponse::fromMap($this->doRequest('queryEventByEventId', 'HTTP', 'POST', '/openapi/queryEventByEventId', null, Tea::merge($request), $runtime));
+    }
+
+    /**
+     * Tests whether the specified event pattern matches the provided event.
+     *
+     * @param QueryEventsByPeriodRequest $request
+     *
+     * @return QueryEventsByPeriodResponse
+     */
+    public function queryEventsByPeriod($request)
+    {
+        $runtime = new RuntimeOptions([]);
+
+        return $this->queryEventsByPeriodWithOptions($request, $runtime);
+    }
+
+    /**
+     * Query the event traces by the event Id.
+     *
+     * @param QueryEventsByPeriodRequest $request
+     * @param RuntimeOptions             $runtime
+     *
+     * @return QueryEventsByPeriodResponse
+     */
+    public function queryEventsByPeriodWithOptions($request, $runtime)
+    {
+        Utils::validateModel($request);
+
+        return QueryEventsByPeriodResponse::fromMap($this->doRequest('queryEventsByPeriod', 'HTTP', 'POST', '/openapi/queryEventsByPeriod', null, Tea::merge($request), $runtime));
     }
 }

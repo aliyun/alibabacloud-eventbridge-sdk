@@ -517,4 +517,98 @@ public interface EventBridge {
     TestEventPatternResponse testEventPatternWithOptions(TestEventPatternRequest request,
         com.aliyun.teautil.models.RuntimeOptions runtime) throws TeaException;
 
+    /**
+     * <p>
+     * Query the event traces by the event Id.
+     * </p>
+     *
+     * @param request The request param of queryEventTraces
+     *
+     * @return Result of the queryEventTraces operation returned by the service.
+     *
+     * @throws TeaException All the exception occurs due to expected or unexpected causes. When the exception is from
+     *                      Eventbridge service, the error message is start with [EventBridgeError].
+     */
+    QueryEventTracesResponse queryEventTraces(QueryEventTracesRequest request) throws TeaException;
+
+    /**
+     * <p>
+     * Query the event traces by the event Id with RuntimeOptions.
+     * </p>
+     *
+     * @param request The request param of queryEventTracesWithOptions
+     * @param runtime When want to custom the request context,such as timeout,localAddr and so on, it can be seted by
+     *                {@link RuntimeOptions}
+     *
+     * @return Result of the queryEventTracesWithOptions operation returned by the service.
+     *
+     * @throws TeaException All the exception occurs due to expected or unexpected causes. When the exception is from
+     *                      Eventbridge service, the error message is start with [EventBridgeError].
+     */
+    QueryEventTracesResponse queryEventTracesWithOptions(QueryEventTracesRequest request,
+        com.aliyun.teautil.models.RuntimeOptions runtime) throws TeaException;
+
+
+    /**
+     * <p>
+     * Query the event traces by the event Id.
+     * </p>
+     *
+     * @param request The request param of queryEventByEventId
+     *
+     * @return Result of the QueryEventByEventId operation returned by the service.
+     *
+     * @throws TeaException All the exception occurs due to expected or unexpected causes. When the exception is from
+     *                      Eventbridge service, the error message is start with [EventBridgeError].
+     */
+    QueryEventByEventIdResponse queryEventByEventId(QueryEventByEventIdRequest request) throws TeaException;
+
+    /**
+     * <p>
+     * Query the event traces by the event Id with RuntimeOptions.
+     * </p>
+     *
+     * @param request The request param of queryEventByEventIdWithOptions
+     * @param runtime When want to custom the request context,such as timeout,localAddr and so on, it can be seted by
+     *                {@link RuntimeOptions}
+     *
+     * @return Result of the queryEventByEventIdWithOptions operation returned by the service.
+     *
+     * @throws TeaException All the exception occurs due to expected or unexpected causes. When the exception is from
+     *                      Eventbridge service, the error message is start with [EventBridgeError].
+     */
+    QueryEventByEventIdResponse queryEventByEventIdWithOptions(QueryEventByEventIdRequest request,
+        com.aliyun.teautil.models.RuntimeOptions runtime) throws TeaException;
+
+    /**
+     * <p>
+     * Query the event traces by the event period.
+     * </p>
+     *
+     * @param request The request param of queryEventsByPeriod
+     *
+     * @return Result of the queryEventsByPeriod operation returned by the service.
+     *
+     * @throws TeaException All the exception occurs due to expected or unexpected causes. When the exception is from
+     *                      Eventbridge service, the error message is start with [EventBridgeError].
+     */
+    QueryEventsByPeriodResponse queryEventsByPeriod(QueryEventsByPeriodRequest request) throws TeaException;
+
+    /**
+     * <p>
+     * Query the event traces by the event period with RuntimeOptions.
+     * </p>
+     *
+     * @param request The request param of queryEventsByPeriodWithOptions
+     * @param runtime When want to custom the request context,such as timeout,localAddr and so on, it can be seted by
+     *                {@link RuntimeOptions}
+     *
+     * @return Result of the queryEventsByPeriodWithOptions operation returned by the service.
+     *
+     * @throws TeaException All the exception occurs due to expected or unexpected causes. When the exception is from
+     *                      Eventbridge service, the error message is start with [EventBridgeError].
+     */
+    QueryEventsByPeriodResponse queryEventsByPeriodWithOptions(QueryEventsByPeriodRequest request,
+        com.aliyun.teautil.models.RuntimeOptions runtime) throws TeaException;
+
 }

@@ -3,6 +3,11 @@ package com.aliyun.eventbridge;
 
 import com.aliyun.tea.*;
 import com.aliyun.eventbridge.models.*;
+import com.aliyun.teautil.*;
+import com.aliyun.teautil.models.*;
+import com.aliyun.eventbridge.base.*;
+import com.aliyun.credentials.*;
+import com.aliyun.credentials.models.*;
 
 public class EventBridgeClient implements EventBridge {
 
@@ -20,7 +25,7 @@ public class EventBridgeClient implements EventBridge {
      * Init client with Config
      * @param config config contains the necessary information to create a client
      */
-    public EventBridgeClient(Config config) {
+    public EventBridgeClient(com.aliyun.eventbridge.models.Config config) {
         if (com.aliyun.teautil.Common.isUnset(TeaModel.buildMap(config))) {
             throw new TeaException(TeaConverter.buildMap(
                 new TeaPair("code", "ParameterMissing"),
@@ -75,7 +80,7 @@ public class EventBridgeClient implements EventBridge {
         this._maxIdleConns = config.maxIdleConns;
     }
 
-    public java.util.Map<String, ?> doRequest(String action, String protocol, String method, String pathname, java.util.Map<String, String> query, Object body, com.aliyun.teautil.models.RuntimeOptions runtime) {
+    public java.util.Map<String, ?> doRequest(String action, String protocol, String method, String pathname, java.util.Map<String, String> query, Object body, RuntimeOptions runtime) {
         java.util.Map<String, Object> runtime_ = TeaConverter.buildMap(
             new TeaPair("timeouted", "retry"),
             new TeaPair("readTimeout", com.aliyun.teautil.Common.defaultNumber(runtime.readTimeout, _readTimeout)),
@@ -181,7 +186,7 @@ public class EventBridgeClient implements EventBridge {
      */
     @Override
     public PutEventsResponse putEvents(java.util.List<CloudEvent> eventList) {
-        com.aliyun.teautil.models.RuntimeOptions runtime = new com.aliyun.teautil.models.RuntimeOptions();
+        RuntimeOptions runtime = new RuntimeOptions();
         return this.putEventsWithOptions(eventList, runtime);
     }
 
@@ -189,8 +194,7 @@ public class EventBridgeClient implements EventBridge {
      * Publish event to the aliyun EventBus
      */
     @Override
-    public PutEventsResponse putEventsWithOptions(java.util.List<CloudEvent> eventList, com.aliyun.teautil.models.RuntimeOptions runtime) {
-
+    public PutEventsResponse putEventsWithOptions(java.util.List<CloudEvent> eventList, RuntimeOptions runtime) {
         for (CloudEvent cloudEvent : eventList) {
             if (com.aliyun.teautil.Common.isUnset(cloudEvent.specversion)) {
                 cloudEvent.specversion = "1.0";
@@ -211,7 +215,7 @@ public class EventBridgeClient implements EventBridge {
      */
     @Override
     public CreateEventBusResponse createEventBus(CreateEventBusRequest request) {
-        com.aliyun.teautil.models.RuntimeOptions runtime = new com.aliyun.teautil.models.RuntimeOptions();
+        RuntimeOptions runtime = new RuntimeOptions();
         return this.createEventBusWithOptions(request, runtime);
     }
 
@@ -219,7 +223,7 @@ public class EventBridgeClient implements EventBridge {
      * Creates a new event bus within your account. This can be a custom event bus which you can use to receive events from your custom applications and services
      */
     @Override
-    public CreateEventBusResponse createEventBusWithOptions(CreateEventBusRequest request, com.aliyun.teautil.models.RuntimeOptions runtime) {
+    public CreateEventBusResponse createEventBusWithOptions(CreateEventBusRequest request, RuntimeOptions runtime) {
         com.aliyun.teautil.Common.validateModel(request);
         return TeaModel.toModel(this.doRequest("createEventBus", "HTTP", "POST", "/openapi/createEventBus", null, TeaModel.buildMap(request), runtime), new CreateEventBusResponse());
     }
@@ -229,7 +233,7 @@ public class EventBridgeClient implements EventBridge {
      */
     @Override
     public DeleteEventBusResponse deleteEventBus(DeleteEventBusRequest request) {
-        com.aliyun.teautil.models.RuntimeOptions runtime = new com.aliyun.teautil.models.RuntimeOptions();
+        RuntimeOptions runtime = new RuntimeOptions();
         return this.deleteEventBusWithOptions(request, runtime);
     }
 
@@ -237,7 +241,7 @@ public class EventBridgeClient implements EventBridge {
      * Deletes the specified custom event bus in your account,You can't delete your account's default event bus
      */
     @Override
-    public DeleteEventBusResponse deleteEventBusWithOptions(DeleteEventBusRequest request, com.aliyun.teautil.models.RuntimeOptions runtime) {
+    public DeleteEventBusResponse deleteEventBusWithOptions(DeleteEventBusRequest request, RuntimeOptions runtime) {
         com.aliyun.teautil.Common.validateModel(request);
         return TeaModel.toModel(this.doRequest("deleteEventBus", "HTTP", "POST", "/openapi/deleteEventBus", null, TeaModel.buildMap(request), runtime), new DeleteEventBusResponse());
     }
@@ -247,7 +251,7 @@ public class EventBridgeClient implements EventBridge {
      */
     @Override
     public GetEventBusResponse getEventBus(GetEventBusRequest request) {
-        com.aliyun.teautil.models.RuntimeOptions runtime = new com.aliyun.teautil.models.RuntimeOptions();
+        RuntimeOptions runtime = new RuntimeOptions();
         return this.getEventBusWithOptions(request, runtime);
     }
 
@@ -255,7 +259,7 @@ public class EventBridgeClient implements EventBridge {
      * Displays details about an event bus in your account
      */
     @Override
-    public GetEventBusResponse getEventBusWithOptions(GetEventBusRequest request, com.aliyun.teautil.models.RuntimeOptions runtime) {
+    public GetEventBusResponse getEventBusWithOptions(GetEventBusRequest request, RuntimeOptions runtime) {
         com.aliyun.teautil.Common.validateModel(request);
         return TeaModel.toModel(this.doRequest("getEventBus", "HTTP", "POST", "/openapi/getEventBus", null, TeaModel.buildMap(request), runtime), new GetEventBusResponse());
     }
@@ -265,7 +269,7 @@ public class EventBridgeClient implements EventBridge {
      */
     @Override
     public ListEventBusesResponse listEventBuses(ListEventBusesRequest request) {
-        com.aliyun.teautil.models.RuntimeOptions runtime = new com.aliyun.teautil.models.RuntimeOptions();
+        RuntimeOptions runtime = new RuntimeOptions();
         return this.listEventBusesWithOptions(request, runtime);
     }
 
@@ -273,7 +277,7 @@ public class EventBridgeClient implements EventBridge {
      * List all the EventBus in your account, including the default event bus, custom event buses, which meet the search criteria.
      */
     @Override
-    public ListEventBusesResponse listEventBusesWithOptions(ListEventBusesRequest request, com.aliyun.teautil.models.RuntimeOptions runtime) {
+    public ListEventBusesResponse listEventBusesWithOptions(ListEventBusesRequest request, RuntimeOptions runtime) {
         com.aliyun.teautil.Common.validateModel(request);
         return TeaModel.toModel(this.doRequest("listEventBuses", "HTTP", "POST", "/openapi/listEventBuses", null, TeaModel.buildMap(request), runtime), new ListEventBusesResponse());
     }
@@ -283,7 +287,7 @@ public class EventBridgeClient implements EventBridge {
      */
     @Override
     public CreateRuleResponse createRule(CreateRuleRequest request) {
-        com.aliyun.teautil.models.RuntimeOptions runtime = new com.aliyun.teautil.models.RuntimeOptions();
+        RuntimeOptions runtime = new RuntimeOptions();
         return this.createRuleWithOptions(request, runtime);
     }
 
@@ -291,7 +295,7 @@ public class EventBridgeClient implements EventBridge {
      * Create an EventBus rule on Aliyun
      */
     @Override
-    public CreateRuleResponse createRuleWithOptions(CreateRuleRequest request, com.aliyun.teautil.models.RuntimeOptions runtime) {
+    public CreateRuleResponse createRuleWithOptions(CreateRuleRequest request, RuntimeOptions runtime) {
         com.aliyun.teautil.Common.validateModel(request);
         return TeaModel.toModel(this.doRequest("createRule", "HTTP", "POST", "/openapi/createRule", null, TeaModel.buildMap(request), runtime), new CreateRuleResponse());
     }
@@ -301,7 +305,7 @@ public class EventBridgeClient implements EventBridge {
      */
     @Override
     public DeleteRuleResponse deleteRule(DeleteRuleRequest request) {
-        com.aliyun.teautil.models.RuntimeOptions runtime = new com.aliyun.teautil.models.RuntimeOptions();
+        RuntimeOptions runtime = new RuntimeOptions();
         return this.deleteRuleWithOptions(request, runtime);
     }
 
@@ -309,7 +313,7 @@ public class EventBridgeClient implements EventBridge {
      * Deletes the specified rule.
      */
     @Override
-    public DeleteRuleResponse deleteRuleWithOptions(DeleteRuleRequest request, com.aliyun.teautil.models.RuntimeOptions runtime) {
+    public DeleteRuleResponse deleteRuleWithOptions(DeleteRuleRequest request, RuntimeOptions runtime) {
         com.aliyun.teautil.Common.validateModel(request);
         return TeaModel.toModel(this.doRequest("deleteRule", "HTTP", "POST", "/openapi/deleteRule", null, TeaModel.buildMap(request), runtime), new DeleteRuleResponse());
     }
@@ -319,7 +323,7 @@ public class EventBridgeClient implements EventBridge {
      */
     @Override
     public DisableRuleResponse disableRule(DisableRuleRequest request) {
-        com.aliyun.teautil.models.RuntimeOptions runtime = new com.aliyun.teautil.models.RuntimeOptions();
+        RuntimeOptions runtime = new RuntimeOptions();
         return this.disableRuleWithOptions(request, runtime);
     }
 
@@ -327,7 +331,7 @@ public class EventBridgeClient implements EventBridge {
      * Disables the specified rule
      */
     @Override
-    public DisableRuleResponse disableRuleWithOptions(DisableRuleRequest request, com.aliyun.teautil.models.RuntimeOptions runtime) {
+    public DisableRuleResponse disableRuleWithOptions(DisableRuleRequest request, RuntimeOptions runtime) {
         com.aliyun.teautil.Common.validateModel(request);
         return TeaModel.toModel(this.doRequest("disableRule", "HTTP", "POST", "/openapi/disableRule", null, TeaModel.buildMap(request), runtime), new DisableRuleResponse());
     }
@@ -337,7 +341,7 @@ public class EventBridgeClient implements EventBridge {
      */
     @Override
     public EnableRuleResponse enableRule(EnableRuleRequest request) {
-        com.aliyun.teautil.models.RuntimeOptions runtime = new com.aliyun.teautil.models.RuntimeOptions();
+        RuntimeOptions runtime = new RuntimeOptions();
         return this.enableRuleWithOptions(request, runtime);
     }
 
@@ -345,7 +349,7 @@ public class EventBridgeClient implements EventBridge {
      * Enables the specified rule
      */
     @Override
-    public EnableRuleResponse enableRuleWithOptions(EnableRuleRequest request, com.aliyun.teautil.models.RuntimeOptions runtime) {
+    public EnableRuleResponse enableRuleWithOptions(EnableRuleRequest request, RuntimeOptions runtime) {
         com.aliyun.teautil.Common.validateModel(request);
         return TeaModel.toModel(this.doRequest("enableRule", "HTTP", "POST", "/openapi/enableRule", null, TeaModel.buildMap(request), runtime), new EnableRuleResponse());
     }
@@ -355,7 +359,7 @@ public class EventBridgeClient implements EventBridge {
      */
     @Override
     public GetRuleResponse getRule(GetRuleRequest request) {
-        com.aliyun.teautil.models.RuntimeOptions runtime = new com.aliyun.teautil.models.RuntimeOptions();
+        RuntimeOptions runtime = new RuntimeOptions();
         return this.getRuleWithOptions(request, runtime);
     }
 
@@ -363,7 +367,7 @@ public class EventBridgeClient implements EventBridge {
      * Describes the specified rule
      */
     @Override
-    public GetRuleResponse getRuleWithOptions(GetRuleRequest request, com.aliyun.teautil.models.RuntimeOptions runtime) {
+    public GetRuleResponse getRuleWithOptions(GetRuleRequest request, RuntimeOptions runtime) {
         com.aliyun.teautil.Common.validateModel(request);
         return TeaModel.toModel(this.doRequest("getRule", "HTTP", "POST", "/openapi/getRule", null, TeaModel.buildMap(request), runtime), new GetRuleResponse());
     }
@@ -373,7 +377,7 @@ public class EventBridgeClient implements EventBridge {
      */
     @Override
     public ListRulesResponse listRules(ListRulesRequest request) {
-        com.aliyun.teautil.models.RuntimeOptions runtime = new com.aliyun.teautil.models.RuntimeOptions();
+        RuntimeOptions runtime = new RuntimeOptions();
         return this.listRulesWithOptions(request, runtime);
     }
 
@@ -381,7 +385,7 @@ public class EventBridgeClient implements EventBridge {
      * List all the rules which meet the search criteria
      */
     @Override
-    public ListRulesResponse listRulesWithOptions(ListRulesRequest request, com.aliyun.teautil.models.RuntimeOptions runtime) {
+    public ListRulesResponse listRulesWithOptions(ListRulesRequest request, RuntimeOptions runtime) {
         com.aliyun.teautil.Common.validateModel(request);
         return TeaModel.toModel(this.doRequest("listRules", "HTTP", "POST", "/openapi/listRules", null, TeaModel.buildMap(request), runtime), new ListRulesResponse());
     }
@@ -391,7 +395,7 @@ public class EventBridgeClient implements EventBridge {
      */
     @Override
     public UpdateRuleResponse updateRule(UpdateRuleRequest request) {
-        com.aliyun.teautil.models.RuntimeOptions runtime = new com.aliyun.teautil.models.RuntimeOptions();
+        RuntimeOptions runtime = new RuntimeOptions();
         return this.updateRuleWithOptions(request, runtime);
     }
 
@@ -399,7 +403,7 @@ public class EventBridgeClient implements EventBridge {
      * update the specified rule.
      */
     @Override
-    public UpdateRuleResponse updateRuleWithOptions(UpdateRuleRequest request, com.aliyun.teautil.models.RuntimeOptions runtime) {
+    public UpdateRuleResponse updateRuleWithOptions(UpdateRuleRequest request, RuntimeOptions runtime) {
         com.aliyun.teautil.Common.validateModel(request);
         return TeaModel.toModel(this.doRequest("updateRule", "HTTP", "POST", "/openapi/updateRule", null, TeaModel.buildMap(request), runtime), new UpdateRuleResponse());
     }
@@ -409,7 +413,7 @@ public class EventBridgeClient implements EventBridge {
      */
     @Override
     public CreateTargetsResponse createTargets(CreateTargetsRequest request) {
-        com.aliyun.teautil.models.RuntimeOptions runtime = new com.aliyun.teautil.models.RuntimeOptions();
+        RuntimeOptions runtime = new RuntimeOptions();
         return this.createTargetsWithOptions(request, runtime);
     }
 
@@ -417,7 +421,7 @@ public class EventBridgeClient implements EventBridge {
      * Adds the specified targets to the specified rule
      */
     @Override
-    public CreateTargetsResponse createTargetsWithOptions(CreateTargetsRequest request, com.aliyun.teautil.models.RuntimeOptions runtime) {
+    public CreateTargetsResponse createTargetsWithOptions(CreateTargetsRequest request, RuntimeOptions runtime) {
         com.aliyun.teautil.Common.validateModel(request);
         return TeaModel.toModel(this.doRequest("createTargets", "HTTP", "POST", "/openapi/createTargets", null, TeaModel.buildMap(request), runtime), new CreateTargetsResponse());
     }
@@ -427,7 +431,7 @@ public class EventBridgeClient implements EventBridge {
      */
     @Override
     public DeleteTargetsResponse deleteTargets(DeleteTargetsRequest request) {
-        com.aliyun.teautil.models.RuntimeOptions runtime = new com.aliyun.teautil.models.RuntimeOptions();
+        RuntimeOptions runtime = new RuntimeOptions();
         return this.deleteTargetsWithOptions(request, runtime);
     }
 
@@ -435,7 +439,7 @@ public class EventBridgeClient implements EventBridge {
      * Delete the specified targets from the specified rule
      */
     @Override
-    public DeleteTargetsResponse deleteTargetsWithOptions(DeleteTargetsRequest request, com.aliyun.teautil.models.RuntimeOptions runtime) {
+    public DeleteTargetsResponse deleteTargetsWithOptions(DeleteTargetsRequest request, RuntimeOptions runtime) {
         com.aliyun.teautil.Common.validateModel(request);
         return TeaModel.toModel(this.doRequest("deleteTargets", "HTTP", "POST", "/openapi/deleteTargets", null, TeaModel.buildMap(request), runtime), new DeleteTargetsResponse());
     }
@@ -445,7 +449,7 @@ public class EventBridgeClient implements EventBridge {
      */
     @Override
     public ListTargetsResponse listTargets(ListTargetsRequest request) {
-        com.aliyun.teautil.models.RuntimeOptions runtime = new com.aliyun.teautil.models.RuntimeOptions();
+        RuntimeOptions runtime = new RuntimeOptions();
         return this.listTargetsWithOptions(request, runtime);
     }
 
@@ -453,7 +457,7 @@ public class EventBridgeClient implements EventBridge {
      * List all the Targets which meet the search criteria
      */
     @Override
-    public ListTargetsResponse listTargetsWithOptions(ListTargetsRequest request, com.aliyun.teautil.models.RuntimeOptions runtime) {
+    public ListTargetsResponse listTargetsWithOptions(ListTargetsRequest request, RuntimeOptions runtime) {
         com.aliyun.teautil.Common.validateModel(request);
         return TeaModel.toModel(this.doRequest("listTargets", "HTTP", "POST", "/openapi/listTargets", null, TeaModel.buildMap(request), runtime), new ListTargetsResponse());
     }
@@ -463,7 +467,7 @@ public class EventBridgeClient implements EventBridge {
      */
     @Override
     public TestEventPatternResponse testEventPattern(TestEventPatternRequest request) {
-        com.aliyun.teautil.models.RuntimeOptions runtime = new com.aliyun.teautil.models.RuntimeOptions();
+        RuntimeOptions runtime = new RuntimeOptions();
         return this.testEventPatternWithOptions(request, runtime);
     }
 
@@ -471,8 +475,62 @@ public class EventBridgeClient implements EventBridge {
      * Tests whether the specified event pattern matches the provided event
      */
     @Override
-    public TestEventPatternResponse testEventPatternWithOptions(TestEventPatternRequest request, com.aliyun.teautil.models.RuntimeOptions runtime) {
+    public TestEventPatternResponse testEventPatternWithOptions(TestEventPatternRequest request, RuntimeOptions runtime) {
         com.aliyun.teautil.Common.validateModel(request);
         return TeaModel.toModel(this.doRequest("testEventPattern", "HTTP", "POST", "/openapi/testEventPattern", null, TeaModel.buildMap(request), runtime), new TestEventPatternResponse());
+    }
+
+    /**
+     * TQuery the event traces by the event Id.
+     */
+    @Override
+    public QueryEventTracesResponse queryEventTraces(QueryEventTracesRequest request) {
+        RuntimeOptions runtime = new RuntimeOptions();
+        return this.queryEventTracesWithOptions(request, runtime);
+    }
+
+    /**
+     * Query the event traces by the event Id.
+     */
+    @Override
+    public QueryEventTracesResponse queryEventTracesWithOptions(QueryEventTracesRequest request, RuntimeOptions runtime) {
+        com.aliyun.teautil.Common.validateModel(request);
+        return TeaModel.toModel(this.doRequest("queryEventTraces", "HTTP", "POST", "/openapi/queryEventTraces", null, TeaModel.buildMap(request), runtime), new QueryEventTracesResponse());
+    }
+
+    /**
+     * Query the event traces by the event Id.
+     */
+    @Override
+    public QueryEventByEventIdResponse queryEventByEventId(QueryEventByEventIdRequest request) {
+        RuntimeOptions runtime = new RuntimeOptions();
+        return this.queryEventByEventIdWithOptions(request, runtime);
+    }
+
+    /**
+     * Query the event traces by the event Id.
+     */
+    @Override
+    public QueryEventByEventIdResponse queryEventByEventIdWithOptions(QueryEventByEventIdRequest request, RuntimeOptions runtime) {
+        com.aliyun.teautil.Common.validateModel(request);
+        return TeaModel.toModel(this.doRequest("queryEventByEventId", "HTTP", "POST", "/openapi/queryEventByEventId", null, TeaModel.buildMap(request), runtime), new QueryEventByEventIdResponse());
+    }
+
+    /**
+     * Query the event traces by the event period.
+     */
+    @Override
+    public QueryEventsByPeriodResponse queryEventsByPeriod(QueryEventsByPeriodRequest request) {
+        RuntimeOptions runtime = new RuntimeOptions();
+        return this.queryEventsByPeriodWithOptions(request, runtime);
+    }
+
+    /**
+     * Query the event traces by the event period.
+     */
+    @Override
+    public QueryEventsByPeriodResponse queryEventsByPeriodWithOptions(QueryEventsByPeriodRequest request, RuntimeOptions runtime) {
+        com.aliyun.teautil.Common.validateModel(request);
+        return TeaModel.toModel(this.doRequest("queryEventsByPeriod", "HTTP", "POST", "/openapi/queryEventsByPeriod", null, TeaModel.buildMap(request), runtime), new QueryEventsByPeriodResponse());
     }
 }

@@ -186,5 +186,35 @@ namespace AlibabaCloud.SDK.EventBridge
          * Tests whether the specified event pattern matches the provided event
          */
         TestEventPatternResponse TestEventPatternWithOptions(TestEventPatternRequest request, AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime);
+
+        /**
+         * Tests whether the specified event pattern matches the provided event
+         */
+        QueryEventTracesResponse QueryEventTraces(QueryEventTracesRequest request);
+
+        /**
+         * Query the event traces by the event Id.
+         */
+        QueryEventTracesResponse QueryEventTracesWithOptions(QueryEventTracesRequest request, AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime);
+
+        /**
+         * Tests whether the specified event pattern matches the provided event
+         */
+        QueryEventByEventIdResponse QueryEventByEventId(QueryEventByEventIdRequest request);
+
+        /**
+         * Query the event traces by the event Id.
+         */
+        QueryEventByEventIdResponse QueryEventByEventIdWithOptions(QueryEventByEventIdRequest request, AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime);
+
+        /**
+         * Tests whether the specified event pattern matches the provided event
+         */
+        QueryEventsByPeriodResponse QueryEventsByPeriod(QueryEventsByPeriodRequest request);
+
+        /**
+         * Query the event traces by the event Id.
+         */
+        QueryEventsByPeriodResponse QueryEventsByPeriodWithOptions(QueryEventsByPeriodRequest request, AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime);
    }
 }

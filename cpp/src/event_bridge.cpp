@@ -525,3 +525,62 @@ Alibabacloud_EventBridge::Client::testEventPatternWithOptions(
       make_shared<string>(string("/openapi/testEventPattern")), nullptr,
       make_shared<map<string, boost::any>>(request->toMap()), runtime));
 }
+
+QueryEventTracesResponse Alibabacloud_EventBridge::Client::queryEventTraces(
+    shared_ptr<QueryEventTracesRequest> request) {
+  shared_ptr<Darabonba_Util::RuntimeOptions> runtime =
+      make_shared<Darabonba_Util::RuntimeOptions>();
+  return queryEventTracesWithOptions(request, runtime);
+}
+
+QueryEventTracesResponse
+Alibabacloud_EventBridge::Client::queryEventTracesWithOptions(
+    shared_ptr<QueryEventTracesRequest> request,
+    shared_ptr<Darabonba_Util::RuntimeOptions> runtime) {
+  Darabonba_Util::Client::validateModel(request);
+  return QueryEventTracesResponse(doRequest(
+      make_shared<string>("queryEventTraces"), make_shared<string>("HTTP"),
+      make_shared<string>("POST"),
+      make_shared<string>(string("/openapi/queryEventTraces")), nullptr,
+      make_shared<map<string, boost::any>>(request->toMap()), runtime));
+}
+
+QueryEventByEventIdResponse
+Alibabacloud_EventBridge::Client::queryEventByEventId(
+    shared_ptr<QueryEventByEventIdRequest> request) {
+  shared_ptr<Darabonba_Util::RuntimeOptions> runtime =
+      make_shared<Darabonba_Util::RuntimeOptions>();
+  return queryEventByEventIdWithOptions(request, runtime);
+}
+
+QueryEventByEventIdResponse
+Alibabacloud_EventBridge::Client::queryEventByEventIdWithOptions(
+    shared_ptr<QueryEventByEventIdRequest> request,
+    shared_ptr<Darabonba_Util::RuntimeOptions> runtime) {
+  Darabonba_Util::Client::validateModel(request);
+  return QueryEventByEventIdResponse(doRequest(
+      make_shared<string>("queryEventByEventId"), make_shared<string>("HTTP"),
+      make_shared<string>("POST"),
+      make_shared<string>(string("/openapi/queryEventByEventId")), nullptr,
+      make_shared<map<string, boost::any>>(request->toMap()), runtime));
+}
+
+QueryEventsByPeriodResponse
+Alibabacloud_EventBridge::Client::queryEventsByPeriod(
+    shared_ptr<QueryEventsByPeriodRequest> request) {
+  shared_ptr<Darabonba_Util::RuntimeOptions> runtime =
+      make_shared<Darabonba_Util::RuntimeOptions>();
+  return queryEventsByPeriodWithOptions(request, runtime);
+}
+
+QueryEventsByPeriodResponse
+Alibabacloud_EventBridge::Client::queryEventsByPeriodWithOptions(
+    shared_ptr<QueryEventsByPeriodRequest> request,
+    shared_ptr<Darabonba_Util::RuntimeOptions> runtime) {
+  Darabonba_Util::Client::validateModel(request);
+  return QueryEventsByPeriodResponse(doRequest(
+      make_shared<string>("queryEventsByPeriod"), make_shared<string>("HTTP"),
+      make_shared<string>("POST"),
+      make_shared<string>(string("/openapi/queryEventsByPeriod")), nullptr,
+      make_shared<map<string, boost::any>>(request->toMap()), runtime));
+}
