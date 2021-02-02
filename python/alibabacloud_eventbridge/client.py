@@ -1028,3 +1028,141 @@ class Client:
         return event_bridge_models.TestEventPatternResponse().from_map(
             await self.do_request_async('testEventPattern', 'HTTP', 'POST', f'/openapi/testEventPattern', None, TeaCore.to_map(request), runtime)
         )
+
+    def query_event_traces(
+        self,
+        request: event_bridge_models.QueryEventTracesRequest,
+    ) -> event_bridge_models.QueryEventTracesResponse:
+        """
+        Tests whether the specified event pattern matches the provided event
+        """
+        runtime = util_models.RuntimeOptions()
+        return self.query_event_traces_with_options(request, runtime)
+
+    async def query_event_traces_async(
+        self,
+        request: event_bridge_models.QueryEventTracesRequest,
+    ) -> event_bridge_models.QueryEventTracesResponse:
+        """
+        Tests whether the specified event pattern matches the provided event
+        """
+        runtime = util_models.RuntimeOptions()
+        return await self.query_event_traces_with_options_async(request, runtime)
+
+    def query_event_traces_with_options(
+        self,
+        request: event_bridge_models.QueryEventTracesRequest,
+        runtime: util_models.RuntimeOptions,
+    ) -> event_bridge_models.QueryEventTracesResponse:
+        """
+        Query the event traces by the event Id.
+        """
+        UtilClient.validate_model(request)
+        return event_bridge_models.QueryEventTracesResponse().from_map(
+            self.do_request('queryEventTraces', 'HTTP', 'POST', f'/openapi/queryEventTraces', None, TeaCore.to_map(request), runtime)
+        )
+
+    async def query_event_traces_with_options_async(
+        self,
+        request: event_bridge_models.QueryEventTracesRequest,
+        runtime: util_models.RuntimeOptions,
+    ) -> event_bridge_models.QueryEventTracesResponse:
+        """
+        Query the event traces by the event Id.
+        """
+        UtilClient.validate_model(request)
+        return event_bridge_models.QueryEventTracesResponse().from_map(
+            await self.do_request_async('queryEventTraces', 'HTTP', 'POST', f'/openapi/queryEventTraces', None, TeaCore.to_map(request), runtime)
+        )
+
+    def query_event_by_event_id(
+        self,
+        request: event_bridge_models.QueryEventByEventIdRequest,
+    ) -> event_bridge_models.QueryEventByEventIdResponse:
+        """
+        Tests whether the specified event pattern matches the provided event
+        """
+        runtime = util_models.RuntimeOptions()
+        return self.query_event_by_event_id_with_options(request, runtime)
+
+    async def query_event_by_event_id_async(
+        self,
+        request: event_bridge_models.QueryEventByEventIdRequest,
+    ) -> event_bridge_models.QueryEventByEventIdResponse:
+        """
+        Tests whether the specified event pattern matches the provided event
+        """
+        runtime = util_models.RuntimeOptions()
+        return await self.query_event_by_event_id_with_options_async(request, runtime)
+
+    def query_event_by_event_id_with_options(
+        self,
+        request: event_bridge_models.QueryEventByEventIdRequest,
+        runtime: util_models.RuntimeOptions,
+    ) -> event_bridge_models.QueryEventByEventIdResponse:
+        """
+        Query the event traces by the event Id.
+        """
+        UtilClient.validate_model(request)
+        return event_bridge_models.QueryEventByEventIdResponse().from_map(
+            self.do_request('queryEventByEventId', 'HTTP', 'POST', f'/openapi/queryEventByEventId', None, TeaCore.to_map(request), runtime)
+        )
+
+    async def query_event_by_event_id_with_options_async(
+        self,
+        request: event_bridge_models.QueryEventByEventIdRequest,
+        runtime: util_models.RuntimeOptions,
+    ) -> event_bridge_models.QueryEventByEventIdResponse:
+        """
+        Query the event traces by the event Id.
+        """
+        UtilClient.validate_model(request)
+        return event_bridge_models.QueryEventByEventIdResponse().from_map(
+            await self.do_request_async('queryEventByEventId', 'HTTP', 'POST', f'/openapi/queryEventByEventId', None, TeaCore.to_map(request), runtime)
+        )
+
+    def query_events_by_period(
+        self,
+        request: event_bridge_models.QueryEventsByPeriodRequest,
+    ) -> event_bridge_models.QueryEventsByPeriodResponse:
+        """
+        Tests whether the specified event pattern matches the provided event
+        """
+        runtime = util_models.RuntimeOptions()
+        return self.query_events_by_period_with_options(request, runtime)
+
+    async def query_events_by_period_async(
+        self,
+        request: event_bridge_models.QueryEventsByPeriodRequest,
+    ) -> event_bridge_models.QueryEventsByPeriodResponse:
+        """
+        Tests whether the specified event pattern matches the provided event
+        """
+        runtime = util_models.RuntimeOptions()
+        return await self.query_events_by_period_with_options_async(request, runtime)
+
+    def query_events_by_period_with_options(
+        self,
+        request: event_bridge_models.QueryEventsByPeriodRequest,
+        runtime: util_models.RuntimeOptions,
+    ) -> event_bridge_models.QueryEventsByPeriodResponse:
+        """
+        Query the event traces by the event Id.
+        """
+        UtilClient.validate_model(request)
+        return event_bridge_models.QueryEventsByPeriodResponse().from_map(
+            self.do_request('queryEventsByPeriod', 'HTTP', 'POST', f'/openapi/queryEventsByPeriod', None, TeaCore.to_map(request), runtime)
+        )
+
+    async def query_events_by_period_with_options_async(
+        self,
+        request: event_bridge_models.QueryEventsByPeriodRequest,
+        runtime: util_models.RuntimeOptions,
+    ) -> event_bridge_models.QueryEventsByPeriodResponse:
+        """
+        Query the event traces by the event Id.
+        """
+        UtilClient.validate_model(request)
+        return event_bridge_models.QueryEventsByPeriodResponse().from_map(
+            await self.do_request_async('queryEventsByPeriod', 'HTTP', 'POST', f'/openapi/queryEventsByPeriod', None, TeaCore.to_map(request), runtime)
+        )

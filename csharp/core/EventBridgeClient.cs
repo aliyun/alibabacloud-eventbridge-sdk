@@ -943,5 +943,113 @@ namespace AlibabaCloud.SDK.EventBridge
             return TeaModel.ToObject<TestEventPatternResponse>(await DoRequestAsync("testEventPattern", "HTTP", "POST", "/openapi/testEventPattern", null, request.ToMap(), runtime));
         }
 
+        /**
+         * Tests whether the specified event pattern matches the provided event
+         */
+        public QueryEventTracesResponse QueryEventTraces(QueryEventTracesRequest request)
+        {
+            AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime = new AlibabaCloud.TeaUtil.Models.RuntimeOptions();
+            return QueryEventTracesWithOptions(request, runtime);
+        }
+
+        /**
+         * Tests whether the specified event pattern matches the provided event
+         */
+        public async Task<QueryEventTracesResponse> QueryEventTracesAsync(QueryEventTracesRequest request)
+        {
+            AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime = new AlibabaCloud.TeaUtil.Models.RuntimeOptions();
+            return await QueryEventTracesWithOptionsAsync(request, runtime);
+        }
+
+        /**
+         * Query the event traces by the event Id.
+         */
+        public QueryEventTracesResponse QueryEventTracesWithOptions(QueryEventTracesRequest request, AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime)
+        {
+            AlibabaCloud.TeaUtil.Common.ValidateModel(request);
+            return TeaModel.ToObject<QueryEventTracesResponse>(DoRequest("queryEventTraces", "HTTP", "POST", "/openapi/queryEventTraces", null, request.ToMap(), runtime));
+        }
+
+        /**
+         * Query the event traces by the event Id.
+         */
+        public async Task<QueryEventTracesResponse> QueryEventTracesWithOptionsAsync(QueryEventTracesRequest request, AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime)
+        {
+            AlibabaCloud.TeaUtil.Common.ValidateModel(request);
+            return TeaModel.ToObject<QueryEventTracesResponse>(await DoRequestAsync("queryEventTraces", "HTTP", "POST", "/openapi/queryEventTraces", null, request.ToMap(), runtime));
+        }
+
+        /**
+         * Tests whether the specified event pattern matches the provided event
+         */
+        public QueryEventByEventIdResponse QueryEventByEventId(QueryEventByEventIdRequest request)
+        {
+            AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime = new AlibabaCloud.TeaUtil.Models.RuntimeOptions();
+            return QueryEventByEventIdWithOptions(request, runtime);
+        }
+
+        /**
+         * Tests whether the specified event pattern matches the provided event
+         */
+        public async Task<QueryEventByEventIdResponse> QueryEventByEventIdAsync(QueryEventByEventIdRequest request)
+        {
+            AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime = new AlibabaCloud.TeaUtil.Models.RuntimeOptions();
+            return await QueryEventByEventIdWithOptionsAsync(request, runtime);
+        }
+
+        /**
+         * Query the event traces by the event Id.
+         */
+        public QueryEventByEventIdResponse QueryEventByEventIdWithOptions(QueryEventByEventIdRequest request, AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime)
+        {
+            AlibabaCloud.TeaUtil.Common.ValidateModel(request);
+            return TeaModel.ToObject<QueryEventByEventIdResponse>(DoRequest("queryEventByEventId", "HTTP", "POST", "/openapi/queryEventByEventId", null, request.ToMap(), runtime));
+        }
+
+        /**
+         * Query the event traces by the event Id.
+         */
+        public async Task<QueryEventByEventIdResponse> QueryEventByEventIdWithOptionsAsync(QueryEventByEventIdRequest request, AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime)
+        {
+            AlibabaCloud.TeaUtil.Common.ValidateModel(request);
+            return TeaModel.ToObject<QueryEventByEventIdResponse>(await DoRequestAsync("queryEventByEventId", "HTTP", "POST", "/openapi/queryEventByEventId", null, request.ToMap(), runtime));
+        }
+
+        /**
+         * Tests whether the specified event pattern matches the provided event
+         */
+        public QueryEventsByPeriodResponse QueryEventsByPeriod(QueryEventsByPeriodRequest request)
+        {
+            AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime = new AlibabaCloud.TeaUtil.Models.RuntimeOptions();
+            return QueryEventsByPeriodWithOptions(request, runtime);
+        }
+
+        /**
+         * Tests whether the specified event pattern matches the provided event
+         */
+        public async Task<QueryEventsByPeriodResponse> QueryEventsByPeriodAsync(QueryEventsByPeriodRequest request)
+        {
+            AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime = new AlibabaCloud.TeaUtil.Models.RuntimeOptions();
+            return await QueryEventsByPeriodWithOptionsAsync(request, runtime);
+        }
+
+        /**
+         * Query the event traces by the event Id.
+         */
+        public QueryEventsByPeriodResponse QueryEventsByPeriodWithOptions(QueryEventsByPeriodRequest request, AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime)
+        {
+            AlibabaCloud.TeaUtil.Common.ValidateModel(request);
+            return TeaModel.ToObject<QueryEventsByPeriodResponse>(DoRequest("queryEventsByPeriod", "HTTP", "POST", "/openapi/queryEventsByPeriod", null, request.ToMap(), runtime));
+        }
+
+        /**
+         * Query the event traces by the event Id.
+         */
+        public async Task<QueryEventsByPeriodResponse> QueryEventsByPeriodWithOptionsAsync(QueryEventsByPeriodRequest request, AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime)
+        {
+            AlibabaCloud.TeaUtil.Common.ValidateModel(request);
+            return TeaModel.ToObject<QueryEventsByPeriodResponse>(await DoRequestAsync("queryEventsByPeriod", "HTTP", "POST", "/openapi/queryEventsByPeriod", null, request.ToMap(), runtime));
+        }
+
     }
 }

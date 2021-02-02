@@ -6,12 +6,12 @@ import EventBridgeUtil;
 import Credential;
 
 type @protocol = string
-type @readTimeout = number
-type @connectTimeout = number
+type @readTimeout = integer
+type @connectTimeout = integer
 type @httpProxy = string
 type @httpsProxy = string
 type @noProxy = string
-type @maxIdleConns = number
+type @maxIdleConns = integer
 type @endpoint = string
 type @regionId = string
 type @credential = Credential
@@ -25,14 +25,14 @@ model Config {
   securityToken?: string(description='security token',default=''),
   protocol?: string(description='http protocol',example='http',default='http'),
   regionId?: string(description='region id',example='cn-hangzhou',default='',pattern='^[a-zA-Z0-9_-]+$'),
-  readTimeout?: number(description='read timeout',example='10',default=''),
-  connectTimeout?: number(description='connect timeout',example='10',default=''),
+  readTimeout?: integer(description='read timeout',example='10',default=''),
+  connectTimeout?: integer(description='connect timeout',example='10',default=''),
   httpProxy?: string(description='http proxy',example='http://localhost',default=''),
   httpsProxy?: string(description='https proxy',example='https://localhost',default=''),
   credential?: Credential(description='credential',example='',default=''),
   endpoint?: string(description='endpoint',example='cs.aliyuncs.com',default=''),
   noProxy?: string(description='proxy white list',example='http://localhost',default=''),
-  maxIdleConns?: number(description='max idle conns',example='3',default=''),
+  maxIdleConns?: integer(description='max idle conns',example='3',default=''),
 }
 
 /**
@@ -261,7 +261,7 @@ async function getEventBusWithOptions(request: GetEventBusRequest, runtime: Util
  */
 model ListEventBusesRequest = {
   namePrefix?: string(name='NamePrefix'),
-  limit?: number(name='Limit'),
+  limit?: integer(name='Limit'),
   nextToken?: string(name='NextToken'),
 }
 
@@ -284,7 +284,7 @@ model ListEventBusesResponse = {
   resourceOwnerAccountId: string(name='ResourceOwnerAccountId'),
   eventBuses: [ EventBusEntry ](name='EventBuses'),
   nextToken: string(name='NextToken'),
-  total: number(name='Total'),
+  total: integer(name='Total'),
 }
 
 /**
@@ -506,7 +506,7 @@ async function getRuleWithOptions(request: GetRuleRequest, runtime: Util.Runtime
 model ListRulesRequest = {
   eventBusName: string(name='EventBusName'),
   ruleNamePrefix?: string(name='RuleNamePrefix'),
-  limit?: number(name='Limit'),
+  limit?: integer(name='Limit'),
   nextToken?: string(name='NextToken'),
 }
 
@@ -518,7 +518,7 @@ model ListRulesResponse = {
   resourceOwnerAccountId: string(name='ResourceOwnerAccountId'),
   nextToken: string(name='NextToken'),
   rules: [ EventRuleDTO ](name='Rules'),
-  total: number(name='Total'),
+  total: integer(name='Total'),
 }
 
 /**
@@ -604,7 +604,7 @@ model CreateTargetsRequest = {
 model CreateTargetsResponse = {
   requestId: string(name='RequestId'),
   resourceOwnerAccountId: string(name='ResourceOwnerAccountId'),
-  errorEntriesCount: number(name='ErrorEntriesCount'),
+  errorEntriesCount: integer(name='ErrorEntriesCount'),
   errorEntries: [TargetResultEntry](name='ErrorEntries'),
 }
 
@@ -639,7 +639,7 @@ model DeleteTargetsRequest = {
 model DeleteTargetsResponse = {
   requestId: string(name='RequestId'),
   resourceOwnerAccountId: string(name='ResourceOwnerAccountId'),
-  errorEntriesCount: number(name='ErrorEntriesCount'),
+  errorEntriesCount: integer(name='ErrorEntriesCount'),
   errorEntries: [ TargetResultEntry ](name='ErrorEntries'),
 }
 
@@ -674,7 +674,7 @@ async function deleteTargetsWithOptions(request: DeleteTargetsRequest, runtime: 
 model ListTargetsRequest = {
   eventBusName: string(name='EventBusName'),
   ruleName: string(name='RuleName'),
-  limit?: number(name='Limit'),
+  limit?: integer(name='Limit'),
 }
 
 /**
@@ -733,6 +733,108 @@ async function testEventPattern(request: TestEventPatternRequest): TestEventPatt
 async function testEventPatternWithOptions(request: TestEventPatternRequest, runtime: Util.RuntimeOptions): TestEventPatternResponse {
   Util.validateModel(request);
   return doRequest('testEventPattern','HTTP', 'POST', `/openapi/testEventPattern`, null, request, runtime);
+}
+
+model QueryEventTracesRequest {
+  eventBusName: string(name='EventBusName'),
+  eventId: string(name='EventId'),
+}
+
+model EventTrace {
+  resourceOwnerId: string(name='ResourceOwnerId'),
+  action: string(name='Action'),
+  eventId: string(name='EventId'),
+  eventBusName: string(name='EventBusName'),
+  actionTime: string(name='ActionTime'),
+}
+
+model QueryEventTracesResponse {
+  eventTraceList: [ EventTrace ](name='EventTraceList'),
+}
+
+/**
+ * Tests whether the specified event pattern matches the provided event
+ */
+async function queryEventTraces(request: QueryEventTracesRequest): QueryEventTracesResponse {
+  var runtime = new Util.RuntimeOptions{};
+  return queryEventTracesWithOptions(request, runtime);
+}
+
+
+/**
+ * Query the event traces by the event Id.
+ */
+async function queryEventTracesWithOptions(request: QueryEventTracesRequest, runtime: Util.RuntimeOptions): QueryEventTracesResponse {
+  Util.validateModel(request);
+  return doRequest('queryEventTraces','HTTP', 'POST', `/openapi/queryEventTraces`, null, request, runtime);
+}
+
+model QueryEventByEventIdRequest {
+  eventBusName: string(name='EventBusName'),
+  eventSource: string(name='EventSource'),
+  eventId: string(name='EventId'),
+}
+
+model TracedEvent {
+  eventReceivedTime: string(name='eventReceivedTime'),
+  eventSource: string(name='EventSource'),
+  eventId: string(name='EventId'),
+  eventBusName: string(name='EventBusName')
+}
+
+model QueryEventByEventIdResponse {
+  tracedEvents: [ EventTrace ](name='TracedEvents'),
+  nextToken: string(name='NextToken'),
+  total: integer(name='Total'),
+}
+
+/**
+ * Tests whether the specified event pattern matches the provided event
+ */
+async function queryEventByEventId(request: QueryEventByEventIdRequest): QueryEventByEventIdResponse {
+  var runtime = new Util.RuntimeOptions{};
+  return queryEventByEventIdWithOptions(request, runtime);
+}
+
+
+/**
+ * Query the event traces by the event Id.
+ */
+async function queryEventByEventIdWithOptions(request: QueryEventByEventIdRequest, runtime: Util.RuntimeOptions): QueryEventByEventIdResponse {
+  Util.validateModel(request);
+  return doRequest('queryEventByEventId','HTTP', 'POST', `/openapi/queryEventByEventId`, null, request, runtime);
+}
+
+model QueryEventsByPeriodRequest {
+  eventBusName: string(name='EventBusName'),
+  eventSource: string(name='EventSource'),
+  startTime: string(name='StartTime'),
+  endTime: string(name='EndTime'),
+  limit: string(name='Limit'),
+  nextToken: string(name='NextToken'),
+}
+
+model QueryEventsByPeriodResponse {
+  tracedEvents: [ EventTrace ](name='TracedEvents'),
+  nextToken: string(name='NextToken'),
+  total: integer(name='Total'),
+}
+
+/**
+ * Tests whether the specified event pattern matches the provided event
+ */
+async function queryEventsByPeriod(request: QueryEventsByPeriodRequest): QueryEventsByPeriodResponse {
+  var runtime = new Util.RuntimeOptions{};
+  return queryEventsByPeriodWithOptions(request, runtime);
+}
+
+
+/**
+ * Query the event traces by the event Id.
+ */
+async function queryEventsByPeriodWithOptions(request: QueryEventsByPeriodRequest, runtime: Util.RuntimeOptions): QueryEventsByPeriodResponse {
+  Util.validateModel(request);
+  return doRequest('queryEventsByPeriod','HTTP', 'POST', `/openapi/queryEventsByPeriod`, null, request, runtime);
 }
 
 /**

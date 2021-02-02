@@ -216,9 +216,6 @@ public:
     }
     Darabonba::Model::validateMaxLength("type", type, 64);
     Darabonba::Model::validateMaxLength("time", time, 64);
-    Darabonba::Model::validatePattern("time", time,
-                                      "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-"
-                                      "9]{2}:[0-9]{2}.[0-9]{3}[\\\\s\\\\S]*");
     if (!extensions) {
       BOOST_THROW_EXCEPTION(boost::enable_error_info(
           std::runtime_error("extensions is required.")));
@@ -2785,6 +2782,548 @@ public:
 
   virtual ~TestEventPatternResponse() = default;
 };
+class QueryEventTracesRequest : public Darabonba::Model {
+public:
+  shared_ptr<string> eventBusName{};
+  shared_ptr<string> eventId{};
+
+  QueryEventTracesRequest() {}
+
+  explicit QueryEventTracesRequest(const std::map<string, boost::any> &config)
+      : Darabonba::Model(config) {
+    fromMap(config);
+  };
+
+  void validate() override {
+    if (!eventBusName) {
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("eventBusName is required.")));
+    }
+    if (!eventId) {
+      BOOST_THROW_EXCEPTION(
+          boost::enable_error_info(std::runtime_error("eventId is required.")));
+    }
+  }
+
+  map<string, boost::any> toMap() override {
+    map<string, boost::any> res;
+    if (eventBusName) {
+      res["EventBusName"] = boost::any(*eventBusName);
+    }
+    if (eventId) {
+      res["EventId"] = boost::any(*eventId);
+    }
+    return res;
+  }
+
+  void fromMap(map<string, boost::any> m) override {
+    if (m.find("EventBusName") != m.end() && !m["EventBusName"].empty()) {
+      eventBusName =
+          make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
+    }
+    if (m.find("EventId") != m.end() && !m["EventId"].empty()) {
+      eventId = make_shared<string>(boost::any_cast<string>(m["EventId"]));
+    }
+  }
+
+  virtual ~QueryEventTracesRequest() = default;
+};
+class EventTrace : public Darabonba::Model {
+public:
+  shared_ptr<string> resourceOwnerId{};
+  shared_ptr<string> action{};
+  shared_ptr<string> eventId{};
+  shared_ptr<string> eventBusName{};
+  shared_ptr<string> actionTime{};
+
+  EventTrace() {}
+
+  explicit EventTrace(const std::map<string, boost::any> &config)
+      : Darabonba::Model(config) {
+    fromMap(config);
+  };
+
+  void validate() override {
+    if (!resourceOwnerId) {
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("resourceOwnerId is required.")));
+    }
+    if (!action) {
+      BOOST_THROW_EXCEPTION(
+          boost::enable_error_info(std::runtime_error("action is required.")));
+    }
+    if (!eventId) {
+      BOOST_THROW_EXCEPTION(
+          boost::enable_error_info(std::runtime_error("eventId is required.")));
+    }
+    if (!eventBusName) {
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("eventBusName is required.")));
+    }
+    if (!actionTime) {
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("actionTime is required.")));
+    }
+  }
+
+  map<string, boost::any> toMap() override {
+    map<string, boost::any> res;
+    if (resourceOwnerId) {
+      res["ResourceOwnerId"] = boost::any(*resourceOwnerId);
+    }
+    if (action) {
+      res["Action"] = boost::any(*action);
+    }
+    if (eventId) {
+      res["EventId"] = boost::any(*eventId);
+    }
+    if (eventBusName) {
+      res["EventBusName"] = boost::any(*eventBusName);
+    }
+    if (actionTime) {
+      res["ActionTime"] = boost::any(*actionTime);
+    }
+    return res;
+  }
+
+  void fromMap(map<string, boost::any> m) override {
+    if (m.find("ResourceOwnerId") != m.end() && !m["ResourceOwnerId"].empty()) {
+      resourceOwnerId =
+          make_shared<string>(boost::any_cast<string>(m["ResourceOwnerId"]));
+    }
+    if (m.find("Action") != m.end() && !m["Action"].empty()) {
+      action = make_shared<string>(boost::any_cast<string>(m["Action"]));
+    }
+    if (m.find("EventId") != m.end() && !m["EventId"].empty()) {
+      eventId = make_shared<string>(boost::any_cast<string>(m["EventId"]));
+    }
+    if (m.find("EventBusName") != m.end() && !m["EventBusName"].empty()) {
+      eventBusName =
+          make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
+    }
+    if (m.find("ActionTime") != m.end() && !m["ActionTime"].empty()) {
+      actionTime =
+          make_shared<string>(boost::any_cast<string>(m["ActionTime"]));
+    }
+  }
+
+  virtual ~EventTrace() = default;
+};
+class QueryEventTracesResponse : public Darabonba::Model {
+public:
+  shared_ptr<vector<EventTrace>> eventTraceList{};
+
+  QueryEventTracesResponse() {}
+
+  explicit QueryEventTracesResponse(const std::map<string, boost::any> &config)
+      : Darabonba::Model(config) {
+    fromMap(config);
+  };
+
+  void validate() override {
+    if (!eventTraceList) {
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("eventTraceList is required.")));
+    }
+  }
+
+  map<string, boost::any> toMap() override {
+    map<string, boost::any> res;
+    if (eventTraceList) {
+      vector<boost::any> temp1;
+      for (auto item1 : *eventTraceList) {
+        temp1.push_back(boost::any(item1.toMap()));
+      }
+      res["EventTraceList"] = boost::any(temp1);
+    }
+    return res;
+  }
+
+  void fromMap(map<string, boost::any> m) override {
+    if (m.find("EventTraceList") != m.end() && !m["EventTraceList"].empty()) {
+      if (typeid(vector<boost::any>) == m["EventTraceList"].type()) {
+        vector<EventTrace> expect1;
+        for (auto item1 :
+             boost::any_cast<vector<boost::any>>(m["EventTraceList"])) {
+          if (typeid(map<string, boost::any>) == item1.type()) {
+            EventTrace model2;
+            model2.fromMap(boost::any_cast<map<string, boost::any>>(item1));
+            expect1.push_back(model2);
+          }
+        }
+        eventTraceList = make_shared<vector<EventTrace>>(expect1);
+      }
+    }
+  }
+
+  virtual ~QueryEventTracesResponse() = default;
+};
+class QueryEventByEventIdRequest : public Darabonba::Model {
+public:
+  shared_ptr<string> eventBusName{};
+  shared_ptr<string> eventSource{};
+  shared_ptr<string> eventId{};
+
+  QueryEventByEventIdRequest() {}
+
+  explicit QueryEventByEventIdRequest(
+      const std::map<string, boost::any> &config)
+      : Darabonba::Model(config) {
+    fromMap(config);
+  };
+
+  void validate() override {
+    if (!eventBusName) {
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("eventBusName is required.")));
+    }
+    if (!eventSource) {
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("eventSource is required.")));
+    }
+    if (!eventId) {
+      BOOST_THROW_EXCEPTION(
+          boost::enable_error_info(std::runtime_error("eventId is required.")));
+    }
+  }
+
+  map<string, boost::any> toMap() override {
+    map<string, boost::any> res;
+    if (eventBusName) {
+      res["EventBusName"] = boost::any(*eventBusName);
+    }
+    if (eventSource) {
+      res["EventSource"] = boost::any(*eventSource);
+    }
+    if (eventId) {
+      res["EventId"] = boost::any(*eventId);
+    }
+    return res;
+  }
+
+  void fromMap(map<string, boost::any> m) override {
+    if (m.find("EventBusName") != m.end() && !m["EventBusName"].empty()) {
+      eventBusName =
+          make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
+    }
+    if (m.find("EventSource") != m.end() && !m["EventSource"].empty()) {
+      eventSource =
+          make_shared<string>(boost::any_cast<string>(m["EventSource"]));
+    }
+    if (m.find("EventId") != m.end() && !m["EventId"].empty()) {
+      eventId = make_shared<string>(boost::any_cast<string>(m["EventId"]));
+    }
+  }
+
+  virtual ~QueryEventByEventIdRequest() = default;
+};
+class TracedEvent : public Darabonba::Model {
+public:
+  shared_ptr<string> eventReceivedTime{};
+  shared_ptr<string> eventSource{};
+  shared_ptr<string> eventId{};
+  shared_ptr<string> eventBusName{};
+
+  TracedEvent() {}
+
+  explicit TracedEvent(const std::map<string, boost::any> &config)
+      : Darabonba::Model(config) {
+    fromMap(config);
+  };
+
+  void validate() override {
+    if (!eventReceivedTime) {
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("eventReceivedTime is required.")));
+    }
+    if (!eventSource) {
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("eventSource is required.")));
+    }
+    if (!eventId) {
+      BOOST_THROW_EXCEPTION(
+          boost::enable_error_info(std::runtime_error("eventId is required.")));
+    }
+    if (!eventBusName) {
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("eventBusName is required.")));
+    }
+  }
+
+  map<string, boost::any> toMap() override {
+    map<string, boost::any> res;
+    if (eventReceivedTime) {
+      res["eventReceivedTime"] = boost::any(*eventReceivedTime);
+    }
+    if (eventSource) {
+      res["EventSource"] = boost::any(*eventSource);
+    }
+    if (eventId) {
+      res["EventId"] = boost::any(*eventId);
+    }
+    if (eventBusName) {
+      res["EventBusName"] = boost::any(*eventBusName);
+    }
+    return res;
+  }
+
+  void fromMap(map<string, boost::any> m) override {
+    if (m.find("eventReceivedTime") != m.end() &&
+        !m["eventReceivedTime"].empty()) {
+      eventReceivedTime =
+          make_shared<string>(boost::any_cast<string>(m["eventReceivedTime"]));
+    }
+    if (m.find("EventSource") != m.end() && !m["EventSource"].empty()) {
+      eventSource =
+          make_shared<string>(boost::any_cast<string>(m["EventSource"]));
+    }
+    if (m.find("EventId") != m.end() && !m["EventId"].empty()) {
+      eventId = make_shared<string>(boost::any_cast<string>(m["EventId"]));
+    }
+    if (m.find("EventBusName") != m.end() && !m["EventBusName"].empty()) {
+      eventBusName =
+          make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
+    }
+  }
+
+  virtual ~TracedEvent() = default;
+};
+class QueryEventByEventIdResponse : public Darabonba::Model {
+public:
+  shared_ptr<vector<EventTrace>> tracedEvents{};
+  shared_ptr<string> nextToken{};
+  shared_ptr<int> total{};
+
+  QueryEventByEventIdResponse() {}
+
+  explicit QueryEventByEventIdResponse(
+      const std::map<string, boost::any> &config)
+      : Darabonba::Model(config) {
+    fromMap(config);
+  };
+
+  void validate() override {
+    if (!tracedEvents) {
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("tracedEvents is required.")));
+    }
+    if (!nextToken) {
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("nextToken is required.")));
+    }
+    if (!total) {
+      BOOST_THROW_EXCEPTION(
+          boost::enable_error_info(std::runtime_error("total is required.")));
+    }
+  }
+
+  map<string, boost::any> toMap() override {
+    map<string, boost::any> res;
+    if (tracedEvents) {
+      vector<boost::any> temp1;
+      for (auto item1 : *tracedEvents) {
+        temp1.push_back(boost::any(item1.toMap()));
+      }
+      res["TracedEvents"] = boost::any(temp1);
+    }
+    if (nextToken) {
+      res["NextToken"] = boost::any(*nextToken);
+    }
+    if (total) {
+      res["Total"] = boost::any(*total);
+    }
+    return res;
+  }
+
+  void fromMap(map<string, boost::any> m) override {
+    if (m.find("TracedEvents") != m.end() && !m["TracedEvents"].empty()) {
+      if (typeid(vector<boost::any>) == m["TracedEvents"].type()) {
+        vector<EventTrace> expect1;
+        for (auto item1 :
+             boost::any_cast<vector<boost::any>>(m["TracedEvents"])) {
+          if (typeid(map<string, boost::any>) == item1.type()) {
+            EventTrace model2;
+            model2.fromMap(boost::any_cast<map<string, boost::any>>(item1));
+            expect1.push_back(model2);
+          }
+        }
+        tracedEvents = make_shared<vector<EventTrace>>(expect1);
+      }
+    }
+    if (m.find("NextToken") != m.end() && !m["NextToken"].empty()) {
+      nextToken = make_shared<string>(boost::any_cast<string>(m["NextToken"]));
+    }
+    if (m.find("Total") != m.end() && !m["Total"].empty()) {
+      total = make_shared<int>(boost::any_cast<int>(m["Total"]));
+    }
+  }
+
+  virtual ~QueryEventByEventIdResponse() = default;
+};
+class QueryEventsByPeriodRequest : public Darabonba::Model {
+public:
+  shared_ptr<string> eventBusName{};
+  shared_ptr<string> eventSource{};
+  shared_ptr<string> startTime{};
+  shared_ptr<string> endTime{};
+  shared_ptr<string> limit{};
+  shared_ptr<string> nextToken{};
+
+  QueryEventsByPeriodRequest() {}
+
+  explicit QueryEventsByPeriodRequest(
+      const std::map<string, boost::any> &config)
+      : Darabonba::Model(config) {
+    fromMap(config);
+  };
+
+  void validate() override {
+    if (!eventBusName) {
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("eventBusName is required.")));
+    }
+    if (!eventSource) {
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("eventSource is required.")));
+    }
+    if (!startTime) {
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("startTime is required.")));
+    }
+    if (!endTime) {
+      BOOST_THROW_EXCEPTION(
+          boost::enable_error_info(std::runtime_error("endTime is required.")));
+    }
+    if (!limit) {
+      BOOST_THROW_EXCEPTION(
+          boost::enable_error_info(std::runtime_error("limit is required.")));
+    }
+    if (!nextToken) {
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("nextToken is required.")));
+    }
+  }
+
+  map<string, boost::any> toMap() override {
+    map<string, boost::any> res;
+    if (eventBusName) {
+      res["EventBusName"] = boost::any(*eventBusName);
+    }
+    if (eventSource) {
+      res["EventSource"] = boost::any(*eventSource);
+    }
+    if (startTime) {
+      res["StartTime"] = boost::any(*startTime);
+    }
+    if (endTime) {
+      res["EndTime"] = boost::any(*endTime);
+    }
+    if (limit) {
+      res["Limit"] = boost::any(*limit);
+    }
+    if (nextToken) {
+      res["NextToken"] = boost::any(*nextToken);
+    }
+    return res;
+  }
+
+  void fromMap(map<string, boost::any> m) override {
+    if (m.find("EventBusName") != m.end() && !m["EventBusName"].empty()) {
+      eventBusName =
+          make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
+    }
+    if (m.find("EventSource") != m.end() && !m["EventSource"].empty()) {
+      eventSource =
+          make_shared<string>(boost::any_cast<string>(m["EventSource"]));
+    }
+    if (m.find("StartTime") != m.end() && !m["StartTime"].empty()) {
+      startTime = make_shared<string>(boost::any_cast<string>(m["StartTime"]));
+    }
+    if (m.find("EndTime") != m.end() && !m["EndTime"].empty()) {
+      endTime = make_shared<string>(boost::any_cast<string>(m["EndTime"]));
+    }
+    if (m.find("Limit") != m.end() && !m["Limit"].empty()) {
+      limit = make_shared<string>(boost::any_cast<string>(m["Limit"]));
+    }
+    if (m.find("NextToken") != m.end() && !m["NextToken"].empty()) {
+      nextToken = make_shared<string>(boost::any_cast<string>(m["NextToken"]));
+    }
+  }
+
+  virtual ~QueryEventsByPeriodRequest() = default;
+};
+class QueryEventsByPeriodResponse : public Darabonba::Model {
+public:
+  shared_ptr<vector<EventTrace>> tracedEvents{};
+  shared_ptr<string> nextToken{};
+  shared_ptr<int> total{};
+
+  QueryEventsByPeriodResponse() {}
+
+  explicit QueryEventsByPeriodResponse(
+      const std::map<string, boost::any> &config)
+      : Darabonba::Model(config) {
+    fromMap(config);
+  };
+
+  void validate() override {
+    if (!tracedEvents) {
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("tracedEvents is required.")));
+    }
+    if (!nextToken) {
+      BOOST_THROW_EXCEPTION(boost::enable_error_info(
+          std::runtime_error("nextToken is required.")));
+    }
+    if (!total) {
+      BOOST_THROW_EXCEPTION(
+          boost::enable_error_info(std::runtime_error("total is required.")));
+    }
+  }
+
+  map<string, boost::any> toMap() override {
+    map<string, boost::any> res;
+    if (tracedEvents) {
+      vector<boost::any> temp1;
+      for (auto item1 : *tracedEvents) {
+        temp1.push_back(boost::any(item1.toMap()));
+      }
+      res["TracedEvents"] = boost::any(temp1);
+    }
+    if (nextToken) {
+      res["NextToken"] = boost::any(*nextToken);
+    }
+    if (total) {
+      res["Total"] = boost::any(*total);
+    }
+    return res;
+  }
+
+  void fromMap(map<string, boost::any> m) override {
+    if (m.find("TracedEvents") != m.end() && !m["TracedEvents"].empty()) {
+      if (typeid(vector<boost::any>) == m["TracedEvents"].type()) {
+        vector<EventTrace> expect1;
+        for (auto item1 :
+             boost::any_cast<vector<boost::any>>(m["TracedEvents"])) {
+          if (typeid(map<string, boost::any>) == item1.type()) {
+            EventTrace model2;
+            model2.fromMap(boost::any_cast<map<string, boost::any>>(item1));
+            expect1.push_back(model2);
+          }
+        }
+        tracedEvents = make_shared<vector<EventTrace>>(expect1);
+      }
+    }
+    if (m.find("NextToken") != m.end() && !m["NextToken"].empty()) {
+      nextToken = make_shared<string>(boost::any_cast<string>(m["NextToken"]));
+    }
+    if (m.find("Total") != m.end() && !m["Total"].empty()) {
+      total = make_shared<int>(boost::any_cast<int>(m["Total"]));
+    }
+  }
+
+  virtual ~QueryEventsByPeriodResponse() = default;
+};
 class Client {
 public:
   shared_ptr<string> _protocol{};
@@ -2870,6 +3409,21 @@ public:
   testEventPattern(shared_ptr<TestEventPatternRequest> request);
   TestEventPatternResponse testEventPatternWithOptions(
       shared_ptr<TestEventPatternRequest> request,
+      shared_ptr<Darabonba_Util::RuntimeOptions> runtime);
+  QueryEventTracesResponse
+  queryEventTraces(shared_ptr<QueryEventTracesRequest> request);
+  QueryEventTracesResponse queryEventTracesWithOptions(
+      shared_ptr<QueryEventTracesRequest> request,
+      shared_ptr<Darabonba_Util::RuntimeOptions> runtime);
+  QueryEventByEventIdResponse
+  queryEventByEventId(shared_ptr<QueryEventByEventIdRequest> request);
+  QueryEventByEventIdResponse queryEventByEventIdWithOptions(
+      shared_ptr<QueryEventByEventIdRequest> request,
+      shared_ptr<Darabonba_Util::RuntimeOptions> runtime);
+  QueryEventsByPeriodResponse
+  queryEventsByPeriod(shared_ptr<QueryEventsByPeriodRequest> request);
+  QueryEventsByPeriodResponse queryEventsByPeriodWithOptions(
+      shared_ptr<QueryEventsByPeriodRequest> request,
       shared_ptr<Darabonba_Util::RuntimeOptions> runtime);
 
   virtual ~Client() = default;

@@ -1231,6 +1231,215 @@ export class TestEventPatternResponse extends $tea.Model {
   }
 }
 
+export class QueryEventTracesRequest extends $tea.Model {
+  eventBusName: string;
+  eventId: string;
+  static names(): { [key: string]: string } {
+    return {
+      eventBusName: 'EventBusName',
+      eventId: 'EventId',
+    };
+  }
+
+  static types(): { [key: string]: any } {
+    return {
+      eventBusName: 'string',
+      eventId: 'string',
+    };
+  }
+
+  constructor(map?: { [key: string]: any }) {
+    super(map);
+  }
+}
+
+export class EventTrace extends $tea.Model {
+  resourceOwnerId: string;
+  action: string;
+  eventId: string;
+  eventBusName: string;
+  actionTime: string;
+  static names(): { [key: string]: string } {
+    return {
+      resourceOwnerId: 'ResourceOwnerId',
+      action: 'Action',
+      eventId: 'EventId',
+      eventBusName: 'EventBusName',
+      actionTime: 'ActionTime',
+    };
+  }
+
+  static types(): { [key: string]: any } {
+    return {
+      resourceOwnerId: 'string',
+      action: 'string',
+      eventId: 'string',
+      eventBusName: 'string',
+      actionTime: 'string',
+    };
+  }
+
+  constructor(map?: { [key: string]: any }) {
+    super(map);
+  }
+}
+
+export class QueryEventTracesResponse extends $tea.Model {
+  eventTraceList: EventTrace[];
+  static names(): { [key: string]: string } {
+    return {
+      eventTraceList: 'EventTraceList',
+    };
+  }
+
+  static types(): { [key: string]: any } {
+    return {
+      eventTraceList: { 'type': 'array', 'itemType': EventTrace },
+    };
+  }
+
+  constructor(map?: { [key: string]: any }) {
+    super(map);
+  }
+}
+
+export class QueryEventByEventIdRequest extends $tea.Model {
+  eventBusName: string;
+  eventSource: string;
+  eventId: string;
+  static names(): { [key: string]: string } {
+    return {
+      eventBusName: 'EventBusName',
+      eventSource: 'EventSource',
+      eventId: 'EventId',
+    };
+  }
+
+  static types(): { [key: string]: any } {
+    return {
+      eventBusName: 'string',
+      eventSource: 'string',
+      eventId: 'string',
+    };
+  }
+
+  constructor(map?: { [key: string]: any }) {
+    super(map);
+  }
+}
+
+export class TracedEvent extends $tea.Model {
+  eventReceivedTime: string;
+  eventSource: string;
+  eventId: string;
+  eventBusName: string;
+  static names(): { [key: string]: string } {
+    return {
+      eventReceivedTime: 'eventReceivedTime',
+      eventSource: 'EventSource',
+      eventId: 'EventId',
+      eventBusName: 'EventBusName',
+    };
+  }
+
+  static types(): { [key: string]: any } {
+    return {
+      eventReceivedTime: 'string',
+      eventSource: 'string',
+      eventId: 'string',
+      eventBusName: 'string',
+    };
+  }
+
+  constructor(map?: { [key: string]: any }) {
+    super(map);
+  }
+}
+
+export class QueryEventByEventIdResponse extends $tea.Model {
+  tracedEvents: EventTrace[];
+  nextToken: string;
+  total: number;
+  static names(): { [key: string]: string } {
+    return {
+      tracedEvents: 'TracedEvents',
+      nextToken: 'NextToken',
+      total: 'Total',
+    };
+  }
+
+  static types(): { [key: string]: any } {
+    return {
+      tracedEvents: { 'type': 'array', 'itemType': EventTrace },
+      nextToken: 'string',
+      total: 'number',
+    };
+  }
+
+  constructor(map?: { [key: string]: any }) {
+    super(map);
+  }
+}
+
+export class QueryEventsByPeriodRequest extends $tea.Model {
+  eventBusName: string;
+  eventSource: string;
+  startTime: string;
+  endTime: string;
+  limit: string;
+  nextToken: string;
+  static names(): { [key: string]: string } {
+    return {
+      eventBusName: 'EventBusName',
+      eventSource: 'EventSource',
+      startTime: 'StartTime',
+      endTime: 'EndTime',
+      limit: 'Limit',
+      nextToken: 'NextToken',
+    };
+  }
+
+  static types(): { [key: string]: any } {
+    return {
+      eventBusName: 'string',
+      eventSource: 'string',
+      startTime: 'string',
+      endTime: 'string',
+      limit: 'string',
+      nextToken: 'string',
+    };
+  }
+
+  constructor(map?: { [key: string]: any }) {
+    super(map);
+  }
+}
+
+export class QueryEventsByPeriodResponse extends $tea.Model {
+  tracedEvents: EventTrace[];
+  nextToken: string;
+  total: number;
+  static names(): { [key: string]: string } {
+    return {
+      tracedEvents: 'TracedEvents',
+      nextToken: 'NextToken',
+      total: 'Total',
+    };
+  }
+
+  static types(): { [key: string]: any } {
+    return {
+      tracedEvents: { 'type': 'array', 'itemType': EventTrace },
+      nextToken: 'string',
+      total: 'number',
+    };
+  }
+
+  constructor(map?: { [key: string]: any }) {
+    super(map);
+  }
+}
+
 
 export default class Client {
   _protocol: string;
@@ -1679,6 +1888,54 @@ export default class Client {
   async testEventPatternWithOptions(request: TestEventPatternRequest, runtime: $Util.RuntimeOptions): Promise<TestEventPatternResponse> {
     Util.validateModel(request);
     return $tea.cast<TestEventPatternResponse>(await this.doRequest("testEventPattern", "HTTP", "POST", `/openapi/testEventPattern`, null, $tea.toMap(request), runtime), new TestEventPatternResponse({}));
+  }
+
+  /**
+   * Tests whether the specified event pattern matches the provided event
+   */
+  async queryEventTraces(request: QueryEventTracesRequest): Promise<QueryEventTracesResponse> {
+    let runtime = new $Util.RuntimeOptions({ });
+    return await this.queryEventTracesWithOptions(request, runtime);
+  }
+
+  /**
+   * Query the event traces by the event Id.
+   */
+  async queryEventTracesWithOptions(request: QueryEventTracesRequest, runtime: $Util.RuntimeOptions): Promise<QueryEventTracesResponse> {
+    Util.validateModel(request);
+    return $tea.cast<QueryEventTracesResponse>(await this.doRequest("queryEventTraces", "HTTP", "POST", `/openapi/queryEventTraces`, null, $tea.toMap(request), runtime), new QueryEventTracesResponse({}));
+  }
+
+  /**
+   * Tests whether the specified event pattern matches the provided event
+   */
+  async queryEventByEventId(request: QueryEventByEventIdRequest): Promise<QueryEventByEventIdResponse> {
+    let runtime = new $Util.RuntimeOptions({ });
+    return await this.queryEventByEventIdWithOptions(request, runtime);
+  }
+
+  /**
+   * Query the event traces by the event Id.
+   */
+  async queryEventByEventIdWithOptions(request: QueryEventByEventIdRequest, runtime: $Util.RuntimeOptions): Promise<QueryEventByEventIdResponse> {
+    Util.validateModel(request);
+    return $tea.cast<QueryEventByEventIdResponse>(await this.doRequest("queryEventByEventId", "HTTP", "POST", `/openapi/queryEventByEventId`, null, $tea.toMap(request), runtime), new QueryEventByEventIdResponse({}));
+  }
+
+  /**
+   * Tests whether the specified event pattern matches the provided event
+   */
+  async queryEventsByPeriod(request: QueryEventsByPeriodRequest): Promise<QueryEventsByPeriodResponse> {
+    let runtime = new $Util.RuntimeOptions({ });
+    return await this.queryEventsByPeriodWithOptions(request, runtime);
+  }
+
+  /**
+   * Query the event traces by the event Id.
+   */
+  async queryEventsByPeriodWithOptions(request: QueryEventsByPeriodRequest, runtime: $Util.RuntimeOptions): Promise<QueryEventsByPeriodResponse> {
+    Util.validateModel(request);
+    return $tea.cast<QueryEventsByPeriodResponse>(await this.doRequest("queryEventsByPeriod", "HTTP", "POST", `/openapi/queryEventsByPeriod`, null, $tea.toMap(request), runtime), new QueryEventsByPeriodResponse({}));
   }
 
 }
