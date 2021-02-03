@@ -27,29 +27,31 @@ import java.util.TimeZone;
  */
 public final class Time {
 
-    private static SimpleDateFormat defaultDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
-    public static TimeZone defaultZone = TimeZone.getDefault();
+    private static final String DATE_FORMAT_PATTERN = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+    public static TimeZone defaultZone = TimeZone.getTimeZone("UTC");
 
     /**
      * build default zone time
-     * e.g: 2020-09-09T11:14:10.664Asia/Shanghai
+     * e.g: 2021-02-02T12:28:18.102Z
      *
      * @return
      */
-    public static String zoneTime(Date data) {
-        return zoneTime(data, defaultZone);
+    public static String zoneTime(Date date) {
+        return zoneTime(date, defaultZone);
     }
 
     /**
      * build zone time with specified zone
-     * e.g: 2020-09-09T11:14:10.664Asia/Shanghai
+     * e.g: 2021-02-02T12:28:18.102Z
      *
      * @return
      */
-    public static String zoneTime(Date data, TimeZone zone) {
+    public static String zoneTime(Date date, TimeZone zone) {
         if (zone == null) {
             zone = defaultZone;
         }
-        return defaultDateFormat.format(data) + zone.getID();
+        SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT_PATTERN);
+        dateFormat.setTimeZone(zone);
+        return dateFormat.format(date);
     }
 }

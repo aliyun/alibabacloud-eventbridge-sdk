@@ -1,5 +1,7 @@
 package com.aliyun.eventbridge.util;
 
+import java.nio.charset.Charset;
+
 public class EBConstants {
 
     /**
@@ -19,5 +21,10 @@ public class EBConstants {
      * CloudEvents extension attribute: aliyuneventbus
      */
     public static final String EXTENSION_EVENTBUSNAME = "aliyuneventbusname";
+
+    /**
+     * the default charset
+     */
+    public static final Charset DEFAULT_CHARSET = Charset.forName("UTF-8");
 
 }
