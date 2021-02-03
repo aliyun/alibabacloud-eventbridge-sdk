@@ -8,6 +8,8 @@ import java.util.TimeZone;
 
 import com.aliyun.eventbridge.models.CloudEvent;
 
+import static com.aliyun.eventbridge.util.EBConstants.DEFAULT_CHARSET;
+
 /**
  * Build Cloud Event
  */
@@ -66,7 +68,7 @@ public class EventBuilder {
     }
 
     public EventBuilder withJsonStringData(String jsonString) {
-        this.data = jsonString.getBytes();
+        this.data = jsonString.getBytes(DEFAULT_CHARSET);
         return this;
     }
 
@@ -81,7 +83,7 @@ public class EventBuilder {
             .setSource(source != null ? source.toASCIIString() : null)
             .setType(type)
             .setSubject(subject)
-            .setTime(time != null ? Time.zoneTime(time,timeZone) : null)
+            .setTime(time != null ? Time.zoneTime(time, timeZone) : null)
             .setExtensions(extensions)
             .setData(data);
         //default value
