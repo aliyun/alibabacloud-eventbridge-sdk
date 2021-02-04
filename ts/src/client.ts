@@ -1305,7 +1305,7 @@ export class QueryEventTracesResponse extends $tea.Model {
 
 export class QueryEventByEventIdRequest extends $tea.Model {
   eventBusName: string;
-  eventSource: string;
+  eventSource?: string;
   eventId: string;
   static names(): { [key: string]: string } {
     return {
@@ -1383,11 +1383,11 @@ export class QueryEventByEventIdResponse extends $tea.Model {
 
 export class QueryEventsByPeriodRequest extends $tea.Model {
   eventBusName: string;
-  eventSource: string;
-  startTime: string;
-  endTime: string;
-  limit: string;
-  nextToken: string;
+  eventSource?: string;
+  startTime: number;
+  endTime: number;
+  limit?: number;
+  nextToken?: string;
   static names(): { [key: string]: string } {
     return {
       eventBusName: 'EventBusName',
@@ -1403,9 +1403,9 @@ export class QueryEventsByPeriodRequest extends $tea.Model {
     return {
       eventBusName: 'string',
       eventSource: 'string',
-      startTime: 'string',
-      endTime: 'string',
-      limit: 'string',
+      startTime: 'number',
+      endTime: 'number',
+      limit: 'number',
       nextToken: 'string',
     };
   }
