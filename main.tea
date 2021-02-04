@@ -808,8 +808,8 @@ async function queryEventByEventIdWithOptions(request: QueryEventByEventIdReques
 model QueryEventsByPeriodRequest {
   eventBusName: string(name='EventBusName'),
   eventSource?: string(name='EventSource'),
-  startTime: number(name='StartTime'),
-  endTime: number(name='EndTime'),
+  startTime: long(name='StartTime'),
+  endTime: long(name='EndTime'),
   limit?: number(name='Limit'),
   nextToken?: string(name='NextToken'),
 }
