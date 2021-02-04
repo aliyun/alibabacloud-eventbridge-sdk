@@ -14,7 +14,7 @@ namespace AlibabaCloud.SDK.EventBridge.Models
         public string EventBusName { get; set; }
 
         [NameInMap("EventSource")]
-        [Validation(Required=true)]
+        [Validation(Required=false)]
         public string EventSource { get; set; }
 
         [NameInMap("EventId")]

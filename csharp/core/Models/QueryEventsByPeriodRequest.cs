@@ -14,23 +14,23 @@ namespace AlibabaCloud.SDK.EventBridge.Models
         public string EventBusName { get; set; }
 
         [NameInMap("EventSource")]
-        [Validation(Required=true)]
+        [Validation(Required=false)]
         public string EventSource { get; set; }
 
         [NameInMap("StartTime")]
         [Validation(Required=true)]
-        public string StartTime { get; set; }
+        public int? StartTime { get; set; }
 
         [NameInMap("EndTime")]
         [Validation(Required=true)]
-        public string EndTime { get; set; }
+        public int? EndTime { get; set; }
 
         [NameInMap("Limit")]
-        [Validation(Required=true)]
-        public string Limit { get; set; }
+        [Validation(Required=false)]
+        public int? Limit { get; set; }
 
         [NameInMap("NextToken")]
-        [Validation(Required=true)]
+        [Validation(Required=false)]
         public string NextToken { get; set; }
 
     }
