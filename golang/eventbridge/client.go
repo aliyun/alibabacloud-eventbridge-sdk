@@ -1619,7 +1619,7 @@ func (s *QueryEventTracesResponse) SetEventTraceList(v []*EventTrace) *QueryEven
 
 type QueryEventByEventIdRequest struct {
 	EventBusName *string `json:"EventBusName,omitempty" xml:"EventBusName,omitempty" require:"true"`
-	EventSource  *string `json:"EventSource,omitempty" xml:"EventSource,omitempty" require:"true"`
+	EventSource  *string `json:"EventSource,omitempty" xml:"EventSource,omitempty"`
 	EventId      *string `json:"EventId,omitempty" xml:"EventId,omitempty" require:"true"`
 }
 
@@ -1712,11 +1712,11 @@ func (s *QueryEventByEventIdResponse) SetTotal(v int) *QueryEventByEventIdRespon
 
 type QueryEventsByPeriodRequest struct {
 	EventBusName *string `json:"EventBusName,omitempty" xml:"EventBusName,omitempty" require:"true"`
-	EventSource  *string `json:"EventSource,omitempty" xml:"EventSource,omitempty" require:"true"`
-	StartTime    *string `json:"StartTime,omitempty" xml:"StartTime,omitempty" require:"true"`
-	EndTime      *string `json:"EndTime,omitempty" xml:"EndTime,omitempty" require:"true"`
-	Limit        *string `json:"Limit,omitempty" xml:"Limit,omitempty" require:"true"`
-	NextToken    *string `json:"NextToken,omitempty" xml:"NextToken,omitempty" require:"true"`
+	EventSource  *string `json:"EventSource,omitempty" xml:"EventSource,omitempty"`
+	StartTime    *int    `json:"StartTime,omitempty" xml:"StartTime,omitempty" require:"true"`
+	EndTime      *int    `json:"EndTime,omitempty" xml:"EndTime,omitempty" require:"true"`
+	Limit        *int    `json:"Limit,omitempty" xml:"Limit,omitempty"`
+	NextToken    *string `json:"NextToken,omitempty" xml:"NextToken,omitempty"`
 }
 
 func (s QueryEventsByPeriodRequest) String() string {
@@ -1737,17 +1737,17 @@ func (s *QueryEventsByPeriodRequest) SetEventSource(v string) *QueryEventsByPeri
 	return s
 }
 
-func (s *QueryEventsByPeriodRequest) SetStartTime(v string) *QueryEventsByPeriodRequest {
+func (s *QueryEventsByPeriodRequest) SetStartTime(v int) *QueryEventsByPeriodRequest {
 	s.StartTime = &v
 	return s
 }
 
-func (s *QueryEventsByPeriodRequest) SetEndTime(v string) *QueryEventsByPeriodRequest {
+func (s *QueryEventsByPeriodRequest) SetEndTime(v int) *QueryEventsByPeriodRequest {
 	s.EndTime = &v
 	return s
 }
 
-func (s *QueryEventsByPeriodRequest) SetLimit(v string) *QueryEventsByPeriodRequest {
+func (s *QueryEventsByPeriodRequest) SetLimit(v int) *QueryEventsByPeriodRequest {
 	s.Limit = &v
 	return s
 }
