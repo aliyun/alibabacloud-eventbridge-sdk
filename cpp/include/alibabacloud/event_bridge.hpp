@@ -2977,10 +2977,6 @@ public:
       BOOST_THROW_EXCEPTION(boost::enable_error_info(
           std::runtime_error("eventBusName is required.")));
     }
-    if (!eventSource) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(
-          std::runtime_error("eventSource is required.")));
-    }
     if (!eventId) {
       BOOST_THROW_EXCEPTION(
           boost::enable_error_info(std::runtime_error("eventId is required.")));
@@ -3164,9 +3160,9 @@ class QueryEventsByPeriodRequest : public Darabonba::Model {
 public:
   shared_ptr<string> eventBusName{};
   shared_ptr<string> eventSource{};
-  shared_ptr<string> startTime{};
-  shared_ptr<string> endTime{};
-  shared_ptr<string> limit{};
+  shared_ptr<int> startTime{};
+  shared_ptr<int> endTime{};
+  shared_ptr<int> limit{};
   shared_ptr<string> nextToken{};
 
   QueryEventsByPeriodRequest() {}
@@ -3182,10 +3178,6 @@ public:
       BOOST_THROW_EXCEPTION(boost::enable_error_info(
           std::runtime_error("eventBusName is required.")));
     }
-    if (!eventSource) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(
-          std::runtime_error("eventSource is required.")));
-    }
     if (!startTime) {
       BOOST_THROW_EXCEPTION(boost::enable_error_info(
           std::runtime_error("startTime is required.")));
@@ -3193,14 +3185,6 @@ public:
     if (!endTime) {
       BOOST_THROW_EXCEPTION(
           boost::enable_error_info(std::runtime_error("endTime is required.")));
-    }
-    if (!limit) {
-      BOOST_THROW_EXCEPTION(
-          boost::enable_error_info(std::runtime_error("limit is required.")));
-    }
-    if (!nextToken) {
-      BOOST_THROW_EXCEPTION(boost::enable_error_info(
-          std::runtime_error("nextToken is required.")));
     }
   }
 
@@ -3237,13 +3221,13 @@ public:
           make_shared<string>(boost::any_cast<string>(m["EventSource"]));
     }
     if (m.find("StartTime") != m.end() && !m["StartTime"].empty()) {
-      startTime = make_shared<string>(boost::any_cast<string>(m["StartTime"]));
+      startTime = make_shared<int>(boost::any_cast<int>(m["StartTime"]));
     }
     if (m.find("EndTime") != m.end() && !m["EndTime"].empty()) {
-      endTime = make_shared<string>(boost::any_cast<string>(m["EndTime"]));
+      endTime = make_shared<int>(boost::any_cast<int>(m["EndTime"]));
     }
     if (m.find("Limit") != m.end() && !m["Limit"].empty()) {
-      limit = make_shared<string>(boost::any_cast<string>(m["Limit"]));
+      limit = make_shared<int>(boost::any_cast<int>(m["Limit"]));
     }
     if (m.find("NextToken") != m.end() && !m["NextToken"].empty()) {
       nextToken = make_shared<string>(boost::any_cast<string>(m["NextToken"]));
