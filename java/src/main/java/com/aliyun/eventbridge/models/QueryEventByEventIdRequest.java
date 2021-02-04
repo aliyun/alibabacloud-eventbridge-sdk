@@ -9,7 +9,6 @@ public class QueryEventByEventIdRequest extends TeaModel {
     public String eventBusName;
 
     @NameInMap("EventSource")
-    @Validation(required = true)
     public String eventSource;
 
     @NameInMap("EventId")
