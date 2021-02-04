@@ -14,7 +14,7 @@ public class QueryEventByEventIdResponse extends TeaModel {
 
     @NameInMap("Total")
     @Validation(required = true)
-    public Number total;
+    public Integer total;
 
     public static QueryEventByEventIdResponse build(java.util.Map<String, ?> map) {
         QueryEventByEventIdResponse self = new QueryEventByEventIdResponse();
@@ -37,11 +37,11 @@ public class QueryEventByEventIdResponse extends TeaModel {
         return this.nextToken;
     }
 
-    public QueryEventByEventIdResponse setTotal(Number total) {
+    public QueryEventByEventIdResponse setTotal(Integer total) {
         this.total = total;
         return this;
     }
-    public Number getTotal() {
+    public Integer getTotal() {
         return this.total;
     }
 
