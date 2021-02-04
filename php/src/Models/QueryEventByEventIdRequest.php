@@ -31,7 +31,6 @@ class QueryEventByEventIdRequest extends Model
     public function validate()
     {
         Model::validateRequired('eventBusName', $this->eventBusName, true);
-        Model::validateRequired('eventSource', $this->eventSource, true);
         Model::validateRequired('eventId', $this->eventId, true);
     }
 

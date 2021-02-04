@@ -19,17 +19,17 @@ class QueryEventsByPeriodRequest extends Model
     public $eventSource;
 
     /**
-     * @var string
+     * @var int
      */
     public $startTime;
 
     /**
-     * @var string
+     * @var int
      */
     public $endTime;
 
     /**
-     * @var string
+     * @var int
      */
     public $limit;
 
@@ -49,11 +49,8 @@ class QueryEventsByPeriodRequest extends Model
     public function validate()
     {
         Model::validateRequired('eventBusName', $this->eventBusName, true);
-        Model::validateRequired('eventSource', $this->eventSource, true);
         Model::validateRequired('startTime', $this->startTime, true);
         Model::validateRequired('endTime', $this->endTime, true);
-        Model::validateRequired('limit', $this->limit, true);
-        Model::validateRequired('nextToken', $this->nextToken, true);
     }
 
     public function toMap()
