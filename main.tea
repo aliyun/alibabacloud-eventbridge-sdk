@@ -810,7 +810,7 @@ model QueryEventsByPeriodRequest {
   eventSource?: string(name='EventSource'),
   startTime: long(name='StartTime'),
   endTime: long(name='EndTime'),
-  limit?: number(name='Limit'),
+  limit?: integer(name='Limit'),
   nextToken?: string(name='NextToken'),
 }
 
