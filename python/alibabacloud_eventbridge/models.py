@@ -2079,7 +2079,6 @@ class QueryEventByEventIdRequest(TeaModel):
 
     def validate(self):
         self.validate_required(self.event_bus_name, 'event_bus_name')
-        self.validate_required(self.event_source, 'event_source')
         self.validate_required(self.event_id, 'event_id')
 
     def to_map(self):
@@ -2198,9 +2197,9 @@ class QueryEventsByPeriodRequest(TeaModel):
         self,
         event_bus_name: str = None,
         event_source: str = None,
-        start_time: str = None,
-        end_time: str = None,
-        limit: str = None,
+        start_time: int = None,
+        end_time: int = None,
+        limit: int = None,
         next_token: str = None,
     ):
         self.event_bus_name = event_bus_name
@@ -2212,11 +2211,8 @@ class QueryEventsByPeriodRequest(TeaModel):
 
     def validate(self):
         self.validate_required(self.event_bus_name, 'event_bus_name')
-        self.validate_required(self.event_source, 'event_source')
         self.validate_required(self.start_time, 'start_time')
         self.validate_required(self.end_time, 'end_time')
-        self.validate_required(self.limit, 'limit')
-        self.validate_required(self.next_token, 'next_token')
 
     def to_map(self):
         result = dict()
