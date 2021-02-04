@@ -771,7 +771,7 @@ async function queryEventTracesWithOptions(request: QueryEventTracesRequest, run
 
 model QueryEventByEventIdRequest {
   eventBusName: string(name='EventBusName'),
-  eventSource: string(name='EventSource'),
+  eventSource?: string(name='EventSource'),
   eventId: string(name='EventId'),
 }
 
@@ -807,11 +807,11 @@ async function queryEventByEventIdWithOptions(request: QueryEventByEventIdReques
 
 model QueryEventsByPeriodRequest {
   eventBusName: string(name='EventBusName'),
-  eventSource: string(name='EventSource'),
-  startTime: string(name='StartTime'),
-  endTime: string(name='EndTime'),
-  limit: string(name='Limit'),
-  nextToken: string(name='NextToken'),
+  eventSource?: string(name='EventSource'),
+  startTime: number(name='StartTime'),
+  endTime: number(name='EndTime'),
+  limit?: number(name='Limit'),
+  nextToken?: string(name='NextToken'),
 }
 
 model QueryEventsByPeriodResponse {
