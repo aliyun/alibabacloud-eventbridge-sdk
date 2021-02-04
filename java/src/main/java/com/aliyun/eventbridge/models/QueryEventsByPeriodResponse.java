@@ -14,7 +14,7 @@ public class QueryEventsByPeriodResponse extends TeaModel {
 
     @NameInMap("Total")
     @Validation(required = true)
-    public Number total;
+    public Integer total;
 
     public static QueryEventsByPeriodResponse build(java.util.Map<String, ?> map) {
         QueryEventsByPeriodResponse self = new QueryEventsByPeriodResponse();
@@ -37,11 +37,11 @@ public class QueryEventsByPeriodResponse extends TeaModel {
         return this.nextToken;
     }
 
-    public QueryEventsByPeriodResponse setTotal(Number total) {
+    public QueryEventsByPeriodResponse setTotal(Integer total) {
         this.total = total;
         return this;
     }
-    public Number getTotal() {
+    public Integer getTotal() {
         return this.total;
     }
 

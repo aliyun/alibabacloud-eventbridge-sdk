@@ -9,23 +9,20 @@ public class QueryEventsByPeriodRequest extends TeaModel {
     public String eventBusName;
 
     @NameInMap("EventSource")
-    @Validation(required = true)
     public String eventSource;
 
     @NameInMap("StartTime")
     @Validation(required = true)
-    public String startTime;
+    public Long startTime;
 
     @NameInMap("EndTime")
     @Validation(required = true)
-    public String endTime;
+    public Long endTime;
 
     @NameInMap("Limit")
-    @Validation(required = true)
-    public String limit;
+    public Integer limit;
 
     @NameInMap("NextToken")
-    @Validation(required = true)
     public String nextToken;
 
     public static QueryEventsByPeriodRequest build(java.util.Map<String, ?> map) {
@@ -49,27 +46,27 @@ public class QueryEventsByPeriodRequest extends TeaModel {
         return this.eventSource;
     }
 
-    public QueryEventsByPeriodRequest setStartTime(String startTime) {
+    public QueryEventsByPeriodRequest setStartTime(Long startTime) {
         this.startTime = startTime;
         return this;
     }
-    public String getStartTime() {
+    public Long getStartTime() {
         return this.startTime;
     }
 
-    public QueryEventsByPeriodRequest setEndTime(String endTime) {
+    public QueryEventsByPeriodRequest setEndTime(Long endTime) {
         this.endTime = endTime;
         return this;
     }
-    public String getEndTime() {
+    public Long getEndTime() {
         return this.endTime;
     }
 
-    public QueryEventsByPeriodRequest setLimit(String limit) {
+    public QueryEventsByPeriodRequest setLimit(Integer limit) {
         this.limit = limit;
         return this;
     }
-    public String getLimit() {
+    public Integer getLimit() {
         return this.limit;
     }
 
