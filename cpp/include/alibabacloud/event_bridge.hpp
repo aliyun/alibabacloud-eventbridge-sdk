@@ -3160,8 +3160,8 @@ class QueryEventsByPeriodRequest : public Darabonba::Model {
 public:
   shared_ptr<string> eventBusName{};
   shared_ptr<string> eventSource{};
-  shared_ptr<int> startTime{};
-  shared_ptr<int> endTime{};
+  shared_ptr<long> startTime{};
+  shared_ptr<long> endTime{};
   shared_ptr<int> limit{};
   shared_ptr<string> nextToken{};
 
@@ -3221,10 +3221,10 @@ public:
           make_shared<string>(boost::any_cast<string>(m["EventSource"]));
     }
     if (m.find("StartTime") != m.end() && !m["StartTime"].empty()) {
-      startTime = make_shared<int>(boost::any_cast<int>(m["StartTime"]));
+      startTime = make_shared<long>(boost::any_cast<long>(m["StartTime"]));
     }
     if (m.find("EndTime") != m.end() && !m["EndTime"].empty()) {
-      endTime = make_shared<int>(boost::any_cast<int>(m["EndTime"]));
+      endTime = make_shared<long>(boost::any_cast<long>(m["EndTime"]));
     }
     if (m.find("Limit") != m.end() && !m["Limit"].empty()) {
       limit = make_shared<int>(boost::any_cast<int>(m["Limit"]));
