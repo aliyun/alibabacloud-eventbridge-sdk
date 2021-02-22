@@ -1,7 +1,7 @@
 {
 	"scope": "alibabacloud",
 	"name": "EventBridge",
-	"version": "0.1.10",
+	"version": "0.1.11",
 	"main": "./main.tea",
 	"maintainers": [
 		{
@@ -30,7 +30,8 @@
 		"csharp": "AlibabaCloud.SDK.Eventbridge:1.2.6",
 		"ts": "@alicloud/eventbridge:^1.2.2",
 		"php": "alibabacloud/eventbridge:^1.2.2",
-		"python": "alibabacloud_eventbridge:1.2.3"
+		"python": "alibabacloud_eventbridge:1.2.3",
+		"cpp": "alibabacloud-sdk-cpp/eventbridge"
 	},
 	"libraries": {
 		"Credential": "alibabacloud:Credential:*",
