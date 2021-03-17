@@ -1,7 +1,7 @@
 {
   "scope": "alibabacloud",
   "name": "EventBridgeUtil",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "main": "./main.tea",
   "maintainers": [
     {
@@ -14,7 +14,7 @@
     "java": "com.aliyun:eventbridge-util:0.0.4",
     "python": "alibabacloud_eventbridge_util:0.0.3",
     "csharp": "AlibabaCloud.EventBridgeUtil:0.0.5",
-    "php": "alibabacloud/eventbridge-util:^0.2.0",
+    "php": "alibabacloud/eventbridge-util:^1.0.0",
     "cpp": "alibabacloud-sdk-cpp/eventbridge-util:master",
     "ts": "@alicloud/eventbridge-util:^1.0.0"
   },
