@@ -86,44 +86,44 @@ public:
   void fromMap(map<string, boost::any> m) override {
     if (m.find("accessKeyId") != m.end() && !m["accessKeyId"].empty()) {
       accessKeyId =
-          make_shared<string>(boost::any_cast<string>(m["accessKeyId"]));
+          std::make_shared<string>(boost::any_cast<string>(m["accessKeyId"]));
     }
     if (m.find("accessKeySecret") != m.end() && !m["accessKeySecret"].empty()) {
       accessKeySecret =
-          make_shared<string>(boost::any_cast<string>(m["accessKeySecret"]));
+          std::make_shared<string>(boost::any_cast<string>(m["accessKeySecret"]));
     }
     if (m.find("securityToken") != m.end() && !m["securityToken"].empty()) {
       securityToken =
-          make_shared<string>(boost::any_cast<string>(m["securityToken"]));
+          std::make_shared<string>(boost::any_cast<string>(m["securityToken"]));
     }
     if (m.find("protocol") != m.end() && !m["protocol"].empty()) {
-      protocol = make_shared<string>(boost::any_cast<string>(m["protocol"]));
+      protocol = std::make_shared<string>(boost::any_cast<string>(m["protocol"]));
     }
     if (m.find("regionId") != m.end() && !m["regionId"].empty()) {
-      regionId = make_shared<string>(boost::any_cast<string>(m["regionId"]));
+      regionId = std::make_shared<string>(boost::any_cast<string>(m["regionId"]));
     }
     if (m.find("readTimeout") != m.end() && !m["readTimeout"].empty()) {
-      readTimeout = make_shared<int>(boost::any_cast<int>(m["readTimeout"]));
+      readTimeout = std::make_shared<int>(boost::any_cast<int>(m["readTimeout"]));
     }
     if (m.find("connectTimeout") != m.end() && !m["connectTimeout"].empty()) {
       connectTimeout =
-          make_shared<int>(boost::any_cast<int>(m["connectTimeout"]));
+          std::make_shared<int>(boost::any_cast<int>(m["connectTimeout"]));
     }
     if (m.find("httpProxy") != m.end() && !m["httpProxy"].empty()) {
-      httpProxy = make_shared<string>(boost::any_cast<string>(m["httpProxy"]));
+      httpProxy = std::make_shared<string>(boost::any_cast<string>(m["httpProxy"]));
     }
     if (m.find("httpsProxy") != m.end() && !m["httpsProxy"].empty()) {
       httpsProxy =
-          make_shared<string>(boost::any_cast<string>(m["httpsProxy"]));
+          std::make_shared<string>(boost::any_cast<string>(m["httpsProxy"]));
     }
     if (m.find("endpoint") != m.end() && !m["endpoint"].empty()) {
-      endpoint = make_shared<string>(boost::any_cast<string>(m["endpoint"]));
+      endpoint = std::make_shared<string>(boost::any_cast<string>(m["endpoint"]));
     }
     if (m.find("noProxy") != m.end() && !m["noProxy"].empty()) {
-      noProxy = make_shared<string>(boost::any_cast<string>(m["noProxy"]));
+      noProxy = std::make_shared<string>(boost::any_cast<string>(m["noProxy"]));
     }
     if (m.find("maxIdleConns") != m.end() && !m["maxIdleConns"].empty()) {
-      maxIdleConns = make_shared<int>(boost::any_cast<int>(m["maxIdleConns"]));
+      maxIdleConns = std::make_shared<int>(boost::any_cast<int>(m["maxIdleConns"]));
     }
   }
 
@@ -164,17 +164,17 @@ public:
 
   void fromMap(map<string, boost::any> m) override {
     if (m.find("EventId") != m.end() && !m["EventId"].empty()) {
-      eventId = make_shared<string>(boost::any_cast<string>(m["EventId"]));
+      eventId = std::make_shared<string>(boost::any_cast<string>(m["EventId"]));
     }
     if (m.find("TraceId") != m.end() && !m["TraceId"].empty()) {
-      traceId = make_shared<string>(boost::any_cast<string>(m["TraceId"]));
+      traceId = std::make_shared<string>(boost::any_cast<string>(m["TraceId"]));
     }
     if (m.find("ErrorCode") != m.end() && !m["ErrorCode"].empty()) {
-      errorCode = make_shared<string>(boost::any_cast<string>(m["ErrorCode"]));
+      errorCode = std::make_shared<string>(boost::any_cast<string>(m["ErrorCode"]));
     }
     if (m.find("ErrorMessage") != m.end() && !m["ErrorMessage"].empty()) {
       errorMessage =
-          make_shared<string>(boost::any_cast<string>(m["ErrorMessage"]));
+          std::make_shared<string>(boost::any_cast<string>(m["ErrorMessage"]));
     }
   }
 
@@ -259,31 +259,31 @@ public:
 
   void fromMap(map<string, boost::any> m) override {
     if (m.find("id") != m.end() && !m["id"].empty()) {
-      id = make_shared<string>(boost::any_cast<string>(m["id"]));
+      id = std::make_shared<string>(boost::any_cast<string>(m["id"]));
     }
     if (m.find("source") != m.end() && !m["source"].empty()) {
-      source = make_shared<string>(boost::any_cast<string>(m["source"]));
+      source = std::make_shared<string>(boost::any_cast<string>(m["source"]));
     }
     if (m.find("specversion") != m.end() && !m["specversion"].empty()) {
       specversion =
-          make_shared<string>(boost::any_cast<string>(m["specversion"]));
+          std::make_shared<string>(boost::any_cast<string>(m["specversion"]));
     }
     if (m.find("type") != m.end() && !m["type"].empty()) {
-      type = make_shared<string>(boost::any_cast<string>(m["type"]));
+      type = std::make_shared<string>(boost::any_cast<string>(m["type"]));
     }
     if (m.find("datacontenttype") != m.end() && !m["datacontenttype"].empty()) {
       datacontenttype =
-          make_shared<string>(boost::any_cast<string>(m["datacontenttype"]));
+          std::make_shared<string>(boost::any_cast<string>(m["datacontenttype"]));
     }
     if (m.find("dataschema") != m.end() && !m["dataschema"].empty()) {
       dataschema =
-          make_shared<string>(boost::any_cast<string>(m["dataschema"]));
+          std::make_shared<string>(boost::any_cast<string>(m["dataschema"]));
     }
     if (m.find("subject") != m.end() && !m["subject"].empty()) {
-      subject = make_shared<string>(boost::any_cast<string>(m["subject"]));
+      subject = std::make_shared<string>(boost::any_cast<string>(m["subject"]));
     }
     if (m.find("time") != m.end() && !m["time"].empty()) {
-      time = make_shared<string>(boost::any_cast<string>(m["time"]));
+      time = std::make_shared<string>(boost::any_cast<string>(m["time"]));
     }
     if (m.find("extensions") != m.end() && !m["extensions"].empty()) {
       map<string, boost::any> map1 =
@@ -292,10 +292,10 @@ public:
       for (auto item : map1) {
         toMap1[item.first] = item.second;
       }
-      extensions = make_shared<map<string, boost::any>>(toMap1);
+      extensions = std::make_shared<map<string, boost::any>>(toMap1);
     }
     if (m.find("data") != m.end() && !m["data"].empty()) {
-      data = make_shared<vector<uint8_t>>(
+      data = std::make_shared<vector<uint8_t>>(
           boost::any_cast<vector<uint8_t>>(m["data"]));
     }
   }
@@ -350,17 +350,17 @@ public:
 
   void fromMap(map<string, boost::any> m) override {
     if (m.find("RequestId") != m.end() && !m["RequestId"].empty()) {
-      requestId = make_shared<string>(boost::any_cast<string>(m["RequestId"]));
+      requestId = std::make_shared<string>(boost::any_cast<string>(m["RequestId"]));
     }
     if (m.find("ResourceOwnerAccountId") != m.end() &&
         !m["ResourceOwnerAccountId"].empty()) {
-      resourceOwnerAccountId = make_shared<string>(
+      resourceOwnerAccountId = std::make_shared<string>(
           boost::any_cast<string>(m["ResourceOwnerAccountId"]));
     }
     if (m.find("FailedEntryCount") != m.end() &&
         !m["FailedEntryCount"].empty()) {
       failedEntryCount =
-          make_shared<int>(boost::any_cast<int>(m["FailedEntryCount"]));
+          std::make_shared<int>(boost::any_cast<int>(m["FailedEntryCount"]));
     }
     if (m.find("EntryList") != m.end() && !m["EntryList"].empty()) {
       if (typeid(vector<boost::any>) == m["EntryList"].type()) {
@@ -372,7 +372,7 @@ public:
             expect1.push_back(model2);
           }
         }
-        entryList = make_shared<vector<PutEventsResponseEntry>>(expect1);
+        entryList = std::make_shared<vector<PutEventsResponseEntry>>(expect1);
       }
     }
   }
@@ -418,11 +418,11 @@ public:
   void fromMap(map<string, boost::any> m) override {
     if (m.find("EventBusName") != m.end() && !m["EventBusName"].empty()) {
       eventBusName =
-          make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
+          std::make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
     }
     if (m.find("Description") != m.end() && !m["Description"].empty()) {
       description =
-          make_shared<string>(boost::any_cast<string>(m["Description"]));
+          std::make_shared<string>(boost::any_cast<string>(m["Description"]));
     }
     if (m.find("Tags") != m.end() && !m["Tags"].empty()) {
       map<string, string> map1 =
@@ -431,7 +431,7 @@ public:
       for (auto item : map1) {
         toMap1[item.first] = item.second;
       }
-      tags = make_shared<map<string, string>>(toMap1);
+      tags = std::make_shared<map<string, string>>(toMap1);
     }
   }
 
@@ -477,16 +477,16 @@ public:
 
   void fromMap(map<string, boost::any> m) override {
     if (m.find("RequestId") != m.end() && !m["RequestId"].empty()) {
-      requestId = make_shared<string>(boost::any_cast<string>(m["RequestId"]));
+      requestId = std::make_shared<string>(boost::any_cast<string>(m["RequestId"]));
     }
     if (m.find("ResourceOwnerAccountId") != m.end() &&
         !m["ResourceOwnerAccountId"].empty()) {
-      resourceOwnerAccountId = make_shared<string>(
+      resourceOwnerAccountId = std::make_shared<string>(
           boost::any_cast<string>(m["ResourceOwnerAccountId"]));
     }
     if (m.find("EventBusARN") != m.end() && !m["EventBusARN"].empty()) {
       eventBusARN =
-          make_shared<string>(boost::any_cast<string>(m["EventBusARN"]));
+          std::make_shared<string>(boost::any_cast<string>(m["EventBusARN"]));
     }
   }
 
@@ -521,7 +521,7 @@ public:
   void fromMap(map<string, boost::any> m) override {
     if (m.find("EventBusName") != m.end() && !m["EventBusName"].empty()) {
       eventBusName =
-          make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
+          std::make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
     }
   }
 
@@ -563,11 +563,11 @@ public:
 
   void fromMap(map<string, boost::any> m) override {
     if (m.find("RequestId") != m.end() && !m["RequestId"].empty()) {
-      requestId = make_shared<string>(boost::any_cast<string>(m["RequestId"]));
+      requestId = std::make_shared<string>(boost::any_cast<string>(m["RequestId"]));
     }
     if (m.find("ResourceOwnerAccountId") != m.end() &&
         !m["ResourceOwnerAccountId"].empty()) {
-      resourceOwnerAccountId = make_shared<string>(
+      resourceOwnerAccountId = std::make_shared<string>(
           boost::any_cast<string>(m["ResourceOwnerAccountId"]));
     }
   }
@@ -603,7 +603,7 @@ public:
   void fromMap(map<string, boost::any> m) override {
     if (m.find("EventBusName") != m.end() && !m["EventBusName"].empty()) {
       eventBusName =
-          make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
+          std::make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
     }
   }
 
@@ -681,28 +681,28 @@ public:
 
   void fromMap(map<string, boost::any> m) override {
     if (m.find("RequestId") != m.end() && !m["RequestId"].empty()) {
-      requestId = make_shared<string>(boost::any_cast<string>(m["RequestId"]));
+      requestId = std::make_shared<string>(boost::any_cast<string>(m["RequestId"]));
     }
     if (m.find("ResourceOwnerAccountId") != m.end() &&
         !m["ResourceOwnerAccountId"].empty()) {
-      resourceOwnerAccountId = make_shared<string>(
+      resourceOwnerAccountId = std::make_shared<string>(
           boost::any_cast<string>(m["ResourceOwnerAccountId"]));
     }
     if (m.find("EventBusARN") != m.end() && !m["EventBusARN"].empty()) {
       eventBusARN =
-          make_shared<string>(boost::any_cast<string>(m["EventBusARN"]));
+          std::make_shared<string>(boost::any_cast<string>(m["EventBusARN"]));
     }
     if (m.find("EventBusName") != m.end() && !m["EventBusName"].empty()) {
       eventBusName =
-          make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
+          std::make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
     }
     if (m.find("Description") != m.end() && !m["Description"].empty()) {
       description =
-          make_shared<string>(boost::any_cast<string>(m["Description"]));
+          std::make_shared<string>(boost::any_cast<string>(m["Description"]));
     }
     if (m.find("CreateTimestamp") != m.end() && !m["CreateTimestamp"].empty()) {
       createTimestamp =
-          make_shared<long>(boost::any_cast<long>(m["CreateTimestamp"]));
+          std::make_shared<long>(boost::any_cast<long>(m["CreateTimestamp"]));
     }
     if (m.find("Tags") != m.end() && !m["Tags"].empty()) {
       map<string, string> map1 =
@@ -711,7 +711,7 @@ public:
       for (auto item : map1) {
         toMap1[item.first] = item.second;
       }
-      tags = make_shared<map<string, string>>(toMap1);
+      tags = std::make_shared<map<string, string>>(toMap1);
     }
   }
 
@@ -749,13 +749,13 @@ public:
   void fromMap(map<string, boost::any> m) override {
     if (m.find("NamePrefix") != m.end() && !m["NamePrefix"].empty()) {
       namePrefix =
-          make_shared<string>(boost::any_cast<string>(m["NamePrefix"]));
+          std::make_shared<string>(boost::any_cast<string>(m["NamePrefix"]));
     }
     if (m.find("Limit") != m.end() && !m["Limit"].empty()) {
-      limit = make_shared<int>(boost::any_cast<int>(m["Limit"]));
+      limit = std::make_shared<int>(boost::any_cast<int>(m["Limit"]));
     }
     if (m.find("NextToken") != m.end() && !m["NextToken"].empty()) {
-      nextToken = make_shared<string>(boost::any_cast<string>(m["NextToken"]));
+      nextToken = std::make_shared<string>(boost::any_cast<string>(m["NextToken"]));
     }
   }
 
@@ -818,19 +818,19 @@ public:
   void fromMap(map<string, boost::any> m) override {
     if (m.find("EventBusName") != m.end() && !m["EventBusName"].empty()) {
       eventBusName =
-          make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
+          std::make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
     }
     if (m.find("EventBusARN") != m.end() && !m["EventBusARN"].empty()) {
       eventBusARN =
-          make_shared<string>(boost::any_cast<string>(m["EventBusARN"]));
+          std::make_shared<string>(boost::any_cast<string>(m["EventBusARN"]));
     }
     if (m.find("Description") != m.end() && !m["Description"].empty()) {
       description =
-          make_shared<string>(boost::any_cast<string>(m["Description"]));
+          std::make_shared<string>(boost::any_cast<string>(m["Description"]));
     }
     if (m.find("CreateTimestamp") != m.end() && !m["CreateTimestamp"].empty()) {
       createTimestamp =
-          make_shared<long>(boost::any_cast<long>(m["CreateTimestamp"]));
+          std::make_shared<long>(boost::any_cast<long>(m["CreateTimestamp"]));
     }
     if (m.find("Tags") != m.end() && !m["Tags"].empty()) {
       map<string, string> map1 =
@@ -839,7 +839,7 @@ public:
       for (auto item : map1) {
         toMap1[item.first] = item.second;
       }
-      tags = make_shared<map<string, string>>(toMap1);
+      tags = std::make_shared<map<string, string>>(toMap1);
     }
   }
 
@@ -909,11 +909,11 @@ public:
 
   void fromMap(map<string, boost::any> m) override {
     if (m.find("RequestId") != m.end() && !m["RequestId"].empty()) {
-      requestId = make_shared<string>(boost::any_cast<string>(m["RequestId"]));
+      requestId = std::make_shared<string>(boost::any_cast<string>(m["RequestId"]));
     }
     if (m.find("ResourceOwnerAccountId") != m.end() &&
         !m["ResourceOwnerAccountId"].empty()) {
-      resourceOwnerAccountId = make_shared<string>(
+      resourceOwnerAccountId = std::make_shared<string>(
           boost::any_cast<string>(m["ResourceOwnerAccountId"]));
     }
     if (m.find("EventBuses") != m.end() && !m["EventBuses"].empty()) {
@@ -927,14 +927,14 @@ public:
             expect1.push_back(model2);
           }
         }
-        eventBuses = make_shared<vector<EventBusEntry>>(expect1);
+        eventBuses = std::make_shared<vector<EventBusEntry>>(expect1);
       }
     }
     if (m.find("NextToken") != m.end() && !m["NextToken"].empty()) {
-      nextToken = make_shared<string>(boost::any_cast<string>(m["NextToken"]));
+      nextToken = std::make_shared<string>(boost::any_cast<string>(m["NextToken"]));
     }
     if (m.find("Total") != m.end() && !m["Total"].empty()) {
-      total = make_shared<int>(boost::any_cast<int>(m["Total"]));
+      total = std::make_shared<int>(boost::any_cast<int>(m["Total"]));
     }
   }
 
@@ -985,16 +985,16 @@ public:
   void fromMap(map<string, boost::any> m) override {
     if (m.find("ResourceKey") != m.end() && !m["ResourceKey"].empty()) {
       resourceKey =
-          make_shared<string>(boost::any_cast<string>(m["ResourceKey"]));
+          std::make_shared<string>(boost::any_cast<string>(m["ResourceKey"]));
     }
     if (m.find("Form") != m.end() && !m["Form"].empty()) {
-      form = make_shared<string>(boost::any_cast<string>(m["Form"]));
+      form = std::make_shared<string>(boost::any_cast<string>(m["Form"]));
     }
     if (m.find("Value") != m.end() && !m["Value"].empty()) {
-      value = make_shared<string>(boost::any_cast<string>(m["Value"]));
+      value = std::make_shared<string>(boost::any_cast<string>(m["Value"]));
     }
     if (m.find("Template") != m.end() && !m["Template"].empty()) {
-      template_ = make_shared<string>(boost::any_cast<string>(m["Template"]));
+      template_ = std::make_shared<string>(boost::any_cast<string>(m["Template"]));
     }
   }
 
@@ -1056,18 +1056,18 @@ public:
 
   void fromMap(map<string, boost::any> m) override {
     if (m.find("Id") != m.end() && !m["Id"].empty()) {
-      id = make_shared<string>(boost::any_cast<string>(m["Id"]));
+      id = std::make_shared<string>(boost::any_cast<string>(m["Id"]));
     }
     if (m.find("Type") != m.end() && !m["Type"].empty()) {
-      type = make_shared<string>(boost::any_cast<string>(m["Type"]));
+      type = std::make_shared<string>(boost::any_cast<string>(m["Type"]));
     }
     if (m.find("Endpoint") != m.end() && !m["Endpoint"].empty()) {
-      endpoint = make_shared<string>(boost::any_cast<string>(m["Endpoint"]));
+      endpoint = std::make_shared<string>(boost::any_cast<string>(m["Endpoint"]));
     }
     if (m.find("PushRetryStrategy") != m.end() &&
         !m["PushRetryStrategy"].empty()) {
       pushRetryStrategy =
-          make_shared<string>(boost::any_cast<string>(m["PushRetryStrategy"]));
+          std::make_shared<string>(boost::any_cast<string>(m["PushRetryStrategy"]));
     }
     if (m.find("ParamList") != m.end() && !m["ParamList"].empty()) {
       if (typeid(vector<boost::any>) == m["ParamList"].type()) {
@@ -1079,7 +1079,7 @@ public:
             expect1.push_back(model2);
           }
         }
-        paramList = make_shared<vector<EBTargetParam>>(expect1);
+        paramList = std::make_shared<vector<EBTargetParam>>(expect1);
       }
     }
   }
@@ -1153,21 +1153,21 @@ public:
   void fromMap(map<string, boost::any> m) override {
     if (m.find("EventBusName") != m.end() && !m["EventBusName"].empty()) {
       eventBusName =
-          make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
+          std::make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
     }
     if (m.find("Description") != m.end() && !m["Description"].empty()) {
       description =
-          make_shared<string>(boost::any_cast<string>(m["Description"]));
+          std::make_shared<string>(boost::any_cast<string>(m["Description"]));
     }
     if (m.find("RuleName") != m.end() && !m["RuleName"].empty()) {
-      ruleName = make_shared<string>(boost::any_cast<string>(m["RuleName"]));
+      ruleName = std::make_shared<string>(boost::any_cast<string>(m["RuleName"]));
     }
     if (m.find("Status") != m.end() && !m["Status"].empty()) {
-      status = make_shared<string>(boost::any_cast<string>(m["Status"]));
+      status = std::make_shared<string>(boost::any_cast<string>(m["Status"]));
     }
     if (m.find("FilterPattern") != m.end() && !m["FilterPattern"].empty()) {
       filterPattern =
-          make_shared<string>(boost::any_cast<string>(m["FilterPattern"]));
+          std::make_shared<string>(boost::any_cast<string>(m["FilterPattern"]));
     }
     if (m.find("Targets") != m.end() && !m["Targets"].empty()) {
       if (typeid(vector<boost::any>) == m["Targets"].type()) {
@@ -1179,7 +1179,7 @@ public:
             expect1.push_back(model2);
           }
         }
-        targets = make_shared<vector<TargetEntry>>(expect1);
+        targets = std::make_shared<vector<TargetEntry>>(expect1);
       }
     }
     if (m.find("Tags") != m.end() && !m["Tags"].empty()) {
@@ -1189,7 +1189,7 @@ public:
       for (auto item : map1) {
         toMap1[item.first] = item.second;
       }
-      tags = make_shared<map<string, string>>(toMap1);
+      tags = std::make_shared<map<string, string>>(toMap1);
     }
   }
 
@@ -1239,15 +1239,15 @@ public:
 
   void fromMap(map<string, boost::any> m) override {
     if (m.find("RequestId") != m.end() && !m["RequestId"].empty()) {
-      requestId = make_shared<string>(boost::any_cast<string>(m["RequestId"]));
+      requestId = std::make_shared<string>(boost::any_cast<string>(m["RequestId"]));
     }
     if (m.find("ResourceOwnerAccountId") != m.end() &&
         !m["ResourceOwnerAccountId"].empty()) {
-      resourceOwnerAccountId = make_shared<string>(
+      resourceOwnerAccountId = std::make_shared<string>(
           boost::any_cast<string>(m["ResourceOwnerAccountId"]));
     }
     if (m.find("RuleARN") != m.end() && !m["RuleARN"].empty()) {
-      ruleARN = make_shared<string>(boost::any_cast<string>(m["RuleARN"]));
+      ruleARN = std::make_shared<string>(boost::any_cast<string>(m["RuleARN"]));
     }
   }
 
@@ -1290,10 +1290,10 @@ public:
   void fromMap(map<string, boost::any> m) override {
     if (m.find("EventBusName") != m.end() && !m["EventBusName"].empty()) {
       eventBusName =
-          make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
+          std::make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
     }
     if (m.find("RuleName") != m.end() && !m["RuleName"].empty()) {
-      ruleName = make_shared<string>(boost::any_cast<string>(m["RuleName"]));
+      ruleName = std::make_shared<string>(boost::any_cast<string>(m["RuleName"]));
     }
   }
 
@@ -1335,11 +1335,11 @@ public:
 
   void fromMap(map<string, boost::any> m) override {
     if (m.find("RequestId") != m.end() && !m["RequestId"].empty()) {
-      requestId = make_shared<string>(boost::any_cast<string>(m["RequestId"]));
+      requestId = std::make_shared<string>(boost::any_cast<string>(m["RequestId"]));
     }
     if (m.find("ResourceOwnerAccountId") != m.end() &&
         !m["ResourceOwnerAccountId"].empty()) {
-      resourceOwnerAccountId = make_shared<string>(
+      resourceOwnerAccountId = std::make_shared<string>(
           boost::any_cast<string>(m["ResourceOwnerAccountId"]));
     }
   }
@@ -1383,10 +1383,10 @@ public:
   void fromMap(map<string, boost::any> m) override {
     if (m.find("EventBusName") != m.end() && !m["EventBusName"].empty()) {
       eventBusName =
-          make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
+          std::make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
     }
     if (m.find("RuleName") != m.end() && !m["RuleName"].empty()) {
-      ruleName = make_shared<string>(boost::any_cast<string>(m["RuleName"]));
+      ruleName = std::make_shared<string>(boost::any_cast<string>(m["RuleName"]));
     }
   }
 
@@ -1428,11 +1428,11 @@ public:
 
   void fromMap(map<string, boost::any> m) override {
     if (m.find("RequestId") != m.end() && !m["RequestId"].empty()) {
-      requestId = make_shared<string>(boost::any_cast<string>(m["RequestId"]));
+      requestId = std::make_shared<string>(boost::any_cast<string>(m["RequestId"]));
     }
     if (m.find("ResourceOwnerAccountId") != m.end() &&
         !m["ResourceOwnerAccountId"].empty()) {
-      resourceOwnerAccountId = make_shared<string>(
+      resourceOwnerAccountId = std::make_shared<string>(
           boost::any_cast<string>(m["ResourceOwnerAccountId"]));
     }
   }
@@ -1476,10 +1476,10 @@ public:
   void fromMap(map<string, boost::any> m) override {
     if (m.find("EventBusName") != m.end() && !m["EventBusName"].empty()) {
       eventBusName =
-          make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
+          std::make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
     }
     if (m.find("RuleName") != m.end() && !m["RuleName"].empty()) {
-      ruleName = make_shared<string>(boost::any_cast<string>(m["RuleName"]));
+      ruleName = std::make_shared<string>(boost::any_cast<string>(m["RuleName"]));
     }
   }
 
@@ -1521,11 +1521,11 @@ public:
 
   void fromMap(map<string, boost::any> m) override {
     if (m.find("RequestId") != m.end() && !m["RequestId"].empty()) {
-      requestId = make_shared<string>(boost::any_cast<string>(m["RequestId"]));
+      requestId = std::make_shared<string>(boost::any_cast<string>(m["RequestId"]));
     }
     if (m.find("ResourceOwnerAccountId") != m.end() &&
         !m["ResourceOwnerAccountId"].empty()) {
-      resourceOwnerAccountId = make_shared<string>(
+      resourceOwnerAccountId = std::make_shared<string>(
           boost::any_cast<string>(m["ResourceOwnerAccountId"]));
     }
   }
@@ -1569,10 +1569,10 @@ public:
   void fromMap(map<string, boost::any> m) override {
     if (m.find("EventBusName") != m.end() && !m["EventBusName"].empty()) {
       eventBusName =
-          make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
+          std::make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
     }
     if (m.find("RuleName") != m.end() && !m["RuleName"].empty()) {
-      ruleName = make_shared<string>(boost::any_cast<string>(m["RuleName"]));
+      ruleName = std::make_shared<string>(boost::any_cast<string>(m["RuleName"]));
     }
   }
 
@@ -1694,33 +1694,33 @@ public:
 
   void fromMap(map<string, boost::any> m) override {
     if (m.find("RequestId") != m.end() && !m["RequestId"].empty()) {
-      requestId = make_shared<string>(boost::any_cast<string>(m["RequestId"]));
+      requestId = std::make_shared<string>(boost::any_cast<string>(m["RequestId"]));
     }
     if (m.find("ResourceOwnerAccountId") != m.end() &&
         !m["ResourceOwnerAccountId"].empty()) {
-      resourceOwnerAccountId = make_shared<string>(
+      resourceOwnerAccountId = std::make_shared<string>(
           boost::any_cast<string>(m["ResourceOwnerAccountId"]));
     }
     if (m.find("EventBusName") != m.end() && !m["EventBusName"].empty()) {
       eventBusName =
-          make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
+          std::make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
     }
     if (m.find("RuleARN") != m.end() && !m["RuleARN"].empty()) {
-      ruleARN = make_shared<string>(boost::any_cast<string>(m["RuleARN"]));
+      ruleARN = std::make_shared<string>(boost::any_cast<string>(m["RuleARN"]));
     }
     if (m.find("RuleName") != m.end() && !m["RuleName"].empty()) {
-      ruleName = make_shared<string>(boost::any_cast<string>(m["RuleName"]));
+      ruleName = std::make_shared<string>(boost::any_cast<string>(m["RuleName"]));
     }
     if (m.find("Description") != m.end() && !m["Description"].empty()) {
       description =
-          make_shared<string>(boost::any_cast<string>(m["Description"]));
+          std::make_shared<string>(boost::any_cast<string>(m["Description"]));
     }
     if (m.find("Status") != m.end() && !m["Status"].empty()) {
-      status = make_shared<string>(boost::any_cast<string>(m["Status"]));
+      status = std::make_shared<string>(boost::any_cast<string>(m["Status"]));
     }
     if (m.find("FilterPattern") != m.end() && !m["FilterPattern"].empty()) {
       filterPattern =
-          make_shared<string>(boost::any_cast<string>(m["FilterPattern"]));
+          std::make_shared<string>(boost::any_cast<string>(m["FilterPattern"]));
     }
     if (m.find("Targets") != m.end() && !m["Targets"].empty()) {
       if (typeid(vector<boost::any>) == m["Targets"].type()) {
@@ -1732,14 +1732,14 @@ public:
             expect1.push_back(model2);
           }
         }
-        targets = make_shared<vector<TargetEntry>>(expect1);
+        targets = std::make_shared<vector<TargetEntry>>(expect1);
       }
     }
     if (m.find("Ctime") != m.end() && !m["Ctime"].empty()) {
-      ctime = make_shared<long>(boost::any_cast<long>(m["Ctime"]));
+      ctime = std::make_shared<long>(boost::any_cast<long>(m["Ctime"]));
     }
     if (m.find("Mtime") != m.end() && !m["Mtime"].empty()) {
-      mtime = make_shared<long>(boost::any_cast<long>(m["Mtime"]));
+      mtime = std::make_shared<long>(boost::any_cast<long>(m["Mtime"]));
     }
     if (m.find("Tags") != m.end() && !m["Tags"].empty()) {
       map<string, string> map1 =
@@ -1748,7 +1748,7 @@ public:
       for (auto item : map1) {
         toMap1[item.first] = item.second;
       }
-      tags = make_shared<map<string, string>>(toMap1);
+      tags = std::make_shared<map<string, string>>(toMap1);
     }
   }
 
@@ -1795,17 +1795,17 @@ public:
   void fromMap(map<string, boost::any> m) override {
     if (m.find("EventBusName") != m.end() && !m["EventBusName"].empty()) {
       eventBusName =
-          make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
+          std::make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
     }
     if (m.find("RuleNamePrefix") != m.end() && !m["RuleNamePrefix"].empty()) {
       ruleNamePrefix =
-          make_shared<string>(boost::any_cast<string>(m["RuleNamePrefix"]));
+          std::make_shared<string>(boost::any_cast<string>(m["RuleNamePrefix"]));
     }
     if (m.find("Limit") != m.end() && !m["Limit"].empty()) {
-      limit = make_shared<int>(boost::any_cast<int>(m["Limit"]));
+      limit = std::make_shared<int>(boost::any_cast<int>(m["Limit"]));
     }
     if (m.find("NextToken") != m.end() && !m["NextToken"].empty()) {
-      nextToken = make_shared<string>(boost::any_cast<string>(m["NextToken"]));
+      nextToken = std::make_shared<string>(boost::any_cast<string>(m["NextToken"]));
     }
   }
 
@@ -1911,25 +1911,25 @@ public:
 
   void fromMap(map<string, boost::any> m) override {
     if (m.find("RuleARN") != m.end() && !m["RuleARN"].empty()) {
-      ruleARN = make_shared<string>(boost::any_cast<string>(m["RuleARN"]));
+      ruleARN = std::make_shared<string>(boost::any_cast<string>(m["RuleARN"]));
     }
     if (m.find("EventBusName") != m.end() && !m["EventBusName"].empty()) {
       eventBusName =
-          make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
+          std::make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
     }
     if (m.find("RuleName") != m.end() && !m["RuleName"].empty()) {
-      ruleName = make_shared<string>(boost::any_cast<string>(m["RuleName"]));
+      ruleName = std::make_shared<string>(boost::any_cast<string>(m["RuleName"]));
     }
     if (m.find("Description") != m.end() && !m["Description"].empty()) {
       description =
-          make_shared<string>(boost::any_cast<string>(m["Description"]));
+          std::make_shared<string>(boost::any_cast<string>(m["Description"]));
     }
     if (m.find("Status") != m.end() && !m["Status"].empty()) {
-      status = make_shared<string>(boost::any_cast<string>(m["Status"]));
+      status = std::make_shared<string>(boost::any_cast<string>(m["Status"]));
     }
     if (m.find("FilterPattern") != m.end() && !m["FilterPattern"].empty()) {
       filterPattern =
-          make_shared<string>(boost::any_cast<string>(m["FilterPattern"]));
+          std::make_shared<string>(boost::any_cast<string>(m["FilterPattern"]));
     }
     if (m.find("Targets") != m.end() && !m["Targets"].empty()) {
       if (typeid(vector<boost::any>) == m["Targets"].type()) {
@@ -1941,14 +1941,14 @@ public:
             expect1.push_back(model2);
           }
         }
-        targets = make_shared<vector<TargetEntry>>(expect1);
+        targets = std::make_shared<vector<TargetEntry>>(expect1);
       }
     }
     if (m.find("Ctime") != m.end() && !m["Ctime"].empty()) {
-      ctime = make_shared<long>(boost::any_cast<long>(m["Ctime"]));
+      ctime = std::make_shared<long>(boost::any_cast<long>(m["Ctime"]));
     }
     if (m.find("Mtime") != m.end() && !m["Mtime"].empty()) {
-      mtime = make_shared<long>(boost::any_cast<long>(m["Mtime"]));
+      mtime = std::make_shared<long>(boost::any_cast<long>(m["Mtime"]));
     }
     if (m.find("Tags") != m.end() && !m["Tags"].empty()) {
       map<string, string> map1 =
@@ -1957,7 +1957,7 @@ public:
       for (auto item : map1) {
         toMap1[item.first] = item.second;
       }
-      tags = make_shared<map<string, string>>(toMap1);
+      tags = std::make_shared<map<string, string>>(toMap1);
     }
   }
 
@@ -2027,15 +2027,15 @@ public:
 
   void fromMap(map<string, boost::any> m) override {
     if (m.find("RequestId") != m.end() && !m["RequestId"].empty()) {
-      requestId = make_shared<string>(boost::any_cast<string>(m["RequestId"]));
+      requestId = std::make_shared<string>(boost::any_cast<string>(m["RequestId"]));
     }
     if (m.find("ResourceOwnerAccountId") != m.end() &&
         !m["ResourceOwnerAccountId"].empty()) {
-      resourceOwnerAccountId = make_shared<string>(
+      resourceOwnerAccountId = std::make_shared<string>(
           boost::any_cast<string>(m["ResourceOwnerAccountId"]));
     }
     if (m.find("NextToken") != m.end() && !m["NextToken"].empty()) {
-      nextToken = make_shared<string>(boost::any_cast<string>(m["NextToken"]));
+      nextToken = std::make_shared<string>(boost::any_cast<string>(m["NextToken"]));
     }
     if (m.find("Rules") != m.end() && !m["Rules"].empty()) {
       if (typeid(vector<boost::any>) == m["Rules"].type()) {
@@ -2047,11 +2047,11 @@ public:
             expect1.push_back(model2);
           }
         }
-        rules = make_shared<vector<EventRuleDTO>>(expect1);
+        rules = std::make_shared<vector<EventRuleDTO>>(expect1);
       }
     }
     if (m.find("Total") != m.end() && !m["Total"].empty()) {
-      total = make_shared<int>(boost::any_cast<int>(m["Total"]));
+      total = std::make_shared<int>(boost::any_cast<int>(m["Total"]));
     }
   }
 
@@ -2110,21 +2110,21 @@ public:
   void fromMap(map<string, boost::any> m) override {
     if (m.find("EventBusName") != m.end() && !m["EventBusName"].empty()) {
       eventBusName =
-          make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
+          std::make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
     }
     if (m.find("RuleName") != m.end() && !m["RuleName"].empty()) {
-      ruleName = make_shared<string>(boost::any_cast<string>(m["RuleName"]));
+      ruleName = std::make_shared<string>(boost::any_cast<string>(m["RuleName"]));
     }
     if (m.find("Description") != m.end() && !m["Description"].empty()) {
       description =
-          make_shared<string>(boost::any_cast<string>(m["Description"]));
+          std::make_shared<string>(boost::any_cast<string>(m["Description"]));
     }
     if (m.find("Status") != m.end() && !m["Status"].empty()) {
-      status = make_shared<string>(boost::any_cast<string>(m["Status"]));
+      status = std::make_shared<string>(boost::any_cast<string>(m["Status"]));
     }
     if (m.find("FilterPattern") != m.end() && !m["FilterPattern"].empty()) {
       filterPattern =
-          make_shared<string>(boost::any_cast<string>(m["FilterPattern"]));
+          std::make_shared<string>(boost::any_cast<string>(m["FilterPattern"]));
     }
     if (m.find("Tags") != m.end() && !m["Tags"].empty()) {
       map<string, string> map1 =
@@ -2133,7 +2133,7 @@ public:
       for (auto item : map1) {
         toMap1[item.first] = item.second;
       }
-      tags = make_shared<map<string, string>>(toMap1);
+      tags = std::make_shared<map<string, string>>(toMap1);
     }
   }
 
@@ -2175,11 +2175,11 @@ public:
 
   void fromMap(map<string, boost::any> m) override {
     if (m.find("RequestId") != m.end() && !m["RequestId"].empty()) {
-      requestId = make_shared<string>(boost::any_cast<string>(m["RequestId"]));
+      requestId = std::make_shared<string>(boost::any_cast<string>(m["RequestId"]));
     }
     if (m.find("ResourceOwnerAccountId") != m.end() &&
         !m["ResourceOwnerAccountId"].empty()) {
-      resourceOwnerAccountId = make_shared<string>(
+      resourceOwnerAccountId = std::make_shared<string>(
           boost::any_cast<string>(m["ResourceOwnerAccountId"]));
     }
   }
@@ -2235,10 +2235,10 @@ public:
   void fromMap(map<string, boost::any> m) override {
     if (m.find("EventBusName") != m.end() && !m["EventBusName"].empty()) {
       eventBusName =
-          make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
+          std::make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
     }
     if (m.find("RuleName") != m.end() && !m["RuleName"].empty()) {
-      ruleName = make_shared<string>(boost::any_cast<string>(m["RuleName"]));
+      ruleName = std::make_shared<string>(boost::any_cast<string>(m["RuleName"]));
     }
     if (m.find("Targets") != m.end() && !m["Targets"].empty()) {
       if (typeid(vector<boost::any>) == m["Targets"].type()) {
@@ -2250,7 +2250,7 @@ public:
             expect1.push_back(model2);
           }
         }
-        targets = make_shared<vector<TargetEntry>>(expect1);
+        targets = std::make_shared<vector<TargetEntry>>(expect1);
       }
     }
   }
@@ -2301,14 +2301,14 @@ public:
 
   void fromMap(map<string, boost::any> m) override {
     if (m.find("ErrorCode") != m.end() && !m["ErrorCode"].empty()) {
-      errorCode = make_shared<string>(boost::any_cast<string>(m["ErrorCode"]));
+      errorCode = std::make_shared<string>(boost::any_cast<string>(m["ErrorCode"]));
     }
     if (m.find("ErrorMessage") != m.end() && !m["ErrorMessage"].empty()) {
       errorMessage =
-          make_shared<string>(boost::any_cast<string>(m["ErrorMessage"]));
+          std::make_shared<string>(boost::any_cast<string>(m["ErrorMessage"]));
     }
     if (m.find("EntryId") != m.end() && !m["EntryId"].empty()) {
-      entryId = make_shared<string>(boost::any_cast<string>(m["EntryId"]));
+      entryId = std::make_shared<string>(boost::any_cast<string>(m["EntryId"]));
     }
   }
 
@@ -2370,17 +2370,17 @@ public:
 
   void fromMap(map<string, boost::any> m) override {
     if (m.find("RequestId") != m.end() && !m["RequestId"].empty()) {
-      requestId = make_shared<string>(boost::any_cast<string>(m["RequestId"]));
+      requestId = std::make_shared<string>(boost::any_cast<string>(m["RequestId"]));
     }
     if (m.find("ResourceOwnerAccountId") != m.end() &&
         !m["ResourceOwnerAccountId"].empty()) {
-      resourceOwnerAccountId = make_shared<string>(
+      resourceOwnerAccountId = std::make_shared<string>(
           boost::any_cast<string>(m["ResourceOwnerAccountId"]));
     }
     if (m.find("ErrorEntriesCount") != m.end() &&
         !m["ErrorEntriesCount"].empty()) {
       errorEntriesCount =
-          make_shared<int>(boost::any_cast<int>(m["ErrorEntriesCount"]));
+          std::make_shared<int>(boost::any_cast<int>(m["ErrorEntriesCount"]));
     }
     if (m.find("ErrorEntries") != m.end() && !m["ErrorEntries"].empty()) {
       if (typeid(vector<boost::any>) == m["ErrorEntries"].type()) {
@@ -2393,7 +2393,7 @@ public:
             expect1.push_back(model2);
           }
         }
-        errorEntries = make_shared<vector<TargetResultEntry>>(expect1);
+        errorEntries = std::make_shared<vector<TargetResultEntry>>(expect1);
       }
     }
   }
@@ -2445,10 +2445,10 @@ public:
   void fromMap(map<string, boost::any> m) override {
     if (m.find("EventBusName") != m.end() && !m["EventBusName"].empty()) {
       eventBusName =
-          make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
+          std::make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
     }
     if (m.find("RuleName") != m.end() && !m["RuleName"].empty()) {
-      ruleName = make_shared<string>(boost::any_cast<string>(m["RuleName"]));
+      ruleName = std::make_shared<string>(boost::any_cast<string>(m["RuleName"]));
     }
     if (m.find("TargetIds") != m.end() && !m["TargetIds"].empty()) {
       vector<string> toVec1;
@@ -2459,7 +2459,7 @@ public:
           toVec1.push_back(boost::any_cast<string>(item));
         }
       }
-      targetIds = make_shared<vector<string>>(toVec1);
+      targetIds = std::make_shared<vector<string>>(toVec1);
     }
   }
 
@@ -2521,17 +2521,17 @@ public:
 
   void fromMap(map<string, boost::any> m) override {
     if (m.find("RequestId") != m.end() && !m["RequestId"].empty()) {
-      requestId = make_shared<string>(boost::any_cast<string>(m["RequestId"]));
+      requestId = std::make_shared<string>(boost::any_cast<string>(m["RequestId"]));
     }
     if (m.find("ResourceOwnerAccountId") != m.end() &&
         !m["ResourceOwnerAccountId"].empty()) {
-      resourceOwnerAccountId = make_shared<string>(
+      resourceOwnerAccountId = std::make_shared<string>(
           boost::any_cast<string>(m["ResourceOwnerAccountId"]));
     }
     if (m.find("ErrorEntriesCount") != m.end() &&
         !m["ErrorEntriesCount"].empty()) {
       errorEntriesCount =
-          make_shared<int>(boost::any_cast<int>(m["ErrorEntriesCount"]));
+          std::make_shared<int>(boost::any_cast<int>(m["ErrorEntriesCount"]));
     }
     if (m.find("ErrorEntries") != m.end() && !m["ErrorEntries"].empty()) {
       if (typeid(vector<boost::any>) == m["ErrorEntries"].type()) {
@@ -2544,7 +2544,7 @@ public:
             expect1.push_back(model2);
           }
         }
-        errorEntries = make_shared<vector<TargetResultEntry>>(expect1);
+        errorEntries = std::make_shared<vector<TargetResultEntry>>(expect1);
       }
     }
   }
@@ -2592,13 +2592,13 @@ public:
   void fromMap(map<string, boost::any> m) override {
     if (m.find("EventBusName") != m.end() && !m["EventBusName"].empty()) {
       eventBusName =
-          make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
+          std::make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
     }
     if (m.find("RuleName") != m.end() && !m["RuleName"].empty()) {
-      ruleName = make_shared<string>(boost::any_cast<string>(m["RuleName"]));
+      ruleName = std::make_shared<string>(boost::any_cast<string>(m["RuleName"]));
     }
     if (m.find("Limit") != m.end() && !m["Limit"].empty()) {
-      limit = make_shared<int>(boost::any_cast<int>(m["Limit"]));
+      limit = std::make_shared<int>(boost::any_cast<int>(m["Limit"]));
     }
   }
 
@@ -2652,11 +2652,11 @@ public:
 
   void fromMap(map<string, boost::any> m) override {
     if (m.find("RequestId") != m.end() && !m["RequestId"].empty()) {
-      requestId = make_shared<string>(boost::any_cast<string>(m["RequestId"]));
+      requestId = std::make_shared<string>(boost::any_cast<string>(m["RequestId"]));
     }
     if (m.find("ResourceOwnerAccountId") != m.end() &&
         !m["ResourceOwnerAccountId"].empty()) {
-      resourceOwnerAccountId = make_shared<string>(
+      resourceOwnerAccountId = std::make_shared<string>(
           boost::any_cast<string>(m["ResourceOwnerAccountId"]));
     }
     if (m.find("Targets") != m.end() && !m["Targets"].empty()) {
@@ -2669,7 +2669,7 @@ public:
             expect1.push_back(model2);
           }
         }
-        targets = make_shared<vector<TargetEntry>>(expect1);
+        targets = std::make_shared<vector<TargetEntry>>(expect1);
       }
     }
   }
@@ -2714,11 +2714,11 @@ public:
 
   void fromMap(map<string, boost::any> m) override {
     if (m.find("Event") != m.end() && !m["Event"].empty()) {
-      event = make_shared<string>(boost::any_cast<string>(m["Event"]));
+      event = std::make_shared<string>(boost::any_cast<string>(m["Event"]));
     }
     if (m.find("EventPattern") != m.end() && !m["EventPattern"].empty()) {
       eventPattern =
-          make_shared<string>(boost::any_cast<string>(m["EventPattern"]));
+          std::make_shared<string>(boost::any_cast<string>(m["EventPattern"]));
     }
   }
 
@@ -2768,15 +2768,15 @@ public:
 
   void fromMap(map<string, boost::any> m) override {
     if (m.find("RequestId") != m.end() && !m["RequestId"].empty()) {
-      requestId = make_shared<string>(boost::any_cast<string>(m["RequestId"]));
+      requestId = std::make_shared<string>(boost::any_cast<string>(m["RequestId"]));
     }
     if (m.find("ResourceOwnerAccountId") != m.end() &&
         !m["ResourceOwnerAccountId"].empty()) {
-      resourceOwnerAccountId = make_shared<string>(
+      resourceOwnerAccountId = std::make_shared<string>(
           boost::any_cast<string>(m["ResourceOwnerAccountId"]));
     }
     if (m.find("Result") != m.end() && !m["Result"].empty()) {
-      result = make_shared<bool>(boost::any_cast<bool>(m["Result"]));
+      result = std::make_shared<bool>(boost::any_cast<bool>(m["Result"]));
     }
   }
 
@@ -2819,10 +2819,10 @@ public:
   void fromMap(map<string, boost::any> m) override {
     if (m.find("EventBusName") != m.end() && !m["EventBusName"].empty()) {
       eventBusName =
-          make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
+          std::make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
     }
     if (m.find("EventId") != m.end() && !m["EventId"].empty()) {
-      eventId = make_shared<string>(boost::any_cast<string>(m["EventId"]));
+      eventId = std::make_shared<string>(boost::any_cast<string>(m["EventId"]));
     }
   }
 
@@ -2889,21 +2889,21 @@ public:
   void fromMap(map<string, boost::any> m) override {
     if (m.find("ResourceOwnerId") != m.end() && !m["ResourceOwnerId"].empty()) {
       resourceOwnerId =
-          make_shared<string>(boost::any_cast<string>(m["ResourceOwnerId"]));
+          std::make_shared<string>(boost::any_cast<string>(m["ResourceOwnerId"]));
     }
     if (m.find("Action") != m.end() && !m["Action"].empty()) {
-      action = make_shared<string>(boost::any_cast<string>(m["Action"]));
+      action = std::make_shared<string>(boost::any_cast<string>(m["Action"]));
     }
     if (m.find("EventId") != m.end() && !m["EventId"].empty()) {
-      eventId = make_shared<string>(boost::any_cast<string>(m["EventId"]));
+      eventId = std::make_shared<string>(boost::any_cast<string>(m["EventId"]));
     }
     if (m.find("EventBusName") != m.end() && !m["EventBusName"].empty()) {
       eventBusName =
-          make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
+          std::make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
     }
     if (m.find("ActionTime") != m.end() && !m["ActionTime"].empty()) {
       actionTime =
-          make_shared<string>(boost::any_cast<string>(m["ActionTime"]));
+          std::make_shared<string>(boost::any_cast<string>(m["ActionTime"]));
     }
   }
 
@@ -2951,7 +2951,7 @@ public:
             expect1.push_back(model2);
           }
         }
-        eventTraceList = make_shared<vector<EventTrace>>(expect1);
+        eventTraceList = std::make_shared<vector<EventTrace>>(expect1);
       }
     }
   }
@@ -3000,14 +3000,14 @@ public:
   void fromMap(map<string, boost::any> m) override {
     if (m.find("EventBusName") != m.end() && !m["EventBusName"].empty()) {
       eventBusName =
-          make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
+          std::make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
     }
     if (m.find("EventSource") != m.end() && !m["EventSource"].empty()) {
       eventSource =
-          make_shared<string>(boost::any_cast<string>(m["EventSource"]));
+          std::make_shared<string>(boost::any_cast<string>(m["EventSource"]));
     }
     if (m.find("EventId") != m.end() && !m["EventId"].empty()) {
-      eventId = make_shared<string>(boost::any_cast<string>(m["EventId"]));
+      eventId = std::make_shared<string>(boost::any_cast<string>(m["EventId"]));
     }
   }
 
@@ -3067,18 +3067,18 @@ public:
     if (m.find("eventReceivedTime") != m.end() &&
         !m["eventReceivedTime"].empty()) {
       eventReceivedTime =
-          make_shared<string>(boost::any_cast<string>(m["eventReceivedTime"]));
+          std::make_shared<string>(boost::any_cast<string>(m["eventReceivedTime"]));
     }
     if (m.find("EventSource") != m.end() && !m["EventSource"].empty()) {
       eventSource =
-          make_shared<string>(boost::any_cast<string>(m["EventSource"]));
+          std::make_shared<string>(boost::any_cast<string>(m["EventSource"]));
     }
     if (m.find("EventId") != m.end() && !m["EventId"].empty()) {
-      eventId = make_shared<string>(boost::any_cast<string>(m["EventId"]));
+      eventId = std::make_shared<string>(boost::any_cast<string>(m["EventId"]));
     }
     if (m.find("EventBusName") != m.end() && !m["EventBusName"].empty()) {
       eventBusName =
-          make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
+          std::make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
     }
   }
 
@@ -3143,14 +3143,14 @@ public:
             expect1.push_back(model2);
           }
         }
-        tracedEvents = make_shared<vector<EventTrace>>(expect1);
+        tracedEvents = std::make_shared<vector<EventTrace>>(expect1);
       }
     }
     if (m.find("NextToken") != m.end() && !m["NextToken"].empty()) {
-      nextToken = make_shared<string>(boost::any_cast<string>(m["NextToken"]));
+      nextToken = std::make_shared<string>(boost::any_cast<string>(m["NextToken"]));
     }
     if (m.find("Total") != m.end() && !m["Total"].empty()) {
-      total = make_shared<int>(boost::any_cast<int>(m["Total"]));
+      total = std::make_shared<int>(boost::any_cast<int>(m["Total"]));
     }
   }
 
@@ -3214,23 +3214,23 @@ public:
   void fromMap(map<string, boost::any> m) override {
     if (m.find("EventBusName") != m.end() && !m["EventBusName"].empty()) {
       eventBusName =
-          make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
+          std::make_shared<string>(boost::any_cast<string>(m["EventBusName"]));
     }
     if (m.find("EventSource") != m.end() && !m["EventSource"].empty()) {
       eventSource =
-          make_shared<string>(boost::any_cast<string>(m["EventSource"]));
+          std::make_shared<string>(boost::any_cast<string>(m["EventSource"]));
     }
     if (m.find("StartTime") != m.end() && !m["StartTime"].empty()) {
-      startTime = make_shared<long>(boost::any_cast<long>(m["StartTime"]));
+      startTime = std::make_shared<long>(boost::any_cast<long>(m["StartTime"]));
     }
     if (m.find("EndTime") != m.end() && !m["EndTime"].empty()) {
-      endTime = make_shared<long>(boost::any_cast<long>(m["EndTime"]));
+      endTime = std::make_shared<long>(boost::any_cast<long>(m["EndTime"]));
     }
     if (m.find("Limit") != m.end() && !m["Limit"].empty()) {
-      limit = make_shared<int>(boost::any_cast<int>(m["Limit"]));
+      limit = std::make_shared<int>(boost::any_cast<int>(m["Limit"]));
     }
     if (m.find("NextToken") != m.end() && !m["NextToken"].empty()) {
-      nextToken = make_shared<string>(boost::any_cast<string>(m["NextToken"]));
+      nextToken = std::make_shared<string>(boost::any_cast<string>(m["NextToken"]));
     }
   }
 
@@ -3295,14 +3295,14 @@ public:
             expect1.push_back(model2);
           }
         }
-        tracedEvents = make_shared<vector<EventTrace>>(expect1);
+        tracedEvents = std::make_shared<vector<EventTrace>>(expect1);
       }
     }
     if (m.find("NextToken") != m.end() && !m["NextToken"].empty()) {
-      nextToken = make_shared<string>(boost::any_cast<string>(m["NextToken"]));
+      nextToken = std::make_shared<string>(boost::any_cast<string>(m["NextToken"]));
     }
     if (m.find("Total") != m.end() && !m["Total"].empty()) {
-      total = make_shared<int>(boost::any_cast<int>(m["Total"]));
+      total = std::make_shared<int>(boost::any_cast<int>(m["Total"]));
     }
   }
 
