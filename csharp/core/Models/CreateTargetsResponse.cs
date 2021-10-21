@@ -20,13 +20,9 @@ namespace AlibabaCloud.SDK.EventBridge.Models
         [Validation(Required=true)]
         public string ResourceOwnerAccountId { get; set; }
 
-        [NameInMap("ErrorEntriesCount")]
+        [NameInMap("EventBusARN")]
         [Validation(Required=true)]
-        public int? ErrorEntriesCount { get; set; }
-
-        [NameInMap("ErrorEntries")]
-        [Validation(Required=true)]
-        public List<TargetResultEntry> ErrorEntries { get; set; }
+        public string EventBusARN { get; set; }
 
     }
 

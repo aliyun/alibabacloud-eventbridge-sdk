@@ -8,9 +8,12 @@ using Tea;
 
 namespace AlibabaCloud.SDK.EventBridge.Models
 {
+    /**
+     * The request of query the event by id
+     */
     public class QueryEventByEventIdRequest : TeaModel {
         [NameInMap("EventBusName")]
-        [Validation(Required=true)]
+        [Validation(Required=false)]
         public string EventBusName { get; set; }
 
         [NameInMap("EventSource")]
@@ -18,7 +21,7 @@ namespace AlibabaCloud.SDK.EventBridge.Models
         public string EventSource { get; set; }
 
         [NameInMap("EventId")]
-        [Validation(Required=true)]
+        [Validation(Required=false)]
         public string EventId { get; set; }
 
     }

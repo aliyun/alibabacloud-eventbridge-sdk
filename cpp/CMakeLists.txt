@@ -1,7 +1,7 @@
 
 cmake_minimum_required(VERSION 3.11 FATAL_ERROR)
 
-project(alibabacloud_event_bridge VERSION "0.1.0")
+project(alibabacloud_event_bridge VERSION "1.3.0")
 
 # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< General set up >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> #
 set(CMAKE_CXX_STANDARD 11)

@@ -14,9 +14,6 @@ public class CreateEventBusRequest extends TeaModel {
     @NameInMap("Description")
     public String description;
 
-    @NameInMap("Tags")
-    public java.util.Map<String, String> tags;
-
     public static CreateEventBusRequest build(java.util.Map<String, ?> map) {
         CreateEventBusRequest self = new CreateEventBusRequest();
         return TeaModel.build(map, self);
@@ -36,14 +33,6 @@ public class CreateEventBusRequest extends TeaModel {
     }
     public String getDescription() {
         return this.description;
-    }
-
-    public CreateEventBusRequest setTags(java.util.Map<String, String> tags) {
-        this.tags = tags;
-        return this;
-    }
-    public java.util.Map<String, String> getTags() {
-        return this.tags;
     }
 
 }

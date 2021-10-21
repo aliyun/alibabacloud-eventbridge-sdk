@@ -69,7 +69,6 @@ init(config: Config){
       message = '\'accessKeyId\' and \'accessKeySecret\' or \'credential\' can not be unset'
     };
   }
-  
   if (Util.empty(config.endpoint)) {
     throw {
       code = 'ParameterMissing',
@@ -114,7 +113,7 @@ model CloudEvent {
   datacontenttype?: string(name='datacontenttype'),
   dataschema?: string(name='dataschema'),
   subject?: string(name='subject'),
-  time?: string(name='time', maxLength=64),
+  time?: string(name='time', maxLength=64, pattern='[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{3}[\\\\s\\\\S]*'),
   extensions: map[string]any(name='extensions'),
   data?: bytes(name='data'),
 }
@@ -152,7 +151,43 @@ async function putEventsWithOptions(eventList: [ CloudEvent ], runtime: Util.Run
     Util.validateModel(cloudEvent);
   }
   var body = EventBridgeUtil.serialize(eventList);
-  return doRequest('putEvents', 'HTTP', 'POST', `/openapi/putEvents`, null, body, runtime);
+  return doRequest('putEvents', 'HTTP', 'POST', `/openapi/putEvents`, null, body, null, runtime);
+}
+
+/**
+ * Publish event to the aliyun specified account's event bus
+ */
+async function putEventsToAccount(accoutid: string, eventList: [ CloudEvent ]): PutEventsResponse {
+  var runtime = new Util.RuntimeOptions{};
+  return putEventsToAccountWithOptions(accoutid, eventList, runtime);
+}
+
+/**
+ * Publish event to the aliyun specified account's event bus
+ */
+async function putEventsToAccountWithOptions(accoutid: string, eventList: [ CloudEvent ], runtime: Util.RuntimeOptions): PutEventsResponse {
+  for (var cloudEvent : eventList) {
+    if (Util.isUnset(cloudEvent.specversion)) {
+      cloudEvent.specversion = '1.0';
+    }
+
+    if (Util.isUnset(cloudEvent.datacontenttype)) {
+      cloudEvent.datacontenttype = 'application/json; charset=utf-8';
+    }
+    Util.validateModel(cloudEvent);
+  }
+  if (Util.empty(accoutid)) {
+    throw {
+      code = 'ParameterMissing',
+      message = 'accoutid should be setted',
+    };
+  }
+  
+  var header : map[string]string = {
+    x-eventbridge-accountid = accoutid,
+  };
+  var body = EventBridgeUtil.serialize(eventList);
+  return doRequest('putEventsToAccount', 'HTTP', 'POST', `/openapi/putEventsToAccount`, null, body, header,runtime);
 }
 
 /**
@@ -161,7 +196,6 @@ async function putEventsWithOptions(eventList: [ CloudEvent ], runtime: Util.Run
 model CreateEventBusRequest = {
   eventBusName: string(name='EventBusName', maxLength=127, minLength=1),
   description?: string(name='Description'),
-  tags?: map[string]string(name='Tags'),
 }
 
 /**
@@ -186,7 +220,117 @@ async function createEventBus(request: CreateEventBusRequest): CreateEventBusRes
  */
 async function createEventBusWithOptions(request: CreateEventBusRequest, runtime: Util.RuntimeOptions): CreateEventBusResponse {
   Util.validateModel(request);
-  return doRequest('createEventBus', 'HTTP', 'POST', `/openapi/createEventBus`, null, request, runtime);
+  return doRequest('createEventBus', 'HTTP', 'POST', `/openapi/createEventBus`, null, request, null, runtime);
+}
+
+/**
+ * The event source entry
+ */
+model EBAliyunOfficialEventSourceEntry = {
+  name: string(name='Name'),
+  description: string(name='Description'),
+  arn: string(name='ARN'),
+  status: string(name='Status'),
+  ctime: long(name='Ctime'),
+  eventBusName: string(name='EventBusName'),
+  eventTypes: [ EventTypeEntry ](name='EventTypes'),
+}
+
+/**
+ * The event source entry
+ */
+model EventTypeEntry = {
+  name: string(name='Name'),
+  eventSourceName: string(name='EventSourceName'),
+  shortName: string(name='ShortName'),
+  groupName: string(name='GroupName'),
+}
+
+/**
+ * The request of listAliyunOfficialEventSources
+ */
+model ListAliyunOfficialRequest = {
+  nextToken?: string(name='NextToken'),
+  limit?: integer(name='Limit'),
+}
+
+/**
+ * The response of listAliyunOfficialEventSources
+ */
+model ListAliyunOfficialResponse = {
+  requestId: string(name='RequestId'),
+  resourceOwnerAccountId: string(name='ResourceOwnerAccountId'),
+  eventSourceList: [ EBAliyunOfficialEventSourceEntry ](name='EventSourceList'),
+  nextToken: string(name='NextToken'),
+  total: integer(name='Total'),
+}
+
+/**
+ * List the aliyun official event source within your account
+ */
+async function listAliyunOfficialEventSources(request: ListAliyunOfficialRequest): ListAliyunOfficialResponse {
+  var runtime = new Util.RuntimeOptions{};
+  return listAliyunOfficialEventSourcesWithOptions(request, runtime);
+}
+
+/**
+ * List the aliyun official event source within your account
+ */
+async function listAliyunOfficialEventSourcesWithOptions(request: ListAliyunOfficialRequest, runtime: Util.RuntimeOptions): ListAliyunOfficialResponse {
+  Util.validateModel(request);
+  return doRequest('listAliyunOfficialEventSources', 'HTTP', 'POST', `/openapi/v2/listAliyunOfficialEventSources`, null, request, null, runtime);
+}
+
+/**
+ * The event source entry
+ */
+model EBUserDefinedEventSourceEntry = {
+  name?: string(name='Name'),
+  description?: string(name='Description'),
+  arn?: string(name='ARN'),
+  status?: string(name='Status'),
+  ctime?: long(name='Ctime'),
+  eventBusName?: string(name='EventBusName'),
+  sourceRabbitMQParameters?: SourceRabbitMQParameters(name='SourceRabbitMQParameters'),
+  sourceMNSParameters?: SourceMNSParameters(name='SourceMNSParameters'),
+  sourceRocketMQParameters: SourceRocketMQParameters(name='SourceRocketMQParameters'),
+  sourceKafkaParameters: SourceKafkaParameters(name='SourceKafkaParameters'),
+}
+
+/**
+ * The request of listUserDefinedEventSources
+ */
+model ListUserDefinedRequest = {
+  eventBusName?: string(name='EventBusName'),
+  nextToken?: string(name='NextToken'),
+  limit?: integer(name='Limit'),
+}
+
+/**
+ * The response of listUserDefinedEventSources
+ */
+model ListUserDefinedResponse = {
+  requestId: string(name='RequestId'),
+  resourceOwnerAccountId: string(name='ResourceOwnerAccountId'),
+  eventSources?: [ EBUserDefinedEventSourceEntry ](name='EventSources'),
+  nextToken?: string(name='NextToken'),
+  total?: integer(name='Total'),
+}
+
+/**
+ * List the user defined event source within your account
+ */
+async function listUserDefinedEventSources(request: ListUserDefinedRequest): ListUserDefinedResponse {
+  var runtime = new Util.RuntimeOptions{};
+  return listUserDefinedEventSourcesWithOptions(request, runtime);
+}
+
+/**
+ * List the user defined event source within your account
+ */
+async function listUserDefinedEventSourcesWithOptions(request: ListUserDefinedRequest, runtime: Util.RuntimeOptions): ListUserDefinedResponse {
+  Util.validateModel(request);
+  return doRequest('listUserDefinedEventSources', 'HTTP', 'POST', `/openapi/v2/listUserDefinedEventSources`, null, request, null, runtime);
 }
 
 /**
@@ -217,7 +361,7 @@ async function deleteEventBus(request: DeleteEventBusRequest): DeleteEventBusRes
  */
 async function deleteEventBusWithOptions(request: DeleteEventBusRequest, runtime: Util.RuntimeOptions): DeleteEventBusResponse {
   Util.validateModel(request);
-  return doRequest('deleteEventBus', 'HTTP', 'POST', `/openapi/deleteEventBus`, null, request, runtime);
+  return doRequest('deleteEventBus', 'HTTP', 'POST', `/openapi/deleteEventBus`, null, request, null, runtime);
 }
 
 /**
@@ -237,7 +381,6 @@ model GetEventBusResponse = {
   eventBusName: string(name='EventBusName'),
   description: string(name='Description'),
   createTimestamp: int64(name='CreateTimestamp'),
-  tags?: map[string]string(name='Tags'),
 }
 
 /**
@@ -253,7 +396,7 @@ async function getEventBus(request: GetEventBusRequest): GetEventBusResponse {
  */
 async function getEventBusWithOptions(request: GetEventBusRequest, runtime: Util.RuntimeOptions): GetEventBusResponse {
   Util.validateModel(request);
-  return doRequest('getEventBus', 'HTTP', 'POST', `/openapi/getEventBus`, null, request, runtime);
+  return doRequest('getEventBus', 'HTTP', 'POST', `/openapi/getEventBus`, null, request, null, runtime);
 }
 
 /**
@@ -273,7 +416,6 @@ model EventBusEntry = {
   eventBusARN: string(name='EventBusARN'),
   description: string(name='Description'),
   createTimestamp: int64(name='CreateTimestamp'),
-  tags?: map[string]string(name='Tags'),
 }
 
 /**
@@ -300,7 +442,7 @@ async function listEventBuses(request: ListEventBusesRequest): ListEventBusesRes
  */
 async function listEventBusesWithOptions(request: ListEventBusesRequest, runtime: Util.RuntimeOptions): ListEventBusesResponse {
   Util.validateModel(request);
-  return doRequest('listEventBuses', 'HTTP', 'POST', `/openapi/listEventBuses`, null, request, runtime);
+  return doRequest('listEventBuses', 'HTTP', 'POST', `/openapi/listEventBuses`, null, request, null, runtime);
 }
 
 /**
@@ -313,7 +455,297 @@ model CreateRuleRequest = {
   status?: string(name='Status'),
   filterPattern?: string(name='FilterPattern'),
   targets: [ TargetEntry ](name='Targets'),
-  tags?: map[string]string(name='Tags'),
+}
+
+/**
+ * The traced event
+ */
+model TracedEvent = {
+  eventBusName: string(name='EventBusName'),
+  eventId: string(name='EventId'),
+  eventSource: string(name='EventSource'),
+  eventReceivedTime: long(name='EventReceivedTime'),
+}
+
+/**
+ * The request of query the event by id
+ */
+model QueryEventByEventIdRequest = {
+  eventBusName?: string(name='EventBusName'),
+  eventSource?: string(name='EventSource'),
+  eventId?: string(name='EventId'),
+}
+
+/**
+ * The response of query event by id
+ */
+model QueryEventByEventIdResponse = {
+  requestId: string(name='RequestId'),
+  resourceOwnerAccountId: string(name='ResourceOwnerAccountId'),
+  tracedEvents?: [ TracedEvent ](name='TracedEvents'),
+  nextToken?: string(name='NextToken'),
+  total?: integer(name='Total'),
+}
+
+/**
+ * Query the event traces by the event Id
+ */
+async function queryEventByEventId(request: QueryEventByEventIdRequest): QueryEventByEventIdResponse {
+  var runtime = new Util.RuntimeOptions{};
+  return queryEventByEventIdWithOptions(request, runtime);
+}
+
+/**
+ * Query the event traces by the event Id
+ */
+async function queryEventByEventIdWithOptions(request: QueryEventByEventIdRequest, runtime: Util.RuntimeOptions): QueryEventByEventIdResponse {
+  Util.validateModel(request);
+  return doRequest('queryEventByEventId', 'HTTP', 'POST', `/openapi/queryEventByEventId`, null, request, null, runtime);
+}
+
+/**
+ * The request of query the event traces by the event period
+ */
+model QueryEventsByPeriodRequest = {
+  eventBusName: string(name='EventBusName'),
+  eventSource?: string(name='EventSource'),
+  startTime: long(name='StartTime'),
+  endTime: long(name='EndTime'),
+  limit: integer(name='Limit'),
+  nextToken: integer(name='NextToken'),
+}
+
+/**
+ * The response of query the event traces by the event period
+ */
+model QueryEventsByPeriodResponse = {
+  requestId: string(name='RequestId'),
+  resourceOwnerAccountId: string(name='ResourceOwnerAccountId'),
+  tracedEvents?: [ TracedEvent ](name='TracedEvents'),
+  nextToken?: string(name='NextToken'),
+  total?: integer(name='Total'),
+}
+
+/**
+ *Query the event traces by the event period
+ */
+async function queryEventsByPeriod(request: QueryEventsByPeriodRequest): QueryEventsByPeriodResponse {
+  var runtime = new Util.RuntimeOptions{};
+  return queryEventsByPeriodWithOptions(request, runtime);
+}
+
+/**
+ * Query the event traces by the event period
+ */
+async function queryEventsByPeriodWithOptions(request: QueryEventsByPeriodRequest, runtime: Util.RuntimeOptions): QueryEventsByPeriodResponse {
+  Util.validateModel(request);
+  return doRequest('queryEventsByPeriod', 'HTTP', 'POST', `/openapi/queryEventsByPeriod`, null, request, null, runtime);
+}
+
+/**
+ * The detail of EventTrace
+ */
+model EventTrace = {
+  resourceOwnerId: string(name='ResourceOwnerId'),
+  action: string(name='Action'),
+  eventId: string(name='EventId'),
+  eventBusName: string(name='EventBusName'),
+  actionTime: string(name='ActionTime'),
+}
+
+/**
+ * The request of queryEventTraces
+ */
+model QueryEventTracesRequest = {
+  eventBusName?: string(name='EventBusName'),
+  eventId?: string(name='EventId'),
+}
+
+/**
+ * The response of queryEventTraces
+ */
+model QueryEventTracesResponse = {
+  requestId: string(name='RequestId'),
+  resourceOwnerAccountId: string(name='ResourceOwnerAccountId'),
+  eventTraceList?: [ EventTrace ](name='EventTraceList'),
+}
+
+/**
+ * Query the event traces by the event Id
+ */
+async function queryEventTraces(request: QueryEventTracesRequest): QueryEventTracesResponse {
+  var runtime = new Util.RuntimeOptions{};
+  return queryEventTracesWithOptions(request, runtime);
+}
+
+/**
+ * Query the event traces by the event Id
+ */
+async function queryEventTracesWithOptions(request: QueryEventTracesRequest, runtime: Util.RuntimeOptions): QueryEventTracesResponse {
+  Util.validateModel(request);
+  return doRequest('queryEventTraces', 'HTTP', 'POST', `/openapi/queryEventTraces`, null, request, null, runtime);
+}
+
+/**
+ * The request of delete event streaming
+ */
+model DeleteEventStreamingRequest = {
+  eventStreamingName: string(name='EventStreamingName'),
+}
+
+/**
+ * The response of delete event streaming
+ */
+model DeleteEventStreamingResponse = {
+  requestId: string(name='RequestId'),
+  resourceOwnerAccountId: string(name='ResourceOwnerAccountId'),
+}
+
+/**
+ * delete event streaming
+ */
+async function deleteEventStreaming(request: DeleteEventStreamingRequest): DeleteEventStreamingResponse {
+  var runtime = new Util.RuntimeOptions{};
+  return deleteEventStreamingWithOptions(request, runtime);
+}
+
+/**
+ * delete event streaming
+ */
+async function deleteEventStreamingWithOptions(request: DeleteEventStreamingRequest, runtime: Util.RuntimeOptions): DeleteEventStreamingResponse {
+  Util.validateModel(request);
+  return doRequest('deleteEventStreaming', 'HTTP', 'POST', `/openapi/v2/deleteEventStreaming`, null, request, null, runtime);
+}
+
+/**
+ * The request of create event streaming
+ */
+model GetEventStreamingRequest = {
+  eventStreamingName: string(name='EventStreamingName'),
+}
+
+/**
+ * The response of create event streaming
+ */
+model GetEventStreamingResponse = {
+  requestId: string(name='RequestId'),
+  resourceOwnerAccountId: string(name='ResourceOwnerAccountId'),
+  eventStreamingName: string(name='EventStreamingName'),
+  description: string(name='Description'),
+  source: Source(name='Source'),
+  filterPattern: string(name='FilterPattern'),
+  sink: Sink(name='Sink'),
+  runOptions: RunOptions(name='RunOptions'),
+  tag: string(name='Tag'),
+  status: string(name='Status'),
+}
+
+/**
+ * create event streaming
+ */
+async function getEventStreaming(request: GetEventStreamingRequest): GetEventStreamingResponse {
+  var runtime = new Util.RuntimeOptions{};
+  return getEventStreamingWithOptions(request, runtime);
+}
+
+/**
+ * create event streaming
+ */
+async function getEventStreamingWithOptions(request: GetEventStreamingRequest, runtime: Util.RuntimeOptions): GetEventStreamingResponse {
+  Util.validateModel(request);
+  return doRequest('getEventStreaming', 'HTTP', 'POST', `/openapi/v2/getEventStreaming`, null, request, null, runtime);
+}
+
+/**
+ * The metrics of event streaming
+ */
+model EventStreamingMetric = {
+  name?: string(name='Name'),
+  tps?: double(name='TPS'),
+  delayTime?: long(name='DelayTime'),
+  diffOffset?: long(name='DiffOffset'),
+  lastDateSyncTime?: long(name='LastDateSyncTime'),
+  lastHeartBeat?: long(name='LastHeartBeat'),
+  status?: string(name='Status'),
+}
+
+/**
+ * The request of listEventStreamingMetrics
+ */
+model ListEventStreamingMetricsRequest = {
+  eventStreamingNames?: [ string ](name='EventStreamingNames'),
+}
+
+/**
+ * The response of listEventStreamingMetrics
+ */
+model ListEventStreamingMetricsResponse = {
+  requestId: string(name='RequestId'),
+  resourceOwnerAccountId: string(name='ResourceOwnerAccountId'),
+  eventStreamingMetrics: [ EventStreamingMetric ](name='EventStreamingMetrics'),
+}
+
+/**
+ * List the metrics of event streaming
+ */
+async function listEventStreamingMetrics(request: ListEventStreamingMetricsRequest): ListEventStreamingMetricsResponse {
+  var runtime = new Util.RuntimeOptions{};
+  return listEventStreamingMetricsWithOptions(request, runtime);
+}
+
+/**
+ * List the metrics of event streaming
+ */
+async function listEventStreamingMetricsWithOptions(request: ListEventStreamingMetricsRequest, runtime: Util.RuntimeOptions): ListEventStreamingMetricsResponse {
+  Util.validateModel(request);
+  return doRequest('listEventStreamingMetrics', 'HTTP', 'POST', `/openapi/v2/listEventStreamingMetrics`, null, request, null, runtime);
+}
+
+/**
+ * The eventsource of event streaming
+ */
+model EBEventSourceEntry = {
+  name: string(name='Name'),
+  New: boolean(name='IsNew'),
+  description: string(name='Description'),
+  externalSourceType: string(name='ExternalSourceType'),
+  externalSourceConfig: map[string] any(name='ExternalSourceConfig'),
+}
+
+/**
+ * The request of Save and start event streaming procss
+ */
+model SaveAndStartEventStreamingRequest = {
+  name: string(name='Name'),
+  description?: string(name='Description'),
+  EBEventSourceEntry?: string(name='EBEventSourceEntry'),
+  filterPattern?: string(name='FilterPattern'),
+  targets: [ TargetEntry ](name='Targets'),
+}
+
+/**
+ * The response of Save and start event streaming procss
+ */
+model SaveAndStartEventStreamingResponse = {
+  requestId: string(name='RequestId'),
+  resourceOwnerAccountId: string(name='ResourceOwnerAccountId'),
+  eventStreamingARN: string(name='EventStreamingARN'),
+}
+
+/**
+ * Save and start event streaming procss
+ */
+async function saveAndStartEventStreaming(request: SaveAndStartEventStreamingRequest): SaveAndStartEventStreamingResponse {
+  var runtime = new Util.RuntimeOptions{};
+  return saveAndStartEventStreamingWithOptions(request, runtime);
+}
+
+/**
+ * Save and start event streaming procss
+ */
+async function saveAndStartEventStreamingWithOptions(request: SaveAndStartEventStreamingRequest, runtime: Util.RuntimeOptions): SaveAndStartEventStreamingResponse {
+  Util.validateModel(request);
+  return doRequest('saveAndStartEventStreaming', 'HTTP', 'POST', `/openapi/saveAndStartEventStreaming`, null, request, null, runtime);
 }
 
 /**
@@ -359,7 +791,7 @@ async function createRule(request: CreateRuleRequest): CreateRuleResponse {
  */
 async function createRuleWithOptions(request: CreateRuleRequest, runtime: Util.RuntimeOptions): CreateRuleResponse {
   Util.validateModel(request);
-  return doRequest('createRule', 'HTTP', 'POST', `/openapi/createRule`, null, request, runtime);
+  return doRequest('createRule', 'HTTP', 'POST', `/openapi/createRule`, null, request, null, runtime);
 }
 
 /**
@@ -391,7 +823,7 @@ async function deleteRule(request: DeleteRuleRequest): DeleteRuleResponse {
  */
 async function deleteRuleWithOptions(request: DeleteRuleRequest, runtime: Util.RuntimeOptions): DeleteRuleResponse {
   Util.validateModel(request);
-  return doRequest('deleteRule', 'HTTP', 'POST', `/openapi/deleteRule`, null, request, runtime);
+  return doRequest('deleteRule', 'HTTP', 'POST', `/openapi/deleteRule`, null, request, null, runtime);
 }
 
 /**
@@ -423,7 +855,7 @@ async function disableRule(request: DisableRuleRequest): DisableRuleResponse {
  */
 async function disableRuleWithOptions(request: DisableRuleRequest, runtime: Util.RuntimeOptions): DisableRuleResponse {
   Util.validateModel(request);
-  return doRequest('disableRule', 'HTTP', 'POST', `/openapi/disableRule`, null, request, runtime);
+  return doRequest('disableRule', 'HTTP', 'POST', `/openapi/disableRule`, null, request, null, runtime);
 }
 
 /**
@@ -455,7 +887,478 @@ async function enableRule(request: EnableRuleRequest): EnableRuleResponse {
  */
 async function enableRuleWithOptions(request: EnableRuleRequest, runtime: Util.RuntimeOptions): EnableRuleResponse {
   Util.validateModel(request);
-  return doRequest('enableRule', 'HTTP', 'POST', `/openapi/enableRule`, null, request, runtime);
+  return doRequest('enableRule', 'HTTP', 'POST', `/openapi/enableRule`, null, request, null, runtime);
+}
+
+/**
+ * The request of UpdateEventStreaming
+ */
+model UpdateEventStreamingRequest = {
+  eventStreamingName: string(name='EventStreamingName'),
+  description?: string(name='Description'),
+  Source?: Source(name='Source'),
+  filterPattern?: string(name='FilterPattern'),
+  Sink?: Sink(name='Sink'),
+  runOptions?: RunOptions(name='RunOptions'),
+  tag?: string(name='Tag'),
+}
+
+/**
+ * The response of UpdateEventStreaming
+ */
+model UpdateEventStreamingResponse = {
+  requestId: string(name='RequestId'),
+  resourceOwnerAccountId: string(name='ResourceOwnerAccountId'),
+}
+
+/**
+ * Update event streaming procss
+ */
+async function updateEventStreaming(request: UpdateEventStreamingRequest): UpdateEventStreamingResponse {
+  var runtime = new Util.RuntimeOptions{};
+  return updateEventStreamingWithOptions(request, runtime);
+}
+
+/**
+ * create event streaming
+ */
+async function updateEventStreamingWithOptions(request: UpdateEventStreamingRequest, runtime: Util.RuntimeOptions): UpdateEventStreamingResponse {
+  Util.validateModel(request);
+  return doRequest('updateEventStreaming', 'HTTP', 'POST', `/openapi/v2/updateEventStreaming`, null, request, null, runtime);
+}
+
+/**
+ * The request of StartEventStreaming
+ */
+model StartEventStreamingRequest = {
+  eventStreamingName: string(name='EventStreamingName'),
+ 
+}
+
+/**
+ * The response of StartEventStreaming
+ */
+model StartEventStreamingResponse = {
+  requestId: string(name='RequestId'),
+  resourceOwnerAccountId: string(name='ResourceOwnerAccountId'),
+}
+
+/**
+ * create event streaming
+ */
+async function startEventStreaming(request: StartEventStreamingRequest): StartEventStreamingResponse {
+  var runtime = new Util.RuntimeOptions{};
+  return startEventStreamingsWithOptions(request, runtime);
+}
+
+/**
+ * create event streaming
+ */
+async function startEventStreamingsWithOptions(request: StartEventStreamingRequest, runtime: Util.RuntimeOptions): StartEventStreamingResponse {
+  Util.validateModel(request);
+  return doRequest('startEventStreaming', 'HTTP', 'POST', `/openapi/v2/startEventStreaming`, null, request, null, runtime);
+}
+
+/**
+ * The request of PauseEventStreaming
+ */
+model PauseEventStreamingRequest = {
+  eventStreamingName: string(name='EventStreamingName'),
+ 
+}
+
+/**
+ * The response of PauseEventStreaming
+ */
+model PauseEventStreamingResponse = {
+  requestId: string(name='RequestId'),
+  resourceOwnerAccountId: string(name='ResourceOwnerAccountId'),
+}
+
+/**
+ * delete event streaming
+ */
+async function pauseEventStreaming(request: PauseEventStreamingRequest): PauseEventStreamingResponse {
+  var runtime = new Util.RuntimeOptions{};
+  return pauseEventStreamingWithOptions(request, runtime);
+}
+
+/**
+ * delete event streaming
+ */
+async function pauseEventStreamingWithOptions(request: PauseEventStreamingRequest, runtime: Util.RuntimeOptions): PauseEventStreamingResponse {
+  Util.validateModel(request);
+  return doRequest('startEventStreaming', 'HTTP', 'POST', `/openapi/v2/pauseEventStreaming`, null, request, null, runtime);
+}
+
+/**
+ * The detail of DeadLetterQueue
+ */
+model DeadLetterQueue = {
+  arn?: string(name='Arn'),
+}
+
+/**
+ * The detail of EBEventStreamingEntry
+ */
+model EBEventStreamingEntry = {
+  eventStreamingName?: string(name='EventStreamingName'),
+  description?: string(name='Description'),
+  source?: Source(name='Source'),
+  filterPattern?: string(name='FilterPattern'),
+  sink?: Sink(name='Sink'),
+  runOptions?: RunOptions(name='RunOptions'),
+  tag?: string(name='Tag'),
+  status?: string(name='Status'),
+}
+
+/**
+ * The request of search EventStreaming
+ */
+model listEventStreamingsRequest = {
+  namePrefix?: string(name='NamePrefix'),
+  sourceType?: string(name='SourceType'),
+  sinkType?: string(name='SinkType'),
+  limit?: integer(name='Limit'),
+  nextToken?: string(name='NextToken'),
+  tag?: string(name='Tag'),
+}
+
+/**
+ * The response of search EventStreaming
+ */
+model listEventStreamingsResponse = {
+  requestId: string(name='RequestId'),
+  resourceOwnerAccountId: string(name='ResourceOwnerAccountId'),
+  eventStreamings?: [ EBEventStreamingEntry ](name='EventStreamings'),
+  nextToken?: string(name='NextToken'),
+  total?: integer(name='Total'),
+}
+
+/**
+ * create event streaming
+ */
+async function listEventStreamings(request: listEventStreamingsRequest): listEventStreamingsResponse {
+  var runtime = new Util.RuntimeOptions{};
+  return listEventStreamingsWithOptions(request, runtime);
+}
+
+/**
+ * create event streaming
+ */
+async function listEventStreamingsWithOptions(request: listEventStreamingsRequest, runtime: Util.RuntimeOptions): listEventStreamingsResponse {
+  Util.validateModel(request);
+  return doRequest('listEventStreamings', 'HTTP', 'POST', `/openapi/v2/listEventStreamings`, null, request, null, runtime);
+}
+
+/**
+ * The config of SinkOdpsParameters
+ */
+model SinkOdpsParameters = {
+  project?: TargetParameter(name='Project'),
+  table?: TargetParameter(name='Table'),
+  roleName?: TargetParameter(name='RoleName'),
+  format?: TargetParameter(name='Format'),
+  mode?: TargetParameter(name='Mode'),
+  partitionWindowType?: TargetParameter(name='PartitionWindowType'),
+  timeZone?: TargetParameter(name='TimeZone'),
+  useStreaming?: TargetParameter(name='UseStreaming'),
+  extendConfig?: map[string] any(name='ExtendConfig'),
+  }
+
+/**
+ * The config of SinkFcParameters
+ */
+model SinkFcParameters = {
+  serviceName?: TargetParameter(name='ServiceName'),
+  functionName?: TargetParameter(name='FunctionName'),
+  body?: TargetParameter(name='Body'),
+  qualifier?: TargetParameter(name='Qualifier'),
+  invocationType?: TargetParameter(name='InvocationType'),
+  batchSize?: TargetParameter(name='BatchSize'),
+  extendConfig?: map[string] any(name='ExtendConfig'),
+}
+
+/**
+ * The config of SinkRocketMQParameters
+ */
+model SinkRocketMQParameters = {
+  instanceId?: TargetParameter(name='InstanceId'),
+  topic?: TargetParameter(name='Topic'),
+  body?: TargetParameter(name='Body'),
+  properties?: TargetParameter(name='Properties'),
+  keys?: TargetParameter(name='Keys'),
+  tags?: TargetParameter(name='Tags'),
+}
+
+/**
+ * The config of SinkKafkaParameters
+ */
+model SinkKafkaParameters = {
+  instanceId?: TargetParameter(name='InstanceId'),
+  topic?: TargetParameter(name='Topic'),
+  acks?: TargetParameter(name='Acks'),
+  key?: TargetParameter(name='Key'),
+  value?: TargetParameter(name='Value'),
+}
+
+/**
+ * The config of SinkRabbitMQParameters
+ */
+model SinkRabbitMQParameters = {
+  instanceId?: TargetParameter(name='InstanceId'),
+  virtualHostName?: TargetParameter(name='VirtualHostName'),
+  targetType?: TargetParameter(name='TargetType'),
+  exchange?: TargetParameter(name='Exchange'),
+  routingKey?: TargetParameter(name='RoutingKey'),
+  queueName?: TargetParameter(name='QueueName'),
+  body?: TargetParameter(name='Body'),
+  messageId?: TargetParameter(name='MessageId'),
+  properties?: TargetParameter(name='Properties'),
+}
+
+/**
+ * The config of SinkMNSParameters
+ */
+model SinkMNSParameters = {
+  QueueName?: TargetParameter(name='QueueName'),
+  body?: TargetParameter(name='Body'),
+}
+
+/**
+ * The config of TargetParameter
+ */
+model TargetParameter = {
+  value?: string(name='Value'),
+  form?: string(name='Form'),
+  template?: string(name='Template'),
+}
+
+/**
+ * The config of Sink
+ */
+model Sink = {
+  sinkMNSParameters?: SinkMNSParameters(name='SinkMNSParameters'),
+  sinkRabbitMQParameters?: SinkRabbitMQParameters(name='SinkRabbitMQParameters'),
+  sinkKafkaParameters?: SinkKafkaParameters(name='SinkKafkaParameters'),
+  sinkRocketMQParameters?: SinkRocketMQParameters(name='SinkRocketMQParameters'),
+  sinkFcParameters?: SinkFcParameters(name='SinkFcParameters'),
+  sinkOdpsParameters?: SinkOdpsParameters(name='SinkOdpsParameters'),
+}
+
+
+/**
+ * The config of RunOptions
+ */
+model RunOptions = {
+  maximumTasks?: integer(name='MaximumTasks'),
+  retryStrategy?: RetryStrategy(name='RetryStrategy'),
+  errorsTolerance?: string(name='ErrorsTolerance'),
+  deadLetterQueue?: DeadLetterQueue(name='DeadLetterQueue'),
+}
+
+/**
+ * The config of RetryStrategy
+ */
+model RetryStrategy = {
+  pushRetryStrategy?: string(name='PushRetryStrategy'),
+  maximumEventAgeInSeconds?: integer(name='MaximumEventAgeInSeconds'),
+  maximumRetryAttempts?: integer(name='MaximumRetryAttempts'),
+}
+
+/**
+ * The config of Source
+ */
+model Source = {
+  sourceMNSParameters?: SourceMNSParameters(name='SourceMNSParameters'),
+  sourceRabbitMQParameters?: SourceRabbitMQParameters(name='SourceRabbitMQParameters'),
+  sourceRocketMQParameters?: SourceRocketMQParameters(name='SourceRocketMQParameters'),
+  sourceKafkaParameters?: SourceKafkaParameters(name='SourceKafkaParameters'),
+}
+
+/**
+ * The request of createEventStreaming
+ */
+model CreateEventStreamingRequest = {
+  eventStreamingName?: string(name='EventStreamingName'),
+  description?: string(name='Description'),
+  source?: Source(name='Source'),
+  filterPattern?: string(name='FilterPattern'),
+  sink?: Sink(name='Sink'),
+  runOptions?: RunOptions(name='RunOptions'),
+  tag?: string(name='Tag'),
+}
+
+/**
+ * The response of createEventStreaming
+ */
+model CreateEventStreamingResponse = {
+  requestId: string(name='RequestId'),
+  resourceOwnerAccountId: string(name='ResourceOwnerAccountId'),
+  eventStreamingARN?: string(name='EventStreamingARN'),
+}
+
+/**
+ * Create event streaming procss
+ */
+async function createEventStreaming(request: CreateEventStreamingRequest): CreateEventStreamingResponse {
+  var runtime = new Util.RuntimeOptions{};
+  return createEventStreamingWithOptions(request, runtime);
+}
+
+/**
+ * Create event streaming procss
+ */
+async function createEventStreamingWithOptions(request: CreateEventStreamingRequest, runtime: Util.RuntimeOptions): CreateEventStreamingResponse {
+  Util.validateModel(request);
+  return doRequest('createEventStreaming', 'HTTP', 'POST', `/openapi/v2/createEventStreaming`, null, request, null, runtime);
+}
+
+/**
+ * The detail of SourceRabbitMQParameters
+ */
+model SourceRabbitMQParameters = {
+  regionId?: string(name='RegionId'),
+  instanceId?: string(name='InstanceId'),
+  virtualHostName: string(name='VirtualHostName'),
+  queueName: string(name='QueueName'),
+}
+
+/**
+ * The detail of SourceMNSParameters
+ */
+model SourceMNSParameters = {
+  regionId?: string(name='RegionId'),
+  queueName?: string(name='QueueName'),
+  isBase64Decode: boolean(name='IsBase64Decode'),
+}
+
+/**
+ * The detail of SourceRocketMQParameters
+ */
+model SourceRocketMQParameters = {
+  regionId?: string(name='RegionId'),
+  instanceId?: string(name='InstanceId'),
+  topic?: string(name='Topic'),
+  tag?: string(name='Tag'),
+  timestamp?: number(name='Timestamp'),
+  offset?: string(name='Offset'),
+  groupID: string(name='GroupID'),
+}
+
+/**
+ * The detail of SourceKafkaParameters
+ */
+model SourceKafkaParameters = {
+  InstanceId?: string(name='InstanceId'),
+  topic?: string(name='Topic'),
+  consumerGroup: string(name='ConsumerGroup'),
+  offsetRest?: string(name='OffsetRest'),
+}
+
+/**
+ * The request of createEventSource
+ */
+model CreateEventSourceRequest = {
+  eventSourceName: string(name='EventSourceName', maxLength=127, minLength=1),
+  description?: string(name='Description'),
+  eventBusName: string(name='EventBusName'),
+  sourceRabbitMQParameters?: SourceRabbitMQParameters(name='SourceRabbitMQParameters'),
+  sourceMNSParameters?: SourceMNSParameters(name='SourceMNSParameters'),
+  SourceRocketMQParameters?: SourceRocketMQParameters(name='SourceRocketMQParameters'),
+  }
+
+/**
+ * The response of createEventSource
+ */
+model CreateEventSourceResponse = {
+  requestId: string(name='RequestId'),
+  resourceOwnerAccountId: string(name='ResourceOwnerAccountId'),
+  eventSourceARN?: string(name='EventSourceARN'),
+}
+
+/**
+ * Creates a new event source within your account
+ */
+async function createEventSource(request: CreateEventSourceRequest): CreateEventSourceResponse {
+  var runtime = new Util.RuntimeOptions{};
+  return createEventSourceWithOptions(request, runtime);
+}
+
+/**
+ * Creates a new event source within your account
+ */
+async function createEventSourceWithOptions(request: CreateEventSourceRequest, runtime: Util.RuntimeOptions): CreateEventSourceResponse {
+  Util.validateModel(request);
+  return doRequest('createEventSource', 'HTTP', 'POST', `/openapi/v2/createEventSource`, null, request, null, runtime);
+}
+
+/**
+ * The request of deleteEventSource
+ */
+model DeleteEventSourceRequest = {
+  eventBusName?: string(name='EventBusName'),
+  eventSourceName: string(name='EventSourceName'),
+}
+
+/**
+ * The response of deleteEventSource
+ */
+model DeleteEventSourceResponse = {
+  requestId: string(name='RequestId'),
+  resourceOwnerAccountId: string(name='ResourceOwnerAccountId'),
+}
+
+/**
+ * Delete the event source
+ */
+async function deleteEventSource(request: DeleteEventSourceRequest): DeleteEventSourceResponse {
+  var runtime = new Util.RuntimeOptions{};
+  return deleteEventSourceWithOptions(request, runtime);
+}
+
+/**
+ * Delete the event source
+ */
+async function deleteEventSourceWithOptions(request: DeleteEventSourceRequest, runtime: Util.RuntimeOptions): DeleteEventSourceResponse {
+  Util.validateModel(request);
+  return doRequest('deleteEventSource','HTTP', 'POST', `/openapi/v2/deleteEventSource`, null, request, null, runtime);
+}
+
+/**
+ * The request of update the event source
+ */
+model UpdateEventSourceRequest = {
+  eventSourceName: string(name='EventSourceName', maxLength=127, minLength=1),
+  description?: string(name='Description'),
+  eventBusName: string(name='EventBusName'),
+  sourceRabbitMQParameters?: SourceRabbitMQParameters(name='SourceRabbitMQParameters'),
+  sourceMNSParameters?: SourceMNSParameters(name='SourceMNSParameters'),
+  sourceRocketMQParameters?: SourceRocketMQParameters(name='SourceRocketMQParameters'),
+} 
+
+/**
+ * The response of update the event source
+ */
+model UpdateEventSourceResponse = {
+  requestId: string(name='RequestId'),
+  resourceOwnerAccountId: string(name='ResourceOwnerAccountId'),
+}
+
+/**
+ * Update the event source
+ */
+async function updateEventSource(request: UpdateEventSourceRequest): UpdateEventSourceResponse {
+  var runtime = new Util.RuntimeOptions{};
+  return updateEventSourceWithOptions(request, runtime);
+}
+
+/**
+ * Update the event source
+ */
+async function updateEventSourceWithOptions(request: UpdateEventSourceRequest, runtime: Util.RuntimeOptions): UpdateEventSourceResponse {
+  Util.validateModel(request);
+  return doRequest('updateEventSource','HTTP', 'POST', `/openapi/v2/updateEventSource`, null, request, null, runtime);
 }
 
 /**
@@ -481,7 +1384,6 @@ model GetRuleResponse = {
   targets: [ TargetEntry ](name='Targets'),
   ctime: int64(name='Ctime'),
   mtime: int64(name='Mtime'),
-  tags?: map[string]string(name='Tags'),
 }
 
 /**
@@ -497,7 +1399,7 @@ async function getRule(request: GetRuleRequest): GetRuleResponse {
  */
 async function getRuleWithOptions(request: GetRuleRequest, runtime: Util.RuntimeOptions): GetRuleResponse {
   Util.validateModel(request);
-  return doRequest('getRule', 'HTTP', 'POST', `/openapi/getRule`, null, request, runtime);
+  return doRequest('getRule', 'HTTP', 'POST', `/openapi/getRule`, null, request, null, runtime);
 }
 
 /**
@@ -534,7 +1436,6 @@ model EventRuleDTO = {
   targets: [ TargetEntry ](name='Targets'),
   ctime: int64(name='Ctime'),
   mtime: int64(name='Mtime'),
-  tags?: map[string]string(name='Tags'),
 }
 
 /**
@@ -550,7 +1451,7 @@ async function listRules(request: ListRulesRequest): ListRulesResponse {
  */
 async function listRulesWithOptions(request: ListRulesRequest, runtime: Util.RuntimeOptions): ListRulesResponse {
   Util.validateModel(request);
-  return doRequest('listRules', 'HTTP', 'POST', `/openapi/listRules`, null, request, runtime);
+  return doRequest('listRules', 'HTTP', 'POST', `/openapi/listRules`, null, request, null, runtime);
 }
 
 /**
@@ -562,7 +1463,6 @@ model UpdateRuleRequest = {
   description?: string(name='Description'),
   status?: string(name='Status'),
   filterPattern?: string(name='FilterPattern'),
-  tags?: map[string]string(name='Tags'),
 }
 
 /**
@@ -586,7 +1486,7 @@ async function updateRule(request: UpdateRuleRequest): UpdateRuleResponse {
  */
 async function updateRuleWithOptions(request: UpdateRuleRequest, runtime: Util.RuntimeOptions): UpdateRuleResponse {
   Util.validateModel(request);
-  return doRequest('updateRule','HTTP', 'POST', `/openapi/updateRule`, null, request, runtime);
+  return doRequest('updateRule','HTTP', 'POST', `/openapi/updateRule`, null, request, null, runtime);
 }
 
 /**
@@ -604,8 +1504,7 @@ model CreateTargetsRequest = {
 model CreateTargetsResponse = {
   requestId: string(name='RequestId'),
   resourceOwnerAccountId: string(name='ResourceOwnerAccountId'),
-  errorEntriesCount: integer(name='ErrorEntriesCount'),
-  errorEntries: [TargetResultEntry](name='ErrorEntries'),
+  eventBusARN: string(name='EventBusARN'),
 }
 
 /**
@@ -621,7 +1520,7 @@ async function createTargets(request: CreateTargetsRequest): CreateTargetsRespon
  */
 async function createTargetsWithOptions(request: CreateTargetsRequest, runtime: Util.RuntimeOptions): CreateTargetsResponse {
   Util.validateModel(request);
-  return doRequest('createTargets','HTTP', 'POST', `/openapi/createTargets`, null, request, runtime);
+  return doRequest('createTargets','HTTP', 'POST', `/openapi/createTargets`, null, request, null, runtime);
 }
 
 /**
@@ -665,7 +1564,7 @@ async function deleteTargets(request: DeleteTargetsRequest): DeleteTargetsRespon
  */
 async function deleteTargetsWithOptions(request: DeleteTargetsRequest, runtime: Util.RuntimeOptions): DeleteTargetsResponse {
   Util.validateModel(request);
-  return doRequest('deleteTargets','HTTP', 'POST', `/openapi/deleteTargets`, null, request, runtime);
+  return doRequest('deleteTargets','HTTP', 'POST', `/openapi/deleteTargets`, null, request, null, runtime);
 }
 
 /**
@@ -699,7 +1598,7 @@ async function listTargets(request: ListTargetsRequest): ListTargetsResponse {
  */
 async function listTargetsWithOptions(request: ListTargetsRequest, runtime: Util.RuntimeOptions): ListTargetsResponse {
   Util.validateModel(request);
-  return doRequest('listTargets','HTTP', 'POST', `/openapi/listTargets`, null, request, runtime);
+  return doRequest('listTargets','HTTP', 'POST', `/openapi/listTargets`, null, request, null, runtime);
 }
 
 /**
@@ -732,109 +1631,39 @@ async function testEventPattern(request: TestEventPatternRequest): TestEventPatt
  */
 async function testEventPatternWithOptions(request: TestEventPatternRequest, runtime: Util.RuntimeOptions): TestEventPatternResponse {
   Util.validateModel(request);
-  return doRequest('testEventPattern','HTTP', 'POST', `/openapi/testEventPattern`, null, request, runtime);
-}
-
-model QueryEventTracesRequest {
-  eventBusName: string(name='EventBusName'),
-  eventId: string(name='EventId'),
-}
-
-model EventTrace {
-  resourceOwnerId: string(name='ResourceOwnerId'),
-  action: string(name='Action'),
-  eventId: string(name='EventId'),
-  eventBusName: string(name='EventBusName'),
-  actionTime: string(name='ActionTime'),
-}
-
-model QueryEventTracesResponse {
-  eventTraceList: [ EventTrace ](name='EventTraceList'),
+  return doRequest('testEventPattern','HTTP', 'POST', `/openapi/testEventPattern`, null, request, null, runtime);
 }
 
 /**
- * Tests whether the specified event pattern matches the provided event
+ * The request of query EventBridge status for a given user
  */
-async function queryEventTraces(request: QueryEventTracesRequest): QueryEventTracesResponse {
+model QueryEventBridgeStatusRequest = {
+  resourceOwnerAccountId: string(name='ResourceOwnerAccountId', description='the accountId of resource owner'),
+}
+
+/**
+ * The response of query EventBridge status for a given user
+ */
+model QueryEventBridgeStatusResponse = {
+  requestId: string(name='RequestId'),
+  resourceOwnerAccountId: string(name='ResourceOwnerAccountId'),
+  defaultBusEnable: boolean(name='DefaultBusEnable'),
+}
+
+/**
+ * Check the activation status of EventBridge service for a given user
+ */
+async function queryEventBridgeStatus(request: QueryEventBridgeStatusRequest): QueryEventBridgeStatusResponse {
   var runtime = new Util.RuntimeOptions{};
-  return queryEventTracesWithOptions(request, runtime);
+  return queryEventBridgeStatusWithOptions(request, runtime);
 }
 
-
 /**
- * Query the event traces by the event Id.
+ * Check the activation status of EventBridge service for a given user
  */
-async function queryEventTracesWithOptions(request: QueryEventTracesRequest, runtime: Util.RuntimeOptions): QueryEventTracesResponse {
+async function queryEventBridgeStatusWithOptions(request: QueryEventBridgeStatusRequest, runtime: Util.RuntimeOptions): QueryEventBridgeStatusResponse {
   Util.validateModel(request);
-  return doRequest('queryEventTraces','HTTP', 'POST', `/openapi/queryEventTraces`, null, request, runtime);
-}
-
-model QueryEventByEventIdRequest {
-  eventBusName: string(name='EventBusName'),
-  eventSource?: string(name='EventSource'),
-  eventId: string(name='EventId'),
-}
-
-model TracedEvent {
-  eventReceivedTime: string(name='eventReceivedTime'),
-  eventSource: string(name='EventSource'),
-  eventId: string(name='EventId'),
-  eventBusName: string(name='EventBusName')
-}
-
-model QueryEventByEventIdResponse {
-  tracedEvents: [ EventTrace ](name='TracedEvents'),
-  nextToken: string(name='NextToken'),
-  total: integer(name='Total'),
-}
-
-/**
- * Tests whether the specified event pattern matches the provided event
- */
-async function queryEventByEventId(request: QueryEventByEventIdRequest): QueryEventByEventIdResponse {
-  var runtime = new Util.RuntimeOptions{};
-  return queryEventByEventIdWithOptions(request, runtime);
-}
-
-
-/**
- * Query the event traces by the event Id.
- */
-async function queryEventByEventIdWithOptions(request: QueryEventByEventIdRequest, runtime: Util.RuntimeOptions): QueryEventByEventIdResponse {
-  Util.validateModel(request);
-  return doRequest('queryEventByEventId','HTTP', 'POST', `/openapi/queryEventByEventId`, null, request, runtime);
-}
-
-model QueryEventsByPeriodRequest {
-  eventBusName: string(name='EventBusName'),
-  eventSource?: string(name='EventSource'),
-  startTime: long(name='StartTime'),
-  endTime: long(name='EndTime'),
-  limit?: integer(name='Limit'),
-  nextToken?: string(name='NextToken'),
-}
-
-model QueryEventsByPeriodResponse {
-  tracedEvents: [ EventTrace ](name='TracedEvents'),
-  nextToken: string(name='NextToken'),
-  total: integer(name='Total'),
-}
-
-/**
- * Tests whether the specified event pattern matches the provided event
- */
-async function queryEventsByPeriod(request: QueryEventsByPeriodRequest): QueryEventsByPeriodResponse {
-  var runtime = new Util.RuntimeOptions{};
-  return queryEventsByPeriodWithOptions(request, runtime);
-}
-
-
-/**
- * Query the event traces by the event Id.
- */
-async function queryEventsByPeriodWithOptions(request: QueryEventsByPeriodRequest, runtime: Util.RuntimeOptions): QueryEventsByPeriodResponse {
-  Util.validateModel(request);
-  return doRequest('queryEventsByPeriod','HTTP', 'POST', `/openapi/queryEventsByPeriod`, null, request, runtime);
+  return doRequest('queryEventBridgeStatus', 'HTTP', 'POST', `/openapi/queryEventBridgeStatus`, null, request, null, runtime);
 }
 
 /**
@@ -848,7 +1677,7 @@ async function queryEventsByPeriodWithOptions(request: QueryEventsByPeriodReques
  * @param runtime which controls some details of call api, such as retry times
  * @return the response
  */
-api doRequest(action: string, protocol: string, method: string, pathname: string, query: map[string]string, body: any, runtime: Util.RuntimeOptions): object {
+api doRequest(action: string, protocol: string, method: string, pathname: string, query: map[string]string, body: any, headers: map[string]string, runtime: Util.RuntimeOptions): object {
   __request.protocol = Util.defaultString(@protocol, protocol);
   __request.method = method;
   __request.pathname = pathname;
@@ -860,7 +1689,8 @@ api doRequest(action: string, protocol: string, method: string, pathname: string
     x-acs-signature-method = 'HMAC-SHA1',
     x-acs-signature-version = '1.0',
     x-eventbridge-version = '2015-06-06',
-    user-agent = Util.getUserAgent(' aliyun-eventbridge-sdk/1.2.0'),
+    user-agent = Util.getUserAgent(' aliyun-eventbridge-sdk/1.1.0'),
+    ...headers
   };
 
   if (!Util.isUnset(@regionId)) {
@@ -874,6 +1704,11 @@ api doRequest(action: string, protocol: string, method: string, pathname: string
 
   if (Util.equalString(action, 'putEvents')) {
     __request.headers.content-type = 'application/cloudevents-batch+json; charset=utf-8';
+  }
+
+  if (Util.equalString(action, 'putEventsToAccount')) {
+    __request.headers.content-type = 'application/cloudevents-batch+json; charset=utf-8';
+    __request.headers.x-eventbridge-sourcetype = 'acs.*';
   }
 
   if (!Util.isUnset(query)) {
@@ -896,7 +1731,7 @@ api doRequest(action: string, protocol: string, method: string, pathname: string
   if (Util.is4xx(__response.statusCode) || Util.is5xx(__response.statusCode)) {
     throw {
       code = tmp.code,
-      message = `[EventBridgeError-${tmp.requestId}] ${tmp.message}`,
+      message = `[EventBridgeError] ${tmp.message}`,
       data = tmp,
     }
   }

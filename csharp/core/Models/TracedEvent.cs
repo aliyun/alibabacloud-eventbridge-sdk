@@ -8,22 +8,25 @@ using Tea;
 
 namespace AlibabaCloud.SDK.EventBridge.Models
 {
+    /**
+     * The traced event
+     */
     public class TracedEvent : TeaModel {
-        [NameInMap("eventReceivedTime")]
+        [NameInMap("EventBusName")]
         [Validation(Required=true)]
-        public string EventReceivedTime { get; set; }
-
-        [NameInMap("EventSource")]
-        [Validation(Required=true)]
-        public string EventSource { get; set; }
+        public string EventBusName { get; set; }
 
         [NameInMap("EventId")]
         [Validation(Required=true)]
         public string EventId { get; set; }
 
-        [NameInMap("EventBusName")]
+        [NameInMap("EventSource")]
         [Validation(Required=true)]
-        public string EventBusName { get; set; }
+        public string EventSource { get; set; }
+
+        [NameInMap("EventReceivedTime")]
+        [Validation(Required=true)]
+        public long? EventReceivedTime { get; set; }
 
     }
 

@@ -3,6 +3,9 @@ package com.aliyun.eventbridge.models;
 
 import com.aliyun.tea.*;
 
+/**
+ * The request of query the event traces by the event period
+ */
 public class QueryEventsByPeriodRequest extends TeaModel {
     @NameInMap("EventBusName")
     @Validation(required = true)
@@ -20,10 +23,12 @@ public class QueryEventsByPeriodRequest extends TeaModel {
     public Long endTime;
 
     @NameInMap("Limit")
+    @Validation(required = true)
     public Integer limit;
 
     @NameInMap("NextToken")
-    public String nextToken;
+    @Validation(required = true)
+    public Integer nextToken;
 
     public static QueryEventsByPeriodRequest build(java.util.Map<String, ?> map) {
         QueryEventsByPeriodRequest self = new QueryEventsByPeriodRequest();
@@ -70,11 +75,11 @@ public class QueryEventsByPeriodRequest extends TeaModel {
         return this.limit;
     }
 
-    public QueryEventsByPeriodRequest setNextToken(String nextToken) {
+    public QueryEventsByPeriodRequest setNextToken(Integer nextToken) {
         this.nextToken = nextToken;
         return this;
     }
-    public String getNextToken() {
+    public Integer getNextToken() {
         return this.nextToken;
     }
 

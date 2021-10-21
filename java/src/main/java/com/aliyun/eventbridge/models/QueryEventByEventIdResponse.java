@@ -3,17 +3,25 @@ package com.aliyun.eventbridge.models;
 
 import com.aliyun.tea.*;
 
+/**
+ * The response of query event by id
+ */
 public class QueryEventByEventIdResponse extends TeaModel {
-    @NameInMap("TracedEvents")
+    @NameInMap("RequestId")
     @Validation(required = true)
-    public java.util.List<EventTrace> tracedEvents;
+    public String requestId;
+
+    @NameInMap("ResourceOwnerAccountId")
+    @Validation(required = true)
+    public String resourceOwnerAccountId;
+
+    @NameInMap("TracedEvents")
+    public java.util.List<TracedEvent> tracedEvents;
 
     @NameInMap("NextToken")
-    @Validation(required = true)
     public String nextToken;
 
     @NameInMap("Total")
-    @Validation(required = true)
     public Integer total;
 
     public static QueryEventByEventIdResponse build(java.util.Map<String, ?> map) {
@@ -21,11 +29,27 @@ public class QueryEventByEventIdResponse extends TeaModel {
         return TeaModel.build(map, self);
     }
 
-    public QueryEventByEventIdResponse setTracedEvents(java.util.List<EventTrace> tracedEvents) {
+    public QueryEventByEventIdResponse setRequestId(String requestId) {
+        this.requestId = requestId;
+        return this;
+    }
+    public String getRequestId() {
+        return this.requestId;
+    }
+
+    public QueryEventByEventIdResponse setResourceOwnerAccountId(String resourceOwnerAccountId) {
+        this.resourceOwnerAccountId = resourceOwnerAccountId;
+        return this;
+    }
+    public String getResourceOwnerAccountId() {
+        return this.resourceOwnerAccountId;
+    }
+
+    public QueryEventByEventIdResponse setTracedEvents(java.util.List<TracedEvent> tracedEvents) {
         this.tracedEvents = tracedEvents;
         return this;
     }
-    public java.util.List<EventTrace> getTracedEvents() {
+    public java.util.List<TracedEvent> getTracedEvents() {
         return this.tracedEvents;
     }
 

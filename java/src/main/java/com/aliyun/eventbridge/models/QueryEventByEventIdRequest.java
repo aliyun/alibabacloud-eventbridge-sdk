@@ -3,16 +3,17 @@ package com.aliyun.eventbridge.models;
 
 import com.aliyun.tea.*;
 
+/**
+ * The request of query the event by id
+ */
 public class QueryEventByEventIdRequest extends TeaModel {
     @NameInMap("EventBusName")
-    @Validation(required = true)
     public String eventBusName;
 
     @NameInMap("EventSource")
     public String eventSource;
 
     @NameInMap("EventId")
-    @Validation(required = true)
     public String eventId;
 
     public static QueryEventByEventIdRequest build(java.util.Map<String, ?> map) {

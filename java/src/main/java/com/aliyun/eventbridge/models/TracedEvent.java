@@ -3,42 +3,37 @@ package com.aliyun.eventbridge.models;
 
 import com.aliyun.tea.*;
 
+/**
+ * The traced event
+ */
 public class TracedEvent extends TeaModel {
-    @NameInMap("eventReceivedTime")
+    @NameInMap("EventBusName")
     @Validation(required = true)
-    public String eventReceivedTime;
-
-    @NameInMap("EventSource")
-    @Validation(required = true)
-    public String eventSource;
+    public String eventBusName;
 
     @NameInMap("EventId")
     @Validation(required = true)
     public String eventId;
 
-    @NameInMap("EventBusName")
+    @NameInMap("EventSource")
     @Validation(required = true)
-    public String eventBusName;
+    public String eventSource;
+
+    @NameInMap("EventReceivedTime")
+    @Validation(required = true)
+    public Long eventReceivedTime;
 
     public static TracedEvent build(java.util.Map<String, ?> map) {
         TracedEvent self = new TracedEvent();
         return TeaModel.build(map, self);
     }
 
-    public TracedEvent setEventReceivedTime(String eventReceivedTime) {
-        this.eventReceivedTime = eventReceivedTime;
+    public TracedEvent setEventBusName(String eventBusName) {
+        this.eventBusName = eventBusName;
         return this;
     }
-    public String getEventReceivedTime() {
-        return this.eventReceivedTime;
-    }
-
-    public TracedEvent setEventSource(String eventSource) {
-        this.eventSource = eventSource;
-        return this;
-    }
-    public String getEventSource() {
-        return this.eventSource;
+    public String getEventBusName() {
+        return this.eventBusName;
     }
 
     public TracedEvent setEventId(String eventId) {
@@ -49,12 +44,20 @@ public class TracedEvent extends TeaModel {
         return this.eventId;
     }
 
-    public TracedEvent setEventBusName(String eventBusName) {
-        this.eventBusName = eventBusName;
+    public TracedEvent setEventSource(String eventSource) {
+        this.eventSource = eventSource;
         return this;
     }
-    public String getEventBusName() {
-        return this.eventBusName;
+    public String getEventSource() {
+        return this.eventSource;
+    }
+
+    public TracedEvent setEventReceivedTime(Long eventReceivedTime) {
+        this.eventReceivedTime = eventReceivedTime;
+        return this;
+    }
+    public Long getEventReceivedTime() {
+        return this.eventReceivedTime;
     }
 
 }

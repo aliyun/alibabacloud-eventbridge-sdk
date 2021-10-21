@@ -8,13 +8,16 @@ using Tea;
 
 namespace AlibabaCloud.SDK.EventBridge.Models
 {
+    /**
+     * The request of queryEventTraces
+     */
     public class QueryEventTracesRequest : TeaModel {
         [NameInMap("EventBusName")]
-        [Validation(Required=true)]
+        [Validation(Required=false)]
         public string EventBusName { get; set; }
 
         [NameInMap("EventId")]
-        [Validation(Required=true)]
+        [Validation(Required=false)]
         public string EventId { get; set; }
 
     }

@@ -36,10 +36,6 @@ namespace AlibabaCloud.SDK.EventBridge.Models
         [Validation(Required=true)]
         public List<TargetEntry> Targets { get; set; }
 
-        [NameInMap("Tags")]
-        [Validation(Required=false)]
-        public Dictionary<string, string> Tags { get; set; }
-
     }
 
 }

@@ -3,6 +3,9 @@ package com.aliyun.eventbridge.models;
 
 import com.aliyun.tea.*;
 
+/**
+ * The detail of EventTrace
+ */
 public class EventTrace extends TeaModel {
     @NameInMap("ResourceOwnerId")
     @Validation(required = true)

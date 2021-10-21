@@ -8,9 +8,20 @@ using Tea;
 
 namespace AlibabaCloud.SDK.EventBridge.Models
 {
+    /**
+     * The response of queryEventTraces
+     */
     public class QueryEventTracesResponse : TeaModel {
-        [NameInMap("EventTraceList")]
+        [NameInMap("RequestId")]
         [Validation(Required=true)]
+        public string RequestId { get; set; }
+
+        [NameInMap("ResourceOwnerAccountId")]
+        [Validation(Required=true)]
+        public string ResourceOwnerAccountId { get; set; }
+
+        [NameInMap("EventTraceList")]
+        [Validation(Required=false)]
         public List<EventTrace> EventTraceList { get; set; }
 
     }

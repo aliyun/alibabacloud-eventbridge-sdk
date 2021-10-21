@@ -8,6 +8,9 @@ using Tea;
 
 namespace AlibabaCloud.SDK.EventBridge.Models
 {
+    /**
+     * The detail of EventTrace
+     */
     public class EventTrace : TeaModel {
         [NameInMap("ResourceOwnerId")]
         [Validation(Required=true)]

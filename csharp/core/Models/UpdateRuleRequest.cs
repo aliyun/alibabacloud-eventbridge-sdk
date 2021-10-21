@@ -32,10 +32,6 @@ namespace AlibabaCloud.SDK.EventBridge.Models
         [Validation(Required=false)]
         public string FilterPattern { get; set; }
 
-        [NameInMap("Tags")]
-        [Validation(Required=false)]
-        public Dictionary<string, string> Tags { get; set; }
-
     }
 
 }
