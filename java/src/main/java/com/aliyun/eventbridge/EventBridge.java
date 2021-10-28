@@ -1,6 +1,7 @@
 package com.aliyun.eventbridge;
 
 import com.aliyun.eventbridge.models.*;
+import com.aliyun.teautil.models.RuntimeOptions;
 
 public interface EventBridge {
 
