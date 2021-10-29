@@ -28,7 +28,7 @@ public class EventBridgeClient implements EventBridge {
      * Init client with Config
      * @param config config contains the necessary information to create a client
      */
-    public EventBridgeClient(com.aliyun.eventbridge.models.Config config) throws Exception {
+    public EventBridgeClient(com.aliyun.eventbridge.models.Config config) {
         if (com.aliyun.teautil.Common.isUnset(TeaModel.buildMap(config))) {
             throw new TeaException(TeaConverter.buildMap(
                 new TeaPair("code", "ParameterMissing"),
