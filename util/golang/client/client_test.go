@@ -2,111 +2,49 @@ package client
 
 import (
 	"encoding/json"
+	"fmt"
 	"testing"
 
 	"github.com/alibabacloud-go/tea/tea"
-	"github.com/alibabacloud-go/tea/utils"
 )
 
-func Test_GetSignature(t *testing.T) {
-	request := tea.NewRequest()
-	sign := GetStringToSign(request)
-	signature := GetSignature(sign, tea.String("secret"))
-	utils.AssertEqual(t, 28, len(tea.StringValue(signature)))
+type CloudEvent struct {
+	Id                  *string                `json:"id,omitempty" xml:"id,omitempty"`
+	Source              *string                `json:"source,omitempty" xml:"source,omitempty"`
+	Specversion         *string                `json:"specversion,omitempty" xml:"specversion,omitempty"`
+	Type                *string                `json:"type,omitempty" xml:"type,omitempty"`
+	Datacontenttype     *string                `json:"datacontenttype,omitempty" xml:"datacontenttype,omitempty"`
+	Datacontentencoding *string                `json:"datacontentencoding,omitempty" xml:"datacontentencoding,omitempty"`
+	Schemaurl           *string                `json:"schemaurl,omitempty" xml:"schemaurl,omitempty"`
+	Subject             *string                `json:"subject,omitempty" xml:"subject,omitempty"`
+	Time                *string                `json:"time,omitempty" xml:"time,omitempty"`
+	Extensions          map[string]interface{} `json:"extensions,omitempty" xml:"extensions,omitempty"`
+	Data                []byte                 `json:"data,omitempty" xml:"data,omitempty"`
 }
 
-func Test_Sorter(t *testing.T) {
-	tmp := map[string]string{
-		"key":   "eventbridge",
-		"value": "ok",
-	}
-	sort := newSorter(tmp)
-	sort.Sort()
-
-	len := sort.Len()
-	utils.AssertEqual(t, len, 2)
-
-	isLess := sort.Less(0, 1)
-	utils.AssertEqual(t, isLess, true)
-
-	sort.Swap(0, 1)
-	isLess = sort.Less(0, 1)
-	utils.AssertEqual(t, isLess, false)
+func (s CloudEvent) String() string {
+	return tea.Prettify(s)
 }
 
-func Test_getStringToSign(t *testing.T) {
-	request := tea.NewRequest()
-	request.Query = map[string]*string{
-		"eventbridge": tea.String("ok"),
-		"null":        tea.String(""),
-	}
-	request.Headers = map[string]*string{
-		"x-acs-meta": tea.String("user"),
-	}
-	str := getStringToSign(request)
-	utils.AssertEqual(t, 41, len(str))
-}
-
-type TestEvent struct {
-	Datacontenttype *string                `json:"datacontenttype,omitempty" xml:"datacontenttype,omitempty"`
-	Extensions      map[string]interface{} `json:"extensions,omitempty" xml:"extensions,omitempty"`
-	Data            []byte                 `json:"data,omitempty" xml:"data,omitempty"`
+func (s CloudEvent) GoString() string {
+	return s.String()
 }
 
 func Test_Serialize(t *testing.T) {
-	in := []*TestEvent{
-		&TestEvent{
+	in := []*CloudEvent{
+		&CloudEvent{
 			Datacontenttype: tea.String("text/plain"),
-			Data:            []byte(`{"test":"ok"}`),
-			Extensions: map[string]interface{}{
-				"key": "ok",
-			},
+			Data:            []byte("test"),
 		},
-		&TestEvent{
-			Datacontenttype: tea.String("text/json"),
-			Data:            []byte(`{"test":"ok"}`),
-		},
-		&TestEvent{
-			Datacontenttype: tea.String("text/json"),
-			Data:            []byte(`[{"test":"ok"}]`),
-		},
-		&TestEvent{
+		&CloudEvent{
 			Datacontenttype: tea.String("text/json"),
 			Data:            []byte("test"),
 		},
-		&TestEvent{
-			Datacontenttype: tea.String("text/json"),
-			Data:            []byte("\"{\"bus\":\"demo\"}\""),
-		},
 	}
-	out := make([]map[string]interface{}, 0)
+	var tmp []*CloudEvent
 	res := Serialize(in)
+	fmt.Printf("%s", res)
 	byt, _ := json.Marshal(res)
-	json.Unmarshal(byt, &out)
-	utils.AssertEqual(t, "ok", out[0]["key"].(string))
-	byt, _ = json.Marshal(out[0])
-	utils.AssertEqual(t, `{"data_base64":"eyJ0ZXN0Ijoib2sifQ==","datacontenttype":"text/plain","key":"ok"}`, string(byt))
-	utils.AssertNil(t, out[0]["data"])
-	byt, _ = json.Marshal(out[1])
-	utils.AssertEqual(t, `{"data":{"test":"ok"},"datacontenttype":"text/json"}`, string(byt))
-	byt, _ = json.Marshal(out[2])
-	utils.AssertEqual(t, `{"data":[{"test":"ok"}],"datacontenttype":"text/json"}`, string(byt))
-	byt, _ = json.Marshal(out[3])
-	utils.AssertEqual(t, `{"data":"test","datacontenttype":"text/json"}`, string(byt))
-	byt, _ = json.Marshal(out[4])
-	utils.AssertEqual(t, `{"data":"\"{\"bus\":\"demo\"}\"","datacontenttype":"text/json"}`, string(byt))
-
-	res = Serialize(nil)
-	utils.AssertNil(t, res)
-
-	res = Serialize("string")
-	utils.AssertEqual(t, "string", res)
-}
-
-func Test_StartWith(t *testing.T) {
-	res := StartWith(tea.String("eventbridge"), tea.String("event"))
-	utils.AssertEqual(t, true, tea.BoolValue(res))
-
-	res = StartWith(tea.String("eventbridge"), tea.String("evenc"))
-	utils.AssertEqual(t, false, tea.BoolValue(res))
+	json.Unmarshal(byt, &tmp)
+	fmt.Println(string(tmp[1].Data))
 }

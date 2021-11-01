@@ -1,0 +1,32 @@
+alibabaCloud: "alibabaCloud:1.0.0"
+info:
+  namespace: "eventbridge"
+  apiStyle: "restful"
+apis:
+  putEvents:
+    description: "Enables the specified rule."
+    path: "/openapi/enableRule"
+    methods:
+      - "post"
+    schemes:
+      - "http"
+    visibility: "Public"
+    parameters:
+      - name: "EventBusName"
+        in: "body"
+        schema:
+          required: true
+          description: "eventBusName"
+          type: "string"
+          checkBlank: true
+          visibility: "private"
+      - name: "RuleName"
+        in: "body"
+        schema:
+          required: true
+          description: "ruleName"
+          type: "string"
+          checkBlank: true
+          visibility: "private"
+    responses:
+      "200": {}

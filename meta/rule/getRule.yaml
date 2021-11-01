@@ -1,0 +1,99 @@
+alibabaCloud: "alibabaCloud:1.0.0"
+info:
+  namespace: "eventbridge"
+  apiStyle: "restful"
+apis:
+  putEvents:
+    description: "Describes the specified rule."
+    path: "/openapi/getRule"
+    methods:
+      - "post"
+    schemes:
+      - "http"
+    visibility: "Public"
+    parameters:
+      - name: "EventBusName"
+        in: "body"
+        schema:
+          required: true
+          description: "eventBusName"
+          type: "string"
+          checkBlank: true
+          visibility: "private"
+      - name: "RuleName"
+        in: "body"
+        schema:
+          required: true
+          description: "ruleName"
+          type: "string"
+          checkBlank: true
+          visibility: "private"
+    responses:
+      "200":
+        schema:
+          title: "The response of Get EventBus "
+          type: "object"
+          properties:
+            EventBusName:
+              title: "the name of eventbus"
+              type: "string"
+            RuleARN:
+              title: "the Uniform Resource identification of eventbus rule"
+              type: "string"
+            RuleName:
+              title: "the name of eventbus rule"
+              type: "string"
+            Description:
+              title: "the description of eventbus"
+              type: "string"
+            Status:
+              title: "the status of eventbus rule"
+              type: "string"
+            FilterPattern:
+              title: "the filter pattern of eventbus rule"
+              type: "string"
+            Targets:
+              type: "array"
+              items:
+                type: "object"
+                $ref: "#/components/schemas/TargetEntry"
+            Ctime:
+              title: "the create time of eventbus rule"
+              type: "long"
+            Mtime:
+              title: "the modify time of eventbus rule"
+              type: "long"
+            Tags:
+              title: "the tags of event rule"
+              type: "object"
+              additionalProperties:
+                type: "string"
+components:
+  schemas:
+    TargetEntry:
+      description: "The detail of TargetEntry"
+      visibility: "Public"
+      properties:
+        Id:
+          type: "string"
+        Type:
+          type: "string"
+        Endpoint:
+          type: "string"
+        PushRetryStrategy:
+          type: "string"
+        ParamList:
+          type: "array"
+          $ref: "#/components/schemas/EBTargetParam"
+    EBTargetParam:
+      description: "The param of TargetEntry"
+      visibility: "Public"
+      properties:
+        ResourceKey:
+          type: "string"
+        Form:
+          type: "string"
+        Value:
+          type: "string"
+        Template:
+          type: "string"

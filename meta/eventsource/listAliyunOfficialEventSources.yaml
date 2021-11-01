@@ -1,0 +1,75 @@
+alibabaCloud: "alibabaCloud:1.0.0"
+info:
+  namespace: "eventbridge"
+  apiStyle: "restful"
+apis:
+  putEvents:
+    description: "List the aliyun official event source within your account."
+    path: "/openapi/v2/listAliyunOfficialEventSources"
+    methods:
+      - "post"
+    schemes:
+      - "http"
+    visibility: "Public"
+    parameters:
+      - name: "NextToken"
+        in: "body"
+        schema:
+          description: "the next element."
+          type: "string"
+      - name: "Limit"
+        in: "body"
+        schema:
+          description: "response limit."
+          type: "number"
+    responses:
+      "200":
+        schema:
+          title: "The response of list event source."
+          type: "object"
+          properties:
+            EventSources:
+              title: "the list of eventsource."
+              type: "array"
+              items:
+                type: "object"
+                $ref: "#/components/schemas/EBAliyunOfficialEventSourceEntry"
+            NextToken:
+              title: "the next element."
+              type: "string"
+            Total:
+              title: "the total count of eventsource."
+              type: "number"
+components:
+  schemas:
+    EBAliyunOfficialEventSourceEntry:
+      description: "The event source entry."
+      visibility: "Public"
+      properties:
+        Name:
+          type: "string"
+        Description:
+          type: "string"
+        ARN:
+          type: "string"
+        Status:
+          type: "string"
+        Ctime:
+          type: "long"
+        EventBusName:
+          type: "string"
+        EventTypes:
+          type: "object"
+          $ref: "#/components/schemas/EventTypeEntry"
+    EventTypeEntry:
+      description: "The event source type."
+      visibility: "Public"
+      properties:
+        Name:
+          type: "string"
+        EventSourceName:
+          type: "string"
+        ShortName:
+          type: "string"
+        GroupName:
+          type: "string"

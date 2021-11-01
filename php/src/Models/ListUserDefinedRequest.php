@@ -10,16 +10,14 @@ use AlibabaCloud\Tea\Model;
  */
 class ListUserDefinedRequest extends Model {
     protected $_name = [
-        'eventBusName' => 'EventBusName',
         'nextToken' => 'NextToken',
         'limit' => 'Limit',
     ];
-    public function validate() {}
+    public function validate() {
+        Model::validateRequired('nextToken', $this->nextToken, true);
+    }
     public function toMap() {
         $res = [];
-        if (null !== $this->eventBusName) {
-            $res['EventBusName'] = $this->eventBusName;
-        }
         if (null !== $this->nextToken) {
             $res['NextToken'] = $this->nextToken;
         }
@@ -34,9 +32,6 @@ class ListUserDefinedRequest extends Model {
      */
     public static function fromMap($map = []) {
         $model = new self();
-        if(isset($map['EventBusName'])){
-            $model->eventBusName = $map['EventBusName'];
-        }
         if(isset($map['NextToken'])){
             $model->nextToken = $map['NextToken'];
         }
@@ -45,11 +40,6 @@ class ListUserDefinedRequest extends Model {
         }
         return $model;
     }
-    /**
-     * @var string
-     */
-    public $eventBusName;
-
     /**
      * @var string
      */

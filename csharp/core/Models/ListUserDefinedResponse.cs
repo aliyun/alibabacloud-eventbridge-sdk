@@ -20,17 +20,9 @@ namespace AlibabaCloud.SDK.EventBridge.Models
         [Validation(Required=true)]
         public string ResourceOwnerAccountId { get; set; }
 
-        [NameInMap("EventSources")]
-        [Validation(Required=false)]
-        public List<EBUserDefinedEventSourceEntry> EventSources { get; set; }
-
-        [NameInMap("NextToken")]
-        [Validation(Required=false)]
-        public string NextToken { get; set; }
-
-        [NameInMap("Total")]
-        [Validation(Required=false)]
-        public int? Total { get; set; }
+        [NameInMap("EventBuses")]
+        [Validation(Required=true)]
+        public List<EBUserDefinedEventSourceEntry> EventBuses { get; set; }
 
     }
 

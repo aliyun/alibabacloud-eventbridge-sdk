@@ -1,0 +1,61 @@
+alibabaCloud: "alibabaCloud:1.0.0"
+info:
+  namespace: "eventbridge"
+  apiStyle: "restful"
+apis:
+  putEvents:
+    description: "Update the specified rule."
+    path: "/openapi/updateRule"
+    methods:
+      - "post"
+    schemes:
+      - "http"
+    visibility: "Public"
+    parameters:
+      - name: "EventBusName"
+        in: "body"
+        schema:
+          required: true
+          description: "eventBusName"
+          type: "string"
+          checkBlank: true
+          visibility: "private"
+      - name: "RuleName"
+        in: "body"
+        schema:
+          required: true
+          description: "ruleName"
+          type: "string"
+          checkBlank: true
+          visibility: "private"
+      - name: "Description"
+        in: "body"
+        schema:
+          description: "description"
+          type: "string"
+          checkBlank: true
+          visibility: "private"
+      - name: "Status"
+        in: "body"
+        schema:
+          description: "status"
+          type: "string"
+          checkBlank: true
+          visibility: "private"
+      - name: "FilterPattern"
+        in: "body"
+        schema:
+          description: "status"
+          type: "string"
+          checkBlank: true
+          visibility: "private"
+      - name: "Tags"
+        in: "body"
+        schema:
+          description: "tags"
+          type: "object"
+          additionalProperties:
+            type: "string"
+          visibility: "private"
+    responses:
+      "200": {}

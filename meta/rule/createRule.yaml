@@ -1,0 +1,116 @@
+alibabaCloud: "alibabaCloud:1.0.0"
+info:
+  namespace: "eventbridge"
+  apiStyle: "restful"
+apis:
+  putEvents:
+    description: "Create an EventBus rule on Aliyun "
+    path: "/openapi/createRule"
+    methods:
+      - "post"
+    schemes:
+      - "http"
+    visibility: "Public"
+    parameters:
+      - name: "EventBusName"
+        in: "body"
+        schema:
+          required: true
+          description: "eventBusName"
+          type: "string"
+          checkBlank: true
+          visibility: "private"
+      - name: "Description"
+        in: "body"
+        schema:
+          description: "description"
+          type: "string"
+          checkBlank: true
+          visibility: "private"
+      - name: "RuleName"
+        in: "body"
+        schema:
+          required: true
+          description: "ruleName"
+          type: "string"
+          checkBlank: true
+          visibility: "private"
+          maxLength: 127
+          minLength: 1
+      - name: "Status"
+        in: "body"
+        schema:
+          description: "status"
+          type: "string"
+          checkBlank: true
+          visibility: "private"
+      - name: "FilterPattern"
+        in: "body"
+        schema:
+          description: "filterPattern"
+          type: "string"
+          checkBlank: true
+          visibility: "private"
+          maxLength: 2048
+      - name: "Targets"
+        in: "body"
+        schema:
+          required: true
+          description: "filterPattern"
+          type: "array"
+          checkBlank: true
+          visibility: "private"
+          items:
+            type: "object"
+            $ref: "#/components/schemas/TargetEntry"
+      - name: "Tags"
+        in: "body"
+        schema:
+          description: "the tags of event rule"
+          type: "object"
+          additionalProperties:
+            type: "string"
+          visibility: "private"
+    responses:
+      "200":
+        schema:
+          title: "The response of create EventBus Rule "
+          type: "object"
+          properties:
+            RuleARN:
+              title: "the id of rule"
+              type: "string"
+components:
+  schemas:
+    TargetEntry:
+      description: "The detail of TargetEntry"
+      visibility: "Public"
+      properties:
+        Id:
+          type: "string"
+          required: true
+        Type:
+          type: "string"
+          required: true
+        Endpoint:
+          type: "string"
+          required: true
+        PushRetryStrategy:
+          type: "string"
+        ParamList:
+            type: "array"
+            $ref: "#/components/schemas/EBTargetParam"
+    EBTargetParam:
+      description: "The param of TargetEntry"
+      visibility: "Public"
+      properties:
+        ResourceKey:
+          type: "string"
+          required: true
+        Form:
+          type: "string"
+          required: true
+        Value:
+          type: "string"
+        Template:
+          type: "string"

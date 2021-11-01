@@ -1,0 +1,31 @@
+{
+  "scope": "alibabacloud",
+  "name": "Sample",
+  "version": "0.0.1",
+  "main": "main.tea",
+  "libraries": {
+    "Console": "alibabacloud:Console:*",
+    "EventBridge": "alibabacloud:EventBridge:*",
+    "Util": "alibabacloud:Util:*"
+  },
+  "java": {
+    "package": "aliyun.com.alibabacloud.sample"
+  },
+  "csharp": {
+    "namespace": "Alibabacloud.Sample"
+  },
+  "php": {
+    "package": "Alibabacloud.Sample",
+    "packageInfo": {
+      "name": "alibabacloud/eventbridge",
+      "desc": "Alibaba Cloud EventBridge Sample Library for PHP",
+      "github": "https://github.com/aliyun/alibabacloud-sdk",
+      "files": {
+        "LICENSE": "../LICENSE"
+      }
+    }
+  },
+  "python": {
+    "package": "alibabacloud_sample"
+  }
+}

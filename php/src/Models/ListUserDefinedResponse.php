@@ -14,13 +14,12 @@ class ListUserDefinedResponse extends Model {
     protected $_name = [
         'requestId' => 'RequestId',
         'resourceOwnerAccountId' => 'ResourceOwnerAccountId',
-        'eventSources' => 'EventSources',
-        'nextToken' => 'NextToken',
-        'total' => 'Total',
+        'eventBuses' => 'EventBuses',
     ];
     public function validate() {
         Model::validateRequired('requestId', $this->requestId, true);
         Model::validateRequired('resourceOwnerAccountId', $this->resourceOwnerAccountId, true);
+        Model::validateRequired('eventBuses', $this->eventBuses, true);
     }
     public function toMap() {
         $res = [];
@@ -30,20 +29,14 @@ class ListUserDefinedResponse extends Model {
         if (null !== $this->resourceOwnerAccountId) {
             $res['ResourceOwnerAccountId'] = $this->resourceOwnerAccountId;
         }
-        if (null !== $this->eventSources) {
-            $res['EventSources'] = [];
-            if(null !== $this->eventSources && is_array($this->eventSources)){
+        if (null !== $this->eventBuses) {
+            $res['EventBuses'] = [];
+            if(null !== $this->eventBuses && is_array($this->eventBuses)){
                 $n = 0;
-                foreach($this->eventSources as $item){
-                    $res['EventSources'][$n++] = null !== $item ? $item->toMap() : $item;
+                foreach($this->eventBuses as $item){
+                    $res['EventBuses'][$n++] = null !== $item ? $item->toMap() : $item;
                 }
             }
-        }
-        if (null !== $this->nextToken) {
-            $res['NextToken'] = $this->nextToken;
-        }
-        if (null !== $this->total) {
-            $res['Total'] = $this->total;
         }
         return $res;
     }
@@ -59,20 +52,14 @@ class ListUserDefinedResponse extends Model {
         if(isset($map['ResourceOwnerAccountId'])){
             $model->resourceOwnerAccountId = $map['ResourceOwnerAccountId'];
         }
-        if(isset($map['EventSources'])){
-            if(!empty($map['EventSources'])){
-                $model->eventSources = [];
+        if(isset($map['EventBuses'])){
+            if(!empty($map['EventBuses'])){
+                $model->eventBuses = [];
                 $n = 0;
-                foreach($map['EventSources'] as $item) {
-                    $model->eventSources[$n++] = null !== $item ? EBUserDefinedEventSourceEntry::fromMap($item) : $item;
+                foreach($map['EventBuses'] as $item) {
+                    $model->eventBuses[$n++] = null !== $item ? EBUserDefinedEventSourceEntry::fromMap($item) : $item;
                 }
             }
-        }
-        if(isset($map['NextToken'])){
-            $model->nextToken = $map['NextToken'];
-        }
-        if(isset($map['Total'])){
-            $model->total = $map['Total'];
         }
         return $model;
     }
@@ -89,16 +76,6 @@ class ListUserDefinedResponse extends Model {
     /**
      * @var EBUserDefinedEventSourceEntry[]
      */
-    public $eventSources;
-
-    /**
-     * @var string
-     */
-    public $nextToken;
-
-    /**
-     * @var int
-     */
-    public $total;
+    public $eventBuses;
 
 }

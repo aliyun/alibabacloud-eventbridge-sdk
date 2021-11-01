@@ -1,0 +1,116 @@
+alibabaCloud: "alibabaCloud:1.0.0"
+info:
+  namespace: "eventbridge"
+  apiStyle: "restful"
+apis:
+  putEvents:
+    description: "Update the event source."
+    path: "/openapi/v2/updateEventSource"
+    methods:
+      - "post"
+    schemes:
+      - "http"
+    visibility: "Public"
+    parameters:
+      - name: "EventSourceName"
+        in: "body"
+        schema:
+          required: true
+          description: "event source name."
+          type: "string"
+          checkBlank: true
+          maxLength: 127
+          minLength: 1
+      - name: "Description"
+        in: "body"
+        schema:
+          description: "event source description."
+          type: "string"
+          checkBlank: true
+      - name: "EventBusName"
+        in: "body"
+        schema:
+          description: "the event bus bind to eventsource."
+          type: "string"
+      - name: "SourceRabbitMQParameters"
+        in: "body"
+        schema:
+          description: "whether has external source."
+          items:
+            type: "object"
+            $ref: "#/components/schemas/SourceRabbitMQParameters"
+      - name: "SourceMNSParameters"
+        in: "body"
+        schema:
+          description: "whether has external source."
+          items:
+            type: "object"
+            $ref: "#/components/schemas/SourceMNSParameters"
+      - name: "SourceRocketMQParameters"
+        in: "body"
+        schema:
+          description: "whether has external source."
+          items:
+            type: "object"
+            $ref: "#/components/schemas/SourceRocketMQParameters"
+    responses:
+      "200": { }
+components:
+  schemas:
+    SourceRabbitMQParameters:
+      description: "The detail of SourceRabbitMQParameters"
+      visibility: "Public"
+      properties:
+        RegionId:
+          type: "string"
+        InstanceId:
+          type: "string"
+          required: true
+        VirtualHostName:
+          type: "string"
+          required: true
+        QueueName:
+          type: "string"
+          required: true
+    SourceMNSParameters:
+      description: "The detail of SourceMNSParameters"
+      visibility: "Public"
+      properties:
+        RegionId:
+          type: "string"
+        QueueName:
+          type: "string"
+          required: true
+    SourceRocketMQParameters:
+      description: "The detail of SourceRocketMQParameters"
+      visibility: "Public"
+      properties:
+        RegionId:
+          type: "string"
+        InstanceId:
+          type: "string"
+          required: true
+        Topic:
+          type: "string"
+        Tag:
+          type: "string"
+        Offset:
+          type: "string"
+        GroupID:
+          type: "string"
+          required: true
+    SourceKafkaParameters:
+      description: "The detail of SourceKafkaParameters"
+      visibility: "Public"
+      properties:
+        InstanceId:
+          type: "string"
+          required: true
+        Topic:
+          type: "string"
+          required: true
+        ConsumerGroup:
+          type: "string"
+          required: true
+        OffsetRest:
+          type: "string"

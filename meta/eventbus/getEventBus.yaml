@@ -1,0 +1,45 @@
+alibabaCloud: "alibabaCloud:1.0.0"
+info:
+  namespace: "eventbridge"
+  apiStyle: "restful"
+apis:
+  putEvents:
+    description: "Displays details about an event bus in your account "
+    path: "/openapi/getEventBus"
+    methods:
+      - "post"
+    schemes:
+      - "http"
+    visibility: "Public"
+    parameters:
+      - name: "EventBusName"
+        in: "body"
+        schema:
+          required: true
+          description: "eventBusName"
+          type: "string"
+          checkBlank: true
+          visibility: "private"
+    responses:
+      "200":
+        schema:
+          title: "The response of Get EventBus "
+          type: "object"
+          properties:
+            EventBusARN:
+              title: "the Uniform Resource identification of eventbus"
+              type: "string"
+            EventBusName:
+              title: "the name of eventbus"
+              type: "string"
+            Description:
+              title: "the description of eventbus"
+              type: "string"
+            CreateTimestamp:
+              title: "the create time of eventbus"
+              type: "number"
+            Tags:
+              title: "the tags of eventbus"
+              type: "object"
+              additionalProperties:
+                type: "string"

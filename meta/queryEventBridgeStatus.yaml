@@ -1,0 +1,27 @@
+alibabaCloud: "alibabaCloud:1.0.0"
+info:
+  namespace: "eventbridge"
+  apiStyle: "restful"
+apis:
+  putEvents:
+    summary: "Check the activation status of EventBridge service for a given user"
+    path: "/openapi/queryEventBridgeStatus"
+    methods:
+      - "post"
+    schemes:
+      - "http"
+    visibility: "Public"
+    parameters:
+      - name: "ResourceOwnerAccountId"
+        description: "the accountId of resource owner"
+        type: "string"
+        in: "body"
+    responses:
+      "200":
+        schema:
+          title: "The response of query EventBridge status for a given user."
+          type: "object"
+          properties:
+            DefaultBusEnable:
+              title: "true if the default bus is enable"
+              type: "boolean"

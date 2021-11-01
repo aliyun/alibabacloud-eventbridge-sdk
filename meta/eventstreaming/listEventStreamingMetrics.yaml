@@ -1,0 +1,54 @@
+alibabaCloud: "alibabaCloud:1.0.0"
+info:
+  namespace: "eventbridge"
+  apiStyle: "restful"
+apis:
+  putEvents:
+    summary: "List the metrics of event streaming."
+    path: "/openapi/v2/listEventStreamingMetrics"
+    methods:
+      - "post"
+    schemes:
+      - "http"
+    visibility: "Public"
+    parameters:
+      - name: "EventStreamingNames"
+        in: "body"
+        schema:
+          description: "the names of event streaming."
+          type: "array"
+          checkBlank: true
+          items:
+            type: "string"
+    responses:
+      "200":
+        schema:
+          title: "The response of list Event Streaming Metrics."
+          type: "object"
+          properties:
+            EventStreamingMetrics:
+              title: "the list of Metrics"
+              type: "array"
+              items:
+                type: "object"
+                $ref: "#/components/schemas/EventStreamingMetric"
+components:
+  schemas:
+    EventStreamingMetric:
+      description: "The metrics of event streaming."
+      visibility: "Public"
+      properties:
+        Name:
+          type: "string"
+        TPS:
+          type: "number"
+        DelayTime:
+          type: "number"
+        DiffOffset:
+          type: "number"
+        LastDateSyncTime:
+          type: "number"
+        LastHeartBeat:
+          type: "number"
+        Status:
+          type: "string"

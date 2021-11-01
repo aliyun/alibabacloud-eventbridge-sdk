@@ -20,18 +20,18 @@ class Client
     public static function getStringToSign($request)
     {
         $pathname = $request->pathname ? $request->pathname : '';
-        $query    = $request->query ? $request->query : [];
+        $query = $request->query ? $request->query : [];
 
-        $contentMD5  = isset($request->headers['content-md5']) ? $request->headers['content-md5'] : '';
+        $contentMD5 = isset($request->headers['content-md5']) ? $request->headers['content-md5'] : '';
         $contentType = isset($request->headers['content-type']) ? $request->headers['content-type'] : '';
-        $date        = isset($request->headers['date']) ? $request->headers['date'] : '';
+        $date = isset($request->headers['date']) ? $request->headers['date'] : '';
 
         $result = $request->method . "\n" .
             $contentMD5 . "\n" .
             $contentType . "\n" .
             $date . "\n";
 
-        $canonicalizedHeaders  = self::getCanonicalizedHeaders($request->headers);
+        $canonicalizedHeaders = self::getCanonicalizedHeaders($request->headers);
         $canonicalizedResource = self::getCanonicalizedResource($pathname, $query);
 
         return $result . $canonicalizedHeaders . $canonicalizedResource;
@@ -41,7 +41,7 @@ class Client
      * Get signature according to stringToSign, secret.
      *
      * @param string $stringToSign the signed string
-     * @param string $secret       accesskey secret
+     * @param string $secret accesskey secret
      *
      * @return string the signature
      */
@@ -63,29 +63,15 @@ class Client
             $events = json_decode(json_encode($events), true);
         }
         foreach ($events as $k => &$v) {
-            if (\is_object($v) && $v instanceof Model) {
+            if (is_object($v) && $v instanceof Model) {
                 $v = $v->toMap();
             }
             if (\is_array($v)) {
-                if (!isset($v['datacontenttype']) || empty($v['datacontenttype'])) {
-                    $v['datacontenttype'] = 'application/json';
-                }
-                $content_type = $v['datacontenttype'];
-                if (isset($v['data']) && \is_array($v['data'])) {
-                    // to string
-                    $str = '';
-                    foreach ($v['data'] as $ch) {
-                        $str .= \chr($ch);
-                    }
-                    $v['data'] = $str;
-                }
-                if (!\in_array($content_type, ['application/json', 'text/json']) && !empty($v['data'])) {
-                    $v['data_base64'] = base64_encode($v['data']);
-                    unset($v['data']);
-                } elseif (!empty($v['data'])) {
-                    $res = @json_decode($v['data'], true);
-                    if (\is_array($res)) {
-                        $v['data'] = $res;
+                if (isset($v['datacontenttype'])) {
+                    $content_type = $v['datacontenttype'];
+                    if (!\in_array($content_type, ['application/json', 'text/json']) && !empty($v['data'])) {
+                        $v['data_base64'] = $v['data'];
+                        unset($v['data']);
                     }
                 }
                 if (isset($v['extensions']) && \is_array($v['extensions'])) {
@@ -96,7 +82,6 @@ class Client
                 }
             }
         }
-
         return $events;
     }
 
@@ -128,18 +113,5 @@ class Client
         }
 
         return $pathname . '?' . implode('&', $tmp);
-    }
-
-    /**
-     * Judge if the  origin is start with the prefix.
-     *
-     * @param string $origin the original string
-     * @param string $prefix the prefix string
-     *
-     * @return bool the result
-     */
-    public static function startWith($origin, $prefix)
-    {
-        return 0 === strpos($origin, $prefix);
     }
 }

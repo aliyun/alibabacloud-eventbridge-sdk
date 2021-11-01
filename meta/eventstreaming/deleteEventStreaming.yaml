@@ -1,0 +1,23 @@
+alibabaCloud: "alibabaCloud:1.0.0"
+info:
+  namespace: "eventbridge"
+  apiStyle: "restful"
+apis:
+  putEvents:
+    summary: "delete event streaming."
+    path: "/openapi/v2/deleteEventStreaming"
+    methods:
+      - "post"
+    schemes:
+      - "http"
+    visibility: "Public"
+    parameters:
+      - name: "EventStreamingName"
+        in: "body"
+        schema:
+          required: true
+          description: "the name of event streaming"
+          type: "string"
+          checkBlank: true
+    responses:
+      "200": { }

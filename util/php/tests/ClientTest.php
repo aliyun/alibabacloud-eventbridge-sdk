@@ -33,14 +33,14 @@ class ClientTest extends TestCase
             'content-md5'              => 'md5',
             'content-type'             => 'application/json',
             'date'                     => 'date',
-            'x-acs-custom-key'         => 'any value',
+            'x-eventbridge-custom-key' => 'any value',
         ];
-        $this->assertEquals("GET\nmd5\napplication/json\ndate\nx-acs-custom-key:any value\n/", Client::getStringToSign($request));
+        $this->assertEquals("GET\nmd5\napplication/json\ndate\nx-eventbridge-custom-key:any value\n/", Client::getStringToSign($request));
 
         $request->query = [
             'key' => 'val ue with space',
         ];
-        $this->assertEquals("GET\nmd5\napplication/json\ndate\nx-acs-custom-key:any value\n/?key=val ue with space", Client::getStringToSign($request));
+        $this->assertEquals("GET\nmd5\napplication/json\ndate\nx-eventbridge-custom-key:any value\n/?key=val ue with space", Client::getStringToSign($request));
     }
 
     public function testGetSignature()
@@ -51,36 +51,12 @@ class ClientTest extends TestCase
     public function testSerialize()
     {
         $result = Client::serialize([
-            ['datacontenttype'=> 'text/plain', 'data'=>$this->toBytes('test1')],
+            ['datacontenttype'=>'text/plain', 'data'=>'test1'],
             ['datacontenttype'=> 'text/json', 'extensions'=>['foo'=>'bar']],
-            ['datacontenttype'=> 'text/json', 'data'=>$this->toBytes(json_encode(['foo'=>'bar']))],
-            ['datacontenttype'=> 'text/json', 'data'=>$this->toBytes('\\{"foo": "bar"}\\')],
-            ['datacontenttype'=> '', 'data'=>$this->toBytes('\\{"foo": "bar"}\\')],
-            ['datacontenttype'=> null, 'data'=>$this->toBytes('\\{"foo": "bar"}\\')],
         ]);
         $this->assertEquals([
-            ['datacontenttype'=> 'text/plain', 'data_base64'=>'dGVzdDE='],
+            ['datacontenttype'=>'text/plain', 'data_base64'=>'test1'],
             ['datacontenttype'=> 'text/json', 'foo'=>'bar'],
-            ['datacontenttype'=> 'text/json', 'data'=>['foo'=>'bar']],
-            ['datacontenttype'=> 'text/json', 'data'=>'\\{"foo": "bar"}\\'],
-            ['datacontenttype'=> 'application/json', 'data'=>'\\{"foo": "bar"}\\'],
-            ['datacontenttype'=> 'application/json', 'data'=>'\\{"foo": "bar"}\\'],
         ], $result);
-    }
-
-    public function testStartWith()
-    {
-        $this->assertTrue(Client::startWith('x-test-string', 'x-test'));
-        $this->assertFalse(Client::startWith('x-test-string', 'test-string'));
-    }
-
-    private function toBytes($string)
-    {
-        $bytes = [];
-        for ($i = 0; $i < \strlen($string); ++$i) {
-            $bytes[] = \ord($string[$i]);
-        }
-
-        return $bytes;
     }
 }

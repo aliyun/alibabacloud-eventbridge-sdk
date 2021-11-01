@@ -28,20 +28,6 @@ use AlibabaCloud\SDK\EventBridge\Models\GetEventBusRequest;
 use AlibabaCloud\SDK\EventBridge\Models\GetEventBusResponse;
 use AlibabaCloud\SDK\EventBridge\Models\ListEventBusesRequest;
 use AlibabaCloud\SDK\EventBridge\Models\ListEventBusesResponse;
-use AlibabaCloud\SDK\EventBridge\Models\QueryEventByEventIdRequest;
-use AlibabaCloud\SDK\EventBridge\Models\QueryEventByEventIdResponse;
-use AlibabaCloud\SDK\EventBridge\Models\QueryEventsByPeriodRequest;
-use AlibabaCloud\SDK\EventBridge\Models\QueryEventsByPeriodResponse;
-use AlibabaCloud\SDK\EventBridge\Models\QueryEventTracesRequest;
-use AlibabaCloud\SDK\EventBridge\Models\QueryEventTracesResponse;
-use AlibabaCloud\SDK\EventBridge\Models\DeleteEventStreamingRequest;
-use AlibabaCloud\SDK\EventBridge\Models\DeleteEventStreamingResponse;
-use AlibabaCloud\SDK\EventBridge\Models\GetEventStreamingRequest;
-use AlibabaCloud\SDK\EventBridge\Models\GetEventStreamingResponse;
-use AlibabaCloud\SDK\EventBridge\Models\ListEventStreamingMetricsRequest;
-use AlibabaCloud\SDK\EventBridge\Models\ListEventStreamingMetricsResponse;
-use AlibabaCloud\SDK\EventBridge\Models\SaveAndStartEventStreamingRequest;
-use AlibabaCloud\SDK\EventBridge\Models\SaveAndStartEventStreamingResponse;
 use AlibabaCloud\SDK\EventBridge\Models\CreateRuleRequest;
 use AlibabaCloud\SDK\EventBridge\Models\CreateRuleResponse;
 use AlibabaCloud\SDK\EventBridge\Models\DeleteRuleRequest;
@@ -50,22 +36,6 @@ use AlibabaCloud\SDK\EventBridge\Models\DisableRuleRequest;
 use AlibabaCloud\SDK\EventBridge\Models\DisableRuleResponse;
 use AlibabaCloud\SDK\EventBridge\Models\EnableRuleRequest;
 use AlibabaCloud\SDK\EventBridge\Models\EnableRuleResponse;
-use AlibabaCloud\SDK\EventBridge\Models\UpdateEventStreamingRequest;
-use AlibabaCloud\SDK\EventBridge\Models\UpdateEventStreamingResponse;
-use AlibabaCloud\SDK\EventBridge\Models\StartEventStreamingRequest;
-use AlibabaCloud\SDK\EventBridge\Models\StartEventStreamingResponse;
-use AlibabaCloud\SDK\EventBridge\Models\PauseEventStreamingRequest;
-use AlibabaCloud\SDK\EventBridge\Models\PauseEventStreamingResponse;
-use AlibabaCloud\SDK\EventBridge\Models\listEventStreamingsRequest;
-use AlibabaCloud\SDK\EventBridge\Models\listEventStreamingsResponse;
-use AlibabaCloud\SDK\EventBridge\Models\CreateEventStreamingRequest;
-use AlibabaCloud\SDK\EventBridge\Models\CreateEventStreamingResponse;
-use AlibabaCloud\SDK\EventBridge\Models\CreateEventSourceRequest;
-use AlibabaCloud\SDK\EventBridge\Models\CreateEventSourceResponse;
-use AlibabaCloud\SDK\EventBridge\Models\DeleteEventSourceRequest;
-use AlibabaCloud\SDK\EventBridge\Models\DeleteEventSourceResponse;
-use AlibabaCloud\SDK\EventBridge\Models\UpdateEventSourceRequest;
-use AlibabaCloud\SDK\EventBridge\Models\UpdateEventSourceResponse;
 use AlibabaCloud\SDK\EventBridge\Models\GetRuleRequest;
 use AlibabaCloud\SDK\EventBridge\Models\GetRuleResponse;
 use AlibabaCloud\SDK\EventBridge\Models\ListRulesRequest;
@@ -389,7 +359,7 @@ class Eventbridge {
      */
     public function listAliyunOfficialEventSourcesWithOptions($request, $runtime){
         Utils::validateModel($request);
-        return ListAliyunOfficialResponse::fromMap($this->doRequest("listAliyunOfficialEventSources", "HTTP", "POST", "/openapi/v2/listAliyunOfficialEventSources", null, Tea::merge($request), null, $runtime));
+        return ListAliyunOfficialResponse::fromMap($this->doRequest("listAliyunOfficialEventSources", "HTTP", "POST", "/openapi/listAliyunOfficialEventSources", null, Tea::merge($request), null, $runtime));
     }
 
     /**
@@ -410,7 +380,7 @@ class Eventbridge {
      */
     public function listUserDefinedEventSourcesWithOptions($request, $runtime){
         Utils::validateModel($request);
-        return ListUserDefinedResponse::fromMap($this->doRequest("listUserDefinedEventSources", "HTTP", "POST", "/openapi/v2/listUserDefinedEventSources", null, Tea::merge($request), null, $runtime));
+        return ListUserDefinedResponse::fromMap($this->doRequest("listUserDefinedEventSources", "HTTP", "POST", "/openapi/listUserDefinedEventSources", null, Tea::merge($request), null, $runtime));
     }
 
     /**
@@ -474,153 +444,6 @@ class Eventbridge {
     public function listEventBusesWithOptions($request, $runtime){
         Utils::validateModel($request);
         return ListEventBusesResponse::fromMap($this->doRequest("listEventBuses", "HTTP", "POST", "/openapi/listEventBuses", null, Tea::merge($request), null, $runtime));
-    }
-
-    /**
-     * Query the event traces by the event Id
-     * @param QueryEventByEventIdRequest $request
-     * @return QueryEventByEventIdResponse
-     */
-    public function queryEventByEventId($request){
-        $runtime = new RuntimeOptions([]);
-        return $this->queryEventByEventIdWithOptions($request, $runtime);
-    }
-
-    /**
-     * Query the event traces by the event Id
-     * @param QueryEventByEventIdRequest $request
-     * @param RuntimeOptions $runtime
-     * @return QueryEventByEventIdResponse
-     */
-    public function queryEventByEventIdWithOptions($request, $runtime){
-        Utils::validateModel($request);
-        return QueryEventByEventIdResponse::fromMap($this->doRequest("queryEventByEventId", "HTTP", "POST", "/openapi/queryEventByEventId", null, Tea::merge($request), null, $runtime));
-    }
-
-    /**
-     * *Query the event traces by the event period
-     * @param QueryEventsByPeriodRequest $request
-     * @return QueryEventsByPeriodResponse
-     */
-    public function queryEventsByPeriod($request){
-        $runtime = new RuntimeOptions([]);
-        return $this->queryEventsByPeriodWithOptions($request, $runtime);
-    }
-
-    /**
-     * Query the event traces by the event period
-     * @param QueryEventsByPeriodRequest $request
-     * @param RuntimeOptions $runtime
-     * @return QueryEventsByPeriodResponse
-     */
-    public function queryEventsByPeriodWithOptions($request, $runtime){
-        Utils::validateModel($request);
-        return QueryEventsByPeriodResponse::fromMap($this->doRequest("queryEventsByPeriod", "HTTP", "POST", "/openapi/queryEventsByPeriod", null, Tea::merge($request), null, $runtime));
-    }
-
-    /**
-     * Query the event traces by the event Id
-     * @param QueryEventTracesRequest $request
-     * @return QueryEventTracesResponse
-     */
-    public function queryEventTraces($request){
-        $runtime = new RuntimeOptions([]);
-        return $this->queryEventTracesWithOptions($request, $runtime);
-    }
-
-    /**
-     * Query the event traces by the event Id
-     * @param QueryEventTracesRequest $request
-     * @param RuntimeOptions $runtime
-     * @return QueryEventTracesResponse
-     */
-    public function queryEventTracesWithOptions($request, $runtime){
-        Utils::validateModel($request);
-        return QueryEventTracesResponse::fromMap($this->doRequest("queryEventTraces", "HTTP", "POST", "/openapi/queryEventTraces", null, Tea::merge($request), null, $runtime));
-    }
-
-    /**
-     * delete event streaming
-     * @param DeleteEventStreamingRequest $request
-     * @return DeleteEventStreamingResponse
-     */
-    public function deleteEventStreaming($request){
-        $runtime = new RuntimeOptions([]);
-        return $this->deleteEventStreamingWithOptions($request, $runtime);
-    }
-
-    /**
-     * delete event streaming
-     * @param DeleteEventStreamingRequest $request
-     * @param RuntimeOptions $runtime
-     * @return DeleteEventStreamingResponse
-     */
-    public function deleteEventStreamingWithOptions($request, $runtime){
-        Utils::validateModel($request);
-        return DeleteEventStreamingResponse::fromMap($this->doRequest("deleteEventStreaming", "HTTP", "POST", "/openapi/v2/deleteEventStreaming", null, Tea::merge($request), null, $runtime));
-    }
-
-    /**
-     * create event streaming
-     * @param GetEventStreamingRequest $request
-     * @return GetEventStreamingResponse
-     */
-    public function getEventStreaming($request){
-        $runtime = new RuntimeOptions([]);
-        return $this->getEventStreamingWithOptions($request, $runtime);
-    }
-
-    /**
-     * create event streaming
-     * @param GetEventStreamingRequest $request
-     * @param RuntimeOptions $runtime
-     * @return GetEventStreamingResponse
-     */
-    public function getEventStreamingWithOptions($request, $runtime){
-        Utils::validateModel($request);
-        return GetEventStreamingResponse::fromMap($this->doRequest("getEventStreaming", "HTTP", "POST", "/openapi/v2/getEventStreaming", null, Tea::merge($request), null, $runtime));
-    }
-
-    /**
-     * List the metrics of event streaming
-     * @param ListEventStreamingMetricsRequest $request
-     * @return ListEventStreamingMetricsResponse
-     */
-    public function listEventStreamingMetrics($request){
-        $runtime = new RuntimeOptions([]);
-        return $this->listEventStreamingMetricsWithOptions($request, $runtime);
-    }
-
-    /**
-     * List the metrics of event streaming
-     * @param ListEventStreamingMetricsRequest $request
-     * @param RuntimeOptions $runtime
-     * @return ListEventStreamingMetricsResponse
-     */
-    public function listEventStreamingMetricsWithOptions($request, $runtime){
-        Utils::validateModel($request);
-        return ListEventStreamingMetricsResponse::fromMap($this->doRequest("listEventStreamingMetrics", "HTTP", "POST", "/openapi/v2/listEventStreamingMetrics", null, Tea::merge($request), null, $runtime));
-    }
-
-    /**
-     * Save and start event streaming procss
-     * @param SaveAndStartEventStreamingRequest $request
-     * @return SaveAndStartEventStreamingResponse
-     */
-    public function saveAndStartEventStreaming($request){
-        $runtime = new RuntimeOptions([]);
-        return $this->saveAndStartEventStreamingWithOptions($request, $runtime);
-    }
-
-    /**
-     * Save and start event streaming procss
-     * @param SaveAndStartEventStreamingRequest $request
-     * @param RuntimeOptions $runtime
-     * @return SaveAndStartEventStreamingResponse
-     */
-    public function saveAndStartEventStreamingWithOptions($request, $runtime){
-        Utils::validateModel($request);
-        return SaveAndStartEventStreamingResponse::fromMap($this->doRequest("saveAndStartEventStreaming", "HTTP", "POST", "/openapi/saveAndStartEventStreaming", null, Tea::merge($request), null, $runtime));
     }
 
     /**
@@ -705,174 +528,6 @@ class Eventbridge {
     public function enableRuleWithOptions($request, $runtime){
         Utils::validateModel($request);
         return EnableRuleResponse::fromMap($this->doRequest("enableRule", "HTTP", "POST", "/openapi/enableRule", null, Tea::merge($request), null, $runtime));
-    }
-
-    /**
-     * Update event streaming procss
-     * @param UpdateEventStreamingRequest $request
-     * @return UpdateEventStreamingResponse
-     */
-    public function updateEventStreaming($request){
-        $runtime = new RuntimeOptions([]);
-        return $this->updateEventStreamingWithOptions($request, $runtime);
-    }
-
-    /**
-     * create event streaming
-     * @param UpdateEventStreamingRequest $request
-     * @param RuntimeOptions $runtime
-     * @return UpdateEventStreamingResponse
-     */
-    public function updateEventStreamingWithOptions($request, $runtime){
-        Utils::validateModel($request);
-        return UpdateEventStreamingResponse::fromMap($this->doRequest("updateEventStreaming", "HTTP", "POST", "/openapi/v2/updateEventStreaming", null, Tea::merge($request), null, $runtime));
-    }
-
-    /**
-     * create event streaming
-     * @param StartEventStreamingRequest $request
-     * @return StartEventStreamingResponse
-     */
-    public function startEventStreaming($request){
-        $runtime = new RuntimeOptions([]);
-        return $this->startEventStreamingsWithOptions($request, $runtime);
-    }
-
-    /**
-     * create event streaming
-     * @param StartEventStreamingRequest $request
-     * @param RuntimeOptions $runtime
-     * @return StartEventStreamingResponse
-     */
-    public function startEventStreamingsWithOptions($request, $runtime){
-        Utils::validateModel($request);
-        return StartEventStreamingResponse::fromMap($this->doRequest("startEventStreaming", "HTTP", "POST", "/openapi/v2/startEventStreaming", null, Tea::merge($request), null, $runtime));
-    }
-
-    /**
-     * delete event streaming
-     * @param PauseEventStreamingRequest $request
-     * @return PauseEventStreamingResponse
-     */
-    public function pauseEventStreaming($request){
-        $runtime = new RuntimeOptions([]);
-        return $this->pauseEventStreamingWithOptions($request, $runtime);
-    }
-
-    /**
-     * delete event streaming
-     * @param PauseEventStreamingRequest $request
-     * @param RuntimeOptions $runtime
-     * @return PauseEventStreamingResponse
-     */
-    public function pauseEventStreamingWithOptions($request, $runtime){
-        Utils::validateModel($request);
-        return PauseEventStreamingResponse::fromMap($this->doRequest("startEventStreaming", "HTTP", "POST", "/openapi/v2/pauseEventStreaming", null, Tea::merge($request), null, $runtime));
-    }
-
-    /**
-     * create event streaming
-     * @param listEventStreamingsRequest $request
-     * @return listEventStreamingsResponse
-     */
-    public function listEventStreamings($request){
-        $runtime = new RuntimeOptions([]);
-        return $this->listEventStreamingsWithOptions($request, $runtime);
-    }
-
-    /**
-     * create event streaming
-     * @param listEventStreamingsRequest $request
-     * @param RuntimeOptions $runtime
-     * @return listEventStreamingsResponse
-     */
-    public function listEventStreamingsWithOptions($request, $runtime){
-        Utils::validateModel($request);
-        return listEventStreamingsResponse::fromMap($this->doRequest("listEventStreamings", "HTTP", "POST", "/openapi/v2/listEventStreamings", null, Tea::merge($request), null, $runtime));
-    }
-
-    /**
-     * Create event streaming procss
-     * @param CreateEventStreamingRequest $request
-     * @return CreateEventStreamingResponse
-     */
-    public function createEventStreaming($request){
-        $runtime = new RuntimeOptions([]);
-        return $this->createEventStreamingWithOptions($request, $runtime);
-    }
-
-    /**
-     * Create event streaming procss
-     * @param CreateEventStreamingRequest $request
-     * @param RuntimeOptions $runtime
-     * @return CreateEventStreamingResponse
-     */
-    public function createEventStreamingWithOptions($request, $runtime){
-        Utils::validateModel($request);
-        return CreateEventStreamingResponse::fromMap($this->doRequest("createEventStreaming", "HTTP", "POST", "/openapi/v2/createEventStreaming", null, Tea::merge($request), null, $runtime));
-    }
-
-    /**
-     * Creates a new event source within your account
-     * @param CreateEventSourceRequest $request
-     * @return CreateEventSourceResponse
-     */
-    public function createEventSource($request){
-        $runtime = new RuntimeOptions([]);
-        return $this->createEventSourceWithOptions($request, $runtime);
-    }
-
-    /**
-     * Creates a new event source within your account
-     * @param CreateEventSourceRequest $request
-     * @param RuntimeOptions $runtime
-     * @return CreateEventSourceResponse
-     */
-    public function createEventSourceWithOptions($request, $runtime){
-        Utils::validateModel($request);
-        return CreateEventSourceResponse::fromMap($this->doRequest("createEventSource", "HTTP", "POST", "/openapi/v2/createEventSource", null, Tea::merge($request), null, $runtime));
-    }
-
-    /**
-     * Delete the event source
-     * @param DeleteEventSourceRequest $request
-     * @return DeleteEventSourceResponse
-     */
-    public function deleteEventSource($request){
-        $runtime = new RuntimeOptions([]);
-        return $this->deleteEventSourceWithOptions($request, $runtime);
-    }
-
-    /**
-     * Delete the event source
-     * @param DeleteEventSourceRequest $request
-     * @param RuntimeOptions $runtime
-     * @return DeleteEventSourceResponse
-     */
-    public function deleteEventSourceWithOptions($request, $runtime){
-        Utils::validateModel($request);
-        return DeleteEventSourceResponse::fromMap($this->doRequest("deleteEventSource", "HTTP", "POST", "/openapi/v2/deleteEventSource", null, Tea::merge($request), null, $runtime));
-    }
-
-    /**
-     * Update the event source
-     * @param UpdateEventSourceRequest $request
-     * @return UpdateEventSourceResponse
-     */
-    public function updateEventSource($request){
-        $runtime = new RuntimeOptions([]);
-        return $this->updateEventSourceWithOptions($request, $runtime);
-    }
-
-    /**
-     * Update the event source
-     * @param UpdateEventSourceRequest $request
-     * @param RuntimeOptions $runtime
-     * @return UpdateEventSourceResponse
-     */
-    public function updateEventSourceWithOptions($request, $runtime){
-        Utils::validateModel($request);
-        return UpdateEventSourceResponse::fromMap($this->doRequest("updateEventSource", "HTTP", "POST", "/openapi/v2/updateEventSource", null, Tea::merge($request), null, $runtime));
     }
 
     /**

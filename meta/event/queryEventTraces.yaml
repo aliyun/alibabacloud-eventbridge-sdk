@@ -1,0 +1,56 @@
+alibabaCloud: "alibabaCloud:1.0.0"
+info:
+  namespace: "eventbridge"
+  apiStyle: "restful"
+apis:
+  putEvents:
+    description: "Query the event traces by the event Id."
+    path: "/openapi/queryEventTraces"
+    methods:
+      - "post"
+    schemes:
+      - "http"
+    visibility: "Public"
+    parameters:
+      - name: "EventBusName"
+        in: "body"
+        schema:
+          description: "the name of eventbus"
+          type: "string"
+          checkBlank: true
+          visibility: "private"
+      - name: "EventId"
+        in: "body"
+        schema:
+          description: "the event id of event"
+          type: "string"
+          checkBlank: true
+          visibility: "private"
+    responses:
+      "200":
+        schema:
+          title: "The response of query event traces."
+          type: "object"
+          properties:
+            EventTraceList:
+              title: "the list of EventTrace"
+              type: "array"
+              items:
+                type: "object"
+                $ref: "#/components/schemas/EventTrace"
+components:
+  schemas:
+    EventTrace:
+      description: "The detail of EventTrace"
+      visibility: "Public"
+      properties:
+        ResourceOwnerId:
+          type: "string"
+        Action:
+          type: "string"
+        EventId:
+          type: "string"
+        EventBusName:
+          type: "string"
+        ActionTime:
+          type: "string"

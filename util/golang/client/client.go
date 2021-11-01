@@ -154,23 +154,11 @@ func Serialize(events interface{}) (_result interface{}) {
 
 		if m["datacontenttype"] != nil {
 			datacontenttype := m["datacontenttype"].(string)
-			if (!strings.HasPrefix(datacontenttype, "application/json") &&
-				!strings.HasPrefix(datacontenttype, "text/json")) && m["data"] != nil {
+			if (datacontenttype != "application/json" && datacontenttype != "text/json") &&
+				m["data"] != nil {
 				data := m["data"].(string)
 				m["data_base64"] = data
 				delete(m, "data")
-			}
-		}
-
-		if m["data"] != nil {
-			var res interface{}
-			data := m["data"].(string)
-			tmp, _ := base64.StdEncoding.DecodeString(data)
-			err = json.Unmarshal(tmp, &res)
-			if err != nil {
-				m["data"] = string(tmp)
-			} else {
-				m["data"] = res
 			}
 		}
 
@@ -185,15 +173,4 @@ func Serialize(events interface{}) (_result interface{}) {
 	}
 
 	return out
-}
-
-/**
- * Judge if the  origin is start with the prefix
- * @param origin the original string
- * @param prefix the prefix string
- * @return the result
- */
-func StartWith(origin, prefix *string) (_result *bool) {
-	res := strings.HasPrefix(tea.StringValue(origin), tea.StringValue(prefix))
-	return tea.Bool(res)
 }

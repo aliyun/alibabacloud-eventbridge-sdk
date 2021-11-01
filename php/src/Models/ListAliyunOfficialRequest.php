@@ -13,7 +13,9 @@ class ListAliyunOfficialRequest extends Model {
         'nextToken' => 'NextToken',
         'limit' => 'Limit',
     ];
-    public function validate() {}
+    public function validate() {
+        Model::validateRequired('nextToken', $this->nextToken, true);
+    }
     public function toMap() {
         $res = [];
         if (null !== $this->nextToken) {

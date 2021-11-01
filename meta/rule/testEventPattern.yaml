@@ -1,0 +1,41 @@
+alibabaCloud: "alibabaCloud:1.0.0"
+info:
+  namespace: "eventbridge"
+  apiStyle: "restful"
+apis:
+  putEvents:
+    description: "Tests whether the specified event pattern matches the provided event."
+    path: "/openapi/testEventPattern"
+    methods:
+      - "post"
+    schemes:
+      - "http"
+    visibility: "Public"
+    parameters:
+      - name: "Event"
+        in: "body"
+        schema:
+          required: true
+          description: "The event, in JSON format, to test against the event pattern."
+          type: "string"
+          checkBlank: true
+          visibility: "private"
+          maxLength: 2048
+      - name: "EventPattern"
+        in: "body"
+        schema:
+          required: true
+          description: "The event pattern"
+          type: "string"
+          checkBlank: true
+          visibility: "private"
+          maxLength: 2048
+    responses:
+      "200":
+        schema:
+          title: "The response of Get EventBus "
+          type: "object"
+          properties:
+            Result:
+              title: "return true if the eventPattern math the event"
+              type: "boolean"

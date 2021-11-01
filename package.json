@@ -1,0 +1,39 @@
+{
+  "name": "@ali/eventbridge-helper",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "test": "mocha -R spec",
+    "lint": "eslint --fix  bin/ ",
+    "test-cov": "nyc -r=lcov -r=html -r=text -r=json mocha -t 3000 -R spec test/*.test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@gitlab.alibaba-inc.com:alicloud-sdk/EventBridge-helper.git"
+  },
+  "bin": {
+    "combo": "bin/combo.js"
+  },
+  "author": "Jackson Tian",
+  "license": "MIT",
+  "dependencies": {
+    "@ali/emitter": "^1.0.0",
+    "js-yaml": "^3.13.1",
+    "xml2js": "^0.4.19"
+  },
+  "publishConfig": {
+    "registry": "http://registry.npm.alibaba-inc.com"
+  },
+  "devDependencies": {
+    "eslint": "^6.6.0",
+    "expect.js": "^0.3.1",
+    "mocha": "^5.2.0",
+    "nyc": "^14.1.1"
+  },
+  "files": [
+    "bin",
+    "lib",
+    "template",
+    "command"
+  ]
+}

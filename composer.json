@@ -1,5 +1,0 @@
-{
-    "require": {
-        "alibabacloud/dysmsapi-20170525": "^1.0"
-    }
-}

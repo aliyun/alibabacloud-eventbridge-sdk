@@ -1,0 +1,68 @@
+alibabaCloud: "alibabaCloud:1.0.0"
+info:
+  namespace: "eventbridge"
+  apiStyle: "restful"
+apis:
+  putEvents:
+    description: "Delete the specified targets from the specified rule."
+    path: "/openapi/deleteTargets"
+    methods:
+      - "post"
+    schemes:
+      - "http"
+    visibility: "Public"
+    parameters:
+      - name: "EventBusName"
+        in: "body"
+        schema:
+          required: true
+          description: "eventBusName"
+          type: "string"
+          checkBlank: true
+          visibility: "private"
+      - name: "RuleName"
+        in: "body"
+        schema:
+          required: true
+          description: "ruleName"
+          type: "string"
+          checkBlank: true
+          visibility: "private"
+      - name: "TargetIds"
+        in: "body"
+        schema:
+          required: true
+          description: "targetIds"
+          type: "array"
+          checkBlank: true
+          visibility: "private"
+          items:
+            type: "string"
+
+    responses:
+      "200":
+        schema:
+          title: "The response of delete Targets "
+          type: "object"
+          properties:
+            ErrorEntriesCount:
+              title: "the cout of error entries"
+              type: "number"
+            ErrorEntries:
+              title: "the cout of error entries"
+              type: "array"
+              items:
+                type: "object"
+                $ref: "#/components/schemas/TargetResultEntry"
+components:
+  schemas:
+    TargetResultEntry:
+      description: "The result detail of target operation"
+      visibility: "Public"
+      properties:
+        ErrorCode:
+          type: "string"
+        ErrorMessage:
+          type: "string"
+        EntryId:
+          type: "string"

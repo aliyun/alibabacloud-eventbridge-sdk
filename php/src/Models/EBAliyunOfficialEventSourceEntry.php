@@ -17,7 +17,7 @@ class EBAliyunOfficialEventSourceEntry extends Model {
         'arn' => 'ARN',
         'status' => 'Status',
         'ctime' => 'Ctime',
-        'eventBusName' => 'EventBusName',
+        'attachedBuses' => 'AttachedBuses',
         'eventTypes' => 'EventTypes',
     ];
     public function validate() {
@@ -26,7 +26,7 @@ class EBAliyunOfficialEventSourceEntry extends Model {
         Model::validateRequired('arn', $this->arn, true);
         Model::validateRequired('status', $this->status, true);
         Model::validateRequired('ctime', $this->ctime, true);
-        Model::validateRequired('eventBusName', $this->eventBusName, true);
+        Model::validateRequired('attachedBuses', $this->attachedBuses, true);
         Model::validateRequired('eventTypes', $this->eventTypes, true);
     }
     public function toMap() {
@@ -46,8 +46,8 @@ class EBAliyunOfficialEventSourceEntry extends Model {
         if (null !== $this->ctime) {
             $res['Ctime'] = $this->ctime;
         }
-        if (null !== $this->eventBusName) {
-            $res['EventBusName'] = $this->eventBusName;
+        if (null !== $this->attachedBuses) {
+            $res['AttachedBuses'] = $this->attachedBuses;
         }
         if (null !== $this->eventTypes) {
             $res['EventTypes'] = [];
@@ -81,8 +81,10 @@ class EBAliyunOfficialEventSourceEntry extends Model {
         if(isset($map['Ctime'])){
             $model->ctime = $map['Ctime'];
         }
-        if(isset($map['EventBusName'])){
-            $model->eventBusName = $map['EventBusName'];
+        if(isset($map['AttachedBuses'])){
+            if(!empty($map['AttachedBuses'])){
+                $model->attachedBuses = $map['AttachedBuses'];
+            }
         }
         if(isset($map['EventTypes'])){
             if(!empty($map['EventTypes'])){
@@ -121,9 +123,9 @@ class EBAliyunOfficialEventSourceEntry extends Model {
     public $ctime;
 
     /**
-     * @var string
+     * @var string[]
      */
-    public $eventBusName;
+    public $attachedBuses;
 
     /**
      * @var EventTypeEntry[]

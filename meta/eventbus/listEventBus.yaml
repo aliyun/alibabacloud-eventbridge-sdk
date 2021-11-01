@@ -1,0 +1,71 @@
+alibabaCloud: "alibabaCloud:1.0.0"
+info:
+  namespace: "eventbridge"
+  apiStyle: "restful"
+apis:
+  putEvents:
+    description: "List all the EventBus in your account, including the default event bus, custom event buses, which meet the search criteria."
+    path: "/openapi/listEventBuses"
+    methods:
+      - "post"
+    schemes:
+      - "http"
+    visibility: "Public"
+    parameters:
+      - name: "NamePrefix"
+        in: "body"
+        schema:
+          description: "namePrefix"
+          type: "string"
+          checkBlank: true
+          visibility: "private"
+      - name: "Limit"
+        in: "body"
+        schema:
+          description: "limit"
+          type: "number"
+          checkBlank: true
+          visibility: "private"
+      - name: "NextToken"
+        in: "body"
+        schema:
+          description: "nextToken"
+          type: "String"
+          checkBlank: true
+          visibility: "private"
+    responses:
+      "200":
+        schema:
+          title: "The response of search EventBus "
+          type: "object"
+          properties:
+            EventBuses:
+              title: "the list of EventBuses"
+              type: "array"
+              items:
+                type: "object"
+                $ref: "#/components/schemas/EventBusEntry"
+            NextToken:
+              title: "the NextToken of list EventBuses"
+              type: "string"
+            Total:
+              title: "the Total Number of list EventBuses"
+              type: "number"
+components:
+  schemas:
+    EventBusEntry:
+      description: "The detail of EventBuses"
+      visibility: "Public"
+      properties:
+        EventBusName:
+          type: "string"
+        EventBusARN:
+          type: "string"
+        Description:
+          type: "string"
+        CreateTimestamp:
+          type: "number"
+        Tags:
+          type: "object"
+          additionalProperties:
+            type: "string"

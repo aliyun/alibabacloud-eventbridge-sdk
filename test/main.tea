@@ -1,0 +1,397 @@
+import EventBridge;
+import Util;
+import Console;
+
+/**
+* Create client  初始化公共请求参数
+*/
+static function createClient()throws: EventBridge{
+
+    var config = new EventBridge.Config{};
+    // AccessKey ID
+    config.accessKeyId = "<accessKeyId>";
+    // AccessKey Secret
+    config.accessKeySecret = "<accessKeySecret>";
+    // 接入点
+    config.endpoint = '<endpoint>';
+
+    return new EventBridge(config);
+}
+
+
+static function createEventBusSample(client: EventBridge) throws: void{
+    try {
+        var createEventBusRequest = new EventBridge.CreateEventBusRequest{};
+        createEventBusRequest.eventBusName = 'demo-bus';
+        var resp = client.createEventBus(createEventBusRequest);
+        Console.log("--------------------Create bus success --------------------");
+        Console.log(Util.toJSONString(resp));
+    } catch (error) {
+        Console.log(error.message);
+    }
+}
+
+static function deleteEventBusSample(client: EventBridge) throws: void{
+     try {
+        //delete
+        var deleteEventBusRequest = new EventBridge.DeleteEventBusRequest{};
+        deleteEventBusRequest.eventBusName='demo-bus';
+        var resp = client.deleteEventBus(deleteEventBusRequest);
+        Console.log("--------------------Delete bus success --------------------");
+        Console.log(Util.toJSONString(resp));
+    } catch (error) {
+        Console.log(error.message);
+    }
+}
+
+static function getEventBusSample(client: EventBridge) throws: void{
+    try {
+        var getEventBusRequest = new EventBridge.GetEventBusRequest{};
+        getEventBusRequest.eventBusName='demo-bus';
+        var resp = client.getEventBus(getEventBusRequest);
+        Console.log("--------------------get event bus success --------------------");
+        Console.log(Util.toJSONString(resp));
+    } catch (error) {
+        Console.log(error.message);
+    }
+}
+
+static function listEventBusesSample(client: EventBridge) throws: void{
+    try {
+        var listEventBusesRequest = new EventBridge.ListEventBusesRequest{};
+        listEventBusesRequest.limit=100;
+        var resp = client.listEventBuses(listEventBusesRequest);
+        Console.log("--------------------list bus success --------------------");
+        Console.log(Util.toJSONString(resp));
+    } catch (error) {
+        Console.log(error.message);
+    }
+}
+
+static function createEventRuleSample(client: EventBridge) throws: void{
+    try {
+        var createEventRuleRequest = new EventBridge.CreateRuleRequest{};
+        var targetEntry = new EventBridge.TargetEntry{};
+        targetEntry.id='dingtalk.target';
+        targetEntry.endpoint='https://oapi.dingtalk.com/robot/send?access_token=1019d4a19e2ef6b2f***********396fc5e94814ed8460';
+        targetEntry.type='acs.dingtalk';
+
+        var param1 = new EventBridge.EBTargetParam{};
+        param1.resourceKey='URL';
+        param1.form='CONSTANT';
+        param1.value='https://oapi.dingtalk.com/robot/send?access_token=1019d4a19e2ef6b2f***********396fc5e94814ed8460';
+
+        var param2 = new EventBridge.EBTargetParam{};
+        param2.resourceKey='SecretKey';
+        param2.form='CONSTANT';
+        param2.value='SEC121a71ff304a65b4f7c**************1f4d9f6c1ca514300d15234';
+
+        var param3 = new EventBridge.EBTargetParam{};
+        param3.resourceKey='Body';
+        param3.form='TEMPLATE';
+        param3.value=`{\n    \"key\":\"$.source\",\n    \"value\":\"$.data\"\n}`;
+        param3.template='{"msgtype": "text","text": {"content": "Hello：${key}"}}';
+
+        var paramList = [param1, param2, param3];
+        targetEntry.paramList = paramList;
+
+        var targetEntryList = [targetEntry];
+        createEventRuleRequest.targets=targetEntryList;
+        createEventRuleRequest.ruleName='myRule';
+        createEventRuleRequest.eventBusName='demo-bus';
+        createEventRuleRequest.filterPattern=`{\"source\":[\"acs.oss\"],\"type\":[\"oss:ObjectCreated:UploadPart\"]}`;
+        createEventRuleRequest.status='enable';
+        var resp= client.createRule(createEventRuleRequest);
+        Console.log("--------------------create rule success--------------------");
+        Console.log(Util.toJSONString(resp));
+    } catch (error) {
+        Console.log(error.message);
+    }
+}
+
+static function deleteEventRuleSample(client: EventBridge) throws: void{
+    try {
+        var deleteRuleRequest = new EventBridge.DeleteRuleRequest{};
+        deleteRuleRequest.ruleName='myRule';
+        deleteRuleRequest.eventBusName='demo-bus';
+        var resp = client.deleteRule(deleteRuleRequest);
+        Console.log("--------------------delete rule success--------------------");
+        Console.log(Util.toJSONString(resp));
+    } catch (error) {
+        Console.log(error.message);
+    }
+}
+
+static function enableEventRuleSample(client: EventBridge) throws: void{
+    try {
+        var enableEventRuleRequest = new EventBridge.EnableRuleRequest{};
+        enableEventRuleRequest.ruleName='myRule';
+        enableEventRuleRequest.eventBusName='demo-bus';
+        var resp = client.enableRule(enableEventRuleRequest);
+        Console.log("--------------------enable rule success--------------------");
+        Console.log(Util.toJSONString(resp));
+    } catch (error) {
+        Console.log(error.message);
+    }
+}
+
+static function disableEventRuleSample(client: EventBridge) throws: void{
+    try {
+        var disableEventRuleRequest = new EventBridge.DisableRuleRequest{};
+        disableEventRuleRequest.ruleName='myRule';
+        disableEventRuleRequest.eventBusName='demo-bus';
+        var resp = client.disableRule(disableEventRuleRequest);
+        Console.log("--------------------disable rule success--------------------");
+        Console.log(Util.toJSONString(resp));
+    } catch (error) {
+        Console.log(error.message);
+    }
+}
+
+static function getEventRuleSample(client: EventBridge) throws: void{
+    try {
+        var getEventRuleRequest = new EventBridge.GetRuleRequest{};
+        getEventRuleRequest.ruleName='myRule';
+        getEventRuleRequest.eventBusName='demo-bus';
+        var resp = client.getRule(getEventRuleRequest);
+        Console.log("--------------------get rule success--------------------");
+        Console.log(Util.toJSONString(resp));
+    } catch (error) {
+        Console.log(error.message);
+    }
+}
+
+
+static function listEventRulesSample(client: EventBridge) throws: void{
+    try {
+        var listEventRulesRequest = new EventBridge.ListRulesRequest{};
+        listEventRulesRequest.eventBusName='demo-bus';
+        var resp = client.listRules(listEventRulesRequest);
+        Console.log("--------------------listRules rule success--------------------");
+        Console.log(Util.toJSONString(resp));
+    } catch (error) {
+        Console.log(error.message);
+    }
+}
+
+static function updateEventRuleSample(client: EventBridge) throws: void{
+    try {
+        var updateEventRuleRequest = new EventBridge.UpdateRuleRequest{};
+        updateEventRuleRequest.eventBusName='demo-bus';
+        updateEventRuleRequest.ruleName='myRule';
+        updateEventRuleRequest.filterPattern=`{\"source\":[\"acs.oss\"],\"type\":[\"oss:BucketQueried:GetBucketStat\"]}`;
+        var resp = client.updateRule(updateEventRuleRequest);
+        Console.log("--------------------update rule success--------------------");
+        Console.log(Util.toJSONString(resp));
+    } catch (error) {
+        Console.log(error.message);
+    }
+}
+
+static function testEventPattern_False(client: EventBridge) throws: void{
+    try {
+        var request = new EventBridge.TestEventPatternRequest{};
+        var pattern = `{\n    \"source\": [\"acs.oss\"],\n    \"data\": {\n      \"b\": [1]\n    }\n}`;
+        var jsonData = `{
+        \"id\":\"51efe8e2-841f-4900-8ff5-3c6dfae1060e\",
+        \"source\":\"acs.oss\",
+        \"type\":\"oss:ObjectCreated:PostObject\",
+        \"dataschema\":\"http://taobao.com/test.json\",
+        \"subject\":\"acs:oss:cn-hangzhou:1234567:xls-papk/game_apk/123.jpg\",
+        \"aliyuneventbusname\":\"demo-bus\",
+        \"data\":{
+            \"a\":\"test\",
+            \"b\":1
+        }
+}`;
+        request.event=jsonData;
+        request.eventPattern=pattern;
+        var resp = client.testEventPattern(request);
+        Console.log("--------------------test event pattern --------------------");
+        Console.log(Util.toJSONString(resp));
+    } catch (error) {
+        Console.log(error.message);
+    }
+}
+
+static function testEventPattern_True(client: EventBridge) throws: void{
+    try {
+        var request = new EventBridge.TestEventPatternRequest{};
+        var pattern = `{\n    \"source\": [\"acs.oss\"],\n    \"data\": {\n      \"b\": [2]\n    }\n}`;
+        var jsonData = `{
+        \"id\":\"51efe8e2-841f-4900-8ff5-3c6dfae1060e\",
+        \"source\":\"acs.oss\",        
+        \"type\":\"oss:ObjectCreated:PostObject\",
+        \"dataschema\":\"http://taobao.com/test.json\",
+        \"subject\":\"acs:oss:cn-hangzhou:1234567:xls-papk/game_apk/123.jpg\",
+        \"aliyuneventbusname\":\"demo-bus\",
+        \"data\":{
+            \"a\":\"test\",
+            \"b\":1
+        }
+}`;
+        request.event=jsonData;
+        request.eventPattern=pattern;
+        var resp = client.testEventPattern(request);
+        Console.log("--------------------test event pattern --------------------");
+        Console.log(Util.toJSONString(resp));
+    } catch (error) {
+        Console.log(error.message);
+    }
+}
+
+static function createTargetsSample(client: EventBridge) throws: void{
+    try {
+        var createTargetsRequest = new EventBridge.CreateTargetsRequest{};
+        createTargetsRequest.eventBusName='demo-bus';
+        createTargetsRequest.ruleName='myRule';
+        var targetEntry = new EventBridge.TargetEntry{};
+        targetEntry.id='1234';
+        targetEntry.endpoint='http://www.baidu.com';
+        var list : [EventBridge.TargetEntry]= [targetEntry];
+        createTargetsRequest.targets=list;
+        var response = client.createTargets(createTargetsRequest);
+        Console.log("--------------------Create targets success--------------------");
+        Console.log(Util.toJSONString(response));
+    } catch (error) {
+        Console.log(error.message);
+    }
+}
+
+static function removeTargetsSample(client: EventBridge) throws: void{
+    try {
+        var removeTargetsRequest = new EventBridge.DeleteTargetsRequest{};
+        removeTargetsRequest.eventBusName='demo-bus';
+        removeTargetsRequest.ruleName='myRule';
+        var list = ['dingtalk.target'];
+        removeTargetsRequest.targetIds=list;
+        var response = client.deleteTargets(removeTargetsRequest);
+        Console.log("--------------------remove targets success--------------------");
+        Console.log(Util.toJSONString(response));
+    } catch (error) {
+        Console.log(error.message);
+    }
+}
+
+static function listTargetsSample(client: EventBridge) throws: void{
+    try {
+        var listTargetsRequest = new EventBridge.ListTargetsRequest{};
+        listTargetsRequest.eventBusName='demo-bus';
+        listTargetsRequest.ruleName='myRule';
+        var response = client.listTargets(listTargetsRequest);
+        Console.log("--------------------list targets success--------------------");
+        Console.log(Util.toJSONString(response));
+    } catch (error) {
+        Console.log(error.message);
+    }
+}
+
+
+/**
+* PutEvents
+*/
+static function PutEvents(client: EventBridge) throws: void{
+    var event = new EventBridge.CloudEvent{};
+    event.datacontenttype = 'application/json';
+    event.data = Util.toBytes('test');
+    event.id = 'a5074581-7e74-4e4c-868f-47e7afdf8445';
+    event.source = 'acs.oss';
+    event.specversion = '1.0';
+    event.type = 'oss:ObjectCreated:PostObject';
+    event.time = '2020-08-24T13:54:05.965Asia/Shanghai';
+    event.subject = '1.0';
+    event.type = 'acs:oss:cn-hangzhou:1234567:xls-papk/game_apk/123.jpg';
+    event.extensions = {
+        aliyuneventbusname = "demo-bus",
+    };
+    try {
+        var resp = client.putEvents([ event ]);
+        Console.log("--------------------Publish event to the aliyun EventBus--------------------");
+        Console.log(Util.toJSONString(resp));
+    } catch (error) {
+        Console.log(error.message);
+    }
+}
+
+/**
+* queryEventTraces
+*/
+static function queryEventTracesSample(client: EventBridge) throws: void{
+    var request = new EventBridge.QueryEventTracesRequest{};
+    request.eventId = 'afhbj4c3-72ce-g9j3-6hcj-0gia021eh5gg';
+    request.eventBusName = 'demo-bus';
+
+    try {
+        var resp = client.queryEventTraces(request);
+        Console.log("--------------------queryEventTraces--------------------");
+        Console.log(Util.toJSONString(resp));
+    } catch (error) {
+        Console.log(error.message);
+    }
+}
+
+
+/**
+* queryEventByEventId
+*/
+static function queryEventByEventIdSample(client: EventBridge) throws: void{
+    var request = new EventBridge.QueryEventByEventIdRequest{};
+    request.eventId = 'afhbj4c3-72ce-g9j3-6hcj-0gia021eh5gg';
+    request.eventBusName = 'demo-bus';
+
+    try {
+        var resp = client.queryEventByEventId(request);
+        Console.log("--------------------queryEventByEventId--------------------");
+        Console.log(Util.toJSONString(resp));
+    } catch (error) {
+        Console.log(error.message);
+    }
+}
+
+
+/**
+* queryEventsByPeriod
+*/
+static function queryEventsByPeriodSample(client: EventBridge) throws: void{
+    var request = new EventBridge.QueryEventsByPeriodRequest{};
+    request.eventBusName = 'demo-bus';
+    request.startTime = 1612312407;
+    request.endTime = 1612322407;
+    try {
+        var resp = client.queryEventsByPeriod(request);
+        Console.log("--------------------queryEventsByPeriod--------------------");
+        Console.log(Util.toJSONString(resp));
+    } catch (error) {
+        Console.log(error.message);
+    }
+}
+
+
+static async function main(args: [string]): void {
+    var client = createClient();
+    createEventBusSample(client);
+    PutEvents(client);
+    getEventBusSample(client);
+    listEventBusesSample(client);
+
+    createEventRuleSample(client);
+    enableEventRuleSample(client);
+    disableEventRuleSample(client);
+    getEventRuleSample(client);
+    listEventRulesSample(client);
+    updateEventRuleSample(client);
+
+    testEventPattern_False(client);
+    testEventPattern_True(client);
+
+    createTargetsSample(client);
+    listTargetsSample(client);
+    
+    removeTargetsSample(client);
+    deleteEventRuleSample(client);
+    deleteEventBusSample(client);
+
+    queryEventTracesSample(client);
+    queryEventByEventIdSample(client);
+    queryEventsByPeriodSample(client);
+}

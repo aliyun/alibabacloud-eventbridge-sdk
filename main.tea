@@ -1230,7 +1230,7 @@ model SourceRabbitMQParameters = {
 model SourceMNSParameters = {
   regionId?: string(name='RegionId'),
   queueName?: string(name='QueueName'),
-  isBase64Decode: boolean(name='IsBase64Decode'),
+  isBase64Decode?: boolean(name='IsBase64Decode'),
 }
 
 /**
@@ -1241,9 +1241,9 @@ model SourceRocketMQParameters = {
   instanceId?: string(name='InstanceId'),
   topic?: string(name='Topic'),
   tag?: string(name='Tag'),
-  timestamp?: number(name='Timestamp'),
   offset?: string(name='Offset'),
   groupID: string(name='GroupID'),
+  timestamp: number(name='Timestamp'),
 }
 
 /**

@@ -11,15 +11,14 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
-
 using Newtonsoft.Json;
-
 using Tea;
 using Tea.Utils;
 
+
 namespace AlibabaCloud.EventBridgeUtil
 {
-    public class Common
+    public class Common 
     {
 
         /**
@@ -52,7 +51,7 @@ namespace AlibabaCloud.EventBridgeUtil
         public static string GetSignature(string stringToSign, string secret)
         {
             byte[] signData;
-            using(KeyedHashAlgorithm algorithm = CryptoConfig.CreateFromName("HMACSHA1") as KeyedHashAlgorithm)
+            using (KeyedHashAlgorithm algorithm = CryptoConfig.CreateFromName("HMACSHA1") as KeyedHashAlgorithm)
             {
                 algorithm.Key = Encoding.UTF8.GetBytes(secret);
                 signData = algorithm.ComputeHash(Encoding.UTF8.GetBytes(stringToSign.ToCharArray()));
@@ -67,49 +66,26 @@ namespace AlibabaCloud.EventBridgeUtil
          */
         public static object Serialize(object events)
         {
-            var listModel = (IList) events;
+            var listModel = (IList)events;
             List<Dictionary<string, object>> listMap = new List<Dictionary<string, object>>();
-            foreach (var model in listModel)
+            foreach(var model in listModel)
             {
-                var map = ((TeaModel) model).ToMap();
-                var contentType = map.Get("datacontenttype").ToSafeString("application/json");
+                var map = ((TeaModel)model).ToMap();
+                var contentType = map.Get("datacontenttype").ToSafeString();
                 var data = map.Get("data");
-                if(map.ContainsKey("data"))
+                if (contentType != null && contentType != "application/json" && contentType != "text/json" && data != null)
                 {
+                    map["data_base64"] = data;
                     map.Remove("data");
                 }
 
-                if (data != null)
+                if(map.ContainsKey("extensions"))
                 {
-                    byte[] bytes = (byte[]) data;
-                    if (contentType == "" || contentType.StartsWith("application/json") || contentType.StartsWith("text/json"))
+                    var iDic = ((IDictionary)map.Get("extensions"));
+                    var mapExtensions = iDic.Keys.Cast<string>().ToDictionary(key => key, key => iDic[key]);
+                    foreach(var keypair in mapExtensions)
                     {
-                        string jsonData = Encoding.UTF8.GetString(bytes);
-                        try
-                        {
-                            map["data"] = JsonConvert.DeserializeObject<object>(jsonData);
-                        }
-                        catch
-                        {
-                            map["data"] = jsonData;
-                        }
-                    }
-                    else
-                    {
-                        map["data_base64"] = System.Convert.ToBase64String(bytes);
-                    }
-                }
-
-                if (map.ContainsKey("extensions"))
-                {
-                    var iDic = ((IDictionary) map.Get("extensions"));
-                    if (iDic != null)
-                    {
-                        var mapExtensions = iDic.Keys.Cast<string>().ToDictionary(key => key, key => iDic[key]);
-                        foreach (var keypair in mapExtensions)
-                        {
-                            map[keypair.Key] = keypair.Value;
-                        }
+                        map[keypair.Key] = keypair.Value;
                     }
                     map.Remove("extensions");
                 }
@@ -118,17 +94,6 @@ namespace AlibabaCloud.EventBridgeUtil
             }
 
             return listMap;
-        }
-
-        /**
-         * Judge if the  origin is start with the prefix
-         * @param origin the original string
-         * @param prefix the prefix string
-         * @return the result
-         */
-        public static bool StartWith(string origin, string prefix)
-        {
-            return origin.ToSafeString().StartsWith(prefix);
         }
 
         internal static string GetCanonicalizedHeaders(Dictionary<string, string> headers)

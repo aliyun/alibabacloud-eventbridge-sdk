@@ -9,6 +9,7 @@ import (
 	util "github.com/alibabacloud-go/tea-utils/service"
 	"github.com/alibabacloud-go/tea/tea"
 	credential "github.com/aliyun/credentials-go/credentials"
+	kvcache "gitlab.alibaba-inc.com/alicloud-sdk/EventBridge-helper/golang/util"
 )
 
 /**
@@ -165,7 +166,7 @@ type CloudEvent struct {
 	Datacontenttype *string                `json:"datacontenttype,omitempty" xml:"datacontenttype,omitempty"`
 	Dataschema      *string                `json:"dataschema,omitempty" xml:"dataschema,omitempty"`
 	Subject         *string                `json:"subject,omitempty" xml:"subject,omitempty"`
-	Time            *string                `json:"time,omitempty" xml:"time,omitempty" maxLength:"64"`
+	Time            *string                `json:"time,omitempty" xml:"time,omitempty" maxLength:"64" pattern:"[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{3}[\\s\\S]*"`
 	Extensions      map[string]interface{} `json:"extensions,omitempty" xml:"extensions,omitempty" require:"true"`
 	Data            []byte                 `json:"data,omitempty" xml:"data,omitempty"`
 }
@@ -270,9 +271,8 @@ func (s *PutEventsResponse) SetEntryList(v []*PutEventsResponseEntry) *PutEvents
  * The request of create EventBus
  */
 type CreateEventBusRequest struct {
-	EventBusName *string            `json:"EventBusName,omitempty" xml:"EventBusName,omitempty" require:"true" maxLength:"127" minLength:"1"`
-	Description  *string            `json:"Description,omitempty" xml:"Description,omitempty"`
-	Tags         map[string]*string `json:"Tags,omitempty" xml:"Tags,omitempty"`
+	EventBusName *string `json:"EventBusName,omitempty" xml:"EventBusName,omitempty" require:"true" maxLength:"127" minLength:"1"`
+	Description  *string `json:"Description,omitempty" xml:"Description,omitempty"`
 }
 
 func (s CreateEventBusRequest) String() string {
@@ -290,11 +290,6 @@ func (s *CreateEventBusRequest) SetEventBusName(v string) *CreateEventBusRequest
 
 func (s *CreateEventBusRequest) SetDescription(v string) *CreateEventBusRequest {
 	s.Description = &v
-	return s
-}
-
-func (s *CreateEventBusRequest) SetTags(v map[string]*string) *CreateEventBusRequest {
-	s.Tags = v
 	return s
 }
 
@@ -400,13 +395,12 @@ func (s *GetEventBusRequest) SetEventBusName(v string) *GetEventBusRequest {
  * The response of get the detail of EventBus
  */
 type GetEventBusResponse struct {
-	RequestId              *string            `json:"RequestId,omitempty" xml:"RequestId,omitempty" require:"true"`
-	ResourceOwnerAccountId *string            `json:"ResourceOwnerAccountId,omitempty" xml:"ResourceOwnerAccountId,omitempty" require:"true"`
-	EventBusARN            *string            `json:"EventBusARN,omitempty" xml:"EventBusARN,omitempty" require:"true"`
-	EventBusName           *string            `json:"EventBusName,omitempty" xml:"EventBusName,omitempty" require:"true"`
-	Description            *string            `json:"Description,omitempty" xml:"Description,omitempty" require:"true"`
-	CreateTimestamp        *int64             `json:"CreateTimestamp,omitempty" xml:"CreateTimestamp,omitempty" require:"true"`
-	Tags                   map[string]*string `json:"Tags,omitempty" xml:"Tags,omitempty"`
+	RequestId              *string `json:"RequestId,omitempty" xml:"RequestId,omitempty" require:"true"`
+	ResourceOwnerAccountId *string `json:"ResourceOwnerAccountId,omitempty" xml:"ResourceOwnerAccountId,omitempty" require:"true"`
+	EventBusARN            *string `json:"EventBusARN,omitempty" xml:"EventBusARN,omitempty" require:"true"`
+	EventBusName           *string `json:"EventBusName,omitempty" xml:"EventBusName,omitempty" require:"true"`
+	Description            *string `json:"Description,omitempty" xml:"Description,omitempty" require:"true"`
+	CreateTimestamp        *int64  `json:"CreateTimestamp,omitempty" xml:"CreateTimestamp,omitempty" require:"true"`
 }
 
 func (s GetEventBusResponse) String() string {
@@ -447,11 +441,6 @@ func (s *GetEventBusResponse) SetCreateTimestamp(v int64) *GetEventBusResponse {
 	return s
 }
 
-func (s *GetEventBusResponse) SetTags(v map[string]*string) *GetEventBusResponse {
-	s.Tags = v
-	return s
-}
-
 /**
  * The request of list all the EventBus which meet the search criteria
  */
@@ -488,11 +477,10 @@ func (s *ListEventBusesRequest) SetNextToken(v string) *ListEventBusesRequest {
  * The detail of EventBuses
  */
 type EventBusEntry struct {
-	EventBusName    *string            `json:"EventBusName,omitempty" xml:"EventBusName,omitempty" require:"true"`
-	EventBusARN     *string            `json:"EventBusARN,omitempty" xml:"EventBusARN,omitempty" require:"true"`
-	Description     *string            `json:"Description,omitempty" xml:"Description,omitempty" require:"true"`
-	CreateTimestamp *int64             `json:"CreateTimestamp,omitempty" xml:"CreateTimestamp,omitempty" require:"true"`
-	Tags            map[string]*string `json:"Tags,omitempty" xml:"Tags,omitempty"`
+	EventBusName    *string `json:"EventBusName,omitempty" xml:"EventBusName,omitempty" require:"true"`
+	EventBusARN     *string `json:"EventBusARN,omitempty" xml:"EventBusARN,omitempty" require:"true"`
+	Description     *string `json:"Description,omitempty" xml:"Description,omitempty" require:"true"`
+	CreateTimestamp *int64  `json:"CreateTimestamp,omitempty" xml:"CreateTimestamp,omitempty" require:"true"`
 }
 
 func (s EventBusEntry) String() string {
@@ -520,11 +508,6 @@ func (s *EventBusEntry) SetDescription(v string) *EventBusEntry {
 
 func (s *EventBusEntry) SetCreateTimestamp(v int64) *EventBusEntry {
 	s.CreateTimestamp = &v
-	return s
-}
-
-func (s *EventBusEntry) SetTags(v map[string]*string) *EventBusEntry {
-	s.Tags = v
 	return s
 }
 
@@ -576,13 +559,12 @@ func (s *ListEventBusesResponse) SetTotal(v int) *ListEventBusesResponse {
  * The request of create an EventBus rule on Aliyun
  */
 type CreateRuleRequest struct {
-	EventBusName  *string            `json:"EventBusName,omitempty" xml:"EventBusName,omitempty" require:"true" maxLength:"127" minLength:"1"`
-	Description   *string            `json:"Description,omitempty" xml:"Description,omitempty"`
-	RuleName      *string            `json:"RuleName,omitempty" xml:"RuleName,omitempty" require:"true"`
-	Status        *string            `json:"Status,omitempty" xml:"Status,omitempty"`
-	FilterPattern *string            `json:"FilterPattern,omitempty" xml:"FilterPattern,omitempty"`
-	Targets       []*TargetEntry     `json:"Targets,omitempty" xml:"Targets,omitempty" require:"true" type:"Repeated"`
-	Tags          map[string]*string `json:"Tags,omitempty" xml:"Tags,omitempty"`
+	EventBusName  *string        `json:"EventBusName,omitempty" xml:"EventBusName,omitempty" require:"true" maxLength:"127" minLength:"1"`
+	Description   *string        `json:"Description,omitempty" xml:"Description,omitempty"`
+	RuleName      *string        `json:"RuleName,omitempty" xml:"RuleName,omitempty" require:"true"`
+	Status        *string        `json:"Status,omitempty" xml:"Status,omitempty"`
+	FilterPattern *string        `json:"FilterPattern,omitempty" xml:"FilterPattern,omitempty"`
+	Targets       []*TargetEntry `json:"Targets,omitempty" xml:"Targets,omitempty" require:"true" type:"Repeated"`
 }
 
 func (s CreateRuleRequest) String() string {
@@ -620,11 +602,6 @@ func (s *CreateRuleRequest) SetFilterPattern(v string) *CreateRuleRequest {
 
 func (s *CreateRuleRequest) SetTargets(v []*TargetEntry) *CreateRuleRequest {
 	s.Targets = v
-	return s
-}
-
-func (s *CreateRuleRequest) SetTags(v map[string]*string) *CreateRuleRequest {
-	s.Tags = v
 	return s
 }
 
@@ -928,18 +905,17 @@ func (s *GetRuleRequest) SetRuleName(v string) *GetRuleRequest {
  * The response of Get EventBus
  */
 type GetRuleResponse struct {
-	RequestId              *string            `json:"RequestId,omitempty" xml:"RequestId,omitempty" require:"true"`
-	ResourceOwnerAccountId *string            `json:"ResourceOwnerAccountId,omitempty" xml:"ResourceOwnerAccountId,omitempty" require:"true"`
-	EventBusName           *string            `json:"EventBusName,omitempty" xml:"EventBusName,omitempty" require:"true"`
-	RuleARN                *string            `json:"RuleARN,omitempty" xml:"RuleARN,omitempty" require:"true"`
-	RuleName               *string            `json:"RuleName,omitempty" xml:"RuleName,omitempty" require:"true"`
-	Description            *string            `json:"Description,omitempty" xml:"Description,omitempty" require:"true"`
-	Status                 *string            `json:"Status,omitempty" xml:"Status,omitempty" require:"true"`
-	FilterPattern          *string            `json:"FilterPattern,omitempty" xml:"FilterPattern,omitempty" require:"true"`
-	Targets                []*TargetEntry     `json:"Targets,omitempty" xml:"Targets,omitempty" require:"true" type:"Repeated"`
-	Ctime                  *int64             `json:"Ctime,omitempty" xml:"Ctime,omitempty" require:"true"`
-	Mtime                  *int64             `json:"Mtime,omitempty" xml:"Mtime,omitempty" require:"true"`
-	Tags                   map[string]*string `json:"Tags,omitempty" xml:"Tags,omitempty"`
+	RequestId              *string        `json:"RequestId,omitempty" xml:"RequestId,omitempty" require:"true"`
+	ResourceOwnerAccountId *string        `json:"ResourceOwnerAccountId,omitempty" xml:"ResourceOwnerAccountId,omitempty" require:"true"`
+	EventBusName           *string        `json:"EventBusName,omitempty" xml:"EventBusName,omitempty" require:"true"`
+	RuleARN                *string        `json:"RuleARN,omitempty" xml:"RuleARN,omitempty" require:"true"`
+	RuleName               *string        `json:"RuleName,omitempty" xml:"RuleName,omitempty" require:"true"`
+	Description            *string        `json:"Description,omitempty" xml:"Description,omitempty" require:"true"`
+	Status                 *string        `json:"Status,omitempty" xml:"Status,omitempty" require:"true"`
+	FilterPattern          *string        `json:"FilterPattern,omitempty" xml:"FilterPattern,omitempty" require:"true"`
+	Targets                []*TargetEntry `json:"Targets,omitempty" xml:"Targets,omitempty" require:"true" type:"Repeated"`
+	Ctime                  *int64         `json:"Ctime,omitempty" xml:"Ctime,omitempty" require:"true"`
+	Mtime                  *int64         `json:"Mtime,omitempty" xml:"Mtime,omitempty" require:"true"`
 }
 
 func (s GetRuleResponse) String() string {
@@ -1002,11 +978,6 @@ func (s *GetRuleResponse) SetCtime(v int64) *GetRuleResponse {
 
 func (s *GetRuleResponse) SetMtime(v int64) *GetRuleResponse {
 	s.Mtime = &v
-	return s
-}
-
-func (s *GetRuleResponse) SetTags(v map[string]*string) *GetRuleResponse {
-	s.Tags = v
 	return s
 }
 
@@ -1096,16 +1067,15 @@ func (s *ListRulesResponse) SetTotal(v int) *ListRulesResponse {
  * The detail of EventBuses rule
  */
 type EventRuleDTO struct {
-	RuleARN       *string            `json:"RuleARN,omitempty" xml:"RuleARN,omitempty" require:"true"`
-	EventBusName  *string            `json:"EventBusName,omitempty" xml:"EventBusName,omitempty" require:"true"`
-	RuleName      *string            `json:"RuleName,omitempty" xml:"RuleName,omitempty" require:"true"`
-	Description   *string            `json:"Description,omitempty" xml:"Description,omitempty" require:"true"`
-	Status        *string            `json:"Status,omitempty" xml:"Status,omitempty" require:"true"`
-	FilterPattern *string            `json:"FilterPattern,omitempty" xml:"FilterPattern,omitempty" require:"true"`
-	Targets       []*TargetEntry     `json:"Targets,omitempty" xml:"Targets,omitempty" require:"true" type:"Repeated"`
-	Ctime         *int64             `json:"Ctime,omitempty" xml:"Ctime,omitempty" require:"true"`
-	Mtime         *int64             `json:"Mtime,omitempty" xml:"Mtime,omitempty" require:"true"`
-	Tags          map[string]*string `json:"Tags,omitempty" xml:"Tags,omitempty"`
+	RuleARN       *string        `json:"RuleARN,omitempty" xml:"RuleARN,omitempty" require:"true"`
+	EventBusName  *string        `json:"EventBusName,omitempty" xml:"EventBusName,omitempty" require:"true"`
+	RuleName      *string        `json:"RuleName,omitempty" xml:"RuleName,omitempty" require:"true"`
+	Description   *string        `json:"Description,omitempty" xml:"Description,omitempty" require:"true"`
+	Status        *string        `json:"Status,omitempty" xml:"Status,omitempty" require:"true"`
+	FilterPattern *string        `json:"FilterPattern,omitempty" xml:"FilterPattern,omitempty" require:"true"`
+	Targets       []*TargetEntry `json:"Targets,omitempty" xml:"Targets,omitempty" require:"true" type:"Repeated"`
+	Ctime         *int64         `json:"Ctime,omitempty" xml:"Ctime,omitempty" require:"true"`
+	Mtime         *int64         `json:"Mtime,omitempty" xml:"Mtime,omitempty" require:"true"`
 }
 
 func (s EventRuleDTO) String() string {
@@ -1161,21 +1131,15 @@ func (s *EventRuleDTO) SetMtime(v int64) *EventRuleDTO {
 	return s
 }
 
-func (s *EventRuleDTO) SetTags(v map[string]*string) *EventRuleDTO {
-	s.Tags = v
-	return s
-}
-
 /**
  * The request of update the EventBus rule
  */
 type UpdateRuleRequest struct {
-	EventBusName  *string            `json:"EventBusName,omitempty" xml:"EventBusName,omitempty" require:"true"`
-	RuleName      *string            `json:"RuleName,omitempty" xml:"RuleName,omitempty" require:"true"`
-	Description   *string            `json:"Description,omitempty" xml:"Description,omitempty"`
-	Status        *string            `json:"Status,omitempty" xml:"Status,omitempty"`
-	FilterPattern *string            `json:"FilterPattern,omitempty" xml:"FilterPattern,omitempty"`
-	Tags          map[string]*string `json:"Tags,omitempty" xml:"Tags,omitempty"`
+	EventBusName  *string `json:"EventBusName,omitempty" xml:"EventBusName,omitempty" require:"true"`
+	RuleName      *string `json:"RuleName,omitempty" xml:"RuleName,omitempty" require:"true"`
+	Description   *string `json:"Description,omitempty" xml:"Description,omitempty"`
+	Status        *string `json:"Status,omitempty" xml:"Status,omitempty"`
+	FilterPattern *string `json:"FilterPattern,omitempty" xml:"FilterPattern,omitempty"`
 }
 
 func (s UpdateRuleRequest) String() string {
@@ -1208,11 +1172,6 @@ func (s *UpdateRuleRequest) SetStatus(v string) *UpdateRuleRequest {
 
 func (s *UpdateRuleRequest) SetFilterPattern(v string) *UpdateRuleRequest {
 	s.FilterPattern = &v
-	return s
-}
-
-func (s *UpdateRuleRequest) SetTags(v map[string]*string) *UpdateRuleRequest {
-	s.Tags = v
 	return s
 }
 
@@ -1278,10 +1237,9 @@ func (s *CreateTargetsRequest) SetTargets(v []*TargetEntry) *CreateTargetsReques
  * The response of create Targets
  */
 type CreateTargetsResponse struct {
-	RequestId              *string              `json:"RequestId,omitempty" xml:"RequestId,omitempty" require:"true"`
-	ResourceOwnerAccountId *string              `json:"ResourceOwnerAccountId,omitempty" xml:"ResourceOwnerAccountId,omitempty" require:"true"`
-	ErrorEntriesCount      *int                 `json:"ErrorEntriesCount,omitempty" xml:"ErrorEntriesCount,omitempty" require:"true"`
-	ErrorEntries           []*TargetResultEntry `json:"ErrorEntries,omitempty" xml:"ErrorEntries,omitempty" require:"true" type:"Repeated"`
+	RequestId              *string `json:"RequestId,omitempty" xml:"RequestId,omitempty" require:"true"`
+	ResourceOwnerAccountId *string `json:"ResourceOwnerAccountId,omitempty" xml:"ResourceOwnerAccountId,omitempty" require:"true"`
+	EventBusARN            *string `json:"EventBusARN,omitempty" xml:"EventBusARN,omitempty" require:"true"`
 }
 
 func (s CreateTargetsResponse) String() string {
@@ -1302,13 +1260,8 @@ func (s *CreateTargetsResponse) SetResourceOwnerAccountId(v string) *CreateTarge
 	return s
 }
 
-func (s *CreateTargetsResponse) SetErrorEntriesCount(v int) *CreateTargetsResponse {
-	s.ErrorEntriesCount = &v
-	return s
-}
-
-func (s *CreateTargetsResponse) SetErrorEntries(v []*TargetResultEntry) *CreateTargetsResponse {
-	s.ErrorEntries = v
+func (s *CreateTargetsResponse) SetEventBusARN(v string) *CreateTargetsResponse {
+	s.EventBusARN = &v
 	return s
 }
 
@@ -1536,253 +1489,56 @@ func (s *TestEventPatternResponse) SetResult(v bool) *TestEventPatternResponse {
 	return s
 }
 
-type QueryEventTracesRequest struct {
-	EventBusName *string `json:"EventBusName,omitempty" xml:"EventBusName,omitempty" require:"true"`
-	EventId      *string `json:"EventId,omitempty" xml:"EventId,omitempty" require:"true"`
+/**
+ * The request of query EventBridge status for a given user
+ */
+type QueryEventBridgeStatusRequest struct {
+	// the accountId of resource owner
+	ResourceOwnerAccountId *string `json:"ResourceOwnerAccountId,omitempty" xml:"ResourceOwnerAccountId,omitempty" require:"true"`
 }
 
-func (s QueryEventTracesRequest) String() string {
+func (s QueryEventBridgeStatusRequest) String() string {
 	return tea.Prettify(s)
 }
 
-func (s QueryEventTracesRequest) GoString() string {
+func (s QueryEventBridgeStatusRequest) GoString() string {
 	return s.String()
 }
 
-func (s *QueryEventTracesRequest) SetEventBusName(v string) *QueryEventTracesRequest {
-	s.EventBusName = &v
+func (s *QueryEventBridgeStatusRequest) SetResourceOwnerAccountId(v string) *QueryEventBridgeStatusRequest {
+	s.ResourceOwnerAccountId = &v
 	return s
 }
 
-func (s *QueryEventTracesRequest) SetEventId(v string) *QueryEventTracesRequest {
-	s.EventId = &v
-	return s
+/**
+ * The response of query EventBridge status for a given user
+ */
+type QueryEventBridgeStatusResponse struct {
+	RequestId              *string `json:"RequestId,omitempty" xml:"RequestId,omitempty" require:"true"`
+	ResourceOwnerAccountId *string `json:"ResourceOwnerAccountId,omitempty" xml:"ResourceOwnerAccountId,omitempty" require:"true"`
+	DefaultBusEnable       *bool   `json:"DefaultBusEnable,omitempty" xml:"DefaultBusEnable,omitempty" require:"true"`
 }
 
-type EventTrace struct {
-	ResourceOwnerId *string `json:"ResourceOwnerId,omitempty" xml:"ResourceOwnerId,omitempty" require:"true"`
-	Action          *string `json:"Action,omitempty" xml:"Action,omitempty" require:"true"`
-	EventId         *string `json:"EventId,omitempty" xml:"EventId,omitempty" require:"true"`
-	EventBusName    *string `json:"EventBusName,omitempty" xml:"EventBusName,omitempty" require:"true"`
-	ActionTime      *string `json:"ActionTime,omitempty" xml:"ActionTime,omitempty" require:"true"`
-}
-
-func (s EventTrace) String() string {
+func (s QueryEventBridgeStatusResponse) String() string {
 	return tea.Prettify(s)
 }
 
-func (s EventTrace) GoString() string {
+func (s QueryEventBridgeStatusResponse) GoString() string {
 	return s.String()
 }
 
-func (s *EventTrace) SetResourceOwnerId(v string) *EventTrace {
-	s.ResourceOwnerId = &v
+func (s *QueryEventBridgeStatusResponse) SetRequestId(v string) *QueryEventBridgeStatusResponse {
+	s.RequestId = &v
 	return s
 }
 
-func (s *EventTrace) SetAction(v string) *EventTrace {
-	s.Action = &v
+func (s *QueryEventBridgeStatusResponse) SetResourceOwnerAccountId(v string) *QueryEventBridgeStatusResponse {
+	s.ResourceOwnerAccountId = &v
 	return s
 }
 
-func (s *EventTrace) SetEventId(v string) *EventTrace {
-	s.EventId = &v
-	return s
-}
-
-func (s *EventTrace) SetEventBusName(v string) *EventTrace {
-	s.EventBusName = &v
-	return s
-}
-
-func (s *EventTrace) SetActionTime(v string) *EventTrace {
-	s.ActionTime = &v
-	return s
-}
-
-type QueryEventTracesResponse struct {
-	EventTraceList []*EventTrace `json:"EventTraceList,omitempty" xml:"EventTraceList,omitempty" require:"true" type:"Repeated"`
-}
-
-func (s QueryEventTracesResponse) String() string {
-	return tea.Prettify(s)
-}
-
-func (s QueryEventTracesResponse) GoString() string {
-	return s.String()
-}
-
-func (s *QueryEventTracesResponse) SetEventTraceList(v []*EventTrace) *QueryEventTracesResponse {
-	s.EventTraceList = v
-	return s
-}
-
-type QueryEventByEventIdRequest struct {
-	EventBusName *string `json:"EventBusName,omitempty" xml:"EventBusName,omitempty" require:"true"`
-	EventSource  *string `json:"EventSource,omitempty" xml:"EventSource,omitempty"`
-	EventId      *string `json:"EventId,omitempty" xml:"EventId,omitempty" require:"true"`
-}
-
-func (s QueryEventByEventIdRequest) String() string {
-	return tea.Prettify(s)
-}
-
-func (s QueryEventByEventIdRequest) GoString() string {
-	return s.String()
-}
-
-func (s *QueryEventByEventIdRequest) SetEventBusName(v string) *QueryEventByEventIdRequest {
-	s.EventBusName = &v
-	return s
-}
-
-func (s *QueryEventByEventIdRequest) SetEventSource(v string) *QueryEventByEventIdRequest {
-	s.EventSource = &v
-	return s
-}
-
-func (s *QueryEventByEventIdRequest) SetEventId(v string) *QueryEventByEventIdRequest {
-	s.EventId = &v
-	return s
-}
-
-type TracedEvent struct {
-	EventReceivedTime *string `json:"eventReceivedTime,omitempty" xml:"eventReceivedTime,omitempty" require:"true"`
-	EventSource       *string `json:"EventSource,omitempty" xml:"EventSource,omitempty" require:"true"`
-	EventId           *string `json:"EventId,omitempty" xml:"EventId,omitempty" require:"true"`
-	EventBusName      *string `json:"EventBusName,omitempty" xml:"EventBusName,omitempty" require:"true"`
-}
-
-func (s TracedEvent) String() string {
-	return tea.Prettify(s)
-}
-
-func (s TracedEvent) GoString() string {
-	return s.String()
-}
-
-func (s *TracedEvent) SetEventReceivedTime(v string) *TracedEvent {
-	s.EventReceivedTime = &v
-	return s
-}
-
-func (s *TracedEvent) SetEventSource(v string) *TracedEvent {
-	s.EventSource = &v
-	return s
-}
-
-func (s *TracedEvent) SetEventId(v string) *TracedEvent {
-	s.EventId = &v
-	return s
-}
-
-func (s *TracedEvent) SetEventBusName(v string) *TracedEvent {
-	s.EventBusName = &v
-	return s
-}
-
-type QueryEventByEventIdResponse struct {
-	TracedEvents []*EventTrace `json:"TracedEvents,omitempty" xml:"TracedEvents,omitempty" require:"true" type:"Repeated"`
-	NextToken    *string       `json:"NextToken,omitempty" xml:"NextToken,omitempty" require:"true"`
-	Total        *int          `json:"Total,omitempty" xml:"Total,omitempty" require:"true"`
-}
-
-func (s QueryEventByEventIdResponse) String() string {
-	return tea.Prettify(s)
-}
-
-func (s QueryEventByEventIdResponse) GoString() string {
-	return s.String()
-}
-
-func (s *QueryEventByEventIdResponse) SetTracedEvents(v []*EventTrace) *QueryEventByEventIdResponse {
-	s.TracedEvents = v
-	return s
-}
-
-func (s *QueryEventByEventIdResponse) SetNextToken(v string) *QueryEventByEventIdResponse {
-	s.NextToken = &v
-	return s
-}
-
-func (s *QueryEventByEventIdResponse) SetTotal(v int) *QueryEventByEventIdResponse {
-	s.Total = &v
-	return s
-}
-
-type QueryEventsByPeriodRequest struct {
-	EventBusName *string `json:"EventBusName,omitempty" xml:"EventBusName,omitempty" require:"true"`
-	EventSource  *string `json:"EventSource,omitempty" xml:"EventSource,omitempty"`
-	StartTime    *int    `json:"StartTime,omitempty" xml:"StartTime,omitempty" require:"true"`
-	EndTime      *int    `json:"EndTime,omitempty" xml:"EndTime,omitempty" require:"true"`
-	Limit        *int    `json:"Limit,omitempty" xml:"Limit,omitempty"`
-	NextToken    *string `json:"NextToken,omitempty" xml:"NextToken,omitempty"`
-}
-
-func (s QueryEventsByPeriodRequest) String() string {
-	return tea.Prettify(s)
-}
-
-func (s QueryEventsByPeriodRequest) GoString() string {
-	return s.String()
-}
-
-func (s *QueryEventsByPeriodRequest) SetEventBusName(v string) *QueryEventsByPeriodRequest {
-	s.EventBusName = &v
-	return s
-}
-
-func (s *QueryEventsByPeriodRequest) SetEventSource(v string) *QueryEventsByPeriodRequest {
-	s.EventSource = &v
-	return s
-}
-
-func (s *QueryEventsByPeriodRequest) SetStartTime(v int) *QueryEventsByPeriodRequest {
-	s.StartTime = &v
-	return s
-}
-
-func (s *QueryEventsByPeriodRequest) SetEndTime(v int) *QueryEventsByPeriodRequest {
-	s.EndTime = &v
-	return s
-}
-
-func (s *QueryEventsByPeriodRequest) SetLimit(v int) *QueryEventsByPeriodRequest {
-	s.Limit = &v
-	return s
-}
-
-func (s *QueryEventsByPeriodRequest) SetNextToken(v string) *QueryEventsByPeriodRequest {
-	s.NextToken = &v
-	return s
-}
-
-type QueryEventsByPeriodResponse struct {
-	TracedEvents []*EventTrace `json:"TracedEvents,omitempty" xml:"TracedEvents,omitempty" require:"true" type:"Repeated"`
-	NextToken    *string       `json:"NextToken,omitempty" xml:"NextToken,omitempty" require:"true"`
-	Total        *int          `json:"Total,omitempty" xml:"Total,omitempty" require:"true"`
-}
-
-func (s QueryEventsByPeriodResponse) String() string {
-	return tea.Prettify(s)
-}
-
-func (s QueryEventsByPeriodResponse) GoString() string {
-	return s.String()
-}
-
-func (s *QueryEventsByPeriodResponse) SetTracedEvents(v []*EventTrace) *QueryEventsByPeriodResponse {
-	s.TracedEvents = v
-	return s
-}
-
-func (s *QueryEventsByPeriodResponse) SetNextToken(v string) *QueryEventsByPeriodResponse {
-	s.NextToken = &v
-	return s
-}
-
-func (s *QueryEventsByPeriodResponse) SetTotal(v int) *QueryEventsByPeriodResponse {
-	s.Total = &v
+func (s *QueryEventBridgeStatusResponse) SetDefaultBusEnable(v bool) *QueryEventBridgeStatusResponse {
+	s.DefaultBusEnable = &v
 	return s
 }
 
@@ -1887,7 +1643,7 @@ func (client *Client) Init(config *Config) (_err error) {
  * @param runtime which controls some details of call api, such as retry times
  * @return the response
  */
-func (client *Client) DoRequest(action *string, protocol *string, method *string, pathname *string, query map[string]*string, body interface{}, runtime *util.RuntimeOptions) (_result map[string]interface{}, _err error) {
+func (client *Client) DoRequest(action *string, protocol *string, method *string, pathname *string, query map[string]*string, body interface{}, headers map[string]*string, runtime *util.RuntimeOptions) (_result map[string]interface{}, _err error) {
 	_err = tea.Validate(runtime)
 	if _err != nil {
 		return _result, _err
@@ -1925,7 +1681,7 @@ func (client *Client) DoRequest(action *string, protocol *string, method *string
 			request_.Protocol = util.DefaultString(client.Protocol, protocol)
 			request_.Method = method
 			request_.Pathname = pathname
-			request_.Headers = map[string]*string{
+			request_.Headers = tea.Merge(map[string]*string{
 				"date":                    util.GetDateUTCString(),
 				"host":                    client.Endpoint,
 				"accept":                  tea.String("application/json"),
@@ -1933,8 +1689,8 @@ func (client *Client) DoRequest(action *string, protocol *string, method *string
 				"x-acs-signature-method":  tea.String("HMAC-SHA1"),
 				"x-acs-signature-version": tea.String("1.0"),
 				"x-eventbridge-version":   tea.String("2015-06-06"),
-				"user-agent":              util.GetUserAgent(tea.String(" aliyun-eventbridge-sdk/1.2.0")),
-			}
+				"user-agent":              util.GetUserAgent(tea.String(" aliyun-eventbridge-sdk/1.1.0")),
+			}, headers)
 			if !tea.BoolValue(util.IsUnset(client.RegionId)) {
 				request_.Headers["x-eventbridge-regionId"] = client.RegionId
 			}
@@ -1946,6 +1702,11 @@ func (client *Client) DoRequest(action *string, protocol *string, method *string
 
 			if tea.BoolValue(util.EqualString(action, tea.String("putEvents"))) {
 				request_.Headers["content-type"] = tea.String("application/cloudevents-batch+json; charset=utf-8")
+			}
+
+			if tea.BoolValue(util.EqualString(action, tea.String("putEventsToAccount"))) {
+				request_.Headers["content-type"] = tea.String("application/cloudevents-batch+json; charset=utf-8")
+				request_.Headers["x-eventbridge-sourcetype"] = tea.String("acs.*")
 			}
 
 			if !tea.BoolValue(util.IsUnset(query)) {
@@ -1987,7 +1748,7 @@ func (client *Client) DoRequest(action *string, protocol *string, method *string
 			if tea.BoolValue(util.Is4xx(response_.StatusCode)) || tea.BoolValue(util.Is5xx(response_.StatusCode)) {
 				_err = tea.NewSDKError(map[string]interface{}{
 					"code":    tmp["code"],
-					"message": "[EventBridgeError-" + tea.ToString(tmp["requestId"]) + "] " + tea.ToString(tmp["message"]),
+					"message": "[EventBridgeError " + tea.ToString(tmp["requestId"]) + "] " + tea.ToString(tmp["message"]),
 					"data":    tmp,
 				})
 				return _result, _err
@@ -2038,11 +1799,99 @@ func (client *Client) PutEventsWithOptions(eventList []*CloudEvent, runtime *uti
 	}
 	body := eventbridgeutil.Serialize(eventList)
 	_result = &PutEventsResponse{}
-	_body, _err := client.DoRequest(tea.String("putEvents"), tea.String("HTTP"), tea.String("POST"), tea.String("/openapi/putEvents"), nil, body, runtime)
+	_body, _err := client.DoRequest(tea.String("putEvents"), tea.String("HTTP"), tea.String("POST"), tea.String("/openapi/putEvents"), nil, body, nil, runtime)
 	if _err != nil {
 		return _result, _err
 	}
 	_err = tea.Convert(_body, &_result)
+	return _result, _err
+}
+
+/**
+ * Publish event to the aliyun specified account's event bus
+ */
+func (client *Client) PutEventsToAccount(accoutid *string, eventList []*CloudEvent) (_result *PutEventsResponse, _err error) {
+	runtime := &util.RuntimeOptions{}
+	_result = &PutEventsResponse{}
+	_body, _err := client.PutEventsToAccountWithOptions(accoutid, eventList, runtime)
+	if _err != nil {
+		return _result, _err
+	}
+	_result = _body
+	return _result, _err
+}
+
+/**
+ * Publish event to the aliyun specified account's event bus
+ */
+func (client *Client) PutEventsToAccountWithOptions(accoutid *string, eventList []*CloudEvent, runtime *util.RuntimeOptions) (_result *PutEventsResponse, _err error) {
+	for _, cloudEvent := range eventList {
+		if tea.BoolValue(util.IsUnset(cloudEvent.Specversion)) {
+			cloudEvent.Specversion = tea.String("1.0")
+		}
+
+		if tea.BoolValue(util.IsUnset(cloudEvent.Datacontenttype)) {
+			cloudEvent.Datacontenttype = tea.String("application/json; charset=utf-8")
+		}
+
+		_err = util.ValidateModel(cloudEvent)
+		if _err != nil {
+			return _result, _err
+		}
+	}
+	if tea.BoolValue(util.Empty(accoutid)) {
+		_err = tea.NewSDKError(map[string]interface{}{
+			"code":    "ParameterMissing",
+			"message": "accoutid should be setted",
+		})
+		return _result, _err
+	}
+
+	header := map[string]*string{
+		"x-eventbridge-accountid": accoutid,
+	}
+	body := eventbridgeutil.Serialize(eventList)
+	_result = &PutEventsResponse{}
+	_body, _err := client.DoRequest(tea.String("putEventsToAccount"), tea.String("HTTP"), tea.String("POST"), tea.String("/openapi/putEventsToAccount"), nil, body, header, runtime)
+	if _err != nil {
+		return _result, _err
+	}
+	_err = tea.Convert(_body, &_result)
+	return _result, _err
+}
+
+/**
+ * Publish event to the aliyun specified account's event bus
+ */
+func (client *Client) PutEventsToAccountIfEnable(accoutid *string, eventList []*CloudEvent) (_result *PutEventsResponse, _err error) {
+	runtime := &util.RuntimeOptions{}
+	_result = &PutEventsResponse{}
+	_body, _err := client.PutEventsToAccountIfEnableWithOptions(accoutid, eventList, runtime)
+	if _err != nil {
+		return _result, _err
+	}
+	_result = _body
+	return _result, _err
+}
+
+/**
+ * Publish event to the aliyun specified account's event bus
+ */
+func (client *Client) PutEventsToAccountIfEnableWithOptions(accoutid *string, eventList []*CloudEvent, runtime *util.RuntimeOptions) (_result *PutEventsResponse, _err error) {
+	if kvcache.GetIfPresent(accoutid) != nil {
+		return nil, tea.NewSDKError(map[string]interface{}{
+			"code":    "ServiceNotEnabled",
+			"message": "[EventBridgeError] The OwnerId that your Access Key Id associated to has not enabled.",
+		})
+	}
+	_result, _err = client.PutEventsToAccountWithOptions(accoutid, eventList, runtime)
+	if _err != nil {
+		realErr, ok := _err.(*tea.SDKError)
+		if ok && tea.StringValue(realErr.Code) == "ServiceNotEnabled" {
+			kvcache.Put(accoutid, true)
+		}
+		return nil, _err
+	}
 	return _result, _err
 }
 
@@ -2069,7 +1918,7 @@ func (client *Client) CreateEventBusWithOptions(request *CreateEventBusRequest, 
 		return _result, _err
 	}
 	_result = &CreateEventBusResponse{}
-	_body, _err := client.DoRequest(tea.String("createEventBus"), tea.String("HTTP"), tea.String("POST"), tea.String("/openapi/createEventBus"), nil, tea.ToMap(request), runtime)
+	_body, _err := client.DoRequest(tea.String("createEventBus"), tea.String("HTTP"), tea.String("POST"), tea.String("/openapi/createEventBus"), nil, tea.ToMap(request), nil, runtime)
 	if _err != nil {
 		return _result, _err
 	}
@@ -2100,7 +1949,7 @@ func (client *Client) DeleteEventBusWithOptions(request *DeleteEventBusRequest, 
 		return _result, _err
 	}
 	_result = &DeleteEventBusResponse{}
-	_body, _err := client.DoRequest(tea.String("deleteEventBus"), tea.String("HTTP"), tea.String("POST"), tea.String("/openapi/deleteEventBus"), nil, tea.ToMap(request), runtime)
+	_body, _err := client.DoRequest(tea.String("deleteEventBus"), tea.String("HTTP"), tea.String("POST"), tea.String("/openapi/deleteEventBus"), nil, tea.ToMap(request), nil, runtime)
 	if _err != nil {
 		return _result, _err
 	}
@@ -2131,7 +1980,7 @@ func (client *Client) GetEventBusWithOptions(request *GetEventBusRequest, runtim
 		return _result, _err
 	}
 	_result = &GetEventBusResponse{}
-	_body, _err := client.DoRequest(tea.String("getEventBus"), tea.String("HTTP"), tea.String("POST"), tea.String("/openapi/getEventBus"), nil, tea.ToMap(request), runtime)
+	_body, _err := client.DoRequest(tea.String("getEventBus"), tea.String("HTTP"), tea.String("POST"), tea.String("/openapi/getEventBus"), nil, tea.ToMap(request), nil, runtime)
 	if _err != nil {
 		return _result, _err
 	}
@@ -2162,7 +2011,7 @@ func (client *Client) ListEventBusesWithOptions(request *ListEventBusesRequest, 
 		return _result, _err
 	}
 	_result = &ListEventBusesResponse{}
-	_body, _err := client.DoRequest(tea.String("listEventBuses"), tea.String("HTTP"), tea.String("POST"), tea.String("/openapi/listEventBuses"), nil, tea.ToMap(request), runtime)
+	_body, _err := client.DoRequest(tea.String("listEventBuses"), tea.String("HTTP"), tea.String("POST"), tea.String("/openapi/listEventBuses"), nil, tea.ToMap(request), nil, runtime)
 	if _err != nil {
 		return _result, _err
 	}
@@ -2193,7 +2042,7 @@ func (client *Client) CreateRuleWithOptions(request *CreateRuleRequest, runtime 
 		return _result, _err
 	}
 	_result = &CreateRuleResponse{}
-	_body, _err := client.DoRequest(tea.String("createRule"), tea.String("HTTP"), tea.String("POST"), tea.String("/openapi/createRule"), nil, tea.ToMap(request), runtime)
+	_body, _err := client.DoRequest(tea.String("createRule"), tea.String("HTTP"), tea.String("POST"), tea.String("/openapi/createRule"), nil, tea.ToMap(request), nil, runtime)
 	if _err != nil {
 		return _result, _err
 	}
@@ -2224,7 +2073,7 @@ func (client *Client) DeleteRuleWithOptions(request *DeleteRuleRequest, runtime 
 		return _result, _err
 	}
 	_result = &DeleteRuleResponse{}
-	_body, _err := client.DoRequest(tea.String("deleteRule"), tea.String("HTTP"), tea.String("POST"), tea.String("/openapi/deleteRule"), nil, tea.ToMap(request), runtime)
+	_body, _err := client.DoRequest(tea.String("deleteRule"), tea.String("HTTP"), tea.String("POST"), tea.String("/openapi/deleteRule"), nil, tea.ToMap(request), nil, runtime)
 	if _err != nil {
 		return _result, _err
 	}
@@ -2255,7 +2104,7 @@ func (client *Client) DisableRuleWithOptions(request *DisableRuleRequest, runtim
 		return _result, _err
 	}
 	_result = &DisableRuleResponse{}
-	_body, _err := client.DoRequest(tea.String("disableRule"), tea.String("HTTP"), tea.String("POST"), tea.String("/openapi/disableRule"), nil, tea.ToMap(request), runtime)
+	_body, _err := client.DoRequest(tea.String("disableRule"), tea.String("HTTP"), tea.String("POST"), tea.String("/openapi/disableRule"), nil, tea.ToMap(request), nil, runtime)
 	if _err != nil {
 		return _result, _err
 	}
@@ -2286,7 +2135,7 @@ func (client *Client) EnableRuleWithOptions(request *EnableRuleRequest, runtime 
 		return _result, _err
 	}
 	_result = &EnableRuleResponse{}
-	_body, _err := client.DoRequest(tea.String("enableRule"), tea.String("HTTP"), tea.String("POST"), tea.String("/openapi/enableRule"), nil, tea.ToMap(request), runtime)
+	_body, _err := client.DoRequest(tea.String("enableRule"), tea.String("HTTP"), tea.String("POST"), tea.String("/openapi/enableRule"), nil, tea.ToMap(request), nil, runtime)
 	if _err != nil {
 		return _result, _err
 	}
@@ -2317,7 +2166,7 @@ func (client *Client) GetRuleWithOptions(request *GetRuleRequest, runtime *util.
 		return _result, _err
 	}
 	_result = &GetRuleResponse{}
-	_body, _err := client.DoRequest(tea.String("getRule"), tea.String("HTTP"), tea.String("POST"), tea.String("/openapi/getRule"), nil, tea.ToMap(request), runtime)
+	_body, _err := client.DoRequest(tea.String("getRule"), tea.String("HTTP"), tea.String("POST"), tea.String("/openapi/getRule"), nil, tea.ToMap(request), nil, runtime)
 	if _err != nil {
 		return _result, _err
 	}
@@ -2348,7 +2197,7 @@ func (client *Client) ListRulesWithOptions(request *ListRulesRequest, runtime *u
 		return _result, _err
 	}
 	_result = &ListRulesResponse{}
-	_body, _err := client.DoRequest(tea.String("listRules"), tea.String("HTTP"), tea.String("POST"), tea.String("/openapi/listRules"), nil, tea.ToMap(request), runtime)
+	_body, _err := client.DoRequest(tea.String("listRules"), tea.String("HTTP"), tea.String("POST"), tea.String("/openapi/listRules"), nil, tea.ToMap(request), nil, runtime)
 	if _err != nil {
 		return _result, _err
 	}
@@ -2379,7 +2228,7 @@ func (client *Client) UpdateRuleWithOptions(request *UpdateRuleRequest, runtime 
 		return _result, _err
 	}
 	_result = &UpdateRuleResponse{}
-	_body, _err := client.DoRequest(tea.String("updateRule"), tea.String("HTTP"), tea.String("POST"), tea.String("/openapi/updateRule"), nil, tea.ToMap(request), runtime)
+	_body, _err := client.DoRequest(tea.String("updateRule"), tea.String("HTTP"), tea.String("POST"), tea.String("/openapi/updateRule"), nil, tea.ToMap(request), nil, runtime)
 	if _err != nil {
 		return _result, _err
 	}
@@ -2410,7 +2259,7 @@ func (client *Client) CreateTargetsWithOptions(request *CreateTargetsRequest, ru
 		return _result, _err
 	}
 	_result = &CreateTargetsResponse{}
-	_body, _err := client.DoRequest(tea.String("createTargets"), tea.String("HTTP"), tea.String("POST"), tea.String("/openapi/createTargets"), nil, tea.ToMap(request), runtime)
+	_body, _err := client.DoRequest(tea.String("createTargets"), tea.String("HTTP"), tea.String("POST"), tea.String("/openapi/createTargets"), nil, tea.ToMap(request), nil, runtime)
 	if _err != nil {
 		return _result, _err
 	}
@@ -2441,7 +2290,7 @@ func (client *Client) DeleteTargetsWithOptions(request *DeleteTargetsRequest, ru
 		return _result, _err
 	}
 	_result = &DeleteTargetsResponse{}
-	_body, _err := client.DoRequest(tea.String("deleteTargets"), tea.String("HTTP"), tea.String("POST"), tea.String("/openapi/deleteTargets"), nil, tea.ToMap(request), runtime)
+	_body, _err := client.DoRequest(tea.String("deleteTargets"), tea.String("HTTP"), tea.String("POST"), tea.String("/openapi/deleteTargets"), nil, tea.ToMap(request), nil, runtime)
 	if _err != nil {
 		return _result, _err
 	}
@@ -2472,7 +2321,7 @@ func (client *Client) ListTargetsWithOptions(request *ListTargetsRequest, runtim
 		return _result, _err
 	}
 	_result = &ListTargetsResponse{}
-	_body, _err := client.DoRequest(tea.String("listTargets"), tea.String("HTTP"), tea.String("POST"), tea.String("/openapi/listTargets"), nil, tea.ToMap(request), runtime)
+	_body, _err := client.DoRequest(tea.String("listTargets"), tea.String("HTTP"), tea.String("POST"), tea.String("/openapi/listTargets"), nil, tea.ToMap(request), nil, runtime)
 	if _err != nil {
 		return _result, _err
 	}
@@ -2503,7 +2352,7 @@ func (client *Client) TestEventPatternWithOptions(request *TestEventPatternReque
 		return _result, _err
 	}
 	_result = &TestEventPatternResponse{}
-	_body, _err := client.DoRequest(tea.String("testEventPattern"), tea.String("HTTP"), tea.String("POST"), tea.String("/openapi/testEventPattern"), nil, tea.ToMap(request), runtime)
+	_body, _err := client.DoRequest(tea.String("testEventPattern"), tea.String("HTTP"), tea.String("POST"), tea.String("/openapi/testEventPattern"), nil, tea.ToMap(request), nil, runtime)
 	if _err != nil {
 		return _result, _err
 	}
@@ -2512,12 +2361,12 @@ func (client *Client) TestEventPatternWithOptions(request *TestEventPatternReque
 }
 
 /**
- * Tests whether the specified event pattern matches the provided event
+ * Check the activation status of EventBridge service for a given user
  */
-func (client *Client) QueryEventTraces(request *QueryEventTracesRequest) (_result *QueryEventTracesResponse, _err error) {
+func (client *Client) QueryEventBridgeStatus(request *QueryEventBridgeStatusRequest) (_result *QueryEventBridgeStatusResponse, _err error) {
 	runtime := &util.RuntimeOptions{}
-	_result = &QueryEventTracesResponse{}
-	_body, _err := client.QueryEventTracesWithOptions(request, runtime)
+	_result = &QueryEventBridgeStatusResponse{}
+	_body, _err := client.QueryEventBridgeStatusWithOptions(request, runtime)
 	if _err != nil {
 		return _result, _err
 	}
@@ -2526,77 +2375,15 @@ func (client *Client) QueryEventTraces(request *QueryEventTracesRequest) (_resul
 }
 
 /**
- * Query the event traces by the event Id.
+ * Check the activation status of EventBridge service for a given user
  */
-func (client *Client) QueryEventTracesWithOptions(request *QueryEventTracesRequest, runtime *util.RuntimeOptions) (_result *QueryEventTracesResponse, _err error) {
+func (client *Client) QueryEventBridgeStatusWithOptions(request *QueryEventBridgeStatusRequest, runtime *util.RuntimeOptions) (_result *QueryEventBridgeStatusResponse, _err error) {
 	_err = util.ValidateModel(request)
 	if _err != nil {
 		return _result, _err
 	}
-	_result = &QueryEventTracesResponse{}
-	_body, _err := client.DoRequest(tea.String("queryEventTraces"), tea.String("HTTP"), tea.String("POST"), tea.String("/openapi/queryEventTraces"), nil, tea.ToMap(request), runtime)
-	if _err != nil {
-		return _result, _err
-	}
-	_err = tea.Convert(_body, &_result)
-	return _result, _err
-}
-
-/**
- * Tests whether the specified event pattern matches the provided event
- */
-func (client *Client) QueryEventByEventId(request *QueryEventByEventIdRequest) (_result *QueryEventByEventIdResponse, _err error) {
-	runtime := &util.RuntimeOptions{}
-	_result = &QueryEventByEventIdResponse{}
-	_body, _err := client.QueryEventByEventIdWithOptions(request, runtime)
-	if _err != nil {
-		return _result, _err
-	}
-	_result = _body
-	return _result, _err
-}
-
-/**
- * Query the event traces by the event Id.
- */
-func (client *Client) QueryEventByEventIdWithOptions(request *QueryEventByEventIdRequest, runtime *util.RuntimeOptions) (_result *QueryEventByEventIdResponse, _err error) {
-	_err = util.ValidateModel(request)
-	if _err != nil {
-		return _result, _err
-	}
-	_result = &QueryEventByEventIdResponse{}
-	_body, _err := client.DoRequest(tea.String("queryEventByEventId"), tea.String("HTTP"), tea.String("POST"), tea.String("/openapi/queryEventByEventId"), nil, tea.ToMap(request), runtime)
-	if _err != nil {
-		return _result, _err
-	}
-	_err = tea.Convert(_body, &_result)
-	return _result, _err
-}
-
-/**
- * Tests whether the specified event pattern matches the provided event
- */
-func (client *Client) QueryEventsByPeriod(request *QueryEventsByPeriodRequest) (_result *QueryEventsByPeriodResponse, _err error) {
-	runtime := &util.RuntimeOptions{}
-	_result = &QueryEventsByPeriodResponse{}
-	_body, _err := client.QueryEventsByPeriodWithOptions(request, runtime)
-	if _err != nil {
-		return _result, _err
-	}
-	_result = _body
-	return _result, _err
-}
-
-/**
- * Query the event traces by the event Id.
- */
-func (client *Client) QueryEventsByPeriodWithOptions(request *QueryEventsByPeriodRequest, runtime *util.RuntimeOptions) (_result *QueryEventsByPeriodResponse, _err error) {
-	_err = util.ValidateModel(request)
-	if _err != nil {
-		return _result, _err
-	}
-	_result = &QueryEventsByPeriodResponse{}
-	_body, _err := client.DoRequest(tea.String("queryEventsByPeriod"), tea.String("HTTP"), tea.String("POST"), tea.String("/openapi/queryEventsByPeriod"), nil, tea.ToMap(request), runtime)
+	_result = &QueryEventBridgeStatusResponse{}
+	_body, _err := client.DoRequest(tea.String("queryEventBridgeStatus"), tea.String("HTTP"), tea.String("POST"), tea.String("/openapi/queryEventBridgeStatus"), nil, tea.ToMap(request), nil, runtime)
 	if _err != nil {
 		return _result, _err
 	}

@@ -5,11 +5,6 @@ namespace AlibabaCloud\SDK\EventBridge\Models;
 
 use AlibabaCloud\Tea\Model;
 
-use AlibabaCloud\SDK\EventBridge\Models\SourceRabbitMQParameters;
-use AlibabaCloud\SDK\EventBridge\Models\SourceMNSParameters;
-use AlibabaCloud\SDK\EventBridge\Models\SourceRocketMQParameters;
-use AlibabaCloud\SDK\EventBridge\Models\SourceKafkaParameters;
-
 /**
  * The event source entry
  */
@@ -18,17 +13,21 @@ class EBUserDefinedEventSourceEntry extends Model {
         'name' => 'Name',
         'description' => 'Description',
         'arn' => 'ARN',
+        'externalSourceType' => 'ExternalSourceType',
+        'externalSourceConfig' => 'ExternalSourceConfig',
         'status' => 'Status',
         'ctime' => 'Ctime',
-        'eventBusName' => 'EventBusName',
-        'sourceRabbitMQParameters' => 'SourceRabbitMQParameters',
-        'sourceMNSParameters' => 'SourceMNSParameters',
-        'sourceRocketMQParameters' => 'SourceRocketMQParameters',
-        'sourceKafkaParameters' => 'SourceKafkaParameters',
+        'attachedBuses' => 'AttachedBuses',
     ];
     public function validate() {
-        Model::validateRequired('sourceRocketMQParameters', $this->sourceRocketMQParameters, true);
-        Model::validateRequired('sourceKafkaParameters', $this->sourceKafkaParameters, true);
+        Model::validateRequired('name', $this->name, true);
+        Model::validateRequired('description', $this->description, true);
+        Model::validateRequired('arn', $this->arn, true);
+        Model::validateRequired('externalSourceType', $this->externalSourceType, true);
+        Model::validateRequired('externalSourceConfig', $this->externalSourceConfig, true);
+        Model::validateRequired('status', $this->status, true);
+        Model::validateRequired('ctime', $this->ctime, true);
+        Model::validateRequired('attachedBuses', $this->attachedBuses, true);
     }
     public function toMap() {
         $res = [];
@@ -41,26 +40,20 @@ class EBUserDefinedEventSourceEntry extends Model {
         if (null !== $this->arn) {
             $res['ARN'] = $this->arn;
         }
+        if (null !== $this->externalSourceType) {
+            $res['ExternalSourceType'] = $this->externalSourceType;
+        }
+        if (null !== $this->externalSourceConfig) {
+            $res['ExternalSourceConfig'] = $this->externalSourceConfig;
+        }
         if (null !== $this->status) {
             $res['Status'] = $this->status;
         }
         if (null !== $this->ctime) {
             $res['Ctime'] = $this->ctime;
         }
-        if (null !== $this->eventBusName) {
-            $res['EventBusName'] = $this->eventBusName;
-        }
-        if (null !== $this->sourceRabbitMQParameters) {
-            $res['SourceRabbitMQParameters'] = null !== $this->sourceRabbitMQParameters ? $this->sourceRabbitMQParameters->toMap() : null;
-        }
-        if (null !== $this->sourceMNSParameters) {
-            $res['SourceMNSParameters'] = null !== $this->sourceMNSParameters ? $this->sourceMNSParameters->toMap() : null;
-        }
-        if (null !== $this->sourceRocketMQParameters) {
-            $res['SourceRocketMQParameters'] = null !== $this->sourceRocketMQParameters ? $this->sourceRocketMQParameters->toMap() : null;
-        }
-        if (null !== $this->sourceKafkaParameters) {
-            $res['SourceKafkaParameters'] = null !== $this->sourceKafkaParameters ? $this->sourceKafkaParameters->toMap() : null;
+        if (null !== $this->attachedBuses) {
+            $res['AttachedBuses'] = $this->attachedBuses;
         }
         return $res;
     }
@@ -79,26 +72,22 @@ class EBUserDefinedEventSourceEntry extends Model {
         if(isset($map['ARN'])){
             $model->arn = $map['ARN'];
         }
+        if(isset($map['ExternalSourceType'])){
+            $model->externalSourceType = $map['ExternalSourceType'];
+        }
+        if(isset($map['ExternalSourceConfig'])){
+            $model->externalSourceConfig = $map['ExternalSourceConfig'];
+        }
         if(isset($map['Status'])){
             $model->status = $map['Status'];
         }
         if(isset($map['Ctime'])){
             $model->ctime = $map['Ctime'];
         }
-        if(isset($map['EventBusName'])){
-            $model->eventBusName = $map['EventBusName'];
-        }
-        if(isset($map['SourceRabbitMQParameters'])){
-            $model->sourceRabbitMQParameters = SourceRabbitMQParameters::fromMap($map['SourceRabbitMQParameters']);
-        }
-        if(isset($map['SourceMNSParameters'])){
-            $model->sourceMNSParameters = SourceMNSParameters::fromMap($map['SourceMNSParameters']);
-        }
-        if(isset($map['SourceRocketMQParameters'])){
-            $model->sourceRocketMQParameters = SourceRocketMQParameters::fromMap($map['SourceRocketMQParameters']);
-        }
-        if(isset($map['SourceKafkaParameters'])){
-            $model->sourceKafkaParameters = SourceKafkaParameters::fromMap($map['SourceKafkaParameters']);
+        if(isset($map['AttachedBuses'])){
+            if(!empty($map['AttachedBuses'])){
+                $model->attachedBuses = $map['AttachedBuses'];
+            }
         }
         return $model;
     }
@@ -120,6 +109,16 @@ class EBUserDefinedEventSourceEntry extends Model {
     /**
      * @var string
      */
+    public $externalSourceType;
+
+    /**
+     * @var mixed[]
+     */
+    public $externalSourceConfig;
+
+    /**
+     * @var string
+     */
     public $status;
 
     /**
@@ -128,28 +127,8 @@ class EBUserDefinedEventSourceEntry extends Model {
     public $ctime;
 
     /**
-     * @var string
+     * @var string[]
      */
-    public $eventBusName;
-
-    /**
-     * @var SourceRabbitMQParameters
-     */
-    public $sourceRabbitMQParameters;
-
-    /**
-     * @var SourceMNSParameters
-     */
-    public $sourceMNSParameters;
-
-    /**
-     * @var SourceRocketMQParameters
-     */
-    public $sourceRocketMQParameters;
-
-    /**
-     * @var SourceKafkaParameters
-     */
-    public $sourceKafkaParameters;
+    public $attachedBuses;
 
 }

@@ -1,0 +1,78 @@
+alibabaCloud: "alibabaCloud:1.0.0"
+info:
+  namespace: "eventbridge"
+  apiStyle: "restful"
+apis:
+  putEvents:
+    description: "List all the Targets which meet the search criteria."
+    path: "/openapi/listTargets"
+    methods:
+      - "post"
+    schemes:
+      - "http"
+    visibility: "Public"
+    parameters:
+      - name: "EventBusName"
+        in: "body"
+        schema:
+          required: true
+          description: "eventBusName"
+          type: "string"
+          checkBlank: true
+          visibility: "private"
+      - name: "RuleName"
+        in: "body"
+        schema:
+          required: true
+          description: "ruleName"
+          type: "string"
+          checkBlank: true
+          visibility: "private"
+      - name: "Limit"
+        in: "body"
+        schema:
+          description: "limit"
+          type: "number"
+          checkBlank: true
+          visibility: "private"
+    responses:
+      "200":
+        schema:
+          title: "The response of search Targets "
+          type: "object"
+          properties:
+            Targets:
+              title: "the list of Targets"
+              type: "array"
+              items:
+                type: "object"
+                $ref: "#/components/schemas/TargetEntry"
+components:
+  schemas:
+    TargetEntry:
+      description: "The detail of TargetEntry"
+      visibility: "Public"
+      properties:
+        Id:
+          type: "string"
+        Type:
+          type: "string"
+        Endpoint:
+          type: "string"
+        PushRetryStrategy:
+          type: "string"
+        ParamList:
+          type: "array"
+          $ref: "#/components/schemas/EBTargetParam"
+    EBTargetParam:
+      description: "The param of TargetEntry"
+      visibility: "Public"
+      properties:
+        ResourceKey:
+          type: "string"
+        Form:
+          type: "string"
+        Value:
+          type: "string"
+        Template:
+          type: "string"

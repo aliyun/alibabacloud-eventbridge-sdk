@@ -1,0 +1,333 @@
+alibabaCloud: "alibabaCloud:1.0.0"
+info:
+  namespace: "eventbridge"
+  apiStyle: "restful"
+apis:
+  putEvents:
+    summary: "Save and start event streaming procss."
+    path: "/openapi/v2/getEventStreaming"
+    methods:
+      - "post"
+    schemes:
+      - "http"
+    visibility: "Public"
+    parameters:
+      - name: "EventStreamingName"
+        in: "body"
+        schema:
+          required: true
+          description: "the name of event streaming"
+          type: "string"
+          checkBlank: true
+    responses:
+      "200":
+        schema:
+          title: "The response of create event streaming. "
+          type: "object"
+          properties:
+            EventStreamingName:
+              title: "the name of event streaming"
+              type: "string"
+            Description:
+              title: "the description of event streaming"
+              type: "string"
+            Source:
+              title: "the source config."
+              type: "object"
+              $ref: "#/components/schemas/Source"
+            FilterPattern:
+              title: "the filterPattern of event streaming"
+              type: "string"
+            Sink:
+              title: "the sink config"
+              type: "object"
+              $ref: "#/components/schemas/Sink"
+            RunOptions:
+              title: "the runOptions config."
+              type: "object"
+              $ref: "#/components/schemas/RunOptions"
+            Tag:
+              title: "the tag of event streaming"
+              type: "string"
+            Status:
+              title: "the status of event streaming"
+              type: "string"
+
+components:
+  schemas:
+    RunOptions:
+      description: "The config of RunOptions"
+      visibility: "Public"
+      properties:
+        MaximumTasks:
+          type: "number"
+        RetryStrategy:
+          type: "object"
+          $ref: "#/components/schemas/RetryStrategy"
+        ErrorsTolerance:
+          type: "string"
+        DeadLetterQueue:
+          type: "object"
+          $ref: "#/components/schemas/DeadLetterQueue"
+    RetryStrategy:
+      description: "The config of RetryStrategy"
+      visibility: "Public"
+      properties:
+        PushRetryStrategy:
+          type: "string"
+        MaximumEventAgeInSeconds:
+          type: "number"
+        MaximumRetryAttempts:
+          type: "number"
+        RetryMode:
+          type: "string"
+    DeadLetterQueue:
+      description: "The config of DeadLetterQueue"
+      visibility: "Public"
+      properties:
+        Arn:
+          type: "string"
+    Source:
+      description: "The config of source"
+      visibility: "Public"
+      properties:
+        SourceMNSParameters:
+          type: "object"
+          $ref: "#/components/schemas/SourceMNSParameters"
+        SourceRabbitMQParameters:
+          type: "object"
+          $ref: "#/components/schemas/SourceRabbitMQParameters"
+        SourceRocketMQParameters:
+          type: "object"
+          $ref: "#/components/schemas/SourceRocketMQParameters"
+        SourceKafkaParameters:
+          type: "object"
+          $ref: "#/components/schemas/SourceKafkaParameters"
+    SourceRabbitMQParameters:
+      description: "The detail of SourceRabbitMQParameters"
+      visibility: "Public"
+      properties:
+        RegionId:
+          type: "string"
+        InstanceId:
+          type: "string"
+          required: true
+        VirtualHostName:
+          type: "string"
+          required: true
+        QueueName:
+          type: "string"
+          required: true
+    SourceMNSParameters:
+      description: "The detail of SourceMNSParameters"
+      visibility: "Public"
+      properties:
+        RegionId:
+          type: "string"
+        QueueName:
+          type: "string"
+          required: true
+    SourceRocketMQParameters:
+      description: "The detail of SourceRocketMQParameters"
+      visibility: "Public"
+      properties:
+        RegionId:
+          type: "string"
+        InstanceId:
+          type: "string"
+          required: true
+        Topic:
+          type: "string"
+        Tag:
+          type: "string"
+        Offset:
+          type: "string"
+        GroupID:
+          type: "string"
+          required: true
+    SourceKafkaParameters:
+      description: "The detail of SourceKafkaParameters"
+      visibility: "Public"
+      properties:
+        InstanceId:
+          type: "string"
+          required: true
+        Topic:
+          type: "string"
+          required: true
+        ConsumerGroup:
+          type: "string"
+          required: true
+        OffsetRest:
+          type: "string"
+    Sink:
+      description: "The config of sink"
+      visibility: "Public"
+      properties:
+        SinkMNSParameters:
+          type: "object"
+          $ref: "#/components/schemas/SinkMNSParameters"
+        SinkRabbitMQParameters:
+          type: "object"
+          $ref: "#/components/schemas/SinkRabbitMQParameters"
+        SinkKafkaParameters:
+          type: "object"
+          $ref: "#/components/schemas/SinkKafkaParameters"
+        SinkRocketMQParameters:
+          type: "object"
+          $ref: "#/components/schemas/SinkRocketMQParameters"
+        SinkFcParameters:
+          type: "object"
+          $ref: "#/components/schemas/SinkFcParameters"
+        SinkOdpsParameters:
+          type: "object"
+          $ref: "#/components/schemas/SinkOdpsParameters"
+    TargetParameter:
+      description: "The config of TargetParameter"
+      visibility: "Public"
+      properties:
+        Value:
+          type: "string"
+        Form:
+          type: "string"
+        Template:
+          type: "string"
+    SinkMNSParameters:
+      description: "The config of SinkMNSParameters"
+      visibility: "Public"
+      properties:
+        QueueName:
+          type: "object"
+          $ref: "#/components/schemas/TargetParameter"
+        Body:
+          type: "object"
+          $ref: "#/components/schemas/TargetParameter"
+    SinkRabbitMQParameters:
+      description: "The config of SinkRabbitMQParameters"
+      visibility: "Public"
+      properties:
+        InstanceId:
+          type: "object"
+          $ref: "#/components/schemas/TargetParameter"
+        VirtualHostName:
+          type: "object"
+          $ref: "#/components/schemas/TargetParameter"
+        TargetType:
+          type: "object"
+          $ref: "#/components/schemas/TargetParameter"
+        Exchange:
+          type: "object"
+          $ref: "#/components/schemas/TargetParameter"
+        RoutingKey:
+          type: "object"
+          $ref: "#/components/schemas/TargetParameter"
+        QueueName:
+          type: "object"
+          $ref: "#/components/schemas/TargetParameter"
+        Body:
+          type: "object"
+          $ref: "#/components/schemas/TargetParameter"
+        MessageId:
+          type: "object"
+          $ref: "#/components/schemas/TargetParameter"
+        Properties:
+          type: "object"
+          $ref: "#/components/schemas/TargetParameter"
+    SinkKafkaParameters:
+      description: "The config of SinkKafkaParameters"
+      visibility: "Public"
+      properties:
+        InstanceId:
+          type: "object"
+          $ref: "#/components/schemas/TargetParameter"
+        Topic:
+          type: "object"
+          $ref: "#/components/schemas/TargetParameter"
+        Acks:
+          type: "object"
+          $ref: "#/components/schemas/TargetParameter"
+        Key:
+          type: "object"
+          $ref: "#/components/schemas/TargetParameter"
+        Value:
+          type: "object"
+          $ref: "#/components/schemas/TargetParameter"
+    SinkRocketMQParameters:
+      description: "The config of SinkRocketMQParameters"
+      visibility: "Public"
+      properties:
+        InstanceId:
+          type: "object"
+          $ref: "#/components/schemas/TargetParameter"
+        Topic:
+          type: "object"
+          $ref: "#/components/schemas/TargetParameter"
+        Body:
+          type: "object"
+          $ref: "#/components/schemas/TargetParameter"
+        Properties:
+          type: "object"
+          $ref: "#/components/schemas/TargetParameter"
+        Keys:
+          type: "object"
+          $ref: "#/components/schemas/TargetParameter"
+        Tags:
+          type: "object"
+          $ref: "#/components/schemas/TargetParameter"
+    SinkFcParameters:
+      description: "The config of SinkFcParameters"
+      visibility: "Public"
+      properties:
+        ServiceName:
+          type: "object"
+          $ref: "#/components/schemas/TargetParameter"
+        FunctionName:
+          type: "object"
+          $ref: "#/components/schemas/TargetParameter"
+        Body:
+          type: "object"
+          $ref: "#/components/schemas/TargetParameter"
+        Qualifier:
+          type: "object"
+          $ref: "#/components/schemas/TargetParameter"
+        InvocationType:
+          type: "object"
+          $ref: "#/components/schemas/TargetParameter"
+        BatchSize:
+          type: "object"
+          $ref: "#/components/schemas/TargetParameter"
+        ExtendConfig:
+          type: "map"
+    SinkOdpsParameters:
+      description: "The config of SinkOdpsParameters"
+      visibility: "Public"
+      properties:
+        Endpoint:
+          type: "object"
+          $ref: "#/components/schemas/TargetParameter"
+        Project:
+          type: "object"
+          $ref: "#/components/schemas/TargetParameter"
+        Table:
+          type: "object"
+          $ref: "#/components/schemas/TargetParameter"
+        RoleName:
+          type: "object"
+          $ref: "#/components/schemas/TargetParameter"
+        Format:
+          type: "object"
+          $ref: "#/components/schemas/TargetParameter"
+        Mode:
+          type: "object"
+          $ref: "#/components/schemas/TargetParameter"
+        PartitionWindowType:
+          type: "object"
+          $ref: "#/components/schemas/TargetParameter"
+        TimeZone:
+          type: "object"
+          $ref: "#/components/schemas/TargetParameter"
+        UseStreaming:
+          type: "object"
+          $ref: "#/components/schemas/TargetParameter"
+        ExtendConfig:
+          type: "map"

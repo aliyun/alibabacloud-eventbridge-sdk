@@ -1,0 +1,29 @@
+import EventBridge;
+import Util;
+import Console;
+
+/**
+* PutEvents
+*/
+static function PutEvents(client: EventBridge) throws: void{
+    var event = new EventBridge.CloudEvent{};
+    event.datacontenttype = 'application/json';
+    event.data = Util.toBytes('test');
+    event.id = 'a5074581-7e74-4e4c-868f-47e7afdf8445';
+    event.source = 'acs.oss';
+    event.specversion = '1.0';
+    event.type = 'oss:ObjectCreated:PostObject';
+    event.time = '2020-08-24T13:54:05.965Asia/Shanghai';
+    event.subject = '1.0';
+    event.type = 'acs:oss:cn-hangzhou:1234567:xls-papk/game_apk/123.jpg';
+    event.extensions = {
+        aliyuneventbusname = "demo-bus",
+    };
+    try {
+        var resp = client.putEvents([ event ]);
+        Console.log("--------------------Publish event to the aliyun EventBus--------------------");
+        Console.log(Util.toJSONString(resp));
+    } catch (error) {
+        Console.log(error.message);
+    }
+}

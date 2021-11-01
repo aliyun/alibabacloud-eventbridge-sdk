@@ -1,0 +1,134 @@
+alibabaCloud: "alibabaCloud:1.0.0"
+info:
+  namespace: "eventbridge"
+  apiStyle: "restful"
+apis:
+  putEvents:
+    description: "List the user defined event source within your account."
+    path: "/openapi/v2/listUserDefinedEventSources"
+    methods:
+      - "post"
+    schemes:
+      - "http"
+    visibility: "Public"
+    parameters:
+      - name: "EventBusName"
+        in: "body"
+        schema:
+          description: "eventBusName"
+          type: "string"
+      - name: "NextToken"
+        in: "body"
+        schema:
+          description: "the next element."
+          type: "string"
+      - name: "Limit"
+        in: "body"
+        schema:
+          description: "response limit."
+          type: "number"
+    responses:
+      "200":
+        schema:
+          title: "The response of list event source."
+          type: "object"
+          properties:
+            EventSources:
+              title: "the list of eventsource."
+              type: "array"
+              items:
+                type: "object"
+                $ref: "#/components/schemas/EBUserDefinedEventSourceEntry"
+            NextToken:
+              title: "the next element."
+              type: "string"
+            Total:
+              title: "the total count of eventsource."
+              type: "number"
+components:
+  schemas:
+    EBUserDefinedEventSourceEntry:
+      description: "The event source entry."
+      visibility: "Public"
+      properties:
+        Name:
+          type: "string"
+        Description:
+          type: "string"
+        ARN:
+          type: "string"
+        Status:
+          type: "string"
+        Ctime:
+          type: "long"
+        EventBusName:
+          type: "string"
+        SourceRabbitMQParameters:
+          type: "object"
+          $ref: "#/components/schemas/SourceRabbitMQParameters"
+        SourceMNSParameters:
+          type: "object"
+          $ref: "#/components/schemas/SourceMNSParameters"
+        SourceRocketMQParameters:
+          type: "object"
+          $ref: "#/components/schemas/SourceRocketMQParameters"
+        SourceKafkaParameters:
+          type: "object"
+          $ref: "#/components/schemas/SourceKafkaParameters"
+    SourceRabbitMQParameters:
+      description: "The detail of SourceRabbitMQParameters"
+      visibility: "Public"
+      properties:
+        RegionId:
+          type: "string"
+        InstanceId:
+          type: "string"
+          required: true
+        VirtualHostName:
+          type: "string"
+          required: true
+        QueueName:
+          type: "string"
+          required: true
+    SourceMNSParameters:
+      description: "The detail of SourceMNSParameters"
+      visibility: "Public"
+      properties:
+        RegionId:
+          type: "string"
+        QueueName:
+          type: "string"
+          required: true
+    SourceRocketMQParameters:
+      description: "The detail of SourceRocketMQParameters"
+      visibility: "Public"
+      properties:
+        RegionId:
+          type: "string"
+        InstanceId:
+          type: "string"
+          required: true
+        Topic:
+          type: "string"
+        Tag:
+          type: "string"
+        Offset:
+          type: "string"
+        GroupID:
+          type: "string"
+          required: true
+    SourceKafkaParameters:
+      description: "The detail of SourceKafkaParameters"
+      visibility: "Public"
+      properties:
+        InstanceId:
+          type: "string"
+          required: true
+        Topic:
+          type: "string"
+          required: true
+        ConsumerGroup:
+          type: "string"
+          required: true
+        OffsetRest:
+          type: "string"

@@ -13,44 +13,36 @@ namespace AlibabaCloud.SDK.EventBridge.Models
      */
     public class EBUserDefinedEventSourceEntry : TeaModel {
         [NameInMap("Name")]
-        [Validation(Required=false)]
+        [Validation(Required=true)]
         public string Name { get; set; }
 
         [NameInMap("Description")]
-        [Validation(Required=false)]
+        [Validation(Required=true)]
         public string Description { get; set; }
 
         [NameInMap("ARN")]
-        [Validation(Required=false)]
+        [Validation(Required=true)]
         public string Arn { get; set; }
 
+        [NameInMap("ExternalSourceType")]
+        [Validation(Required=true)]
+        public string ExternalSourceType { get; set; }
+
+        [NameInMap("ExternalSourceConfig")]
+        [Validation(Required=true)]
+        public Dictionary<string, object> ExternalSourceConfig { get; set; }
+
         [NameInMap("Status")]
-        [Validation(Required=false)]
+        [Validation(Required=true)]
         public string Status { get; set; }
 
         [NameInMap("Ctime")]
-        [Validation(Required=false)]
+        [Validation(Required=true)]
         public long? Ctime { get; set; }
 
-        [NameInMap("EventBusName")]
-        [Validation(Required=false)]
-        public string EventBusName { get; set; }
-
-        [NameInMap("SourceRabbitMQParameters")]
-        [Validation(Required=false)]
-        public SourceRabbitMQParameters SourceRabbitMQParameters { get; set; }
-
-        [NameInMap("SourceMNSParameters")]
-        [Validation(Required=false)]
-        public SourceMNSParameters SourceMNSParameters { get; set; }
-
-        [NameInMap("SourceRocketMQParameters")]
+        [NameInMap("AttachedBuses")]
         [Validation(Required=true)]
-        public SourceRocketMQParameters SourceRocketMQParameters { get; set; }
-
-        [NameInMap("SourceKafkaParameters")]
-        [Validation(Required=true)]
-        public SourceKafkaParameters SourceKafkaParameters { get; set; }
+        public List<string> AttachedBuses { get; set; }
 
     }
 

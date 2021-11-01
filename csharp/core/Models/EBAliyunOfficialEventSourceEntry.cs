@@ -32,9 +32,9 @@ namespace AlibabaCloud.SDK.EventBridge.Models
         [Validation(Required=true)]
         public long? Ctime { get; set; }
 
-        [NameInMap("EventBusName")]
+        [NameInMap("AttachedBuses")]
         [Validation(Required=true)]
-        public string EventBusName { get; set; }
+        public List<string> AttachedBuses { get; set; }
 
         [NameInMap("EventTypes")]
         [Validation(Required=true)]

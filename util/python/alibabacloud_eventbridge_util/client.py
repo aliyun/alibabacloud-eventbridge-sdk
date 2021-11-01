@@ -2,7 +2,6 @@
 import hashlib
 import hmac
 import base64
-import json
 
 
 class Client(object):
@@ -81,24 +80,20 @@ class Client(object):
 
         @return: the result
         """
-        if not events or not isinstance(events, list):
-            return events
-
         out = []
         for e in events:
             dic = e.to_map().copy()
 
-            content_type = dic.get('datacontenttype')
-            if content_type not in ('application/json', 'text/json', '', None) and dic.get('data'):
-                dic['data_base64'] = base64.b64encode(dic['data']).decode('utf-8')
-                del dic['data']
-            elif dic.get('data'):
-                try:
-                    dic['data'] = json.loads(str(dic['data'], encoding='utf-8'))
-                except ValueError:
-                    dic['data'] = str(dic['data'], encoding='utf-8')
+            if dic['data']:
+                dic['data'] = str(dic['data'], encoding='utf-8')
 
-            if dic.get('extensions'):
+            if dic.get('datacontenttype') is not None:
+                content_type = dic.get('datacontenttype')
+                if content_type not in ('application/json', 'text/json') and dic.get('data') is not None:
+                    dic['data_base64'] = dic.get('data')
+                    del dic['data']
+
+            if dic.get('extensions') is not None:
                 for k, v in dic.get('extensions').items():
                     dic[k] = v
                 del dic['extensions']
@@ -106,13 +101,3 @@ class Client(object):
             dic = {key: value for key, value in dic.items() if value is not None}
             out.append(dic)
         return out
-
-    @staticmethod
-    def start_with(origin, prefix):
-        """
-        Judge if the  origin is start with the prefix
-        @param origin the original string
-        @param prefix the prefix string
-        @return the result
-        """
-        return origin.startswith(prefix)

@@ -1,4 +1,4 @@
-module github.com/alibabacloud-go/eventbridge-util
+module gitlab.alibaba-inc.com/alicloud-sdk/EventBridge-helper/util/golang
 
 go 1.14
 

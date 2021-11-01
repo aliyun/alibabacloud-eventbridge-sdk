@@ -1,0 +1,100 @@
+alibabaCloud: "alibabaCloud:1.0.0"
+info:
+  namespace: "eventbridge"
+  apiStyle: "restful"
+apis:
+  putEvents:
+    description: "Adds the specified targets to the specified rule."
+    path: "/openapi/createTargets"
+    methods:
+      - "post"
+    schemes:
+      - "http"
+    visibility: "Public"
+    parameters:
+      - name: "EventBusName"
+        in: "body"
+        schema:
+          required: true
+          description: "eventBusName"
+          type: "string"
+          checkBlank: true
+          visibility: "private"
+      - name: "RuleName"
+        in: "body"
+        schema:
+          required: true
+          description: "ruleName"
+          type: "string"
+          checkBlank: true
+          visibility: "private"
+      - name: "Targets"
+        in: "body"
+        schema:
+          required: true
+          description: "targets"
+          type: "array"
+          checkBlank: true
+          visibility: "private"
+          items:
+            type: "object"
+            $ref: "#/components/schemas/TargetEntry"
+    responses:
+      "200":
+        schema:
+          title: "The response of create Targets "
+          type: "object"
+          properties:
+            ErrorEntriesCount:
+              title: "the cout of error entries"
+              type: "number"
+            ErrorEntries:
+              title: "the cout of error entries"
+              type: "array"
+              items:
+                type: "object"
+                $ref: "#/components/schemas/TargetResultEntry"
+components:
+  schemas:
+    TargetEntry:
+      description: "The detail of TargetEntry"
+      visibility: "Public"
+      properties:
+        Id:
+          type: "string"
+          required: true
+        Type:
+          type: "string"
+          required: true
+        Endpoint:
+          type: "string"
+          required: true
+        PushRetryStrategy:
+          type: "string"
+        ParamList:
+          type: "array"
+          $ref: "#/components/schemas/EBTargetParam"
+    EBTargetParam:
+      description: "The param of TargetEntry"
+      visibility: "Public"
+      properties:
+        ResourceKey:
+          type: "string"
+          required: true
+        Form:
+          type: "string"
+          required: true
+        Value:
+          type: "string"
+        Template:
+          type: "string"
+    TargetResultEntry:
+      description: "The result detail of target operation"
+      visibility: "Public"
+      properties:
+        ErrorCode:
+          type: "string"
+        ErrorMessage:
+          type: "string"
+        EntryId:
+          type: "string"

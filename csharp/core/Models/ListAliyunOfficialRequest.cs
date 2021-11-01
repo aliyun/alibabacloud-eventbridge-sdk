@@ -13,7 +13,7 @@ namespace AlibabaCloud.SDK.EventBridge.Models
      */
     public class ListAliyunOfficialRequest : TeaModel {
         [NameInMap("NextToken")]
-        [Validation(Required=false)]
+        [Validation(Required=true)]
         public string NextToken { get; set; }
 
         [NameInMap("Limit")]

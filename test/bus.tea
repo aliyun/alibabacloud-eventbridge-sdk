@@ -1,0 +1,60 @@
+import EventBridge;
+import Util;
+import Console;
+
+static function createEventBusSample(client: EventBridge) throws: void{
+        try {
+            var createEventBusRequest = new CreateEventBusRequest();
+            createEventBusRequest.eventBusName = 'create-bus';
+            var resp = client.createEventBus([ createEventBusRequest ]);
+
+            Console.log("--------------------Create bus success --------------------");
+            Console.log(Util.toJSONString(resp));
+        } catch (error) {
+            Console.log(error.message);
+        }
+    }
+
+static function deleteEventBusSample(client: EventBridge) throws: void{
+        try {
+            var eventBusName = "delete-bus";
+            //create
+            var createEventBusRequest = new CreateEventBusRequest();
+            createEventBusRequest.eventBusName=eventBusName;
+            client.createEventBus([ createEventBusRequest ]);
+            //delete
+            var deleteEventBusRequest = new DeleteEventBusRequest();
+            deleteEventBusRequest.eventBusName=eventBusName;
+            var resp = client.deleteEventBus([ deleteEventBusRequest ]);
+            Console.log("--------------------Delete bus success --------------------");
+            Console.log(Util.toJSONString(resp));
+        } catch (error) {
+            Console.log(error.message);
+        }
+    }
+
+static function getEventBusSample(client: EventBridge) throws: void{
+        try {
+            var describeEventBusRequest = new GetEventBusRequest();
+            describeEventBusRequest.eventBusName='demo-bus';
+            var resp = client.getEventBus([ describeEventBusRequest ]);
+            Console.log("--------------------describe bus success --------------------");
+            Console.log(Util.toJSONString(resp));
+        } catch (error) {
+            Console.log(error.message);
+        }
+    }
+
+static function listEventBusSample(client: EventBridge) throws: void{
+        try {
+            var listEventBusesRequest = new ListEventBusesRequest();
+            listEventBusesRequest.limit=100;
+            var resp = client.listEventBuses(listEventBusesRequest);
+            Console.log("--------------------list bus success --------------------");
+            Console.log(Util.toJSONString(resp));
+        } catch (error) {
+            Console.log(error.message);
+        }
+    }
+
+}

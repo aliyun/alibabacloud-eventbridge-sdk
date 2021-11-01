@@ -1,0 +1,107 @@
+alibabaCloud: "alibabaCloud:1.0.0"
+info:
+  namespace: "eventbridge"
+  apiStyle: "restful"
+apis:
+  putEventsToAccount:
+    summary: "Publish event to the aliyun EventBus"
+    path: "/openapi/putEventsToAccount"
+    methods:
+      - "post"
+    schemes:
+      - "http"
+    visibility: "Public"
+    parameters:
+      - name: "accountId"
+        in: "header"
+        type: "string"
+        headerName: "x-eventbridge-accountid"
+        required: true
+        checkBlank: true
+      - name: "eventList"
+        type: "array"
+        in: "body"
+        items:
+          type: "object"
+          $ref: "#/components/schemas/CloudEvent"
+    responses:
+      "200":
+        schema:
+          title: "put event response"
+          type: "object"
+          properties:
+            RequestId:
+              title: "the id of request"
+              type: "string"
+            FailedEntryCount:
+              title: "the counts of fail put events"
+              type: "number"
+            EntryList:
+              title: "the  detail of fail put events"
+              type: "array"
+              items:
+                type: "object"
+                $ref: "#/components/schemas/PutEventsResponseEntry"
+components:
+  schemas:
+    PutEventsResponseEntry:
+      title: "The detail of put event result"
+      description: "PutEventsResponseEntry"
+      visibility: "Public"
+      properties:
+        EventId:
+          type: "string"
+        TraceId:
+          type: "string"
+        ErrorCode:
+          type: "string"
+        ErrorMessage:
+          type: "string"
+    CloudEvent:
+      title: "Cloud Event"
+      description: "Cloud Event Stanard Froamt"
+      visibility: "Public"
+      type: "object"
+      properties:
+        id:
+          type: "string"
+          required: true
+          checkBlank: true
+          maxLength:
+        source:
+          type: "string"
+          required: true
+          checkBlank: true
+          maxLength: 128
+        specversion:
+          type: "string"
+          required: true
+          checkBlank: true
+          default: "1.0"
+        type:
+          type: "string"
+          required: true
+          checkBlank: true
+          maxLength: 64
+        datacontenttype:
+          type: "string"
+          required: false
+          checkBlank: true
+          default: "application/json; charset=utf-8"
+        dataschema:
+          type: "string"
+          required: false
+          checkBlank: true
+        subject:
+          type: "string"
+          required: false
+          checkBlank: true
+        time:
+          type: "string"
+          maxLength: 64
+        extensions:
+          type: "string"
+          additionalProperties:
+            type: "object"
+        data:
+          type: "bytes"

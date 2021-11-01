@@ -1,0 +1,115 @@
+alibabaCloud: "alibabaCloud:1.0.0"
+info:
+  namespace: "eventbridge"
+  apiStyle: "restful"
+apis:
+  putEvents:
+    description: "List all the rules which meet the search criteria."
+    path: "/openapi/listRules"
+    methods:
+      - "post"
+    schemes:
+      - "http"
+    visibility: "Public"
+    parameters:
+      - name: "EventBusName"
+        in: "body"
+        schema:
+          required: true
+          description: "eventBusName"
+          type: "string"
+          checkBlank: true
+          visibility: "private"
+      - name: "RuleNamePrefix"
+        in: "body"
+        schema:
+          description: "ruleNamePrefix"
+          type: "string"
+          checkBlank: true
+          visibility: "private"
+      - name: "Limit"
+        in: "body"
+        schema:
+          description: "limit"
+          type: "number"
+          checkBlank: true
+          visibility: "private"
+      - name: "NextToken"
+        in: "body"
+        schema:
+          description: "nextToken"
+          type: "String"
+          checkBlank: true
+          visibility: "private"
+    responses:
+      "200":
+        schema:
+          title: "The response of search EventBus "
+          type: "object"
+          properties:
+            NextToken:
+              title: "the NextToken of list EventBuses rule"
+              type: "string"
+            Rules:
+              title: "the list of EventBuses rule"
+              type: "array"
+              items:
+                type: "object"
+                $ref: "#/components/schemas/EventRuleDTO"
+            Total:
+              title: "the Total Number of list EventBuses rule"
+              type: "number"
+components:
+  schemas:
+    EventRuleDTO:
+      description: "The detail of EventBuses rule"
+      visibility: "Public"
+      properties:
+        EventBusName:
+          title: "the name of eventbus"
+          type: "string"
+        RuleARN:
+          title: "the Uniform Resource identification of eventbus rule"
+          type: "string"
+        RuleName:
+          title: "the name of eventbus rule"
+          type: "string"
+        Description:
+          title: "the description of eventbus"
+          type: "string"
+        Status:
+          title: "the status of eventbus rule"
+          type: "string"
+        FilterPattern:
+          title: "the filter pattern of eventbus rule"
+          type: "string"
+        Targets:
+          type: "array"
+          items:
+            type: "object"
+            $ref: "#/components/schemas/TargetEntry"
+        Ctime:
+          title: "the create time of eventbus rule"
+          type: "long"
+        Mtime:
+          title: "the modify time of eventbus rule"
+          type: "long"
+        Tags:
+          title: "the tags of event rule"
+          type: "object"
+          additionalProperties:
+            type: "string"
+    TargetEntry:
+      description: "The detail of TargetEntry"
+      visibility: "Public"
+      properties:
+        Id:
+          type: "string"
+          required: true
+        Type:
+          type: "string"
+        Endpoint:
+          type: "string"
+          required: true
+        PushRetryStrategy:
+          type: "string"

@@ -35,7 +35,7 @@ NAME = "alibabacloud_eventbridge_util"
 DESCRIPTION = "Alibaba Cloud EventBridge Util Library for Python"
 AUTHOR = "Alibaba Cloud SDK"
 AUTHOR_EMAIL = "sdk-team@alibabacloud.com"
-URL = "https://github.com/aliyun/alibabacloud-eventbridge-sdk"
+URL = "https://github.com/aliyun/eventbridge-util"
 
 TOPDIR = os.path.dirname(__file__) or "."
 VERSION = __import__(PACKAGE).__version__

@@ -12,12 +12,8 @@ namespace AlibabaCloud.SDK.EventBridge.Models
      * The request of listUserDefinedEventSources
      */
     public class ListUserDefinedRequest : TeaModel {
-        [NameInMap("EventBusName")]
-        [Validation(Required=false)]
-        public string EventBusName { get; set; }
-
         [NameInMap("NextToken")]
-        [Validation(Required=false)]
+        [Validation(Required=true)]
         public string NextToken { get; set; }
 
         [NameInMap("Limit")]
