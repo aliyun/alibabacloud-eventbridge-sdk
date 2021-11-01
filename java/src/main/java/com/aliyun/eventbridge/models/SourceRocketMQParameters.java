@@ -19,15 +19,16 @@ public class SourceRocketMQParameters extends TeaModel {
     @NameInMap("Tag")
     public String tag;
 
-    @NameInMap("Timestamp")
-    public Number timestamp;
-
     @NameInMap("Offset")
     public String offset;
 
     @NameInMap("GroupID")
     @Validation(required = true)
     public String groupID;
+
+    @NameInMap("Timestamp")
+    @Validation(required = true)
+    public Number timestamp;
 
     public static SourceRocketMQParameters build(java.util.Map<String, ?> map) {
         SourceRocketMQParameters self = new SourceRocketMQParameters();
@@ -66,14 +67,6 @@ public class SourceRocketMQParameters extends TeaModel {
         return this.tag;
     }
 
-    public SourceRocketMQParameters setTimestamp(Number timestamp) {
-        this.timestamp = timestamp;
-        return this;
-    }
-    public Number getTimestamp() {
-        return this.timestamp;
-    }
-
     public SourceRocketMQParameters setOffset(String offset) {
         this.offset = offset;
         return this;
@@ -88,6 +81,14 @@ public class SourceRocketMQParameters extends TeaModel {
     }
     public String getGroupID() {
         return this.groupID;
+    }
+
+    public SourceRocketMQParameters setTimestamp(Number timestamp) {
+        this.timestamp = timestamp;
+        return this;
+    }
+    public Number getTimestamp() {
+        return this.timestamp;
     }
 
 }

@@ -14,7 +14,6 @@ public class SourceMNSParameters extends TeaModel {
     public String queueName;
 
     @NameInMap("IsBase64Decode")
-    @Validation(required = true)
     public Boolean isBase64Decode;
 
     public static SourceMNSParameters build(java.util.Map<String, ?> map) {
