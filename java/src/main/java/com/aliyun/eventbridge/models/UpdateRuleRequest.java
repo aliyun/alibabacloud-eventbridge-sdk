@@ -24,9 +24,6 @@ public class UpdateRuleRequest extends TeaModel {
     @NameInMap("FilterPattern")
     public String filterPattern;
 
-    @NameInMap("Tags")
-    public java.util.Map<String, String> tags;
-
     public static UpdateRuleRequest build(java.util.Map<String, ?> map) {
         UpdateRuleRequest self = new UpdateRuleRequest();
         return TeaModel.build(map, self);
@@ -70,14 +67,6 @@ public class UpdateRuleRequest extends TeaModel {
     }
     public String getFilterPattern() {
         return this.filterPattern;
-    }
-
-    public UpdateRuleRequest setTags(java.util.Map<String, String> tags) {
-        this.tags = tags;
-        return this;
-    }
-    public java.util.Map<String, String> getTags() {
-        return this.tags;
     }
 
 }

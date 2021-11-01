@@ -3,13 +3,14 @@ package com.aliyun.eventbridge.models;
 
 import com.aliyun.tea.*;
 
+/**
+ * The request of queryEventTraces
+ */
 public class QueryEventTracesRequest extends TeaModel {
     @NameInMap("EventBusName")
-    @Validation(required = true)
     public String eventBusName;
 
     @NameInMap("EventId")
-    @Validation(required = true)
     public String eventId;
 
     public static QueryEventTracesRequest build(java.util.Map<String, ?> map) {

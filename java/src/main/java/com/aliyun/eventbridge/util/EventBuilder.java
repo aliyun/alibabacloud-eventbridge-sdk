@@ -83,7 +83,7 @@ public class EventBuilder {
             .setSource(source != null ? source.toASCIIString() : null)
             .setType(type)
             .setSubject(subject)
-            .setTime(time != null ? Time.zoneTime(time, timeZone) : null)
+            .setTime(time != null ? Time.zoneTime(time,timeZone) : null)
             .setExtensions(extensions)
             .setData(data);
         //default value

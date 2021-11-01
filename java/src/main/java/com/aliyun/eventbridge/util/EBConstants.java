@@ -23,6 +23,15 @@ public class EBConstants {
     public static final String EXTENSION_EVENTBUSNAME = "aliyuneventbusname";
 
     /**
+     * Error code:ServiceNotEnabled
+     */
+    public static final String SERVICE_NOT_ENABLED_CODE = "ServiceNotEnabled";
+    /**
+     * Error Message:ServiceNotEnabled
+     */
+    public static final String SERVICE_NOT_ENABLED_MESSAGE
+        = "The OwnerId that your Access Key Id associated to has not enabled.";
+    /**
      * the default charset
      */
     public static final Charset DEFAULT_CHARSET = Charset.forName("UTF-8");

@@ -1,614 +1,371 @@
 package com.aliyun.eventbridge;
 
 import com.aliyun.eventbridge.models.*;
-import com.aliyun.eventbridge.util.EventBuilder;
-import com.aliyun.tea.TeaException;
 import com.aliyun.teautil.models.RuntimeOptions;
 
 public interface EventBridge {
 
     /**
-     * <p>
-     * Publish event to the aliyun EventBus.
-     * </p>
-     * <p>
-     * There is a convenient way to create {@link CloudEvent}  is to
-     * uesing {@link EventBuilder}, avoiding the need to create one manually.
-     * </p>
-     *
-     * @param eventList a list of {@link CloudEvent},which follow the stanndard of
-     *                  <a href="https://github.com/cloudevents"> Open Source CloudEvents </a>
-     *
-     * @return Result of the PutEvents operation returned by the service.
-     *
-     * @throws TeaException All the exception occurs due to expected or unexpected causes. When the exception is from
-     *                      Eventbridge service, the error message is start with [EventBridgeError].
+     * Encapsulate the request and invoke the network
+     * @param action the api name
+     * @param protocol http or https
+     * @param method e.g. GET
+     * @param pathname pathname of every api
+     * @param query which contains request params
+     * @param body content of request
+     * @param runtime which controls some details of call api, such as retry times
+     * @return the response
      */
-    PutEventsResponse putEvents(java.util.List<CloudEvent> eventList) throws TeaException;
+    java.util.Map<String, ?> doRequest(String action, String protocol, String method, String pathname, java.util.Map<String, String> query, Object body, java.util.Map<String, String> headers, RuntimeOptions runtime);
 
     /**
-     * <p>
-     * Publish event to the aliyun EventBus.
-     * </p>
-     * <p>
-     * There is a convenient way to create {@link CloudEvent}  is to
-     * uesing {@link EventBuilder}, avoiding the need to create one manually.
-     * </p>
-     *
-     * @param eventList A list of {@link CloudEvent},which follow the stanndard of
-     *                  <a href="https://github.com/cloudevents"> Open Source CloudEvents </a>
-     * @param runtime   When want to custom the request context,such as timeout,localAddr and so on, it can be seted by
-     *                  {@link RuntimeOptions}
-     *
-     * @return Result of the putEventsWithOptions operation returned by the service.
-     *
-     * @throws TeaException All the exception occurs due to expected or unexpected causes. When the exception is from
-     *                      Eventbridge service, the error message is start with [EventBridgeError].
+     * Publish event to the aliyun EventBus
      */
-    PutEventsResponse putEventsWithOptions(java.util.List<CloudEvent> eventList,
-        com.aliyun.teautil.models.RuntimeOptions runtime) throws TeaException;
+    PutEventsResponse putEvents(java.util.List<CloudEvent> eventList);
 
     /**
-     * <p>
-     * Creates a new event bus within your account. This can be a custom event bus which you can use to receive events
-     * from your custom applications and services.
-     * </p>
-     *
-     * @param request The request param of createEventBus
-     *
-     * @return Result of the createEventBus operation returned by the service.
-     *
-     * @throws TeaException All the exception occurs due to expected or unexpected causes. When the exception is from
-     *                      Eventbridge service, the error message is start with [EventBridgeError].
+     * Publish event to the aliyun EventBus
      */
-    CreateEventBusResponse createEventBus(CreateEventBusRequest request) throws TeaException;
+    PutEventsResponse putEventsWithOptions(java.util.List<CloudEvent> eventList, RuntimeOptions runtime);
 
     /**
-     * <p>
-     * Creates a new event bus within your account. This can be a custom event bus which you can use to receive events
-     * from your custom applications and services with RuntimeOptions.
-     * </p>
-     *
-     * @param request The request param of createEventBus
-     * @param runtime When want to custom the request context,such as timeout,localAddr and so on, it can be seted by
-     *                {@link RuntimeOptions}
-     *
-     * @return Result of the createEventBusWithOptions operation returned by the service.
-     *
-     * @throws TeaException All the exception occurs due to expected or unexpected causes. When the exception is from
-     *                      Eventbridge service, the error message is start with [EventBridgeError].
+     * Publish event to the aliyun specified account's event bus
      */
-    CreateEventBusResponse createEventBusWithOptions(CreateEventBusRequest request,
-        com.aliyun.teautil.models.RuntimeOptions runtime) throws TeaException;
+    PutEventsResponse putEventsToAccount(String accoutid, java.util.List<CloudEvent> eventList);
 
     /**
-     * <p>
-     * Deletes the specified custom event bus in your account,You can't delete your account's default event bus.
-     * </p>
-     *
-     * @param request The request param of deleteEventBus
-     *
-     * @return Result of the deleteEventBus operation returned by the service.
-     *
-     * @throws TeaException All the exception occurs due to expected or unexpected causes. When the exception is from
-     *                      Eventbridge service, the error message is start with [EventBridgeError].
+     * Publish event to the aliyun specified account's event bus
      */
-    DeleteEventBusResponse deleteEventBus(DeleteEventBusRequest request) throws TeaException;
+    PutEventsResponse putEventsToAccountWithOptions(String accoutid, java.util.List<CloudEvent> eventList, RuntimeOptions runtime);
 
     /**
-     * <p>
-     * Deletes the specified custom event bus in your account,You can't delete your account's default event bus with
-     * RuntimeOptions.
-     * </p>
-     *
-     * @param request The request param of deleteEventBusWithOptions
-     * @param runtime When want to custom the request context,such as timeout,localAddr and so on, it can be seted by
-     *                {@link RuntimeOptions}
-     *
-     * @return Result of the deleteEventBusWithOptions operation returned by the service.
-     *
-     * @throws TeaException All the exception occurs due to expected or unexpected causes. When the exception is from
-     *                      Eventbridge service, the error message is start with [EventBridgeError].
+     * Creates a new event bus within your account. This can be a custom event bus which you can use to receive events from your custom applications and services
      */
-    DeleteEventBusResponse deleteEventBusWithOptions(DeleteEventBusRequest request,
-        com.aliyun.teautil.models.RuntimeOptions runtime) throws TeaException;
+    CreateEventBusResponse createEventBus(CreateEventBusRequest request);
 
     /**
-     * <p>
+     * Creates a new event bus within your account. This can be a custom event bus which you can use to receive events from your custom applications and services
+     */
+    CreateEventBusResponse createEventBusWithOptions(CreateEventBusRequest request, RuntimeOptions runtime);
+
+    /**
+     * List the aliyun official event source within your account
+     */
+    ListAliyunOfficialResponse listAliyunOfficialEventSources(ListAliyunOfficialRequest request);
+
+    /**
+     * List the aliyun official event source within your account
+     */
+    ListAliyunOfficialResponse listAliyunOfficialEventSourcesWithOptions(ListAliyunOfficialRequest request, RuntimeOptions runtime);
+
+    /**
+     * List the user defined event source within your account
+     */
+    ListUserDefinedResponse listUserDefinedEventSources(ListUserDefinedRequest request);
+
+    /**
+     * List the user defined event source within your account
+     */
+    ListUserDefinedResponse listUserDefinedEventSourcesWithOptions(ListUserDefinedRequest request, RuntimeOptions runtime);
+
+    /**
+     * Deletes the specified custom event bus in your account,You can't delete your account's default event bus
+     */
+    DeleteEventBusResponse deleteEventBus(DeleteEventBusRequest request);
+
+    /**
+     * Deletes the specified custom event bus in your account,You can't delete your account's default event bus
+     */
+    DeleteEventBusResponse deleteEventBusWithOptions(DeleteEventBusRequest request, RuntimeOptions runtime);
+
+    /**
      * Displays details about an event bus in your account
-     * </p>
-     *
-     * @param request The request param of getEventBus
-     *
-     * @return Result of the getEventBus operation returned by the service.
-     *
-     * @throws TeaException All the exception occurs due to expected or unexpected causes. When the exception is from
-     *                      Eventbridge service, the error message is start with [EventBridgeError].
      */
-    GetEventBusResponse getEventBus(GetEventBusRequest request) throws TeaException;
+    GetEventBusResponse getEventBus(GetEventBusRequest request);
 
     /**
-     * <p>
-     * Displays details about an event bus in your account with RuntimeOptions.
-     * </p>
-     *
-     * @param request The request param of getEventBusWithOptions
-     * @param runtime When want to custom the request context,such as timeout,localAddr and so on, it can be seted by
-     *                {@link RuntimeOptions}
-     *
-     * @return Result of the getEventBusWithOptions operation returned by the service.
-     *
-     * @throws TeaException All the exception occurs due to expected or unexpected causes. When the exception is from
-     *                      Eventbridge service, the error message is start with [EventBridgeError].
+     * Displays details about an event bus in your account
      */
-    GetEventBusResponse getEventBusWithOptions(GetEventBusRequest request,
-        com.aliyun.teautil.models.RuntimeOptions runtime) throws TeaException;
+    GetEventBusResponse getEventBusWithOptions(GetEventBusRequest request, RuntimeOptions runtime);
 
     /**
-     * <p>
-     * List all the EventBus in your account, including the default event bus, custom event buses, which meet the search
-     * criteria.
-     * </p>
-     *
-     * @param request The request param of listEventBuses
-     *
-     * @return Result of the listEventBuses operation returned by the service.
-     *
-     * @throws TeaException All the exception occurs due to expected or unexpected causes. When the exception is from
-     *                      Eventbridge service, the error message is start with [EventBridgeError].
+     * List all the EventBus in your account, including the default event bus, custom event buses, which meet the search criteria.
      */
-    ListEventBusesResponse listEventBuses(ListEventBusesRequest request) throws TeaException;
+    ListEventBusesResponse listEventBuses(ListEventBusesRequest request);
 
     /**
-     * <p>
-     * List all the EventBus in your account, including the default event bus, custom event buses, which meet the search
-     * criteria with RuntimeOptions.
-     * </p>
-     *
-     * @param request The request param of listEventBusesWithOptions
-     * @param runtime When want to custom the request context,such as timeout,localAddr and so on, it can be seted by
-     *                {@link RuntimeOptions}
-     *
-     * @return Result of the listEventBusesWithOptions operation returned by the service.
-     *
-     * @throws TeaException All the exception occurs due to expected or unexpected causes. When the exception is from
-     *                      Eventbridge service, the error message is start with [EventBridgeError].
+     * List all the EventBus in your account, including the default event bus, custom event buses, which meet the search criteria.
      */
-    ListEventBusesResponse listEventBusesWithOptions(ListEventBusesRequest request,
-        com.aliyun.teautil.models.RuntimeOptions runtime) throws TeaException;
+    ListEventBusesResponse listEventBusesWithOptions(ListEventBusesRequest request, RuntimeOptions runtime);
 
     /**
-     * <p>
+     * Query the event traces by the event Id
+     */
+    QueryEventByEventIdResponse queryEventByEventId(QueryEventByEventIdRequest request);
+
+    /**
+     * Query the event traces by the event Id
+     */
+    QueryEventByEventIdResponse queryEventByEventIdWithOptions(QueryEventByEventIdRequest request, RuntimeOptions runtime);
+
+    /**
+     *Query the event traces by the event period
+     */
+    QueryEventsByPeriodResponse queryEventsByPeriod(QueryEventsByPeriodRequest request);
+
+    /**
+     * Query the event traces by the event period
+     */
+    QueryEventsByPeriodResponse queryEventsByPeriodWithOptions(QueryEventsByPeriodRequest request, RuntimeOptions runtime);
+
+    /**
+     * Query the event traces by the event Id
+     */
+    QueryEventTracesResponse queryEventTraces(QueryEventTracesRequest request);
+
+    /**
+     * Query the event traces by the event Id
+     */
+    QueryEventTracesResponse queryEventTracesWithOptions(QueryEventTracesRequest request, RuntimeOptions runtime);
+
+    /**
+     * delete event streaming
+     */
+    DeleteEventStreamingResponse deleteEventStreaming(DeleteEventStreamingRequest request);
+
+    /**
+     * delete event streaming
+     */
+    DeleteEventStreamingResponse deleteEventStreamingWithOptions(DeleteEventStreamingRequest request, RuntimeOptions runtime);
+
+    /**
+     * create event streaming
+     */
+    GetEventStreamingResponse getEventStreaming(GetEventStreamingRequest request);
+
+    /**
+     * create event streaming
+     */
+    GetEventStreamingResponse getEventStreamingWithOptions(GetEventStreamingRequest request, RuntimeOptions runtime);
+
+    /**
+     * List the metrics of event streaming
+     */
+    ListEventStreamingMetricsResponse listEventStreamingMetrics(ListEventStreamingMetricsRequest request);
+
+    /**
+     * List the metrics of event streaming
+     */
+    ListEventStreamingMetricsResponse listEventStreamingMetricsWithOptions(ListEventStreamingMetricsRequest request, RuntimeOptions runtime);
+
+    /**
+     * Save and start event streaming procss
+     */
+    SaveAndStartEventStreamingResponse saveAndStartEventStreaming(SaveAndStartEventStreamingRequest request);
+
+    /**
+     * Save and start event streaming procss
+     */
+    SaveAndStartEventStreamingResponse saveAndStartEventStreamingWithOptions(SaveAndStartEventStreamingRequest request, RuntimeOptions runtime);
+
+    /**
      * Create an EventBus rule on Aliyun
-     * </p>
-     *
-     * @param request The request param of createRule
-     *
-     * @return Result of the createRule operation returned by the service.
-     *
-     * @throws TeaException All the exception occurs due to expected or unexpected causes. When the exception is from
-     *                      Eventbridge service, the error message is start with [EventBridgeError].
      */
-    CreateRuleResponse createRule(CreateRuleRequest request) throws TeaException;
+    CreateRuleResponse createRule(CreateRuleRequest request);
 
     /**
-     * Create an EventBus rule on Aliyun with RuntimeOptions.
-     * </p>
-     *
-     * @param request The request param of createRuleWithOptions
-     * @param runtime When want to custom the request context,such as timeout,localAddr and so on, it can be seted by
-     *                {@link RuntimeOptions}
-     *
-     * @return Result of the createRuleWithOptions operation returned by the service.
-     *
-     * @throws TeaException All the exception occurs due to expected or unexpected causes. When the exception is from
-     *                      Eventbridge service, the error message is start with [EventBridgeError].
+     * Create an EventBus rule on Aliyun
      */
-    CreateRuleResponse createRuleWithOptions(CreateRuleRequest request,
-        com.aliyun.teautil.models.RuntimeOptions runtime) throws TeaException;
+    CreateRuleResponse createRuleWithOptions(CreateRuleRequest request, RuntimeOptions runtime);
 
     /**
-     * <p>
      * Deletes the specified rule.
-     * </p>
-     *
-     * @param request The request param of deleteRule
-     *
-     * @return Result of the deleteRule operation returned by the service.
-     *
-     * @throws TeaException All the exception occurs due to expected or unexpected causes. When the exception is from
-     *                      Eventbridge service, the error message is start with [EventBridgeError].
      */
-    DeleteRuleResponse deleteRule(DeleteRuleRequest request) throws TeaException;
+    DeleteRuleResponse deleteRule(DeleteRuleRequest request);
 
     /**
-     * <p>
-     * Deletes the specified rule with RuntimeOptions.
-     * </p>
-     *
-     * @param request The request param of deleteRuleWithOptions
-     * @param runtime When want to custom the request context,such as timeout,localAddr and so on, it can be seted by
-     *                {@link RuntimeOptions}
-     *
-     * @return Result of the deleteRuleWithOptions operation returned by the service.
-     *
-     * @throws TeaException All the exception occurs due to expected or unexpected causes. When the exception is from
-     *                      Eventbridge service, the error message is start with [EventBridgeError].
+     * Deletes the specified rule.
      */
-    DeleteRuleResponse deleteRuleWithOptions(DeleteRuleRequest request,
-        com.aliyun.teautil.models.RuntimeOptions runtime) throws TeaException;
+    DeleteRuleResponse deleteRuleWithOptions(DeleteRuleRequest request, RuntimeOptions runtime);
 
     /**
-     * <p>
-     * Disables the specified rule.
-     * </p>
-     *
-     * @param request The request param of disableRule
-     *
-     * @return Result of the disableRule operation returned by the service.
-     *
-     * @throws TeaException All the exception occurs due to expected or unexpected causes. When the exception is from
-     *                      Eventbridge service, the error message is start with [EventBridgeError].
+     * Disables the specified rule
      */
-    DisableRuleResponse disableRule(DisableRuleRequest request) throws TeaException;
+    DisableRuleResponse disableRule(DisableRuleRequest request);
 
     /**
-     * <p>
-     * Disables the specified rule with RuntimeOptions.
-     * </p>
-     *
-     * @param request The request param of disableRuleWithOptions
-     * @param runtime When want to custom the request context,such as timeout,localAddr and so on, it can be seted by
-     *                {@link RuntimeOptions}
-     *
-     * @return Result of the disableRuleWithOptions operation returned by the service.
-     *
-     * @throws TeaException All the exception occurs due to expected or unexpected causes. When the exception is from
-     *                      Eventbridge service, the error message is start with [EventBridgeError].
+     * Disables the specified rule
      */
-    DisableRuleResponse disableRuleWithOptions(DisableRuleRequest request,
-        com.aliyun.teautil.models.RuntimeOptions runtime) throws TeaException;
+    DisableRuleResponse disableRuleWithOptions(DisableRuleRequest request, RuntimeOptions runtime);
 
     /**
-     * <p>
-     * Enables the specified rule.
-     * </p>
-     *
-     * @param request The request param of enableRule
-     *
-     * @return Result of the enableRule operation returned by the service.
-     *
-     * @throws TeaException All the exception occurs due to expected or unexpected causes. When the exception is from
-     *                      Eventbridge service, the error message is start with [EventBridgeError].
+     * Enables the specified rule
      */
-    EnableRuleResponse enableRule(EnableRuleRequest request) throws TeaException;
+    EnableRuleResponse enableRule(EnableRuleRequest request);
 
     /**
-     * <p>
-     * Enables the specified rule with RuntimeOptions.
-     * </p>
-     *
-     * @param request The request param of enableRuleWithOptions
-     * @param runtime When want to custom the request context,such as timeout,localAddr and so on, it can be seted by
-     *                {@link RuntimeOptions}
-     *
-     * @return Result of the enableRuleWithOptions operation returned by the service.
-     *
-     * @throws TeaException All the exception occurs due to expected or unexpected causes. When the exception is from
-     *                      Eventbridge service, the error message is start with [EventBridgeError].
+     * Enables the specified rule
      */
-    EnableRuleResponse enableRuleWithOptions(EnableRuleRequest request,
-        com.aliyun.teautil.models.RuntimeOptions runtime) throws TeaException;
+    EnableRuleResponse enableRuleWithOptions(EnableRuleRequest request, RuntimeOptions runtime);
 
     /**
-     * <p>
-     * Describes the specified rule.
-     * </p>
-     *
-     * @param request The request param of getRule
-     *
-     * @return Result of the getRule operation returned by the service.
-     *
-     * @throws TeaException All the exception occurs due to expected or unexpected causes. When the exception is from
-     *                      Eventbridge service, the error message is start with [EventBridgeError].
+     * Update event streaming procss
      */
-    GetRuleResponse getRule(GetRuleRequest request) throws TeaException;
+    UpdateEventStreamingResponse updateEventStreaming(UpdateEventStreamingRequest request);
 
     /**
-     * <p>
-     * Describes the specified rule with RuntimeOptions.
-     * </p>
-     *
-     * @param request The request param of getRuleWithOptions
-     * @param runtime When want to custom the request context,such as timeout,localAddr and so on, it can be seted by
-     *                {@link RuntimeOptions}
-     *
-     * @return Result of the getRuleWithOptions operation returned by the service.
-     *
-     * @throws TeaException All the exception occurs due to expected or unexpected causes. When the exception is from
-     *                      Eventbridge service, the error message is start with [EventBridgeError].
+     * create event streaming
      */
-    GetRuleResponse getRuleWithOptions(GetRuleRequest request, com.aliyun.teautil.models.RuntimeOptions runtime)
-        throws TeaException;
+    UpdateEventStreamingResponse updateEventStreamingWithOptions(UpdateEventStreamingRequest request, RuntimeOptions runtime);
 
     /**
-     * <p>
-     * List all the rules which meet the search criteria.
-     * </p>
-     *
-     * @param request The request param of listRules
-     *
-     * @return Result of the listRules operation returned by the service.
-     *
-     * @throws TeaException All the exception occurs due to expected or unexpected causes. When the exception is from
-     *                      Eventbridge service, the error message is start with [EventBridgeError].
+     * create event streaming
      */
-    ListRulesResponse listRules(ListRulesRequest request) throws TeaException;
+    StartEventStreamingResponse startEventStreaming(StartEventStreamingRequest request);
 
     /**
-     * <p>
-     * List all the rules which meet the search criteria with RuntimeOptions.
-     * </p>
-     *
-     * @param request The request param of listRulesWithOptions
-     * @param runtime When want to custom the request context,such as timeout,localAddr and so on, it can be seted by
-     *                {@link RuntimeOptions}
-     *
-     * @return Result of the listRulesWithOptions operation returned by the service.
-     *
-     * @throws TeaException All the exception occurs due to expected or unexpected causes. When the exception is from
-     *                      Eventbridge service, the error message is start with [EventBridgeError].
+     * create event streaming
      */
-    ListRulesResponse listRulesWithOptions(ListRulesRequest request, com.aliyun.teautil.models.RuntimeOptions runtime)
-        throws TeaException;
+    StartEventStreamingResponse startEventStreamingsWithOptions(StartEventStreamingRequest request, RuntimeOptions runtime);
 
     /**
-     * <p>
-     * Update the specified rule.
-     * </p>
-     *
-     * @param request The request param of updateRule
-     *
-     * @return Result of the updateRule operation returned by the service.
-     *
-     * @throws TeaException All the exception occurs due to expected or unexpected causes. When the exception is from
-     *                      Eventbridge service, the error message is start with [EventBridgeError].
+     * delete event streaming
      */
-    UpdateRuleResponse updateRule(UpdateRuleRequest request) throws TeaException;
+    PauseEventStreamingResponse pauseEventStreaming(PauseEventStreamingRequest request);
 
     /**
-     * <p>
-     * Update the specified rule with RuntimeOptions.
-     * </p>
-     *
-     * @param request The request param of updateRuleWithOptions
-     * @param runtime When want to custom the request context,such as timeout,localAddr and so on, it can be seted by
-     *                {@link RuntimeOptions}
-     *
-     * @return Result of the updateRuleWithOptions operation returned by the service.
-     *
-     * @throws TeaException All the exception occurs due to expected or unexpected causes. When the exception is from
-     *                      Eventbridge service, the error message is start with [EventBridgeError].
+     * delete event streaming
      */
-    UpdateRuleResponse updateRuleWithOptions(UpdateRuleRequest request,
-        com.aliyun.teautil.models.RuntimeOptions runtime) throws TeaException;
+    PauseEventStreamingResponse pauseEventStreamingWithOptions(PauseEventStreamingRequest request, RuntimeOptions runtime);
 
     /**
-     * <p>
-     * Adds the specified targets to the specified rule.
-     * </p>
-     *
-     * @param request The request param of createTargets
-     *
-     * @return Result of the createTargets operation returned by the service.
-     *
-     * @throws TeaException All the exception occurs due to expected or unexpected causes. When the exception is from
-     *                      Eventbridge service, the error message is start with [EventBridgeError].
+     * create event streaming
      */
-    CreateTargetsResponse createTargets(CreateTargetsRequest request) throws TeaException;
+    listEventStreamingsResponse listEventStreamings(listEventStreamingsRequest request);
 
     /**
-     * <p>
-     * Adds the specified targets to the specified rule with RuntimeOptions.
-     * </p>
-     *
-     * @param request The request param of createTargetsWithOptions
-     * @param runtime When want to custom the request context,such as timeout,localAddr and so on, it can be seted by
-     *                {@link RuntimeOptions}
-     *
-     * @return Result of the createTargetsWithOptions operation returned by the service.
-     *
-     * @throws TeaException All the exception occurs due to expected or unexpected causes. When the exception is from
-     *                      Eventbridge service, the error message is start with [EventBridgeError].
+     * create event streaming
      */
-    CreateTargetsResponse createTargetsWithOptions(CreateTargetsRequest request,
-        com.aliyun.teautil.models.RuntimeOptions runtime) throws TeaException;
+    listEventStreamingsResponse listEventStreamingsWithOptions(listEventStreamingsRequest request, RuntimeOptions runtime);
 
     /**
-     * <p>
-     * Delete the specified targets from the specified rule.
-     * </p>
-     *
-     * @param request The request param of deleteTargets
-     *
-     * @return Result of the deleteTargets operation returned by the service.
-     *
-     * @throws TeaException All the exception occurs due to expected or unexpected causes. When the exception is from
-     *                      Eventbridge service, the error message is start with [EventBridgeError].
+     * Create event streaming procss
      */
-    DeleteTargetsResponse deleteTargets(DeleteTargetsRequest request) throws TeaException;
+    CreateEventStreamingResponse createEventStreaming(CreateEventStreamingRequest request);
 
     /**
-     * <p>
-     * Delete the specified targets from the specified rule with RuntimeOptions.
-     * </p>
-     *
-     * @param request The request param of deleteTargetsWithOptions
-     * @param runtime When want to custom the request context,such as timeout,localAddr and so on, it can be seted by
-     *                {@link RuntimeOptions}
-     *
-     * @return Result of the deleteTargetsWithOptions operation returned by the service.
-     *
-     * @throws TeaException All the exception occurs due to expected or unexpected causes. When the exception is from
-     *                      Eventbridge service, the error message is start with [EventBridgeError].
+     * Create event streaming procss
      */
-    DeleteTargetsResponse deleteTargetsWithOptions(DeleteTargetsRequest request,
-        com.aliyun.teautil.models.RuntimeOptions runtime) throws TeaException;
+    CreateEventStreamingResponse createEventStreamingWithOptions(CreateEventStreamingRequest request, RuntimeOptions runtime);
 
     /**
-     * <p>
-     * List all the Targets which meet the search criteria.
-     * </p>
-     *
-     * @param request The request param of listTargets
-     *
-     * @return Result of the listTargets operation returned by the service.
-     *
-     * @throws TeaException All the exception occurs due to expected or unexpected causes. When the exception is from
-     *                      Eventbridge service, the error message is start with [EventBridgeError].
+     * Creates a new event source within your account
      */
-    ListTargetsResponse listTargets(ListTargetsRequest request) throws TeaException;
+    CreateEventSourceResponse createEventSource(CreateEventSourceRequest request);
 
     /**
-     * <p>
-     * List all the Targets which meet the search criteria with RuntimeOptions.
-     * </p>
-     *
-     * @param request The request param of listTargetsWithOptions
-     * @param runtime When want to custom the request context,such as timeout,localAddr and so on, it can be seted by
-     *                {@link RuntimeOptions}
-     *
-     * @return Result of the listTargetsWithOptions operation returned by the service.
-     *
-     * @throws TeaException All the exception occurs due to expected or unexpected causes. When the exception is from
-     *                      Eventbridge service, the error message is start with [EventBridgeError].
+     * Creates a new event source within your account
      */
-    ListTargetsResponse listTargetsWithOptions(ListTargetsRequest request,
-        com.aliyun.teautil.models.RuntimeOptions runtime) throws TeaException;
+    CreateEventSourceResponse createEventSourceWithOptions(CreateEventSourceRequest request, RuntimeOptions runtime);
 
     /**
-     * <p>
-     * Tests whether the specified event pattern matches the provided event.
-     * </p>
-     *
-     * @param request The request param of testEventPattern
-     *
-     * @return Result of the testEventPattern operation returned by the service.
-     *
-     * @throws TeaException All the exception occurs due to expected or unexpected causes. When the exception is from
-     *                      Eventbridge service, the error message is start with [EventBridgeError].
+     * Delete the event source
      */
-    TestEventPatternResponse testEventPattern(TestEventPatternRequest request) throws TeaException;
+    DeleteEventSourceResponse deleteEventSource(DeleteEventSourceRequest request);
 
     /**
-     * <p>
-     * Tests whether the specified event pattern matches the provided event with RuntimeOptions.
-     * </p>
-     *
-     * @param request The request param of testEventPatternWithOptions
-     * @param runtime When want to custom the request context,such as timeout,localAddr and so on, it can be seted by
-     *                {@link RuntimeOptions}
-     *
-     * @return Result of the testEventPatternWithOptions operation returned by the service.
-     *
-     * @throws TeaException All the exception occurs due to expected or unexpected causes. When the exception is from
-     *                      Eventbridge service, the error message is start with [EventBridgeError].
+     * Delete the event source
      */
-    TestEventPatternResponse testEventPatternWithOptions(TestEventPatternRequest request,
-        com.aliyun.teautil.models.RuntimeOptions runtime) throws TeaException;
+    DeleteEventSourceResponse deleteEventSourceWithOptions(DeleteEventSourceRequest request, RuntimeOptions runtime);
 
     /**
-     * <p>
-     * Query the event traces by the event Id.
-     * </p>
-     *
-     * @param request The request param of queryEventTraces
-     *
-     * @return Result of the queryEventTraces operation returned by the service.
-     *
-     * @throws TeaException All the exception occurs due to expected or unexpected causes. When the exception is from
-     *                      Eventbridge service, the error message is start with [EventBridgeError].
+     * Update the event source
      */
-    QueryEventTracesResponse queryEventTraces(QueryEventTracesRequest request) throws TeaException;
+    UpdateEventSourceResponse updateEventSource(UpdateEventSourceRequest request);
 
     /**
-     * <p>
-     * Query the event traces by the event Id with RuntimeOptions.
-     * </p>
-     *
-     * @param request The request param of queryEventTracesWithOptions
-     * @param runtime When want to custom the request context,such as timeout,localAddr and so on, it can be seted by
-     *                {@link RuntimeOptions}
-     *
-     * @return Result of the queryEventTracesWithOptions operation returned by the service.
-     *
-     * @throws TeaException All the exception occurs due to expected or unexpected causes. When the exception is from
-     *                      Eventbridge service, the error message is start with [EventBridgeError].
+     * Update the event source
      */
-    QueryEventTracesResponse queryEventTracesWithOptions(QueryEventTracesRequest request,
-        com.aliyun.teautil.models.RuntimeOptions runtime) throws TeaException;
-
+    UpdateEventSourceResponse updateEventSourceWithOptions(UpdateEventSourceRequest request, RuntimeOptions runtime);
 
     /**
-     * <p>
-     * Query the event traces by the event Id.
-     * </p>
-     *
-     * @param request The request param of queryEventByEventId
-     *
-     * @return Result of the QueryEventByEventId operation returned by the service.
-     *
-     * @throws TeaException All the exception occurs due to expected or unexpected causes. When the exception is from
-     *                      Eventbridge service, the error message is start with [EventBridgeError].
+     * Describes the specified rule
      */
-    QueryEventByEventIdResponse queryEventByEventId(QueryEventByEventIdRequest request) throws TeaException;
+    GetRuleResponse getRule(GetRuleRequest request);
 
     /**
-     * <p>
-     * Query the event traces by the event Id with RuntimeOptions.
-     * </p>
-     *
-     * @param request The request param of queryEventByEventIdWithOptions
-     * @param runtime When want to custom the request context,such as timeout,localAddr and so on, it can be seted by
-     *                {@link RuntimeOptions}
-     *
-     * @return Result of the queryEventByEventIdWithOptions operation returned by the service.
-     *
-     * @throws TeaException All the exception occurs due to expected or unexpected causes. When the exception is from
-     *                      Eventbridge service, the error message is start with [EventBridgeError].
+     * Describes the specified rule
      */
-    QueryEventByEventIdResponse queryEventByEventIdWithOptions(QueryEventByEventIdRequest request,
-        com.aliyun.teautil.models.RuntimeOptions runtime) throws TeaException;
+    GetRuleResponse getRuleWithOptions(GetRuleRequest request, RuntimeOptions runtime);
 
     /**
-     * <p>
-     * Query the event traces by the event period.
-     * </p>
-     *
-     * @param request The request param of queryEventsByPeriod
-     *
-     * @return Result of the queryEventsByPeriod operation returned by the service.
-     *
-     * @throws TeaException All the exception occurs due to expected or unexpected causes. When the exception is from
-     *                      Eventbridge service, the error message is start with [EventBridgeError].
+     * List all the rules which meet the search criteria
      */
-    QueryEventsByPeriodResponse queryEventsByPeriod(QueryEventsByPeriodRequest request) throws TeaException;
+    ListRulesResponse listRules(ListRulesRequest request);
 
     /**
-     * <p>
-     * Query the event traces by the event period with RuntimeOptions.
-     * </p>
-     *
-     * @param request The request param of queryEventsByPeriodWithOptions
-     * @param runtime When want to custom the request context,such as timeout,localAddr and so on, it can be seted by
-     *                {@link RuntimeOptions}
-     *
-     * @return Result of the queryEventsByPeriodWithOptions operation returned by the service.
-     *
-     * @throws TeaException All the exception occurs due to expected or unexpected causes. When the exception is from
-     *                      Eventbridge service, the error message is start with [EventBridgeError].
+     * List all the rules which meet the search criteria
      */
-    QueryEventsByPeriodResponse queryEventsByPeriodWithOptions(QueryEventsByPeriodRequest request,
-        com.aliyun.teautil.models.RuntimeOptions runtime) throws TeaException;
+    ListRulesResponse listRulesWithOptions(ListRulesRequest request, RuntimeOptions runtime);
+
+    /**
+     * update the specified rule.
+     */
+    UpdateRuleResponse updateRule(UpdateRuleRequest request);
+
+    /**
+     * update the specified rule.
+     */
+    UpdateRuleResponse updateRuleWithOptions(UpdateRuleRequest request, RuntimeOptions runtime);
+
+    /**
+     * Adds the specified targets to the specified rule
+     */
+    CreateTargetsResponse createTargets(CreateTargetsRequest request);
+
+    /**
+     * Adds the specified targets to the specified rule
+     */
+    CreateTargetsResponse createTargetsWithOptions(CreateTargetsRequest request, RuntimeOptions runtime);
+
+    /**
+     * Delete the specified targets from the specified rule
+     */
+    DeleteTargetsResponse deleteTargets(DeleteTargetsRequest request);
+
+    /**
+     * Delete the specified targets from the specified rule
+     */
+    DeleteTargetsResponse deleteTargetsWithOptions(DeleteTargetsRequest request, RuntimeOptions runtime);
+
+    /**
+     * List all the Targets which meet the search criteria
+     */
+    ListTargetsResponse listTargets(ListTargetsRequest request);
+
+    /**
+     * List all the Targets which meet the search criteria
+     */
+    ListTargetsResponse listTargetsWithOptions(ListTargetsRequest request, RuntimeOptions runtime);
+
+    /**
+     * Tests whether the specified event pattern matches the provided event
+     */
+    TestEventPatternResponse testEventPattern(TestEventPatternRequest request);
+
+    /**
+     * Tests whether the specified event pattern matches the provided event
+     */
+    TestEventPatternResponse testEventPatternWithOptions(TestEventPatternRequest request, RuntimeOptions runtime);
+
+    /**
+     * Check the activation status of EventBridge service for a given user
+     */
+    QueryEventBridgeStatusResponse queryEventBridgeStatus(QueryEventBridgeStatusRequest request);
+
+    /**
+     * Check the activation status of EventBridge service for a given user
+     */
+    QueryEventBridgeStatusResponse queryEventBridgeStatusWithOptions(QueryEventBridgeStatusRequest request, RuntimeOptions runtime);
 
 }
