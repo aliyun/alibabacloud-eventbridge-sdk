@@ -1,11 +1,9 @@
 // This file is auto-generated, don't edit it. Thanks.
 package com.aliyun.eventbridge.util;
 
-//import java.util.ArrayList;
-//import java.util.List;
-//import java.util.Map;
-import java.util.*;
-
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import com.aliyun.tea.TeaModel;
 import com.google.common.io.BaseEncoding;
 
