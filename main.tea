@@ -919,3 +919,700 @@ api doRequest(action: string, protocol: string, method: string, pathname: string
   },
   ignoreSSL = runtime.ignoreSSL
 }
+
+
+/**
+ * The detail of SourceRabbitMQParameters
+ */
+model SourceRabbitMQParameters = {
+  regionId?: string(name='RegionId'),
+  instanceId?: string(name='InstanceId'),
+  virtualHostName: string(name='VirtualHostName'),
+  queueName: string(name='QueueName'),
+}
+
+/**
+ * The detail of SourceMNSParameters
+ */
+model SourceMNSParameters = {
+  regionId?: string(name='RegionId'),
+  queueName?: string(name='QueueName'),
+  isBase64Decode?: boolean(name='IsBase64Decode'),
+}
+
+/**
+ * The detail of SourceRocketMQParameters
+ */
+model SourceRocketMQParameters = {
+  regionId?: string(name='RegionId'),
+  instanceId?: string(name='InstanceId'),
+  topic?: string(name='Topic'),
+  tag?: string(name='Tag'),
+  offset?: string(name='Offset'),
+  groupID: string(name='GroupID'),
+  timestamp: number(name='Timestamp'),
+}
+
+/**
+ * The request of createEventSource
+ */
+model CreateEventSourceRequest = {
+  eventSourceName: string(name='EventSourceName', maxLength=127, minLength=1),
+  description?: string(name='Description'),
+  eventBusName: string(name='EventBusName'),
+  sourceRabbitMQParameters?: SourceRabbitMQParameters(name='SourceRabbitMQParameters'),
+  sourceMNSParameters?: SourceMNSParameters(name='SourceMNSParameters'),
+  SourceRocketMQParameters?: SourceRocketMQParameters(name='SourceRocketMQParameters'),
+  }
+
+/**
+ * The detail of SourceKafkaParameters
+ */
+model SourceKafkaParameters = {
+  InstanceId?: string(name='InstanceId'),
+  topic?: string(name='Topic'),
+  consumerGroup: string(name='ConsumerGroup'),
+  offsetRest?: string(name='OffsetRest'),
+}
+
+/**
+ * The event source entry
+ */
+model EventTypeEntry = {
+  name: string(name='Name'),
+  eventSourceName: string(name='EventSourceName'),
+  shortName: string(name='ShortName'),
+  groupName: string(name='GroupName'),
+}
+
+/**
+ * The config of Source
+ */
+model Source = {
+  sourceMNSParameters?: SourceMNSParameters(name='SourceMNSParameters'),
+  sourceRabbitMQParameters?: SourceRabbitMQParameters(name='SourceRabbitMQParameters'),
+  sourceRocketMQParameters?: SourceRocketMQParameters(name='SourceRocketMQParameters'),
+  sourceKafkaParameters?: SourceKafkaParameters(name='SourceKafkaParameters'),
+}
+
+/**
+ * The config of Sink
+ */
+model Sink = {
+  sinkMNSParameters?: SinkMNSParameters(name='SinkMNSParameters'),
+  sinkRabbitMQParameters?: SinkRabbitMQParameters(name='SinkRabbitMQParameters'),
+  sinkKafkaParameters?: SinkKafkaParameters(name='SinkKafkaParameters'),
+  sinkRocketMQParameters?: SinkRocketMQParameters(name='SinkRocketMQParameters'),
+  sinkFcParameters?: SinkFcParameters(name='SinkFcParameters'),
+  sinkOdpsParameters?: SinkOdpsParameters(name='SinkOdpsParameters'),
+}
+
+/**
+ * The config of SinkOdpsParameters
+ */
+model SinkOdpsParameters = {
+  project?: TargetParameter(name='Project'),
+  table?: TargetParameter(name='Table'),
+  roleName?: TargetParameter(name='RoleName'),
+  format?: TargetParameter(name='Format'),
+  mode?: TargetParameter(name='Mode'),
+  partitionWindowType?: TargetParameter(name='PartitionWindowType'),
+  timeZone?: TargetParameter(name='TimeZone'),
+  useStreaming?: TargetParameter(name='UseStreaming'),
+  extendConfig?: map[string] any(name='ExtendConfig'),
+  }
+
+/**
+ * The config of SinkFcParameters
+ */
+model SinkFcParameters = {
+  serviceName?: TargetParameter(name='ServiceName'),
+  functionName?: TargetParameter(name='FunctionName'),
+  body?: TargetParameter(name='Body'),
+  qualifier?: TargetParameter(name='Qualifier'),
+  invocationType?: TargetParameter(name='InvocationType'),
+  batchSize?: TargetParameter(name='BatchSize'),
+  extendConfig?: map[string] any(name='ExtendConfig'),
+}
+
+/**
+ * The config of SinkRocketMQParameters
+ */
+model SinkRocketMQParameters = {
+  instanceId?: TargetParameter(name='InstanceId'),
+  topic?: TargetParameter(name='Topic'),
+  body?: TargetParameter(name='Body'),
+  properties?: TargetParameter(name='Properties'),
+  keys?: TargetParameter(name='Keys'),
+  tags?: TargetParameter(name='Tags'),
+}
+
+/**
+ * The config of SinkKafkaParameters
+ */
+model SinkKafkaParameters = {
+  instanceId?: TargetParameter(name='InstanceId'),
+  topic?: TargetParameter(name='Topic'),
+  acks?: TargetParameter(name='Acks'),
+  key?: TargetParameter(name='Key'),
+  value?: TargetParameter(name='Value'),
+}
+
+/**
+ * The config of SinkRabbitMQParameters
+ */
+model SinkRabbitMQParameters = {
+  instanceId?: TargetParameter(name='InstanceId'),
+  virtualHostName?: TargetParameter(name='VirtualHostName'),
+  targetType?: TargetParameter(name='TargetType'),
+  exchange?: TargetParameter(name='Exchange'),
+  routingKey?: TargetParameter(name='RoutingKey'),
+  queueName?: TargetParameter(name='QueueName'),
+  body?: TargetParameter(name='Body'),
+  messageId?: TargetParameter(name='MessageId'),
+  properties?: TargetParameter(name='Properties'),
+}
+
+/**
+ * The config of SinkMNSParameters
+ */
+model SinkMNSParameters = {
+  QueueName?: TargetParameter(name='QueueName'),
+  body?: TargetParameter(name='Body'),
+}
+
+/**
+ * The config of TargetParameter
+ */
+model TargetParameter = {
+  value?: string(name='Value'),
+  form?: string(name='Form'),
+  template?: string(name='Template'),
+}
+
+/**
+ * The config of RunOptions
+ */
+model RunOptions = {
+  maximumTasks?: integer(name='MaximumTasks'),
+  retryStrategy?: RetryStrategy(name='RetryStrategy'),
+  errorsTolerance?: string(name='ErrorsTolerance'),
+  deadLetterQueue?: DeadLetterQueue(name='DeadLetterQueue'),
+}
+
+/**
+ * The config of RetryStrategy
+ */
+model RetryStrategy = {
+  pushRetryStrategy?: string(name='PushRetryStrategy'),
+  maximumEventAgeInSeconds?: integer(name='MaximumEventAgeInSeconds'),
+  maximumRetryAttempts?: integer(name='MaximumRetryAttempts'),
+}
+
+/**
+ * The detail of DeadLetterQueue
+ */
+model DeadLetterQueue = {
+  arn?: string(name='Arn'),
+}
+
+/**
+ * The metrics of event streaming
+ */
+model EventStreamingMetric = {
+  name?: string(name='Name'),
+  tps?: double(name='TPS'),
+  delayTime?: long(name='DelayTime'),
+  diffOffset?: long(name='DiffOffset'),
+  lastDateSyncTime?: long(name='LastDateSyncTime'),
+  lastHeartBeat?: long(name='LastHeartBeat'),
+  status?: string(name='Status'),
+}
+
+/**
+ * The detail of EBEventStreamingEntry
+ */
+model EBEventStreamingEntry = {
+  eventStreamingName?: string(name='EventStreamingName'),
+  description?: string(name='Description'),
+  source?: Source(name='Source'),
+  filterPattern?: string(name='FilterPattern'),
+  sink?: Sink(name='Sink'),
+  runOptions?: RunOptions(name='RunOptions'),
+  tag?: string(name='Tag'),
+  status?: string(name='Status'),
+}
+
+/**
+ * The response of createEventSource
+ */
+model CreateEventSourceResponse = {
+  requestId: string(name='RequestId'),
+  resourceOwnerAccountId: string(name='ResourceOwnerAccountId'),
+  eventSourceARN?: string(name='EventSourceARN'),
+}
+
+/**
+ * The event source entry
+ */
+model EBUserDefinedEventSourceEntry = {
+  name?: string(name='Name'),
+  description?: string(name='Description'),
+  arn?: string(name='ARN'),
+  status?: string(name='Status'),
+  ctime?: long(name='Ctime'),
+  eventBusName?: string(name='EventBusName'),
+  sourceRabbitMQParameters?: SourceRabbitMQParameters(name='SourceRabbitMQParameters'),
+  sourceMNSParameters?: SourceMNSParameters(name='SourceMNSParameters'),
+  sourceRocketMQParameters: SourceRocketMQParameters(name='SourceRocketMQParameters'),
+  sourceKafkaParameters: SourceKafkaParameters(name='SourceKafkaParameters'),
+}
+
+/**
+ * The event source entry
+ */
+model EBAliyunOfficialEventSourceEntry = {
+  name: string(name='Name'),
+  description: string(name='Description'),
+  arn: string(name='ARN'),
+  status: string(name='Status'),
+  ctime: long(name='Ctime'),
+  eventBusName: string(name='EventBusName'),
+  eventTypes: [ EventTypeEntry ](name='EventTypes'),
+}
+
+/**
+ * Creates a new event source within your account
+ */
+async function createEventSource(request: CreateEventSourceRequest): CreateEventSourceResponse {
+  var runtime = new Util.RuntimeOptions{};
+  return createEventSourceWithOptions(request, runtime);
+}
+
+/**
+ * Creates a new event source within your account
+ */
+async function createEventSourceWithOptions(request: CreateEventSourceRequest, runtime: Util.RuntimeOptions): CreateEventSourceResponse {
+  Util.validateModel(request);
+  return doRequest('createEventSource', 'HTTP', 'POST', `/openapi/v2/createEventSource`, null, request,  runtime);
+}
+
+/**
+ * The request of deleteEventSource
+ */
+model DeleteEventSourceRequest = {
+  eventBusName?: string(name='EventBusName'),
+  eventSourceName: string(name='EventSourceName'),
+}
+
+/**
+ * The response of deleteEventSource
+ */
+model DeleteEventSourceResponse = {
+  requestId: string(name='RequestId'),
+  resourceOwnerAccountId: string(name='ResourceOwnerAccountId'),
+}
+
+/**
+ * Delete the event source
+ */
+async function deleteEventSource(request: DeleteEventSourceRequest): DeleteEventSourceResponse {
+  var runtime = new Util.RuntimeOptions{};
+  return deleteEventSourceWithOptions(request, runtime);
+}
+
+/**
+ * Delete the event source
+ */
+async function deleteEventSourceWithOptions(request: DeleteEventSourceRequest, runtime: Util.RuntimeOptions): DeleteEventSourceResponse {
+  Util.validateModel(request);
+  return doRequest('deleteEventSource','HTTP', 'POST', `/openapi/v2/deleteEventSource`, null, request, runtime);
+}
+
+/**
+ * The request of update the event source
+ */
+model UpdateEventSourceRequest = {
+  eventSourceName: string(name='EventSourceName', maxLength=127, minLength=1),
+  description?: string(name='Description'),
+  eventBusName: string(name='EventBusName'),
+  sourceRabbitMQParameters?: SourceRabbitMQParameters(name='SourceRabbitMQParameters'),
+  sourceMNSParameters?: SourceMNSParameters(name='SourceMNSParameters'),
+  sourceRocketMQParameters?: SourceRocketMQParameters(name='SourceRocketMQParameters'),
+} 
+
+/**
+ * The response of update the event source
+ */
+model UpdateEventSourceResponse = {
+  requestId: string(name='RequestId'),
+  resourceOwnerAccountId: string(name='ResourceOwnerAccountId'),
+}
+
+/**
+ * Update the event source
+ */
+async function updateEventSource(request: UpdateEventSourceRequest): UpdateEventSourceResponse {
+  var runtime = new Util.RuntimeOptions{};
+  return updateEventSourceWithOptions(request, runtime);
+}
+
+/**
+ * Update the event source
+ */
+async function updateEventSourceWithOptions(request: UpdateEventSourceRequest, runtime: Util.RuntimeOptions): UpdateEventSourceResponse {
+  Util.validateModel(request);
+  return doRequest('updateEventSource','HTTP', 'POST', `/openapi/v2/updateEventSource`, null, request, runtime);
+}
+
+/**
+ * The request of listUserDefinedEventSources
+ */
+model ListUserDefinedRequest = {
+  eventBusName?: string(name='EventBusName'),
+  nextToken?: string(name='NextToken'),
+  limit?: integer(name='Limit'),
+}
+
+/**
+ * The response of listUserDefinedEventSources
+ */
+model ListUserDefinedResponse = {
+  requestId: string(name='RequestId'),
+  resourceOwnerAccountId: string(name='ResourceOwnerAccountId'),
+  eventSources?: [ EBUserDefinedEventSourceEntry ](name='EventSources'),
+  nextToken?: string(name='NextToken'),
+  total?: integer(name='Total'),
+}
+
+/**
+ * List the user defined event source within your account
+ */
+async function listUserDefinedEventSources(request: ListUserDefinedRequest): ListUserDefinedResponse {
+  var runtime = new Util.RuntimeOptions{};
+  return listUserDefinedEventSourcesWithOptions(request, runtime);
+}
+
+/**
+ * List the user defined event source within your account
+ */
+async function listUserDefinedEventSourcesWithOptions(request: ListUserDefinedRequest, runtime: Util.RuntimeOptions): ListUserDefinedResponse {
+  Util.validateModel(request);
+  return doRequest('listUserDefinedEventSources', 'HTTP', 'POST', `/openapi/v2/listUserDefinedEventSources`, null, request, runtime);
+}
+
+/**
+ * The request of listAliyunOfficialEventSources
+ */
+model ListAliyunOfficialRequest = {
+  nextToken?: string(name='NextToken'),
+  limit?: integer(name='Limit'),
+}
+
+/**
+ * The response of listAliyunOfficialEventSources
+ */
+model ListAliyunOfficialResponse = {
+  requestId: string(name='RequestId'),
+  resourceOwnerAccountId: string(name='ResourceOwnerAccountId'),
+  eventSourceList: [ EBAliyunOfficialEventSourceEntry ](name='EventSourceList'),
+  nextToken: string(name='NextToken'),
+  total: integer(name='Total'),
+}
+
+/**
+ * List the aliyun official event source within your account
+ */
+async function listAliyunOfficialEventSources(request: ListAliyunOfficialRequest): ListAliyunOfficialResponse {
+  var runtime = new Util.RuntimeOptions{};
+  return listAliyunOfficialEventSourcesWithOptions(request, runtime);
+}
+
+/**
+ * List the aliyun official event source within your account
+ */
+async function listAliyunOfficialEventSourcesWithOptions(request: ListAliyunOfficialRequest, runtime: Util.RuntimeOptions): ListAliyunOfficialResponse {
+  Util.validateModel(request);
+  return doRequest('listAliyunOfficialEventSources', 'HTTP', 'POST', `/openapi/v2/listAliyunOfficialEventSources`, null, request, runtime);
+}
+
+
+
+/**
+ * The request of createEventStreaming
+ */
+model CreateEventStreamingRequest = {
+  eventStreamingName?: string(name='EventStreamingName'),
+  description?: string(name='Description'),
+  source?: Source(name='Source'),
+  filterPattern?: string(name='FilterPattern'),
+  sink?: Sink(name='Sink'),
+  runOptions?: RunOptions(name='RunOptions'),
+  tag?: string(name='Tag'),
+}
+
+/**
+ * The response of createEventStreaming
+ */
+model CreateEventStreamingResponse = {
+  requestId: string(name='RequestId'),
+  resourceOwnerAccountId: string(name='ResourceOwnerAccountId'),
+  eventStreamingARN?: string(name='EventStreamingARN'),
+}
+
+/**
+ * Create event streaming procss
+ */
+async function createEventStreaming(request: CreateEventStreamingRequest): CreateEventStreamingResponse {
+  var runtime = new Util.RuntimeOptions{};
+  return createEventStreamingWithOptions(request, runtime);
+}
+
+/**
+ * Create event streaming procss
+ */
+async function createEventStreamingWithOptions(request: CreateEventStreamingRequest, runtime: Util.RuntimeOptions): CreateEventStreamingResponse {
+  Util.validateModel(request);
+  return doRequest('createEventStreaming', 'HTTP', 'POST', `/openapi/v2/createEventStreaming`, null, request, runtime);
+}
+
+/**
+ * The request of delete event streaming
+ */
+model DeleteEventStreamingRequest = {
+  eventStreamingName: string(name='EventStreamingName'),
+}
+
+/**
+ * The response of delete event streaming
+ */
+model DeleteEventStreamingResponse = {
+  requestId: string(name='RequestId'),
+  resourceOwnerAccountId: string(name='ResourceOwnerAccountId'),
+}
+
+/**
+ * delete event streaming
+ */
+async function deleteEventStreaming(request: DeleteEventStreamingRequest): DeleteEventStreamingResponse {
+  var runtime = new Util.RuntimeOptions{};
+  return deleteEventStreamingWithOptions(request, runtime);
+}
+
+/**
+ * delete event streaming
+ */
+async function deleteEventStreamingWithOptions(request: DeleteEventStreamingRequest, runtime: Util.RuntimeOptions): DeleteEventStreamingResponse {
+  Util.validateModel(request);
+  return doRequest('deleteEventStreaming', 'HTTP', 'POST', `/openapi/v2/deleteEventStreaming`, null, request, runtime);
+}
+
+/**
+ * The request of create event streaming
+ */
+model GetEventStreamingRequest = {
+  eventStreamingName: string(name='EventStreamingName'),
+}
+
+/**
+ * The response of create event streaming
+ */
+model GetEventStreamingResponse = {
+  requestId: string(name='RequestId'),
+  resourceOwnerAccountId: string(name='ResourceOwnerAccountId'),
+  eventStreamingName: string(name='EventStreamingName'),
+  description: string(name='Description'),
+  source: Source(name='Source'),
+  filterPattern: string(name='FilterPattern'),
+  sink: Sink(name='Sink'),
+  runOptions: RunOptions(name='RunOptions'),
+  tag: string(name='Tag'),
+  status: string(name='Status'),
+}
+
+/**
+ * create event streaming
+ */
+async function getEventStreaming(request: GetEventStreamingRequest): GetEventStreamingResponse {
+  var runtime = new Util.RuntimeOptions{};
+  return getEventStreamingWithOptions(request, runtime);
+}
+
+/**
+ * create event streaming
+ */
+async function getEventStreamingWithOptions(request: GetEventStreamingRequest, runtime: Util.RuntimeOptions): GetEventStreamingResponse {
+  Util.validateModel(request);
+  return doRequest('getEventStreaming', 'HTTP', 'POST', `/openapi/v2/getEventStreaming`, null, request, runtime);
+}
+
+/**
+ * The request of listEventStreamingMetrics
+ */
+model ListEventStreamingMetricsRequest = {
+  eventStreamingNames?: [ string ](name='EventStreamingNames'),
+}
+
+/**
+ * The response of listEventStreamingMetrics
+ */
+model ListEventStreamingMetricsResponse = {
+  requestId: string(name='RequestId'),
+  resourceOwnerAccountId: string(name='ResourceOwnerAccountId'),
+  eventStreamingMetrics: [ EventStreamingMetric ](name='EventStreamingMetrics'),
+}
+
+/**
+ * List the metrics of event streaming
+ */
+async function listEventStreamingMetrics(request: ListEventStreamingMetricsRequest): ListEventStreamingMetricsResponse {
+  var runtime = new Util.RuntimeOptions{};
+  return listEventStreamingMetricsWithOptions(request, runtime);
+}
+
+/**
+ * List the metrics of event streaming
+ */
+async function listEventStreamingMetricsWithOptions(request: ListEventStreamingMetricsRequest, runtime: Util.RuntimeOptions): ListEventStreamingMetricsResponse {
+  Util.validateModel(request);
+  return doRequest('listEventStreamingMetrics', 'HTTP', 'POST', `/openapi/v2/listEventStreamingMetrics`, null, request, runtime);
+}
+
+/**
+ * The request of search EventStreaming
+ */
+model listEventStreamingsRequest = {
+  namePrefix?: string(name='NamePrefix'),
+  sourceType?: string(name='SourceType'),
+  sinkType?: string(name='SinkType'),
+  limit?: integer(name='Limit'),
+  nextToken?: string(name='NextToken'),
+  tag?: string(name='Tag'),
+}
+
+/**
+ * The response of search EventStreaming
+ */
+model listEventStreamingsResponse = {
+  requestId: string(name='RequestId'),
+  resourceOwnerAccountId: string(name='ResourceOwnerAccountId'),
+  eventStreamings?: [ EBEventStreamingEntry ](name='EventStreamings'),
+  nextToken?: string(name='NextToken'),
+  total?: integer(name='Total'),
+}
+
+/**
+ * create event streaming
+ */
+async function listEventStreamings(request: listEventStreamingsRequest): listEventStreamingsResponse {
+  var runtime = new Util.RuntimeOptions{};
+  return listEventStreamingsWithOptions(request, runtime);
+}
+
+/**
+ * create event streaming
+ */
+async function listEventStreamingsWithOptions(request: listEventStreamingsRequest, runtime: Util.RuntimeOptions): listEventStreamingsResponse {
+  Util.validateModel(request);
+  return doRequest('listEventStreamings', 'HTTP', 'POST', `/openapi/v2/listEventStreamings`, null, request, runtime);
+}
+
+/**
+ * The request of PauseEventStreaming
+ */
+model PauseEventStreamingRequest = {
+  eventStreamingName: string(name='EventStreamingName'),
+ 
+}
+
+/**
+ * The response of PauseEventStreaming
+ */
+model PauseEventStreamingResponse = {
+  requestId: string(name='RequestId'),
+  resourceOwnerAccountId: string(name='ResourceOwnerAccountId'),
+}
+
+/**
+ * delete event streaming
+ */
+async function pauseEventStreaming(request: PauseEventStreamingRequest): PauseEventStreamingResponse {
+  var runtime = new Util.RuntimeOptions{};
+  return pauseEventStreamingWithOptions(request, runtime);
+}
+
+/**
+ * delete event streaming
+ */
+async function pauseEventStreamingWithOptions(request: PauseEventStreamingRequest, runtime: Util.RuntimeOptions): PauseEventStreamingResponse {
+  Util.validateModel(request);
+  return doRequest('startEventStreaming', 'HTTP', 'POST', `/openapi/v2/pauseEventStreaming`, null, request, runtime);
+}
+
+/**
+ * The request of StartEventStreaming
+ */
+model StartEventStreamingRequest = {
+  eventStreamingName: string(name='EventStreamingName'),
+ 
+}
+
+/**
+ * The response of StartEventStreaming
+ */
+model StartEventStreamingResponse = {
+  requestId: string(name='RequestId'),
+  resourceOwnerAccountId: string(name='ResourceOwnerAccountId'),
+}
+
+/**
+ * create event streaming
+ */
+async function startEventStreaming(request: StartEventStreamingRequest): StartEventStreamingResponse {
+  var runtime = new Util.RuntimeOptions{};
+  return startEventStreamingsWithOptions(request, runtime);
+}
+
+/**
+ * create event streaming
+ */
+async function startEventStreamingsWithOptions(request: StartEventStreamingRequest, runtime: Util.RuntimeOptions): StartEventStreamingResponse {
+  Util.validateModel(request);
+  return doRequest('startEventStreaming', 'HTTP', 'POST', `/openapi/v2/startEventStreaming`, null, request, runtime);
+}
+
+/**
+ * The request of UpdateEventStreaming
+ */
+model UpdateEventStreamingRequest = {
+  eventStreamingName: string(name='EventStreamingName'),
+  description?: string(name='Description'),
+  Source?: Source(name='Source'),
+  filterPattern?: string(name='FilterPattern'),
+  Sink?: Sink(name='Sink'),
+  runOptions?: RunOptions(name='RunOptions'),
+  tag?: string(name='Tag'),
+}
+
+/**
+ * The response of UpdateEventStreaming
+ */
+model UpdateEventStreamingResponse = {
+  requestId: string(name='RequestId'),
+  resourceOwnerAccountId: string(name='ResourceOwnerAccountId'),
+}
+
+/**
+ * Update event streaming procss
+ */
+async function updateEventStreaming(request: UpdateEventStreamingRequest): UpdateEventStreamingResponse {
+  var runtime = new Util.RuntimeOptions{};
+  return updateEventStreamingWithOptions(request, runtime);
+}
+/**
+ * create event streaming
+ */
+async function updateEventStreamingWithOptions(request: UpdateEventStreamingRequest, runtime: Util.RuntimeOptions): UpdateEventStreamingResponse {
+  Util.validateModel(request);
+  return doRequest('updateEventStreaming', 'HTTP', 'POST', `/openapi/v2/updateEventStreaming`, null, request, runtime);
+}
