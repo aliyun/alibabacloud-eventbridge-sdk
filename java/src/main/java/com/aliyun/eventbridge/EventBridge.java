@@ -611,4 +611,150 @@ public interface EventBridge {
     QueryEventsByPeriodResponse queryEventsByPeriodWithOptions(QueryEventsByPeriodRequest request,
         com.aliyun.teautil.models.RuntimeOptions runtime) throws TeaException;
 
+
+    /**
+     * Encapsulate the request and invoke the network
+     * @param action the api name
+     * @param protocol http or https
+     * @param method e.g. GET
+     * @param pathname pathname of every api
+     * @param query which contains request params
+     * @param body content of request
+     * @param runtime which controls some details of call api, such as retry times
+     * @return the response
+     */
+    java.util.Map<String, ?> doRequest(String action, String protocol, String method, String pathname, java.util.Map<String, String> query, Object body, RuntimeOptions runtime);
+
+    /**
+     * Creates a new event source within your account
+     */
+    CreateEventSourceResponse createEventSource(CreateEventSourceRequest request);
+
+    /**
+     * Creates a new event source within your account
+     */
+    CreateEventSourceResponse createEventSourceWithOptions(CreateEventSourceRequest request, RuntimeOptions runtime);
+
+    /**
+     * Delete the event source
+     */
+    DeleteEventSourceResponse deleteEventSource(DeleteEventSourceRequest request);
+
+    /**
+     * Delete the event source
+     */
+    DeleteEventSourceResponse deleteEventSourceWithOptions(DeleteEventSourceRequest request, RuntimeOptions runtime);
+
+    /**
+     * Update the event source
+     */
+    UpdateEventSourceResponse updateEventSource(UpdateEventSourceRequest request);
+
+    /**
+     * Update the event source
+     */
+    UpdateEventSourceResponse updateEventSourceWithOptions(UpdateEventSourceRequest request, RuntimeOptions runtime);
+
+    /**
+     * List the user defined event source within your account
+     */
+    ListUserDefinedResponse listUserDefinedEventSources(ListUserDefinedRequest request);
+
+    /**
+     * List the user defined event source within your account
+     */
+    ListUserDefinedResponse listUserDefinedEventSourcesWithOptions(ListUserDefinedRequest request, RuntimeOptions runtime);
+
+    /**
+     * List the aliyun official event source within your account
+     */
+    ListAliyunOfficialResponse listAliyunOfficialEventSources(ListAliyunOfficialRequest request);
+
+    /**
+     * List the aliyun official event source within your account
+     */
+    ListAliyunOfficialResponse listAliyunOfficialEventSourcesWithOptions(ListAliyunOfficialRequest request, RuntimeOptions runtime);
+
+    /**
+     * Create event streaming procss
+     */
+    CreateEventStreamingResponse createEventStreaming(CreateEventStreamingRequest request);
+
+    /**
+     * Create event streaming procss
+     */
+    CreateEventStreamingResponse createEventStreamingWithOptions(CreateEventStreamingRequest request, RuntimeOptions runtime);
+
+    /**
+     * delete event streaming
+     */
+    DeleteEventStreamingResponse deleteEventStreaming(DeleteEventStreamingRequest request);
+
+    /**
+     * delete event streaming
+     */
+    DeleteEventStreamingResponse deleteEventStreamingWithOptions(DeleteEventStreamingRequest request, RuntimeOptions runtime);
+
+    /**
+     * create event streaming
+     */
+    GetEventStreamingResponse getEventStreaming(GetEventStreamingRequest request);
+
+    /**
+     * create event streaming
+     */
+    GetEventStreamingResponse getEventStreamingWithOptions(GetEventStreamingRequest request, RuntimeOptions runtime);
+
+    /**
+     * List the metrics of event streaming
+     */
+    ListEventStreamingMetricsResponse listEventStreamingMetrics(ListEventStreamingMetricsRequest request);
+
+    /**
+     * List the metrics of event streaming
+     */
+    ListEventStreamingMetricsResponse listEventStreamingMetricsWithOptions(ListEventStreamingMetricsRequest request, RuntimeOptions runtime);
+
+    /**
+     * create event streaming
+     */
+    listEventStreamingsResponse listEventStreamings(listEventStreamingsRequest request);
+
+    /**
+     * create event streaming
+     */
+    listEventStreamingsResponse listEventStreamingsWithOptions(listEventStreamingsRequest request, RuntimeOptions runtime);
+
+    /**
+     * delete event streaming
+     */
+    PauseEventStreamingResponse pauseEventStreaming(PauseEventStreamingRequest request);
+
+    /**
+     * delete event streaming
+     */
+    PauseEventStreamingResponse pauseEventStreamingWithOptions(PauseEventStreamingRequest request, RuntimeOptions runtime);
+
+    /**
+     * create event streaming
+     */
+    StartEventStreamingResponse startEventStreaming(StartEventStreamingRequest request);
+
+    /**
+     * create event streaming
+     */
+    StartEventStreamingResponse startEventStreamingsWithOptions(StartEventStreamingRequest request, RuntimeOptions runtime);
+
+    /**
+     * Update event streaming procss
+     */
+    UpdateEventStreamingResponse updateEventStreaming(UpdateEventStreamingRequest request);
+
+    /**
+     * create event streaming
+     */
+    UpdateEventStreamingResponse updateEventStreamingWithOptions(UpdateEventStreamingRequest request, RuntimeOptions runtime);
+
+
+
 }

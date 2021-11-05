@@ -3,6 +3,10 @@ package com.aliyun.eventbridge;
 
 import com.aliyun.tea.*;
 import com.aliyun.eventbridge.models.*;
+import com.aliyun.tea.interceptor.InterceptorChain;
+import com.aliyun.tea.interceptor.RequestInterceptor;
+import com.aliyun.tea.interceptor.ResponseInterceptor;
+import com.aliyun.tea.interceptor.RuntimeOptionsInterceptor;
 import com.aliyun.teautil.*;
 import com.aliyun.teautil.models.*;
 import com.aliyun.eventbridge.base.*;
@@ -10,7 +14,7 @@ import com.aliyun.credentials.*;
 import com.aliyun.credentials.models.*;
 
 public class EventBridgeClient implements EventBridge {
-
+    private final static InterceptorChain interceptorChain = InterceptorChain.create();
     public String _protocol;
     public Integer _readTimeout;
     public Integer _connectTimeout;
@@ -532,5 +536,251 @@ public class EventBridgeClient implements EventBridge {
     public QueryEventsByPeriodResponse queryEventsByPeriodWithOptions(QueryEventsByPeriodRequest request, RuntimeOptions runtime) {
         com.aliyun.teautil.Common.validateModel(request);
         return TeaModel.toModel(this.doRequest("queryEventsByPeriod", "HTTP", "POST", "/openapi/queryEventsByPeriod", null, TeaModel.buildMap(request), runtime), new QueryEventsByPeriodResponse());
+    }
+
+    public void addRuntimeOptionsInterceptor(RuntimeOptionsInterceptor interceptor) {
+        interceptorChain.addRuntimeOptionsInterceptor(interceptor);
+    }
+
+    public void addRequestInterceptor(RequestInterceptor interceptor) {
+        interceptorChain.addRequestInterceptor(interceptor);
+    }
+
+    public void addResponseInterceptor(ResponseInterceptor interceptor) {
+        interceptorChain.addResponseInterceptor(interceptor);
+    }
+
+    /**
+     * Creates a new event source within your account
+     */
+    @Override
+    public CreateEventSourceResponse createEventSource(CreateEventSourceRequest request) {
+        RuntimeOptions runtime = new RuntimeOptions();
+        return this.createEventSourceWithOptions(request, runtime);
+    }
+
+    /**
+     * Creates a new event source within your account
+     */
+    @Override
+    public CreateEventSourceResponse createEventSourceWithOptions(CreateEventSourceRequest request, RuntimeOptions runtime) {
+        com.aliyun.teautil.Common.validateModel(request);
+        return TeaModel.toModel(this.doRequest("createEventSource", "HTTP", "POST", "/openapi/v2/createEventSource", null, TeaModel.buildMap(request), runtime), new CreateEventSourceResponse());
+    }
+
+    /**
+     * Delete the event source
+     */
+    @Override
+    public DeleteEventSourceResponse deleteEventSource(DeleteEventSourceRequest request) {
+        RuntimeOptions runtime = new RuntimeOptions();
+        return this.deleteEventSourceWithOptions(request, runtime);
+    }
+
+    /**
+     * Delete the event source
+     */
+    @Override
+    public DeleteEventSourceResponse deleteEventSourceWithOptions(DeleteEventSourceRequest request, RuntimeOptions runtime) {
+        com.aliyun.teautil.Common.validateModel(request);
+        return TeaModel.toModel(this.doRequest("deleteEventSource", "HTTP", "POST", "/openapi/v2/deleteEventSource", null, TeaModel.buildMap(request), runtime), new DeleteEventSourceResponse());
+    }
+
+    /**
+     * Update the event source
+     */
+    @Override
+    public UpdateEventSourceResponse updateEventSource(UpdateEventSourceRequest request) {
+        RuntimeOptions runtime = new RuntimeOptions();
+        return this.updateEventSourceWithOptions(request, runtime);
+    }
+
+    /**
+     * Update the event source
+     */
+    @Override
+    public UpdateEventSourceResponse updateEventSourceWithOptions(UpdateEventSourceRequest request, RuntimeOptions runtime) {
+        com.aliyun.teautil.Common.validateModel(request);
+        return TeaModel.toModel(this.doRequest("updateEventSource", "HTTP", "POST", "/openapi/v2/updateEventSource", null, TeaModel.buildMap(request), runtime), new UpdateEventSourceResponse());
+    }
+
+    /**
+     * List the user defined event source within your account
+     */
+    @Override
+    public ListUserDefinedResponse listUserDefinedEventSources(ListUserDefinedRequest request) {
+        RuntimeOptions runtime = new RuntimeOptions();
+        return this.listUserDefinedEventSourcesWithOptions(request, runtime);
+    }
+
+    /**
+     * List the user defined event source within your account
+     */
+    @Override
+    public ListUserDefinedResponse listUserDefinedEventSourcesWithOptions(ListUserDefinedRequest request, RuntimeOptions runtime) {
+        com.aliyun.teautil.Common.validateModel(request);
+        return TeaModel.toModel(this.doRequest("listUserDefinedEventSources", "HTTP", "POST", "/openapi/v2/listUserDefinedEventSources", null, TeaModel.buildMap(request), runtime), new ListUserDefinedResponse());
+    }
+
+    /**
+     * List the aliyun official event source within your account
+     */
+    @Override
+    public ListAliyunOfficialResponse listAliyunOfficialEventSources(ListAliyunOfficialRequest request) {
+        RuntimeOptions runtime = new RuntimeOptions();
+        return this.listAliyunOfficialEventSourcesWithOptions(request, runtime);
+    }
+
+    /**
+     * List the aliyun official event source within your account
+     */
+    @Override
+    public ListAliyunOfficialResponse listAliyunOfficialEventSourcesWithOptions(ListAliyunOfficialRequest request, RuntimeOptions runtime) {
+        com.aliyun.teautil.Common.validateModel(request);
+        return TeaModel.toModel(this.doRequest("listAliyunOfficialEventSources", "HTTP", "POST", "/openapi/v2/listAliyunOfficialEventSources", null, TeaModel.buildMap(request), runtime), new ListAliyunOfficialResponse());
+    }
+
+    /**
+     * Create event streaming procss
+     */
+    @Override
+    public CreateEventStreamingResponse createEventStreaming(CreateEventStreamingRequest request) {
+        RuntimeOptions runtime = new RuntimeOptions();
+        return this.createEventStreamingWithOptions(request, runtime);
+    }
+
+    /**
+     * Create event streaming procss
+     */
+    @Override
+    public CreateEventStreamingResponse createEventStreamingWithOptions(CreateEventStreamingRequest request, RuntimeOptions runtime) {
+        com.aliyun.teautil.Common.validateModel(request);
+        return TeaModel.toModel(this.doRequest("createEventStreaming", "HTTP", "POST", "/openapi/v2/createEventStreaming", null, TeaModel.buildMap(request), runtime), new CreateEventStreamingResponse());
+    }
+
+    /**
+     * delete event streaming
+     */
+    @Override
+    public DeleteEventStreamingResponse deleteEventStreaming(DeleteEventStreamingRequest request) {
+        RuntimeOptions runtime = new RuntimeOptions();
+        return this.deleteEventStreamingWithOptions(request, runtime);
+    }
+
+    /**
+     * delete event streaming
+     */
+    @Override
+    public DeleteEventStreamingResponse deleteEventStreamingWithOptions(DeleteEventStreamingRequest request, RuntimeOptions runtime) {
+        com.aliyun.teautil.Common.validateModel(request);
+        return TeaModel.toModel(this.doRequest("deleteEventStreaming", "HTTP", "POST", "/openapi/v2/deleteEventStreaming", null, TeaModel.buildMap(request), runtime), new DeleteEventStreamingResponse());
+    }
+
+    /**
+     * create event streaming
+     */
+    @Override
+    public GetEventStreamingResponse getEventStreaming(GetEventStreamingRequest request) {
+        RuntimeOptions runtime = new RuntimeOptions();
+        return this.getEventStreamingWithOptions(request, runtime);
+    }
+
+    /**
+     * create event streaming
+     */
+    @Override
+    public GetEventStreamingResponse getEventStreamingWithOptions(GetEventStreamingRequest request, RuntimeOptions runtime) {
+        com.aliyun.teautil.Common.validateModel(request);
+        return TeaModel.toModel(this.doRequest("getEventStreaming", "HTTP", "POST", "/openapi/v2/getEventStreaming", null, TeaModel.buildMap(request), runtime), new GetEventStreamingResponse());
+    }
+
+    /**
+     * List the metrics of event streaming
+     */
+    @Override
+    public ListEventStreamingMetricsResponse listEventStreamingMetrics(ListEventStreamingMetricsRequest request) {
+        RuntimeOptions runtime = new RuntimeOptions();
+        return this.listEventStreamingMetricsWithOptions(request, runtime);
+    }
+
+    /**
+     * List the metrics of event streaming
+     */
+    @Override
+    public ListEventStreamingMetricsResponse listEventStreamingMetricsWithOptions(ListEventStreamingMetricsRequest request, RuntimeOptions runtime) {
+        com.aliyun.teautil.Common.validateModel(request);
+        return TeaModel.toModel(this.doRequest("listEventStreamingMetrics", "HTTP", "POST", "/openapi/v2/listEventStreamingMetrics", null, TeaModel.buildMap(request), runtime), new ListEventStreamingMetricsResponse());
+    }
+
+    /**
+     * create event streaming
+     */
+    @Override
+    public listEventStreamingsResponse listEventStreamings(listEventStreamingsRequest request) {
+        RuntimeOptions runtime = new RuntimeOptions();
+        return this.listEventStreamingsWithOptions(request, runtime);
+    }
+
+    /**
+     * create event streaming
+     */
+    @Override
+    public listEventStreamingsResponse listEventStreamingsWithOptions(listEventStreamingsRequest request, RuntimeOptions runtime) {
+        com.aliyun.teautil.Common.validateModel(request);
+        return TeaModel.toModel(this.doRequest("listEventStreamings", "HTTP", "POST", "/openapi/v2/listEventStreamings", null, TeaModel.buildMap(request), runtime), new listEventStreamingsResponse());
+    }
+
+    /**
+     * delete event streaming
+     */
+    @Override
+    public PauseEventStreamingResponse pauseEventStreaming(PauseEventStreamingRequest request) {
+        RuntimeOptions runtime = new RuntimeOptions();
+        return this.pauseEventStreamingWithOptions(request, runtime);
+    }
+
+    /**
+     * delete event streaming
+     */
+    @Override
+    public PauseEventStreamingResponse pauseEventStreamingWithOptions(PauseEventStreamingRequest request, RuntimeOptions runtime) {
+        com.aliyun.teautil.Common.validateModel(request);
+        return TeaModel.toModel(this.doRequest("startEventStreaming", "HTTP", "POST", "/openapi/v2/pauseEventStreaming", null, TeaModel.buildMap(request), runtime), new PauseEventStreamingResponse());
+    }
+
+    /**
+     * create event streaming
+     */
+    @Override
+    public StartEventStreamingResponse startEventStreaming(StartEventStreamingRequest request) {
+        RuntimeOptions runtime = new RuntimeOptions();
+        return this.startEventStreamingsWithOptions(request, runtime);
+    }
+
+    /**
+     * create event streaming
+     */
+    @Override
+    public StartEventStreamingResponse startEventStreamingsWithOptions(StartEventStreamingRequest request, RuntimeOptions runtime) {
+        com.aliyun.teautil.Common.validateModel(request);
+        return TeaModel.toModel(this.doRequest("startEventStreaming", "HTTP", "POST", "/openapi/v2/startEventStreaming", null, TeaModel.buildMap(request), runtime), new StartEventStreamingResponse());
+    }
+
+    /**
+     * Update event streaming procss
+     */
+    @Override
+    public UpdateEventStreamingResponse updateEventStreaming(UpdateEventStreamingRequest request) {
+        RuntimeOptions runtime = new RuntimeOptions();
+        return this.updateEventStreamingWithOptions(request, runtime);
+    }
+
+    /**
+     * create event streaming
+     */
+    @Override
+    public UpdateEventStreamingResponse updateEventStreamingWithOptions(UpdateEventStreamingRequest request, RuntimeOptions runtime) {
+        com.aliyun.teautil.Common.validateModel(request);
+        return TeaModel.toModel(this.doRequest("updateEventStreaming", "HTTP", "POST", "/openapi/v2/updateEventStreaming", null, TeaModel.buildMap(request), runtime), new UpdateEventStreamingResponse());
     }
 }
