@@ -17,8 +17,8 @@ public class SourceKafkaParameters extends TeaModel {
     @Validation(required = true)
     public String consumerGroup;
 
-    @NameInMap("OffsetRest")
-    public String offsetRest;
+    @NameInMap("OffsetReset")
+    public String offsetReset;
 
     public static SourceKafkaParameters build(java.util.Map<String, ?> map) {
         SourceKafkaParameters self = new SourceKafkaParameters();
@@ -49,12 +49,12 @@ public class SourceKafkaParameters extends TeaModel {
         return this.consumerGroup;
     }
 
-    public SourceKafkaParameters setOffsetRest(String offsetRest) {
-        this.offsetRest = offsetRest;
+    public SourceKafkaParameters setOffsetReset(String offsetReset) {
+        this.offsetReset = offsetReset;
         return this;
     }
-    public String getOffsetRest() {
-        return this.offsetRest;
+    public String getOffsetReset() {
+        return this.offsetReset;
     }
 
 }
