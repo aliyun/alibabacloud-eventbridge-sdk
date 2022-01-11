@@ -69,7 +69,7 @@ init(config: Config){
       message = '\'accessKeyId\' and \'accessKeySecret\' or \'credential\' can not be unset'
     };
   }
-  
+
   if (Util.empty(config.endpoint)) {
     throw {
       code = 'ParameterMissing',
@@ -954,6 +954,15 @@ model SourceRocketMQParameters = {
 }
 
 /**
+ * The detail of SourceScheduledEventParameters
+ */
+model SourceScheduledEventParameters = {
+  Schedule: string(name='Schedule'),
+  TimeZone: string(name='TimeZone'),
+  UserData?: map[string]any(name='UserData'),
+}
+
+/**
  * The request of createEventSource
  */
 model CreateEventSourceRequest = {
@@ -961,8 +970,9 @@ model CreateEventSourceRequest = {
   description?: string(name='Description'),
   eventBusName: string(name='EventBusName'),
   sourceRabbitMQParameters?: SourceRabbitMQParameters(name='SourceRabbitMQParameters'),
-  sourceMNSParameters?: SourceMNSParameters(name='SourceMNSParameters'),
-  SourceRocketMQParameters?: SourceRocketMQParameters(name='SourceRocketMQParameters'),
+  SourceMNSParameters?: SourceMNSParameters(name='SourceMNSParameters'),
+  sourceRocketMQParameters?: SourceRocketMQParameters(name='SourceRocketMQParameters'),
+  sourceScheduledEventParameters?: SourceScheduledEventParameters(name='SourceScheduledEventParameters'),
   }
 
 /**
@@ -1239,7 +1249,7 @@ model UpdateEventSourceRequest = {
   sourceRabbitMQParameters?: SourceRabbitMQParameters(name='SourceRabbitMQParameters'),
   sourceMNSParameters?: SourceMNSParameters(name='SourceMNSParameters'),
   sourceRocketMQParameters?: SourceRocketMQParameters(name='SourceRocketMQParameters'),
-} 
+}
 
 /**
  * The response of update the event source
@@ -1522,7 +1532,6 @@ async function listEventStreamingsWithOptions(request: listEventStreamingsReques
  */
 model PauseEventStreamingRequest = {
   eventStreamingName: string(name='EventStreamingName'),
- 
 }
 
 /**
@@ -1554,7 +1563,6 @@ async function pauseEventStreamingWithOptions(request: PauseEventStreamingReques
  */
 model StartEventStreamingRequest = {
   eventStreamingName: string(name='EventStreamingName'),
- 
 }
 
 /**

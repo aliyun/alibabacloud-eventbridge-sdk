@@ -27,6 +27,9 @@ public class UpdateEventSourceRequest extends TeaModel {
     @NameInMap("SourceRocketMQParameters")
     public SourceRocketMQParameters sourceRocketMQParameters;
 
+    @NameInMap("SourceScheduledEventParameters")
+    public SourceScheduledEventParameters sourceScheduledEventParameters;
+
     public static UpdateEventSourceRequest build(java.util.Map<String, ?> map) {
         UpdateEventSourceRequest self = new UpdateEventSourceRequest();
         return TeaModel.build(map, self);
@@ -78,6 +81,14 @@ public class UpdateEventSourceRequest extends TeaModel {
     }
     public SourceRocketMQParameters getSourceRocketMQParameters() {
         return this.sourceRocketMQParameters;
+    }
+
+    public UpdateEventSourceRequest setSourceScheduledEventParameters(SourceScheduledEventParameters sourceScheduledEventParameters) {
+        this.sourceScheduledEventParameters = sourceScheduledEventParameters;
+        return this;
+    }
+    public SourceScheduledEventParameters getSourceScheduledEventParameters() {
+        return this.sourceScheduledEventParameters;
     }
 
 }
