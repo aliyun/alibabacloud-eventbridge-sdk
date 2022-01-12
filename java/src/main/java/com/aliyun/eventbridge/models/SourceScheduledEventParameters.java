@@ -45,7 +45,7 @@ public class SourceScheduledEventParameters extends TeaModel {
         this.UserData = UserData;
         return this;
     }
-    public java.util.Map<String, ?> getUserData() {
+    public java.util.Map<String, String> getUserData() {
         return this.UserData;
     }
 
