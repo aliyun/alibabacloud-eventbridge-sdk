@@ -20,7 +20,7 @@ public class SourceScheduledEventParameters extends TeaModel {
     @NameInMap("UserData")
     public java.util.Map<String, String> UserData;
 
-    public static SourceScheduledEventParameters build(java.util.Map<String, ?> map) {
+    public static SourceScheduledEventParameters build(java.util.Map<String, String> map) {
         SourceScheduledEventParameters self = new SourceScheduledEventParameters();
         return TeaModel.build(map, self);
     }
