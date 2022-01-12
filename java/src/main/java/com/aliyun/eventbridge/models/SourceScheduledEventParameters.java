@@ -18,7 +18,7 @@ public class SourceScheduledEventParameters extends TeaModel {
     public String TimeZone;
 
     @NameInMap("UserData")
-    public java.util.Map<String, ?> UserData;
+    public java.util.Map<String, String> UserData;
 
     public static SourceScheduledEventParameters build(java.util.Map<String, ?> map) {
         SourceScheduledEventParameters self = new SourceScheduledEventParameters();
@@ -41,7 +41,7 @@ public class SourceScheduledEventParameters extends TeaModel {
         return this.TimeZone;
     }
 
-    public SourceScheduledEventParameters setUserData(java.util.Map<String, ?> UserData) {
+    public SourceScheduledEventParameters setUserData(java.util.Map<String, String> UserData) {
         this.UserData = UserData;
         return this;
     }

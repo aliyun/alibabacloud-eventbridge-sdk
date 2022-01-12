@@ -959,7 +959,7 @@ model SourceRocketMQParameters = {
 model SourceScheduledEventParameters = {
   Schedule: string(name='Schedule'),
   TimeZone: string(name='TimeZone'),
-  UserData?: map[string]any(name='UserData'),
+  UserData?: map[string]string(name='UserData'),
 }
 
 /**
@@ -970,8 +970,8 @@ model CreateEventSourceRequest = {
   description?: string(name='Description'),
   eventBusName: string(name='EventBusName'),
   sourceRabbitMQParameters?: SourceRabbitMQParameters(name='SourceRabbitMQParameters'),
-  SourceMNSParameters?: SourceMNSParameters(name='SourceMNSParameters'),
-  sourceRocketMQParameters?: SourceRocketMQParameters(name='SourceRocketMQParameters'),
+  sourceMNSParameters?: SourceMNSParameters(name='SourceMNSParameters'),
+  SourceRocketMQParameters?: SourceRocketMQParameters(name='SourceRocketMQParameters'),
   sourceScheduledEventParameters?: SourceScheduledEventParameters(name='SourceScheduledEventParameters'),
   }
 
@@ -1249,6 +1249,7 @@ model UpdateEventSourceRequest = {
   sourceRabbitMQParameters?: SourceRabbitMQParameters(name='SourceRabbitMQParameters'),
   sourceMNSParameters?: SourceMNSParameters(name='SourceMNSParameters'),
   sourceRocketMQParameters?: SourceRocketMQParameters(name='SourceRocketMQParameters'),
+  sourceScheduledEventParameters?: SourceScheduledEventParameters(name='SourceScheduledEventParameters'),
 }
 
 /**
