@@ -6,7 +6,7 @@ import com.aliyun.tea.*;
 /**
  * The response of search EventStreaming
  */
-public class listEventStreamingsResponse extends TeaModel {
+public class ListEventStreamingsResponse extends TeaModel {
     @NameInMap("RequestId")
     @Validation(required = true)
     public String requestId;
@@ -24,12 +24,12 @@ public class listEventStreamingsResponse extends TeaModel {
     @NameInMap("Total")
     public Integer total;
 
-    public static listEventStreamingsResponse build(java.util.Map<String, ?> map) {
-        listEventStreamingsResponse self = new listEventStreamingsResponse();
+    public static ListEventStreamingsResponse build(java.util.Map<String, ?> map) {
+        ListEventStreamingsResponse self = new ListEventStreamingsResponse();
         return TeaModel.build(map, self);
     }
 
-    public listEventStreamingsResponse setRequestId(String requestId) {
+    public ListEventStreamingsResponse setRequestId(String requestId) {
         this.requestId = requestId;
         return this;
     }
@@ -37,7 +37,7 @@ public class listEventStreamingsResponse extends TeaModel {
         return this.requestId;
     }
 
-    public listEventStreamingsResponse setResourceOwnerAccountId(String resourceOwnerAccountId) {
+    public ListEventStreamingsResponse setResourceOwnerAccountId(String resourceOwnerAccountId) {
         this.resourceOwnerAccountId = resourceOwnerAccountId;
         return this;
     }
@@ -45,7 +45,7 @@ public class listEventStreamingsResponse extends TeaModel {
         return this.resourceOwnerAccountId;
     }
 
-    public listEventStreamingsResponse setEventStreamings(java.util.List<EBEventStreamingEntry> eventStreamings) {
+    public ListEventStreamingsResponse setEventStreamings(java.util.List<EBEventStreamingEntry> eventStreamings) {
         this.eventStreamings = eventStreamings;
         return this;
     }
@@ -53,7 +53,7 @@ public class listEventStreamingsResponse extends TeaModel {
         return this.eventStreamings;
     }
 
-    public listEventStreamingsResponse setNextToken(String nextToken) {
+    public ListEventStreamingsResponse setNextToken(String nextToken) {
         this.nextToken = nextToken;
         return this;
     }
@@ -61,7 +61,7 @@ public class listEventStreamingsResponse extends TeaModel {
         return this.nextToken;
     }
 
-    public listEventStreamingsResponse setTotal(Integer total) {
+    public ListEventStreamingsResponse setTotal(Integer total) {
         this.total = total;
         return this;
     }

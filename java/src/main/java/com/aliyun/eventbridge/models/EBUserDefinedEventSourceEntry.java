@@ -39,6 +39,10 @@ public class EBUserDefinedEventSourceEntry extends TeaModel {
     @Validation(required = true)
     public SourceKafkaParameters sourceKafkaParameters;
 
+    @NameInMap("SourceHttpEventParameters")
+    @Validation(required = true)
+    public SourceHttpEventParameters sourceHttpEventParameters;
+
     public static EBUserDefinedEventSourceEntry build(java.util.Map<String, ?> map) {
         EBUserDefinedEventSourceEntry self = new EBUserDefinedEventSourceEntry();
         return TeaModel.build(map, self);
@@ -122,6 +126,14 @@ public class EBUserDefinedEventSourceEntry extends TeaModel {
     }
     public SourceKafkaParameters getSourceKafkaParameters() {
         return this.sourceKafkaParameters;
+    }
+
+    public EBUserDefinedEventSourceEntry setSourceHttpEventParameters(SourceHttpEventParameters sourceHttpEventParameters) {
+        this.sourceHttpEventParameters = sourceHttpEventParameters;
+        return this;
+    }
+    public SourceHttpEventParameters getSourceHttpEventParameters() {
+        return this.sourceHttpEventParameters;
     }
 
 }

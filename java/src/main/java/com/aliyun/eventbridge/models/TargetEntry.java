@@ -25,6 +25,9 @@ public class TargetEntry extends TeaModel {
     @NameInMap("ParamList")
     public java.util.List<EBTargetParam> paramList;
 
+    @NameInMap("ConcurrentConfig")
+    public ConcurrentConfig concurrentConfig;
+
     public static TargetEntry build(java.util.Map<String, ?> map) {
         TargetEntry self = new TargetEntry();
         return TeaModel.build(map, self);
@@ -68,6 +71,14 @@ public class TargetEntry extends TeaModel {
     }
     public java.util.List<EBTargetParam> getParamList() {
         return this.paramList;
+    }
+
+    public TargetEntry setConcurrentConfig(ConcurrentConfig concurrentConfig) {
+        this.concurrentConfig = concurrentConfig;
+        return this;
+    }
+    public ConcurrentConfig getConcurrentConfig() {
+        return this.concurrentConfig;
     }
 
 }

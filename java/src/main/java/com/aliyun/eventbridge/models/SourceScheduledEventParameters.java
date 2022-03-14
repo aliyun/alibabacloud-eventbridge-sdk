@@ -1,9 +1,7 @@
 // This file is auto-generated, don't edit it. Thanks.
 package com.aliyun.eventbridge.models;
 
-import com.aliyun.tea.NameInMap;
-import com.aliyun.tea.TeaModel;
-import com.aliyun.tea.Validation;
+import com.aliyun.tea.*;
 
 /**
  * The detail of SourceScheduledEventParameters
@@ -20,7 +18,7 @@ public class SourceScheduledEventParameters extends TeaModel {
     @NameInMap("UserData")
     public java.util.Map<String, String> UserData;
 
-    public static SourceScheduledEventParameters build(java.util.Map<String, String> map) {
+    public static SourceScheduledEventParameters build(java.util.Map<String, ?> map) {
         SourceScheduledEventParameters self = new SourceScheduledEventParameters();
         return TeaModel.build(map, self);
     }

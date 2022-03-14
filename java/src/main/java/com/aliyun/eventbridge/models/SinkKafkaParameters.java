@@ -22,6 +22,9 @@ public class SinkKafkaParameters extends TeaModel {
     @NameInMap("Value")
     public TargetParameter value;
 
+    @NameInMap("ExtendConfig")
+    public java.util.Map<String, ?> extendConfig;
+
     public static SinkKafkaParameters build(java.util.Map<String, ?> map) {
         SinkKafkaParameters self = new SinkKafkaParameters();
         return TeaModel.build(map, self);
@@ -65,6 +68,14 @@ public class SinkKafkaParameters extends TeaModel {
     }
     public TargetParameter getValue() {
         return this.value;
+    }
+
+    public SinkKafkaParameters setExtendConfig(java.util.Map<String, ?> extendConfig) {
+        this.extendConfig = extendConfig;
+        return this;
+    }
+    public java.util.Map<String, ?> getExtendConfig() {
+        return this.extendConfig;
     }
 
 }

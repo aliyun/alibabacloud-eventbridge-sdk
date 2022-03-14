@@ -716,7 +716,7 @@ public class EventBridgeClient implements EventBridge {
      * create event streaming
      */
     @Override
-    public listEventStreamingsResponse listEventStreamings(listEventStreamingsRequest request) {
+    public ListEventStreamingsResponse listEventStreamings(ListEventStreamingsRequest request) {
         RuntimeOptions runtime = new RuntimeOptions();
         return this.listEventStreamingsWithOptions(request, runtime);
     }
@@ -725,9 +725,9 @@ public class EventBridgeClient implements EventBridge {
      * create event streaming
      */
     @Override
-    public listEventStreamingsResponse listEventStreamingsWithOptions(listEventStreamingsRequest request, RuntimeOptions runtime) {
+    public ListEventStreamingsResponse listEventStreamingsWithOptions(ListEventStreamingsRequest request, RuntimeOptions runtime) {
         com.aliyun.teautil.Common.validateModel(request);
-        return TeaModel.toModel(this.doRequest("listEventStreamings", "HTTP", "POST", "/openapi/v2/listEventStreamings", null, TeaModel.buildMap(request), runtime), new listEventStreamingsResponse());
+        return TeaModel.toModel(this.doRequest("listEventStreamings", "HTTP", "POST", "/openapi/v2/listEventStreamings", null, TeaModel.buildMap(request), runtime), new ListEventStreamingsResponse());
     }
 
     /**

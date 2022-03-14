@@ -632,11 +632,12 @@ func (s *CreateRuleRequest) SetTags(v map[string]*string) *CreateRuleRequest {
  * The detail of TargetEntry
  */
 type TargetEntry struct {
-	Id                *string          `json:"Id,omitempty" xml:"Id,omitempty" require:"true"`
-	Type              *string          `json:"Type,omitempty" xml:"Type,omitempty" require:"true"`
-	Endpoint          *string          `json:"Endpoint,omitempty" xml:"Endpoint,omitempty" require:"true"`
-	PushRetryStrategy *string          `json:"PushRetryStrategy,omitempty" xml:"PushRetryStrategy,omitempty"`
-	ParamList         []*EBTargetParam `json:"ParamList,omitempty" xml:"ParamList,omitempty" type:"Repeated"`
+	Id                *string           `json:"Id,omitempty" xml:"Id,omitempty" require:"true"`
+	Type              *string           `json:"Type,omitempty" xml:"Type,omitempty" require:"true"`
+	Endpoint          *string           `json:"Endpoint,omitempty" xml:"Endpoint,omitempty" require:"true"`
+	PushRetryStrategy *string           `json:"PushRetryStrategy,omitempty" xml:"PushRetryStrategy,omitempty"`
+	ParamList         []*EBTargetParam  `json:"ParamList,omitempty" xml:"ParamList,omitempty" type:"Repeated"`
+	ConcurrentConfig  *ConcurrentConfig `json:"ConcurrentConfig,omitempty" xml:"ConcurrentConfig,omitempty"`
 }
 
 func (s TargetEntry) String() string {
@@ -669,6 +670,11 @@ func (s *TargetEntry) SetPushRetryStrategy(v string) *TargetEntry {
 
 func (s *TargetEntry) SetParamList(v []*EBTargetParam) *TargetEntry {
 	s.ParamList = v
+	return s
+}
+
+func (s *TargetEntry) SetConcurrentConfig(v *ConcurrentConfig) *TargetEntry {
+	s.ConcurrentConfig = v
 	return s
 }
 
@@ -2741,6 +2747,12 @@ type CreateEventSourceRequest struct {
 	SourceMNSParameters            *SourceMNSParameters            `json:"SourceMNSParameters,omitempty" xml:"SourceMNSParameters,omitempty"`
 	SourceRocketMQParameters       *SourceRocketMQParameters       `json:"SourceRocketMQParameters,omitempty" xml:"SourceRocketMQParameters,omitempty"`
 	SourceScheduledEventParameters *SourceScheduledEventParameters `json:"SourceScheduledEventParameters,omitempty" xml:"SourceScheduledEventParameters,omitempty"`
+	SourceHttpEventParameters      *SourceHttpEventParameters      `json:"SourceHttpEventParameters,omitempty" xml:"SourceHttpEventParameters,omitempty"`
+}
+
+func (s *CreateEventSourceRequest) SetSourceHttpEventParameters(v *SourceHttpEventParameters) *CreateEventSourceRequest {
+	s.SourceHttpEventParameters = v
+	return s
 }
 
 func (s CreateEventSourceRequest) String() string {
@@ -2790,10 +2802,22 @@ func (s *CreateEventSourceRequest) SetSourceScheduledEventParameters(v *SourceSc
  * The detail of SourceKafkaParameters
  */
 type SourceKafkaParameters struct {
-	InstanceId    *string `json:"InstanceId,omitempty" xml:"InstanceId,omitempty"`
-	Topic         *string `json:"Topic,omitempty" xml:"Topic,omitempty"`
-	ConsumerGroup *string `json:"ConsumerGroup,omitempty" xml:"ConsumerGroup,omitempty" require:"true"`
-	OffsetReset   *string `json:"OffsetReset,omitempty" xml:"OffsetReset,omitempty"`
+	RegionId      *string                 `json:"RegionId,omitempty" xml:"RegionId,omitempty"`
+	ExtendConfig  *map[string]interface{} `json:"ExtendConfig,omitempty" xml:"ExtendConfig,omitempty"`
+	InstanceId    *string                 `json:"InstanceId,omitempty" xml:"InstanceId,omitempty"`
+	Topic         *string                 `json:"Topic,omitempty" xml:"Topic,omitempty"`
+	ConsumerGroup *string                 `json:"ConsumerGroup,omitempty" xml:"ConsumerGroup,omitempty" require:"true"`
+	OffsetReset   *string                 `json:"OffsetReset,omitempty" xml:"OffsetReset,omitempty"`
+}
+
+func (s *SourceKafkaParameters) SetRegionId(v string) *SourceKafkaParameters {
+	s.RegionId = &v
+	return s
+}
+
+func (s *SourceKafkaParameters) SetExtendConfig(v map[string]interface{}) *SourceKafkaParameters {
+	s.ExtendConfig = &v
+	return s
 }
 
 func (s SourceKafkaParameters) String() string {
@@ -3128,11 +3152,12 @@ func (s *SinkRocketMQParameters) SetTags(v *TargetParameter) *SinkRocketMQParame
  * The config of SinkKafkaParameters
  */
 type SinkKafkaParameters struct {
-	InstanceId *TargetParameter `json:"InstanceId,omitempty" xml:"InstanceId,omitempty"`
-	Topic      *TargetParameter `json:"Topic,omitempty" xml:"Topic,omitempty"`
-	Acks       *TargetParameter `json:"Acks,omitempty" xml:"Acks,omitempty"`
-	Key        *TargetParameter `json:"Key,omitempty" xml:"Key,omitempty"`
-	Value      *TargetParameter `json:"Value,omitempty" xml:"Value,omitempty"`
+	InstanceId   *TargetParameter       `json:"InstanceId,omitempty" xml:"InstanceId,omitempty"`
+	Topic        *TargetParameter       `json:"Topic,omitempty" xml:"Topic,omitempty"`
+	Acks         *TargetParameter       `json:"Acks,omitempty" xml:"Acks,omitempty"`
+	Key          *TargetParameter       `json:"Key,omitempty" xml:"Key,omitempty"`
+	Value        *TargetParameter       `json:"Value,omitempty" xml:"Value,omitempty"`
+	ExtendConfig map[string]interface{} `json:"ExtendConfig,omitempty" xml:"ExtendConfig,omitempty"`
 }
 
 func (s SinkKafkaParameters) String() string {
@@ -3165,6 +3190,11 @@ func (s *SinkKafkaParameters) SetKey(v *TargetParameter) *SinkKafkaParameters {
 
 func (s *SinkKafkaParameters) SetValue(v *TargetParameter) *SinkKafkaParameters {
 	s.Value = v
+	return s
+}
+
+func (s *SinkKafkaParameters) SetExtendConfig(v map[string]interface{}) *SinkKafkaParameters {
+	s.ExtendConfig = v
 	return s
 }
 
@@ -3538,16 +3568,17 @@ func (s *CreateEventSourceResponse) SetEventSourceARN(v string) *CreateEventSour
  * The event source entry
  */
 type EBUserDefinedEventSourceEntry struct {
-	Name                     *string                   `json:"Name,omitempty" xml:"Name,omitempty"`
-	Description              *string                   `json:"Description,omitempty" xml:"Description,omitempty"`
-	Arn                      *string                   `json:"ARN,omitempty" xml:"ARN,omitempty"`
-	Status                   *string                   `json:"Status,omitempty" xml:"Status,omitempty"`
-	Ctime                    *int64                    `json:"Ctime,omitempty" xml:"Ctime,omitempty"`
-	EventBusName             *string                   `json:"EventBusName,omitempty" xml:"EventBusName,omitempty"`
-	SourceRabbitMQParameters *SourceRabbitMQParameters `json:"SourceRabbitMQParameters,omitempty" xml:"SourceRabbitMQParameters,omitempty"`
-	SourceMNSParameters      *SourceMNSParameters      `json:"SourceMNSParameters,omitempty" xml:"SourceMNSParameters,omitempty"`
-	SourceRocketMQParameters *SourceRocketMQParameters `json:"SourceRocketMQParameters,omitempty" xml:"SourceRocketMQParameters,omitempty" require:"true"`
-	SourceKafkaParameters    *SourceKafkaParameters    `json:"SourceKafkaParameters,omitempty" xml:"SourceKafkaParameters,omitempty" require:"true"`
+	Name                      *string                    `json:"Name,omitempty" xml:"Name,omitempty"`
+	Description               *string                    `json:"Description,omitempty" xml:"Description,omitempty"`
+	Arn                       *string                    `json:"ARN,omitempty" xml:"ARN,omitempty"`
+	Status                    *string                    `json:"Status,omitempty" xml:"Status,omitempty"`
+	Ctime                     *int64                     `json:"Ctime,omitempty" xml:"Ctime,omitempty"`
+	EventBusName              *string                    `json:"EventBusName,omitempty" xml:"EventBusName,omitempty"`
+	SourceRabbitMQParameters  *SourceRabbitMQParameters  `json:"SourceRabbitMQParameters,omitempty" xml:"SourceRabbitMQParameters,omitempty"`
+	SourceMNSParameters       *SourceMNSParameters       `json:"SourceMNSParameters,omitempty" xml:"SourceMNSParameters,omitempty"`
+	SourceRocketMQParameters  *SourceRocketMQParameters  `json:"SourceRocketMQParameters,omitempty" xml:"SourceRocketMQParameters,omitempty" require:"true"`
+	SourceKafkaParameters     *SourceKafkaParameters     `json:"SourceKafkaParameters,omitempty" xml:"SourceKafkaParameters,omitempty" require:"true"`
+	SourceHttpEventParameters *SourceHttpEventParameters `json:"SourceHttpEventParameters,omitempty" xml:"SourceHttpEventParameters,omitempty" require:"true"`
 }
 
 func (s EBUserDefinedEventSourceEntry) String() string {
@@ -3605,6 +3636,11 @@ func (s *EBUserDefinedEventSourceEntry) SetSourceRocketMQParameters(v *SourceRoc
 
 func (s *EBUserDefinedEventSourceEntry) SetSourceKafkaParameters(v *SourceKafkaParameters) *EBUserDefinedEventSourceEntry {
 	s.SourceKafkaParameters = v
+	return s
+}
+
+func (s *EBUserDefinedEventSourceEntry) SetSourceHttpEventParameters(v *SourceHttpEventParameters) *EBUserDefinedEventSourceEntry {
+	s.SourceHttpEventParameters = v
 	return s
 }
 
@@ -3727,6 +3763,7 @@ type UpdateEventSourceRequest struct {
 	SourceMNSParameters            *SourceMNSParameters            `json:"SourceMNSParameters,omitempty" xml:"SourceMNSParameters,omitempty"`
 	SourceRocketMQParameters       *SourceRocketMQParameters       `json:"SourceRocketMQParameters,omitempty" xml:"SourceRocketMQParameters,omitempty"`
 	SourceScheduledEventParameters *SourceScheduledEventParameters `json:"SourceScheduledEventParameters,omitempty" xml:"SourceScheduledEventParameters,omitempty"`
+	SourceHttpEventParameters      *SourceHttpEventParameters      `json:"SourceHttpEventParameters,omitempty" xml:"SourceHttpEventParameters,omitempty"`
 }
 
 func (s UpdateEventSourceRequest) String() string {
@@ -3769,6 +3806,11 @@ func (s *UpdateEventSourceRequest) SetSourceRocketMQParameters(v *SourceRocketMQ
 
 func (s *UpdateEventSourceRequest) SetSourceScheduledEventParameters(v *SourceScheduledEventParameters) *UpdateEventSourceRequest {
 	s.SourceScheduledEventParameters = v
+	return s
+}
+
+func (s *UpdateEventSourceRequest) SetSourceHttpEventParameters(v *SourceHttpEventParameters) *UpdateEventSourceRequest {
+	s.SourceHttpEventParameters = v
 	return s
 }
 
@@ -5592,9 +5634,9 @@ func (client *Client) ListEventStreamingMetricsWithOptions(request *ListEventStr
 /**
  * create event streaming
  */
-func (client *Client) ListEventStreamings(request *listEventStreamingsRequest) (_result *listEventStreamingsResponse, _err error) {
+func (client *Client) ListEventStreamings(request *ListEventStreamingsRequest) (_result *ListEventStreamingsResponse, _err error) {
 	runtime := &util.RuntimeOptions{}
-	_result = &listEventStreamingsResponse{}
+	_result = &ListEventStreamingsResponse{}
 	_body, _err := client.ListEventStreamingsWithOptions(request, runtime)
 	if _err != nil {
 		return _result, _err
@@ -5606,12 +5648,12 @@ func (client *Client) ListEventStreamings(request *listEventStreamingsRequest) (
 /**
  * create event streaming
  */
-func (client *Client) ListEventStreamingsWithOptions(request *listEventStreamingsRequest, runtime *util.RuntimeOptions) (_result *listEventStreamingsResponse, _err error) {
+func (client *Client) ListEventStreamingsWithOptions(request *ListEventStreamingsRequest, runtime *util.RuntimeOptions) (_result *ListEventStreamingsResponse, _err error) {
 	_err = util.ValidateModel(request)
 	if _err != nil {
 		return _result, _err
 	}
-	_result = &listEventStreamingsResponse{}
+	_result = &ListEventStreamingsResponse{}
 	_body, _err := client.DoRequest(tea.String("listEventStreamings"), tea.String("HTTP"), tea.String("POST"), tea.String("/openapi/v2/listEventStreamings"), nil, tea.ToMap(request), runtime)
 	if _err != nil {
 		return _result, _err
@@ -5742,5 +5784,69 @@ func (s *SourceScheduledEventParameters) SetTimeZone(v string) *SourceScheduledE
 
 func (s *SourceScheduledEventParameters) SetUserData(v map[string]*string) *SourceScheduledEventParameters {
 	s.UserData = v
+	return s
+}
+
+/**
+ * The detail of ConcurrentConfig
+ */
+type ConcurrentConfig struct {
+	Concurrency *int `json:"Concurrency,omitempty" xml:"Concurrency,omitempty" require:"true"`
+}
+
+func (s ConcurrentConfig) String() string {
+	return tea.Prettify(s)
+}
+
+func (s ConcurrentConfig) GoString() string {
+	return s.String()
+}
+
+func (s *ConcurrentConfig) SetConcurrency(v int) *ConcurrentConfig {
+	s.Concurrency = &v
+	return s
+}
+
+/**
+ * The detail of SourceHttpEventParameters
+ */
+type SourceHttpEventParameters struct {
+	Type           *string   `json:"Type,omitempty" xml:"Type,omitempty" require:"true"`
+	Method         []*string `json:"Method,omitempty" xml:"Method,omitempty" require:"true"`
+	SecurityConfig *string   `json:"SecurityConfig,omitempty" xml:"SecurityConfig,omitempty" require:"true"`
+	Ip             []*string `json:"Ip,omitempty" xml:"Ip,omitempty" type:"Repeated"`
+	Referer        []*string `json:"Referer,omitempty" xml:"Referer,omitempty" type:"Repeated"`
+}
+
+func (s SourceHttpEventParameters) String() string {
+	return tea.Prettify(s)
+}
+
+func (s SourceHttpEventParameters) GoString() string {
+	return s.String()
+}
+
+func (s *SourceHttpEventParameters) SetType(v string) *SourceHttpEventParameters {
+	s.Type = &v
+	return s
+}
+
+func (s *SourceHttpEventParameters) SetMethod(v []*string) *SourceHttpEventParameters {
+	s.Method = v
+	return s
+}
+
+func (s *SourceHttpEventParameters) SetSecurityConfig(v string) *SourceHttpEventParameters {
+	s.SecurityConfig = &v
+	return s
+}
+
+func (s *SourceHttpEventParameters) SetIp(v []*string) *SourceHttpEventParameters {
+	s.Ip = v
+	return s
+}
+
+func (s *SourceHttpEventParameters) SetReferer(v []*string) *SourceHttpEventParameters {
+	s.Referer = v
 	return s
 }

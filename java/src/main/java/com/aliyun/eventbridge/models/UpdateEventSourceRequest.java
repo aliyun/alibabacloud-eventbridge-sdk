@@ -30,6 +30,9 @@ public class UpdateEventSourceRequest extends TeaModel {
     @NameInMap("SourceScheduledEventParameters")
     public SourceScheduledEventParameters sourceScheduledEventParameters;
 
+    @NameInMap("SourceHttpEventParameters")
+    public SourceHttpEventParameters sourceHttpEventParameters;
+
     public static UpdateEventSourceRequest build(java.util.Map<String, ?> map) {
         UpdateEventSourceRequest self = new UpdateEventSourceRequest();
         return TeaModel.build(map, self);
@@ -89,6 +92,14 @@ public class UpdateEventSourceRequest extends TeaModel {
     }
     public SourceScheduledEventParameters getSourceScheduledEventParameters() {
         return this.sourceScheduledEventParameters;
+    }
+
+    public UpdateEventSourceRequest setSourceHttpEventParameters(SourceHttpEventParameters sourceHttpEventParameters) {
+        this.sourceHttpEventParameters = sourceHttpEventParameters;
+        return this;
+    }
+    public SourceHttpEventParameters getSourceHttpEventParameters() {
+        return this.sourceHttpEventParameters;
     }
 
 }

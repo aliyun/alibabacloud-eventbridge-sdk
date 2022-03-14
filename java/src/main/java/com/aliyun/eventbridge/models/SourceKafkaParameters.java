@@ -7,6 +7,9 @@ import com.aliyun.tea.*;
  * The detail of SourceKafkaParameters
  */
 public class SourceKafkaParameters extends TeaModel {
+    @NameInMap("RegionId")
+    public String regionId;
+
     @NameInMap("InstanceId")
     public String InstanceId;
 
@@ -20,10 +23,20 @@ public class SourceKafkaParameters extends TeaModel {
     @NameInMap("OffsetReset")
     public String offsetReset;
 
+    @NameInMap("ExtendConfig")
+    public java.util.Map<String, ?> extendConfig;
 
     public static SourceKafkaParameters build(java.util.Map<String, ?> map) {
         SourceKafkaParameters self = new SourceKafkaParameters();
         return TeaModel.build(map, self);
+    }
+
+    public SourceKafkaParameters setRegionId(String regionId) {
+        this.regionId = regionId;
+        return this;
+    }
+    public String getRegionId() {
+        return this.regionId;
     }
 
     public SourceKafkaParameters setInstanceId(String InstanceId) {
@@ -57,7 +70,14 @@ public class SourceKafkaParameters extends TeaModel {
     }
     public String getOffsetReset() {
         return this.offsetReset;
+    }
 
+    public SourceKafkaParameters setExtendConfig(java.util.Map<String, ?> extendConfig) {
+        this.extendConfig = extendConfig;
+        return this;
+    }
+    public java.util.Map<String, ?> getExtendConfig() {
+        return this.extendConfig;
     }
 
 }

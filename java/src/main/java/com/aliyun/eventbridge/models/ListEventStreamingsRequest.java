@@ -6,7 +6,7 @@ import com.aliyun.tea.*;
 /**
  * The request of search EventStreaming
  */
-public class listEventStreamingsRequest extends TeaModel {
+public class ListEventStreamingsRequest extends TeaModel {
     @NameInMap("NamePrefix")
     public String namePrefix;
 
@@ -25,12 +25,12 @@ public class listEventStreamingsRequest extends TeaModel {
     @NameInMap("Tag")
     public String tag;
 
-    public static listEventStreamingsRequest build(java.util.Map<String, ?> map) {
-        listEventStreamingsRequest self = new listEventStreamingsRequest();
+    public static ListEventStreamingsRequest build(java.util.Map<String, ?> map) {
+        ListEventStreamingsRequest self = new ListEventStreamingsRequest();
         return TeaModel.build(map, self);
     }
 
-    public listEventStreamingsRequest setNamePrefix(String namePrefix) {
+    public ListEventStreamingsRequest setNamePrefix(String namePrefix) {
         this.namePrefix = namePrefix;
         return this;
     }
@@ -38,7 +38,7 @@ public class listEventStreamingsRequest extends TeaModel {
         return this.namePrefix;
     }
 
-    public listEventStreamingsRequest setSourceType(String sourceType) {
+    public ListEventStreamingsRequest setSourceType(String sourceType) {
         this.sourceType = sourceType;
         return this;
     }
@@ -46,7 +46,7 @@ public class listEventStreamingsRequest extends TeaModel {
         return this.sourceType;
     }
 
-    public listEventStreamingsRequest setSinkType(String sinkType) {
+    public ListEventStreamingsRequest setSinkType(String sinkType) {
         this.sinkType = sinkType;
         return this;
     }
@@ -54,7 +54,7 @@ public class listEventStreamingsRequest extends TeaModel {
         return this.sinkType;
     }
 
-    public listEventStreamingsRequest setLimit(Integer limit) {
+    public ListEventStreamingsRequest setLimit(Integer limit) {
         this.limit = limit;
         return this;
     }
@@ -62,7 +62,7 @@ public class listEventStreamingsRequest extends TeaModel {
         return this.limit;
     }
 
-    public listEventStreamingsRequest setNextToken(String nextToken) {
+    public ListEventStreamingsRequest setNextToken(String nextToken) {
         this.nextToken = nextToken;
         return this;
     }
@@ -70,7 +70,7 @@ public class listEventStreamingsRequest extends TeaModel {
         return this.nextToken;
     }
 
-    public listEventStreamingsRequest setTag(String tag) {
+    public ListEventStreamingsRequest setTag(String tag) {
         this.tag = tag;
         return this;
     }

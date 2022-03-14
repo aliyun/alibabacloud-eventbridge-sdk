@@ -718,12 +718,12 @@ public interface EventBridge {
     /**
      * create event streaming
      */
-    listEventStreamingsResponse listEventStreamings(listEventStreamingsRequest request);
+    ListEventStreamingsResponse listEventStreamings(ListEventStreamingsRequest request);
 
     /**
      * create event streaming
      */
-    listEventStreamingsResponse listEventStreamingsWithOptions(listEventStreamingsRequest request, RuntimeOptions runtime);
+    ListEventStreamingsResponse listEventStreamingsWithOptions(ListEventStreamingsRequest request, RuntimeOptions runtime);
 
     /**
      * delete event streaming

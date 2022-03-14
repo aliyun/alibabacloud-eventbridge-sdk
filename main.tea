@@ -325,6 +325,7 @@ model TargetEntry = {
   endpoint: string(name='Endpoint'),
   pushRetryStrategy?: string(name='PushRetryStrategy'),
   paramList?: [ EBTargetParam ](name='ParamList'),
+  concurrentConfig?: ConcurrentConfig(name='ConcurrentConfig'),
 }
 
 /**
@@ -979,10 +980,12 @@ model CreateEventSourceRequest = {
  * The detail of SourceKafkaParameters
  */
 model SourceKafkaParameters = {
+  regionId?: string(name='RegionId'),
   InstanceId?: string(name='InstanceId'),
   topic?: string(name='Topic'),
   consumerGroup: string(name='ConsumerGroup'),
   offsetReset?: string(name='OffsetReset'),
+  extendConfig?: map[string] any(name='ExtendConfig'),
 }
 
 /**
@@ -1066,6 +1069,7 @@ model SinkKafkaParameters = {
   acks?: TargetParameter(name='Acks'),
   key?: TargetParameter(name='Key'),
   value?: TargetParameter(name='Value'),
+  extendConfig?: map[string] any(name='ExtendConfig'),
 }
 
 /**
@@ -1176,6 +1180,7 @@ model EBUserDefinedEventSourceEntry = {
   sourceMNSParameters?: SourceMNSParameters(name='SourceMNSParameters'),
   sourceRocketMQParameters: SourceRocketMQParameters(name='SourceRocketMQParameters'),
   sourceKafkaParameters: SourceKafkaParameters(name='SourceKafkaParameters'),
+  sourceHttpEventParameters: SourceHttpEventParameters(name='SourceHttpEventParameters'),
 }
 
 /**
@@ -1250,6 +1255,7 @@ model UpdateEventSourceRequest = {
   sourceMNSParameters?: SourceMNSParameters(name='SourceMNSParameters'),
   sourceRocketMQParameters?: SourceRocketMQParameters(name='SourceRocketMQParameters'),
   sourceScheduledEventParameters?: SourceScheduledEventParameters(name='SourceScheduledEventParameters'),
+  sourceHttpEventParameters?: SourceHttpEventParameters(name='SourceHttpEventParameters'),
 }
 
 /**
@@ -1492,7 +1498,7 @@ async function listEventStreamingMetricsWithOptions(request: ListEventStreamingM
 /**
  * The request of search EventStreaming
  */
-model listEventStreamingsRequest = {
+model ListEventStreamingsRequest = {
   namePrefix?: string(name='NamePrefix'),
   sourceType?: string(name='SourceType'),
   sinkType?: string(name='SinkType'),
@@ -1504,7 +1510,7 @@ model listEventStreamingsRequest = {
 /**
  * The response of search EventStreaming
  */
-model listEventStreamingsResponse = {
+model ListEventStreamingsResponse = {
   requestId: string(name='RequestId'),
   resourceOwnerAccountId: string(name='ResourceOwnerAccountId'),
   eventStreamings?: [ EBEventStreamingEntry ](name='EventStreamings'),
@@ -1515,7 +1521,7 @@ model listEventStreamingsResponse = {
 /**
  * create event streaming
  */
-async function listEventStreamings(request: listEventStreamingsRequest): listEventStreamingsResponse {
+async function listEventStreamings(request: ListEventStreamingsRequest): ListEventStreamingsResponse {
   var runtime = new Util.RuntimeOptions{};
   return listEventStreamingsWithOptions(request, runtime);
 }
@@ -1523,7 +1529,7 @@ async function listEventStreamings(request: listEventStreamingsRequest): listEve
 /**
  * create event streaming
  */
-async function listEventStreamingsWithOptions(request: listEventStreamingsRequest, runtime: Util.RuntimeOptions): listEventStreamingsResponse {
+async function listEventStreamingsWithOptions(request: ListEventStreamingsRequest, runtime: Util.RuntimeOptions): ListEventStreamingsResponse {
   Util.validateModel(request);
   return doRequest('listEventStreamings', 'HTTP', 'POST', `/openapi/v2/listEventStreamings`, null, request, runtime);
 }
@@ -1624,4 +1630,23 @@ async function updateEventStreaming(request: UpdateEventStreamingRequest): Updat
 async function updateEventStreamingWithOptions(request: UpdateEventStreamingRequest, runtime: Util.RuntimeOptions): UpdateEventStreamingResponse {
   Util.validateModel(request);
   return doRequest('updateEventStreaming', 'HTTP', 'POST', `/openapi/v2/updateEventStreaming`, null, request, runtime);
+}
+
+
+/**
+ * The detail of SourceHttpEventParameters
+ */
+model SourceHttpEventParameters = {
+  type: string(name='Type'),
+  method: [ string ](name='Method'),
+  securityConfig: string(name='SecurityConfig'),
+  ip?: [ string ](name='Ip'),
+  referer?: [ string ](name='Referer'),
+}
+
+/**
+ * The detail of ConcurrentConfig
+ */
+model ConcurrentConfig = {
+  Concurrency: int32(name='ResourceKey'),
 }
