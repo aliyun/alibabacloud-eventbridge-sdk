@@ -316,7 +316,8 @@ class Client:
                 cloud_event.datacontenttype = 'application/json; charset=utf-8'
             UtilClient.validate_model(cloud_event)
         body = EventBridgeUtilClient.serialize(event_list)
-        return event_bridge_models.PutEventsResponse().from_map(
+        return TeaCore.from_map(
+            event_bridge_models.PutEventsResponse(),
             self.do_request('putEvents', 'HTTP', 'POST', f'/openapi/putEvents', None, body, runtime)
         )
 
@@ -335,7 +336,8 @@ class Client:
                 cloud_event.datacontenttype = 'application/json; charset=utf-8'
             UtilClient.validate_model(cloud_event)
         body = EventBridgeUtilClient.serialize(event_list)
-        return event_bridge_models.PutEventsResponse().from_map(
+        return TeaCore.from_map(
+            event_bridge_models.PutEventsResponse(),
             await self.do_request_async('putEvents', 'HTTP', 'POST', f'/openapi/putEvents', None, body, runtime)
         )
 
@@ -368,7 +370,8 @@ class Client:
         Creates a new event bus within your account. This can be a custom event bus which you can use to receive events from your custom applications and services
         """
         UtilClient.validate_model(request)
-        return event_bridge_models.CreateEventBusResponse().from_map(
+        return TeaCore.from_map(
+            event_bridge_models.CreateEventBusResponse(),
             self.do_request('createEventBus', 'HTTP', 'POST', f'/openapi/createEventBus', None, TeaCore.to_map(request), runtime)
         )
 
@@ -381,7 +384,8 @@ class Client:
         Creates a new event bus within your account. This can be a custom event bus which you can use to receive events from your custom applications and services
         """
         UtilClient.validate_model(request)
-        return event_bridge_models.CreateEventBusResponse().from_map(
+        return TeaCore.from_map(
+            event_bridge_models.CreateEventBusResponse(),
             await self.do_request_async('createEventBus', 'HTTP', 'POST', f'/openapi/createEventBus', None, TeaCore.to_map(request), runtime)
         )
 
@@ -414,7 +418,8 @@ class Client:
         Deletes the specified custom event bus in your account,You can't delete your account's default event bus
         """
         UtilClient.validate_model(request)
-        return event_bridge_models.DeleteEventBusResponse().from_map(
+        return TeaCore.from_map(
+            event_bridge_models.DeleteEventBusResponse(),
             self.do_request('deleteEventBus', 'HTTP', 'POST', f'/openapi/deleteEventBus', None, TeaCore.to_map(request), runtime)
         )
 
@@ -427,7 +432,8 @@ class Client:
         Deletes the specified custom event bus in your account,You can't delete your account's default event bus
         """
         UtilClient.validate_model(request)
-        return event_bridge_models.DeleteEventBusResponse().from_map(
+        return TeaCore.from_map(
+            event_bridge_models.DeleteEventBusResponse(),
             await self.do_request_async('deleteEventBus', 'HTTP', 'POST', f'/openapi/deleteEventBus', None, TeaCore.to_map(request), runtime)
         )
 
@@ -460,7 +466,8 @@ class Client:
         Displays details about an event bus in your account
         """
         UtilClient.validate_model(request)
-        return event_bridge_models.GetEventBusResponse().from_map(
+        return TeaCore.from_map(
+            event_bridge_models.GetEventBusResponse(),
             self.do_request('getEventBus', 'HTTP', 'POST', f'/openapi/getEventBus', None, TeaCore.to_map(request), runtime)
         )
 
@@ -473,7 +480,8 @@ class Client:
         Displays details about an event bus in your account
         """
         UtilClient.validate_model(request)
-        return event_bridge_models.GetEventBusResponse().from_map(
+        return TeaCore.from_map(
+            event_bridge_models.GetEventBusResponse(),
             await self.do_request_async('getEventBus', 'HTTP', 'POST', f'/openapi/getEventBus', None, TeaCore.to_map(request), runtime)
         )
 
@@ -506,7 +514,8 @@ class Client:
         List all the EventBus in your account, including the default event bus, custom event buses, which meet the search criteria.
         """
         UtilClient.validate_model(request)
-        return event_bridge_models.ListEventBusesResponse().from_map(
+        return TeaCore.from_map(
+            event_bridge_models.ListEventBusesResponse(),
             self.do_request('listEventBuses', 'HTTP', 'POST', f'/openapi/listEventBuses', None, TeaCore.to_map(request), runtime)
         )
 
@@ -519,7 +528,8 @@ class Client:
         List all the EventBus in your account, including the default event bus, custom event buses, which meet the search criteria.
         """
         UtilClient.validate_model(request)
-        return event_bridge_models.ListEventBusesResponse().from_map(
+        return TeaCore.from_map(
+            event_bridge_models.ListEventBusesResponse(),
             await self.do_request_async('listEventBuses', 'HTTP', 'POST', f'/openapi/listEventBuses', None, TeaCore.to_map(request), runtime)
         )
 
@@ -552,7 +562,8 @@ class Client:
         Create an EventBus rule on Aliyun
         """
         UtilClient.validate_model(request)
-        return event_bridge_models.CreateRuleResponse().from_map(
+        return TeaCore.from_map(
+            event_bridge_models.CreateRuleResponse(),
             self.do_request('createRule', 'HTTP', 'POST', f'/openapi/createRule', None, TeaCore.to_map(request), runtime)
         )
 
@@ -565,7 +576,8 @@ class Client:
         Create an EventBus rule on Aliyun
         """
         UtilClient.validate_model(request)
-        return event_bridge_models.CreateRuleResponse().from_map(
+        return TeaCore.from_map(
+            event_bridge_models.CreateRuleResponse(),
             await self.do_request_async('createRule', 'HTTP', 'POST', f'/openapi/createRule', None, TeaCore.to_map(request), runtime)
         )
 
@@ -598,7 +610,8 @@ class Client:
         Deletes the specified rule.
         """
         UtilClient.validate_model(request)
-        return event_bridge_models.DeleteRuleResponse().from_map(
+        return TeaCore.from_map(
+            event_bridge_models.DeleteRuleResponse(),
             self.do_request('deleteRule', 'HTTP', 'POST', f'/openapi/deleteRule', None, TeaCore.to_map(request), runtime)
         )
 
@@ -611,7 +624,8 @@ class Client:
         Deletes the specified rule.
         """
         UtilClient.validate_model(request)
-        return event_bridge_models.DeleteRuleResponse().from_map(
+        return TeaCore.from_map(
+            event_bridge_models.DeleteRuleResponse(),
             await self.do_request_async('deleteRule', 'HTTP', 'POST', f'/openapi/deleteRule', None, TeaCore.to_map(request), runtime)
         )
 
@@ -644,7 +658,8 @@ class Client:
         Disables the specified rule
         """
         UtilClient.validate_model(request)
-        return event_bridge_models.DisableRuleResponse().from_map(
+        return TeaCore.from_map(
+            event_bridge_models.DisableRuleResponse(),
             self.do_request('disableRule', 'HTTP', 'POST', f'/openapi/disableRule', None, TeaCore.to_map(request), runtime)
         )
 
@@ -657,7 +672,8 @@ class Client:
         Disables the specified rule
         """
         UtilClient.validate_model(request)
-        return event_bridge_models.DisableRuleResponse().from_map(
+        return TeaCore.from_map(
+            event_bridge_models.DisableRuleResponse(),
             await self.do_request_async('disableRule', 'HTTP', 'POST', f'/openapi/disableRule', None, TeaCore.to_map(request), runtime)
         )
 
@@ -690,7 +706,8 @@ class Client:
         Enables the specified rule
         """
         UtilClient.validate_model(request)
-        return event_bridge_models.EnableRuleResponse().from_map(
+        return TeaCore.from_map(
+            event_bridge_models.EnableRuleResponse(),
             self.do_request('enableRule', 'HTTP', 'POST', f'/openapi/enableRule', None, TeaCore.to_map(request), runtime)
         )
 
@@ -703,7 +720,8 @@ class Client:
         Enables the specified rule
         """
         UtilClient.validate_model(request)
-        return event_bridge_models.EnableRuleResponse().from_map(
+        return TeaCore.from_map(
+            event_bridge_models.EnableRuleResponse(),
             await self.do_request_async('enableRule', 'HTTP', 'POST', f'/openapi/enableRule', None, TeaCore.to_map(request), runtime)
         )
 
@@ -736,7 +754,8 @@ class Client:
         Describes the specified rule
         """
         UtilClient.validate_model(request)
-        return event_bridge_models.GetRuleResponse().from_map(
+        return TeaCore.from_map(
+            event_bridge_models.GetRuleResponse(),
             self.do_request('getRule', 'HTTP', 'POST', f'/openapi/getRule', None, TeaCore.to_map(request), runtime)
         )
 
@@ -749,7 +768,8 @@ class Client:
         Describes the specified rule
         """
         UtilClient.validate_model(request)
-        return event_bridge_models.GetRuleResponse().from_map(
+        return TeaCore.from_map(
+            event_bridge_models.GetRuleResponse(),
             await self.do_request_async('getRule', 'HTTP', 'POST', f'/openapi/getRule', None, TeaCore.to_map(request), runtime)
         )
 
@@ -782,7 +802,8 @@ class Client:
         List all the rules which meet the search criteria
         """
         UtilClient.validate_model(request)
-        return event_bridge_models.ListRulesResponse().from_map(
+        return TeaCore.from_map(
+            event_bridge_models.ListRulesResponse(),
             self.do_request('listRules', 'HTTP', 'POST', f'/openapi/listRules', None, TeaCore.to_map(request), runtime)
         )
 
@@ -795,7 +816,8 @@ class Client:
         List all the rules which meet the search criteria
         """
         UtilClient.validate_model(request)
-        return event_bridge_models.ListRulesResponse().from_map(
+        return TeaCore.from_map(
+            event_bridge_models.ListRulesResponse(),
             await self.do_request_async('listRules', 'HTTP', 'POST', f'/openapi/listRules', None, TeaCore.to_map(request), runtime)
         )
 
@@ -828,7 +850,8 @@ class Client:
         update the specified rule.
         """
         UtilClient.validate_model(request)
-        return event_bridge_models.UpdateRuleResponse().from_map(
+        return TeaCore.from_map(
+            event_bridge_models.UpdateRuleResponse(),
             self.do_request('updateRule', 'HTTP', 'POST', f'/openapi/updateRule', None, TeaCore.to_map(request), runtime)
         )
 
@@ -841,7 +864,8 @@ class Client:
         update the specified rule.
         """
         UtilClient.validate_model(request)
-        return event_bridge_models.UpdateRuleResponse().from_map(
+        return TeaCore.from_map(
+            event_bridge_models.UpdateRuleResponse(),
             await self.do_request_async('updateRule', 'HTTP', 'POST', f'/openapi/updateRule', None, TeaCore.to_map(request), runtime)
         )
 
@@ -874,7 +898,8 @@ class Client:
         Adds the specified targets to the specified rule
         """
         UtilClient.validate_model(request)
-        return event_bridge_models.CreateTargetsResponse().from_map(
+        return TeaCore.from_map(
+            event_bridge_models.CreateTargetsResponse(),
             self.do_request('createTargets', 'HTTP', 'POST', f'/openapi/createTargets', None, TeaCore.to_map(request), runtime)
         )
 
@@ -887,7 +912,8 @@ class Client:
         Adds the specified targets to the specified rule
         """
         UtilClient.validate_model(request)
-        return event_bridge_models.CreateTargetsResponse().from_map(
+        return TeaCore.from_map(
+            event_bridge_models.CreateTargetsResponse(),
             await self.do_request_async('createTargets', 'HTTP', 'POST', f'/openapi/createTargets', None, TeaCore.to_map(request), runtime)
         )
 
@@ -920,7 +946,8 @@ class Client:
         Delete the specified targets from the specified rule
         """
         UtilClient.validate_model(request)
-        return event_bridge_models.DeleteTargetsResponse().from_map(
+        return TeaCore.from_map(
+            event_bridge_models.DeleteTargetsResponse(),
             self.do_request('deleteTargets', 'HTTP', 'POST', f'/openapi/deleteTargets', None, TeaCore.to_map(request), runtime)
         )
 
@@ -933,7 +960,8 @@ class Client:
         Delete the specified targets from the specified rule
         """
         UtilClient.validate_model(request)
-        return event_bridge_models.DeleteTargetsResponse().from_map(
+        return TeaCore.from_map(
+            event_bridge_models.DeleteTargetsResponse(),
             await self.do_request_async('deleteTargets', 'HTTP', 'POST', f'/openapi/deleteTargets', None, TeaCore.to_map(request), runtime)
         )
 
@@ -966,7 +994,8 @@ class Client:
         List all the Targets which meet the search criteria
         """
         UtilClient.validate_model(request)
-        return event_bridge_models.ListTargetsResponse().from_map(
+        return TeaCore.from_map(
+            event_bridge_models.ListTargetsResponse(),
             self.do_request('listTargets', 'HTTP', 'POST', f'/openapi/listTargets', None, TeaCore.to_map(request), runtime)
         )
 
@@ -979,7 +1008,8 @@ class Client:
         List all the Targets which meet the search criteria
         """
         UtilClient.validate_model(request)
-        return event_bridge_models.ListTargetsResponse().from_map(
+        return TeaCore.from_map(
+            event_bridge_models.ListTargetsResponse(),
             await self.do_request_async('listTargets', 'HTTP', 'POST', f'/openapi/listTargets', None, TeaCore.to_map(request), runtime)
         )
 
@@ -1012,7 +1042,8 @@ class Client:
         Tests whether the specified event pattern matches the provided event
         """
         UtilClient.validate_model(request)
-        return event_bridge_models.TestEventPatternResponse().from_map(
+        return TeaCore.from_map(
+            event_bridge_models.TestEventPatternResponse(),
             self.do_request('testEventPattern', 'HTTP', 'POST', f'/openapi/testEventPattern', None, TeaCore.to_map(request), runtime)
         )
 
@@ -1025,7 +1056,8 @@ class Client:
         Tests whether the specified event pattern matches the provided event
         """
         UtilClient.validate_model(request)
-        return event_bridge_models.TestEventPatternResponse().from_map(
+        return TeaCore.from_map(
+            event_bridge_models.TestEventPatternResponse(),
             await self.do_request_async('testEventPattern', 'HTTP', 'POST', f'/openapi/testEventPattern', None, TeaCore.to_map(request), runtime)
         )
 
@@ -1058,7 +1090,8 @@ class Client:
         Query the event traces by the event Id.
         """
         UtilClient.validate_model(request)
-        return event_bridge_models.QueryEventTracesResponse().from_map(
+        return TeaCore.from_map(
+            event_bridge_models.QueryEventTracesResponse(),
             self.do_request('queryEventTraces', 'HTTP', 'POST', f'/openapi/queryEventTraces', None, TeaCore.to_map(request), runtime)
         )
 
@@ -1071,7 +1104,8 @@ class Client:
         Query the event traces by the event Id.
         """
         UtilClient.validate_model(request)
-        return event_bridge_models.QueryEventTracesResponse().from_map(
+        return TeaCore.from_map(
+            event_bridge_models.QueryEventTracesResponse(),
             await self.do_request_async('queryEventTraces', 'HTTP', 'POST', f'/openapi/queryEventTraces', None, TeaCore.to_map(request), runtime)
         )
 
@@ -1104,7 +1138,8 @@ class Client:
         Query the event traces by the event Id.
         """
         UtilClient.validate_model(request)
-        return event_bridge_models.QueryEventByEventIdResponse().from_map(
+        return TeaCore.from_map(
+            event_bridge_models.QueryEventByEventIdResponse(),
             self.do_request('queryEventByEventId', 'HTTP', 'POST', f'/openapi/queryEventByEventId', None, TeaCore.to_map(request), runtime)
         )
 
@@ -1117,7 +1152,8 @@ class Client:
         Query the event traces by the event Id.
         """
         UtilClient.validate_model(request)
-        return event_bridge_models.QueryEventByEventIdResponse().from_map(
+        return TeaCore.from_map(
+            event_bridge_models.QueryEventByEventIdResponse(),
             await self.do_request_async('queryEventByEventId', 'HTTP', 'POST', f'/openapi/queryEventByEventId', None, TeaCore.to_map(request), runtime)
         )
 
@@ -1150,7 +1186,8 @@ class Client:
         Query the event traces by the event Id.
         """
         UtilClient.validate_model(request)
-        return event_bridge_models.QueryEventsByPeriodResponse().from_map(
+        return TeaCore.from_map(
+            event_bridge_models.QueryEventsByPeriodResponse(),
             self.do_request('queryEventsByPeriod', 'HTTP', 'POST', f'/openapi/queryEventsByPeriod', None, TeaCore.to_map(request), runtime)
         )
 
@@ -1163,6 +1200,631 @@ class Client:
         Query the event traces by the event Id.
         """
         UtilClient.validate_model(request)
-        return event_bridge_models.QueryEventsByPeriodResponse().from_map(
+        return TeaCore.from_map(
+            event_bridge_models.QueryEventsByPeriodResponse(),
             await self.do_request_async('queryEventsByPeriod', 'HTTP', 'POST', f'/openapi/queryEventsByPeriod', None, TeaCore.to_map(request), runtime)
+        )
+
+    def create_event_source(
+        self,
+        request: event_bridge_models.CreateEventSourceRequest,
+    ) -> event_bridge_models.CreateEventSourceResponse:
+        """
+        Creates a new event source within your account
+        """
+        runtime = util_models.RuntimeOptions()
+        return self.create_event_source_with_options(request, runtime)
+
+    async def create_event_source_async(
+        self,
+        request: event_bridge_models.CreateEventSourceRequest,
+    ) -> event_bridge_models.CreateEventSourceResponse:
+        """
+        Creates a new event source within your account
+        """
+        runtime = util_models.RuntimeOptions()
+        return await self.create_event_source_with_options_async(request, runtime)
+
+    def create_event_source_with_options(
+        self,
+        request: event_bridge_models.CreateEventSourceRequest,
+        runtime: util_models.RuntimeOptions,
+    ) -> event_bridge_models.CreateEventSourceResponse:
+        """
+        Creates a new event source within your account
+        """
+        UtilClient.validate_model(request)
+        return TeaCore.from_map(
+            event_bridge_models.CreateEventSourceResponse(),
+            self.do_request('createEventSource', 'HTTP', 'POST', f'/openapi/v2/createEventSource', None, TeaCore.to_map(request), runtime)
+        )
+
+    async def create_event_source_with_options_async(
+        self,
+        request: event_bridge_models.CreateEventSourceRequest,
+        runtime: util_models.RuntimeOptions,
+    ) -> event_bridge_models.CreateEventSourceResponse:
+        """
+        Creates a new event source within your account
+        """
+        UtilClient.validate_model(request)
+        return TeaCore.from_map(
+            event_bridge_models.CreateEventSourceResponse(),
+            await self.do_request_async('createEventSource', 'HTTP', 'POST', f'/openapi/v2/createEventSource', None, TeaCore.to_map(request), runtime)
+        )
+
+    def delete_event_source(
+        self,
+        request: event_bridge_models.DeleteEventSourceRequest,
+    ) -> event_bridge_models.DeleteEventSourceResponse:
+        """
+        Delete the event source
+        """
+        runtime = util_models.RuntimeOptions()
+        return self.delete_event_source_with_options(request, runtime)
+
+    async def delete_event_source_async(
+        self,
+        request: event_bridge_models.DeleteEventSourceRequest,
+    ) -> event_bridge_models.DeleteEventSourceResponse:
+        """
+        Delete the event source
+        """
+        runtime = util_models.RuntimeOptions()
+        return await self.delete_event_source_with_options_async(request, runtime)
+
+    def delete_event_source_with_options(
+        self,
+        request: event_bridge_models.DeleteEventSourceRequest,
+        runtime: util_models.RuntimeOptions,
+    ) -> event_bridge_models.DeleteEventSourceResponse:
+        """
+        Delete the event source
+        """
+        UtilClient.validate_model(request)
+        return TeaCore.from_map(
+            event_bridge_models.DeleteEventSourceResponse(),
+            self.do_request('deleteEventSource', 'HTTP', 'POST', f'/openapi/v2/deleteEventSource', None, TeaCore.to_map(request), runtime)
+        )
+
+    async def delete_event_source_with_options_async(
+        self,
+        request: event_bridge_models.DeleteEventSourceRequest,
+        runtime: util_models.RuntimeOptions,
+    ) -> event_bridge_models.DeleteEventSourceResponse:
+        """
+        Delete the event source
+        """
+        UtilClient.validate_model(request)
+        return TeaCore.from_map(
+            event_bridge_models.DeleteEventSourceResponse(),
+            await self.do_request_async('deleteEventSource', 'HTTP', 'POST', f'/openapi/v2/deleteEventSource', None, TeaCore.to_map(request), runtime)
+        )
+
+    def update_event_source(
+        self,
+        request: event_bridge_models.UpdateEventSourceRequest,
+    ) -> event_bridge_models.UpdateEventSourceResponse:
+        """
+        Update the event source
+        """
+        runtime = util_models.RuntimeOptions()
+        return self.update_event_source_with_options(request, runtime)
+
+    async def update_event_source_async(
+        self,
+        request: event_bridge_models.UpdateEventSourceRequest,
+    ) -> event_bridge_models.UpdateEventSourceResponse:
+        """
+        Update the event source
+        """
+        runtime = util_models.RuntimeOptions()
+        return await self.update_event_source_with_options_async(request, runtime)
+
+    def update_event_source_with_options(
+        self,
+        request: event_bridge_models.UpdateEventSourceRequest,
+        runtime: util_models.RuntimeOptions,
+    ) -> event_bridge_models.UpdateEventSourceResponse:
+        """
+        Update the event source
+        """
+        UtilClient.validate_model(request)
+        return TeaCore.from_map(
+            event_bridge_models.UpdateEventSourceResponse(),
+            self.do_request('updateEventSource', 'HTTP', 'POST', f'/openapi/v2/updateEventSource', None, TeaCore.to_map(request), runtime)
+        )
+
+    async def update_event_source_with_options_async(
+        self,
+        request: event_bridge_models.UpdateEventSourceRequest,
+        runtime: util_models.RuntimeOptions,
+    ) -> event_bridge_models.UpdateEventSourceResponse:
+        """
+        Update the event source
+        """
+        UtilClient.validate_model(request)
+        return TeaCore.from_map(
+            event_bridge_models.UpdateEventSourceResponse(),
+            await self.do_request_async('updateEventSource', 'HTTP', 'POST', f'/openapi/v2/updateEventSource', None, TeaCore.to_map(request), runtime)
+        )
+
+    def list_user_defined_event_sources(
+        self,
+        request: event_bridge_models.ListUserDefinedRequest,
+    ) -> event_bridge_models.ListUserDefinedResponse:
+        """
+        List the user defined event source within your account
+        """
+        runtime = util_models.RuntimeOptions()
+        return self.list_user_defined_event_sources_with_options(request, runtime)
+
+    async def list_user_defined_event_sources_async(
+        self,
+        request: event_bridge_models.ListUserDefinedRequest,
+    ) -> event_bridge_models.ListUserDefinedResponse:
+        """
+        List the user defined event source within your account
+        """
+        runtime = util_models.RuntimeOptions()
+        return await self.list_user_defined_event_sources_with_options_async(request, runtime)
+
+    def list_user_defined_event_sources_with_options(
+        self,
+        request: event_bridge_models.ListUserDefinedRequest,
+        runtime: util_models.RuntimeOptions,
+    ) -> event_bridge_models.ListUserDefinedResponse:
+        """
+        List the user defined event source within your account
+        """
+        UtilClient.validate_model(request)
+        return TeaCore.from_map(
+            event_bridge_models.ListUserDefinedResponse(),
+            self.do_request('listUserDefinedEventSources', 'HTTP', 'POST', f'/openapi/v2/listUserDefinedEventSources', None, TeaCore.to_map(request), runtime)
+        )
+
+    async def list_user_defined_event_sources_with_options_async(
+        self,
+        request: event_bridge_models.ListUserDefinedRequest,
+        runtime: util_models.RuntimeOptions,
+    ) -> event_bridge_models.ListUserDefinedResponse:
+        """
+        List the user defined event source within your account
+        """
+        UtilClient.validate_model(request)
+        return TeaCore.from_map(
+            event_bridge_models.ListUserDefinedResponse(),
+            await self.do_request_async('listUserDefinedEventSources', 'HTTP', 'POST', f'/openapi/v2/listUserDefinedEventSources', None, TeaCore.to_map(request), runtime)
+        )
+
+    def list_aliyun_official_event_sources(
+        self,
+        request: event_bridge_models.ListAliyunOfficialRequest,
+    ) -> event_bridge_models.ListAliyunOfficialResponse:
+        """
+        List the aliyun official event source within your account
+        """
+        runtime = util_models.RuntimeOptions()
+        return self.list_aliyun_official_event_sources_with_options(request, runtime)
+
+    async def list_aliyun_official_event_sources_async(
+        self,
+        request: event_bridge_models.ListAliyunOfficialRequest,
+    ) -> event_bridge_models.ListAliyunOfficialResponse:
+        """
+        List the aliyun official event source within your account
+        """
+        runtime = util_models.RuntimeOptions()
+        return await self.list_aliyun_official_event_sources_with_options_async(request, runtime)
+
+    def list_aliyun_official_event_sources_with_options(
+        self,
+        request: event_bridge_models.ListAliyunOfficialRequest,
+        runtime: util_models.RuntimeOptions,
+    ) -> event_bridge_models.ListAliyunOfficialResponse:
+        """
+        List the aliyun official event source within your account
+        """
+        UtilClient.validate_model(request)
+        return TeaCore.from_map(
+            event_bridge_models.ListAliyunOfficialResponse(),
+            self.do_request('listAliyunOfficialEventSources', 'HTTP', 'POST', f'/openapi/v2/listAliyunOfficialEventSources', None, TeaCore.to_map(request), runtime)
+        )
+
+    async def list_aliyun_official_event_sources_with_options_async(
+        self,
+        request: event_bridge_models.ListAliyunOfficialRequest,
+        runtime: util_models.RuntimeOptions,
+    ) -> event_bridge_models.ListAliyunOfficialResponse:
+        """
+        List the aliyun official event source within your account
+        """
+        UtilClient.validate_model(request)
+        return TeaCore.from_map(
+            event_bridge_models.ListAliyunOfficialResponse(),
+            await self.do_request_async('listAliyunOfficialEventSources', 'HTTP', 'POST', f'/openapi/v2/listAliyunOfficialEventSources', None, TeaCore.to_map(request), runtime)
+        )
+
+    def create_event_streaming(
+        self,
+        request: event_bridge_models.CreateEventStreamingRequest,
+    ) -> event_bridge_models.CreateEventStreamingResponse:
+        """
+        Create event streaming procss
+        """
+        runtime = util_models.RuntimeOptions()
+        return self.create_event_streaming_with_options(request, runtime)
+
+    async def create_event_streaming_async(
+        self,
+        request: event_bridge_models.CreateEventStreamingRequest,
+    ) -> event_bridge_models.CreateEventStreamingResponse:
+        """
+        Create event streaming procss
+        """
+        runtime = util_models.RuntimeOptions()
+        return await self.create_event_streaming_with_options_async(request, runtime)
+
+    def create_event_streaming_with_options(
+        self,
+        request: event_bridge_models.CreateEventStreamingRequest,
+        runtime: util_models.RuntimeOptions,
+    ) -> event_bridge_models.CreateEventStreamingResponse:
+        """
+        Create event streaming procss
+        """
+        UtilClient.validate_model(request)
+        return TeaCore.from_map(
+            event_bridge_models.CreateEventStreamingResponse(),
+            self.do_request('createEventStreaming', 'HTTP', 'POST', f'/openapi/v2/createEventStreaming', None, TeaCore.to_map(request), runtime)
+        )
+
+    async def create_event_streaming_with_options_async(
+        self,
+        request: event_bridge_models.CreateEventStreamingRequest,
+        runtime: util_models.RuntimeOptions,
+    ) -> event_bridge_models.CreateEventStreamingResponse:
+        """
+        Create event streaming procss
+        """
+        UtilClient.validate_model(request)
+        return TeaCore.from_map(
+            event_bridge_models.CreateEventStreamingResponse(),
+            await self.do_request_async('createEventStreaming', 'HTTP', 'POST', f'/openapi/v2/createEventStreaming', None, TeaCore.to_map(request), runtime)
+        )
+
+    def delete_event_streaming(
+        self,
+        request: event_bridge_models.DeleteEventStreamingRequest,
+    ) -> event_bridge_models.DeleteEventStreamingResponse:
+        """
+        delete event streaming
+        """
+        runtime = util_models.RuntimeOptions()
+        return self.delete_event_streaming_with_options(request, runtime)
+
+    async def delete_event_streaming_async(
+        self,
+        request: event_bridge_models.DeleteEventStreamingRequest,
+    ) -> event_bridge_models.DeleteEventStreamingResponse:
+        """
+        delete event streaming
+        """
+        runtime = util_models.RuntimeOptions()
+        return await self.delete_event_streaming_with_options_async(request, runtime)
+
+    def delete_event_streaming_with_options(
+        self,
+        request: event_bridge_models.DeleteEventStreamingRequest,
+        runtime: util_models.RuntimeOptions,
+    ) -> event_bridge_models.DeleteEventStreamingResponse:
+        """
+        delete event streaming
+        """
+        UtilClient.validate_model(request)
+        return TeaCore.from_map(
+            event_bridge_models.DeleteEventStreamingResponse(),
+            self.do_request('deleteEventStreaming', 'HTTP', 'POST', f'/openapi/v2/deleteEventStreaming', None, TeaCore.to_map(request), runtime)
+        )
+
+    async def delete_event_streaming_with_options_async(
+        self,
+        request: event_bridge_models.DeleteEventStreamingRequest,
+        runtime: util_models.RuntimeOptions,
+    ) -> event_bridge_models.DeleteEventStreamingResponse:
+        """
+        delete event streaming
+        """
+        UtilClient.validate_model(request)
+        return TeaCore.from_map(
+            event_bridge_models.DeleteEventStreamingResponse(),
+            await self.do_request_async('deleteEventStreaming', 'HTTP', 'POST', f'/openapi/v2/deleteEventStreaming', None, TeaCore.to_map(request), runtime)
+        )
+
+    def get_event_streaming(
+        self,
+        request: event_bridge_models.GetEventStreamingRequest,
+    ) -> event_bridge_models.GetEventStreamingResponse:
+        """
+        create event streaming
+        """
+        runtime = util_models.RuntimeOptions()
+        return self.get_event_streaming_with_options(request, runtime)
+
+    async def get_event_streaming_async(
+        self,
+        request: event_bridge_models.GetEventStreamingRequest,
+    ) -> event_bridge_models.GetEventStreamingResponse:
+        """
+        create event streaming
+        """
+        runtime = util_models.RuntimeOptions()
+        return await self.get_event_streaming_with_options_async(request, runtime)
+
+    def get_event_streaming_with_options(
+        self,
+        request: event_bridge_models.GetEventStreamingRequest,
+        runtime: util_models.RuntimeOptions,
+    ) -> event_bridge_models.GetEventStreamingResponse:
+        """
+        create event streaming
+        """
+        UtilClient.validate_model(request)
+        return TeaCore.from_map(
+            event_bridge_models.GetEventStreamingResponse(),
+            self.do_request('getEventStreaming', 'HTTP', 'POST', f'/openapi/v2/getEventStreaming', None, TeaCore.to_map(request), runtime)
+        )
+
+    async def get_event_streaming_with_options_async(
+        self,
+        request: event_bridge_models.GetEventStreamingRequest,
+        runtime: util_models.RuntimeOptions,
+    ) -> event_bridge_models.GetEventStreamingResponse:
+        """
+        create event streaming
+        """
+        UtilClient.validate_model(request)
+        return TeaCore.from_map(
+            event_bridge_models.GetEventStreamingResponse(),
+            await self.do_request_async('getEventStreaming', 'HTTP', 'POST', f'/openapi/v2/getEventStreaming', None, TeaCore.to_map(request), runtime)
+        )
+
+    def list_event_streaming_metrics(
+        self,
+        request: event_bridge_models.ListEventStreamingMetricsRequest,
+    ) -> event_bridge_models.ListEventStreamingMetricsResponse:
+        """
+        List the metrics of event streaming
+        """
+        runtime = util_models.RuntimeOptions()
+        return self.list_event_streaming_metrics_with_options(request, runtime)
+
+    async def list_event_streaming_metrics_async(
+        self,
+        request: event_bridge_models.ListEventStreamingMetricsRequest,
+    ) -> event_bridge_models.ListEventStreamingMetricsResponse:
+        """
+        List the metrics of event streaming
+        """
+        runtime = util_models.RuntimeOptions()
+        return await self.list_event_streaming_metrics_with_options_async(request, runtime)
+
+    def list_event_streaming_metrics_with_options(
+        self,
+        request: event_bridge_models.ListEventStreamingMetricsRequest,
+        runtime: util_models.RuntimeOptions,
+    ) -> event_bridge_models.ListEventStreamingMetricsResponse:
+        """
+        List the metrics of event streaming
+        """
+        UtilClient.validate_model(request)
+        return TeaCore.from_map(
+            event_bridge_models.ListEventStreamingMetricsResponse(),
+            self.do_request('listEventStreamingMetrics', 'HTTP', 'POST', f'/openapi/v2/listEventStreamingMetrics', None, TeaCore.to_map(request), runtime)
+        )
+
+    async def list_event_streaming_metrics_with_options_async(
+        self,
+        request: event_bridge_models.ListEventStreamingMetricsRequest,
+        runtime: util_models.RuntimeOptions,
+    ) -> event_bridge_models.ListEventStreamingMetricsResponse:
+        """
+        List the metrics of event streaming
+        """
+        UtilClient.validate_model(request)
+        return TeaCore.from_map(
+            event_bridge_models.ListEventStreamingMetricsResponse(),
+            await self.do_request_async('listEventStreamingMetrics', 'HTTP', 'POST', f'/openapi/v2/listEventStreamingMetrics', None, TeaCore.to_map(request), runtime)
+        )
+
+    def list_event_streamings(
+        self,
+        request: event_bridge_models.ListEventStreamingsRequest,
+    ) -> event_bridge_models.ListEventStreamingsResponse:
+        """
+        create event streaming
+        """
+        runtime = util_models.RuntimeOptions()
+        return self.list_event_streamings_with_options(request, runtime)
+
+    async def list_event_streamings_async(
+        self,
+        request: event_bridge_models.ListEventStreamingsRequest,
+    ) -> event_bridge_models.ListEventStreamingsResponse:
+        """
+        create event streaming
+        """
+        runtime = util_models.RuntimeOptions()
+        return await self.list_event_streamings_with_options_async(request, runtime)
+
+    def list_event_streamings_with_options(
+        self,
+        request: event_bridge_models.ListEventStreamingsRequest,
+        runtime: util_models.RuntimeOptions,
+    ) -> event_bridge_models.ListEventStreamingsResponse:
+        """
+        create event streaming
+        """
+        UtilClient.validate_model(request)
+        return TeaCore.from_map(
+            event_bridge_models.ListEventStreamingsResponse(),
+            self.do_request('listEventStreamings', 'HTTP', 'POST', f'/openapi/v2/listEventStreamings', None, TeaCore.to_map(request), runtime)
+        )
+
+    async def list_event_streamings_with_options_async(
+        self,
+        request: event_bridge_models.ListEventStreamingsRequest,
+        runtime: util_models.RuntimeOptions,
+    ) -> event_bridge_models.ListEventStreamingsResponse:
+        """
+        create event streaming
+        """
+        UtilClient.validate_model(request)
+        return TeaCore.from_map(
+            event_bridge_models.ListEventStreamingsResponse(),
+            await self.do_request_async('listEventStreamings', 'HTTP', 'POST', f'/openapi/v2/listEventStreamings', None, TeaCore.to_map(request), runtime)
+        )
+
+    def pause_event_streaming(
+        self,
+        request: event_bridge_models.PauseEventStreamingRequest,
+    ) -> event_bridge_models.PauseEventStreamingResponse:
+        """
+        delete event streaming
+        """
+        runtime = util_models.RuntimeOptions()
+        return self.pause_event_streaming_with_options(request, runtime)
+
+    async def pause_event_streaming_async(
+        self,
+        request: event_bridge_models.PauseEventStreamingRequest,
+    ) -> event_bridge_models.PauseEventStreamingResponse:
+        """
+        delete event streaming
+        """
+        runtime = util_models.RuntimeOptions()
+        return await self.pause_event_streaming_with_options_async(request, runtime)
+
+    def pause_event_streaming_with_options(
+        self,
+        request: event_bridge_models.PauseEventStreamingRequest,
+        runtime: util_models.RuntimeOptions,
+    ) -> event_bridge_models.PauseEventStreamingResponse:
+        """
+        delete event streaming
+        """
+        UtilClient.validate_model(request)
+        return TeaCore.from_map(
+            event_bridge_models.PauseEventStreamingResponse(),
+            self.do_request('startEventStreaming', 'HTTP', 'POST', f'/openapi/v2/pauseEventStreaming', None, TeaCore.to_map(request), runtime)
+        )
+
+    async def pause_event_streaming_with_options_async(
+        self,
+        request: event_bridge_models.PauseEventStreamingRequest,
+        runtime: util_models.RuntimeOptions,
+    ) -> event_bridge_models.PauseEventStreamingResponse:
+        """
+        delete event streaming
+        """
+        UtilClient.validate_model(request)
+        return TeaCore.from_map(
+            event_bridge_models.PauseEventStreamingResponse(),
+            await self.do_request_async('startEventStreaming', 'HTTP', 'POST', f'/openapi/v2/pauseEventStreaming', None, TeaCore.to_map(request), runtime)
+        )
+
+    def start_event_streaming(
+        self,
+        request: event_bridge_models.StartEventStreamingRequest,
+    ) -> event_bridge_models.StartEventStreamingResponse:
+        """
+        create event streaming
+        """
+        runtime = util_models.RuntimeOptions()
+        return self.start_event_streamings_with_options(request, runtime)
+
+    async def start_event_streaming_async(
+        self,
+        request: event_bridge_models.StartEventStreamingRequest,
+    ) -> event_bridge_models.StartEventStreamingResponse:
+        """
+        create event streaming
+        """
+        runtime = util_models.RuntimeOptions()
+        return await self.start_event_streamings_with_options_async(request, runtime)
+
+    def start_event_streamings_with_options(
+        self,
+        request: event_bridge_models.StartEventStreamingRequest,
+        runtime: util_models.RuntimeOptions,
+    ) -> event_bridge_models.StartEventStreamingResponse:
+        """
+        create event streaming
+        """
+        UtilClient.validate_model(request)
+        return TeaCore.from_map(
+            event_bridge_models.StartEventStreamingResponse(),
+            self.do_request('startEventStreaming', 'HTTP', 'POST', f'/openapi/v2/startEventStreaming', None, TeaCore.to_map(request), runtime)
+        )
+
+    async def start_event_streamings_with_options_async(
+        self,
+        request: event_bridge_models.StartEventStreamingRequest,
+        runtime: util_models.RuntimeOptions,
+    ) -> event_bridge_models.StartEventStreamingResponse:
+        """
+        create event streaming
+        """
+        UtilClient.validate_model(request)
+        return TeaCore.from_map(
+            event_bridge_models.StartEventStreamingResponse(),
+            await self.do_request_async('startEventStreaming', 'HTTP', 'POST', f'/openapi/v2/startEventStreaming', None, TeaCore.to_map(request), runtime)
+        )
+
+    def update_event_streaming(
+        self,
+        request: event_bridge_models.UpdateEventStreamingRequest,
+    ) -> event_bridge_models.UpdateEventStreamingResponse:
+        """
+        Update event streaming procss
+        """
+        runtime = util_models.RuntimeOptions()
+        return self.update_event_streaming_with_options(request, runtime)
+
+    async def update_event_streaming_async(
+        self,
+        request: event_bridge_models.UpdateEventStreamingRequest,
+    ) -> event_bridge_models.UpdateEventStreamingResponse:
+        """
+        Update event streaming procss
+        """
+        runtime = util_models.RuntimeOptions()
+        return await self.update_event_streaming_with_options_async(request, runtime)
+
+    def update_event_streaming_with_options(
+        self,
+        request: event_bridge_models.UpdateEventStreamingRequest,
+        runtime: util_models.RuntimeOptions,
+    ) -> event_bridge_models.UpdateEventStreamingResponse:
+        """
+        create event streaming
+        """
+        UtilClient.validate_model(request)
+        return TeaCore.from_map(
+            event_bridge_models.UpdateEventStreamingResponse(),
+            self.do_request('updateEventStreaming', 'HTTP', 'POST', f'/openapi/v2/updateEventStreaming', None, TeaCore.to_map(request), runtime)
+        )
+
+    async def update_event_streaming_with_options_async(
+        self,
+        request: event_bridge_models.UpdateEventStreamingRequest,
+        runtime: util_models.RuntimeOptions,
+    ) -> event_bridge_models.UpdateEventStreamingResponse:
+        """
+        create event streaming
+        """
+        UtilClient.validate_model(request)
+        return TeaCore.from_map(
+            event_bridge_models.UpdateEventStreamingResponse(),
+            await self.do_request_async('updateEventStreaming', 'HTTP', 'POST', f'/openapi/v2/updateEventStreaming', None, TeaCore.to_map(request), runtime)
         )

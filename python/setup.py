@@ -24,7 +24,7 @@ from setuptools import setup, find_packages
 """
 setup module for alibabacloud_eventbridge.
 
-Created on 02/02/2021
+Created on 23/03/2022
 
 @author: Alibaba Cloud SDK
 """
@@ -37,9 +37,9 @@ AUTHOR_EMAIL = "sdk-team@alibabacloud.com"
 URL = "https://github.com/aliyun/alibabacloud-eventbridge-sdk"
 VERSION = __import__(PACKAGE).__version__
 REQUIRES = [
-    "alibabacloud_tea_util>=0.3.1, <1.0.0",
+    "alibabacloud_tea_util>=0.3.5, <1.0.0",
     "alibabacloud_eventbridge_util>=0.0.3, <1.0.0",
-    "alibabacloud_credentials>=0.1.2, <1.0.0"
+    "alibabacloud_credentials>=0.2.0, <1.0.0"
 ]
 
 LONG_DESCRIPTION = ''

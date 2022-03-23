@@ -1743,12 +1743,12 @@ func (s *QueryEventsByPeriodRequest) SetEventSource(v string) *QueryEventsByPeri
 	return s
 }
 
-func (s *QueryEventsByPeriodRequest) SetStartTime(v int) *QueryEventsByPeriodRequest {
+func (s *QueryEventsByPeriodRequest) SetStartTime(v int64) *QueryEventsByPeriodRequest {
 	s.StartTime = &v
 	return s
 }
 
-func (s *QueryEventsByPeriodRequest) SetEndTime(v int) *QueryEventsByPeriodRequest {
+func (s *QueryEventsByPeriodRequest) SetEndTime(v int64) *QueryEventsByPeriodRequest {
 	s.EndTime = &v
 	return s
 }
@@ -1790,824 +1790,6 @@ func (s *QueryEventsByPeriodResponse) SetNextToken(v string) *QueryEventsByPerio
 func (s *QueryEventsByPeriodResponse) SetTotal(v int) *QueryEventsByPeriodResponse {
 	s.Total = &v
 	return s
-}
-
-type Client struct {
-	Protocol       *string
-	ReadTimeout    *int
-	ConnectTimeout *int
-	HttpProxy      *string
-	HttpsProxy     *string
-	NoProxy        *string
-	MaxIdleConns   *int
-	Endpoint       *string
-	RegionId       *string
-	Credential     credential.Credential
-}
-
-/**
- * Init client with Config
- * @param config config contains the necessary information to create a client
- */
-func NewClient(config *Config) (*Client, error) {
-	client := new(Client)
-	err := client.Init(config)
-	return client, err
-}
-
-func (client *Client) Init(config *Config) (_err error) {
-	if tea.BoolValue(util.IsUnset(tea.ToMap(config))) {
-		_err = tea.NewSDKError(map[string]interface{}{
-			"code":    "ParameterMissing",
-			"message": "'config' can not be unset",
-		})
-		return _err
-	}
-
-	_err = util.ValidateModel(config)
-	if _err != nil {
-		return _err
-	}
-	if !tea.BoolValue(util.Empty(config.AccessKeyId)) && !tea.BoolValue(util.Empty(config.AccessKeySecret)) {
-		credentialType := tea.String("access_key")
-		if !tea.BoolValue(util.Empty(config.SecurityToken)) {
-			credentialType = tea.String("sts")
-		}
-
-		credentialConfig := &credential.Config{
-			AccessKeyId:     config.AccessKeyId,
-			Type:            credentialType,
-			AccessKeySecret: config.AccessKeySecret,
-			SecurityToken:   config.SecurityToken,
-		}
-		client.Credential, _err = credential.NewCredential(credentialConfig)
-		if _err != nil {
-			return _err
-		}
-
-	} else if !tea.BoolValue(util.IsUnset(config.Credential)) {
-		client.Credential = config.Credential
-	} else {
-		_err = tea.NewSDKError(map[string]interface{}{
-			"code":    "ParameterMissing",
-			"message": "'accessKeyId' and 'accessKeySecret' or 'credential' can not be unset",
-		})
-		return _err
-	}
-
-	if tea.BoolValue(util.Empty(config.Endpoint)) {
-		_err = tea.NewSDKError(map[string]interface{}{
-			"code":    "ParameterMissing",
-			"message": "'endpoint' can not be unset",
-		})
-		return _err
-	}
-
-	if tea.BoolValue(eventbridgeutil.StartWith(config.Endpoint, tea.String("http"))) || tea.BoolValue(eventbridgeutil.StartWith(config.Endpoint, tea.String("https"))) {
-		_err = tea.NewSDKError(map[string]interface{}{
-			"code":    "ParameterError",
-			"message": "'endpoint' shouldn't start with 'http' or 'https'",
-		})
-		return _err
-	}
-
-	client.RegionId = config.RegionId
-	client.Protocol = config.Protocol
-	client.Endpoint = config.Endpoint
-	client.ReadTimeout = config.ReadTimeout
-	client.ConnectTimeout = config.ConnectTimeout
-	client.HttpProxy = config.HttpProxy
-	client.HttpsProxy = config.HttpsProxy
-	client.MaxIdleConns = config.MaxIdleConns
-	return nil
-}
-
-/**
- * Encapsulate the request and invoke the network
- * @param action the api name
- * @param protocol http or https
- * @param method e.g. GET
- * @param pathname pathname of every api
- * @param query which contains request params
- * @param body content of request
- * @param runtime which controls some details of call api, such as retry times
- * @return the response
- */
-func (client *Client) DoRequest(action *string, protocol *string, method *string, pathname *string, query map[string]*string, body interface{}, runtime *util.RuntimeOptions) (_result map[string]interface{}, _err error) {
-	_err = tea.Validate(runtime)
-	if _err != nil {
-		return _result, _err
-	}
-	_runtime := map[string]interface{}{
-		"timeouted":      "retry",
-		"readTimeout":    tea.IntValue(util.DefaultNumber(runtime.ReadTimeout, client.ReadTimeout)),
-		"connectTimeout": tea.IntValue(util.DefaultNumber(runtime.ConnectTimeout, client.ConnectTimeout)),
-		"httpProxy":      tea.StringValue(util.DefaultString(runtime.HttpProxy, client.HttpProxy)),
-		"httpsProxy":     tea.StringValue(util.DefaultString(runtime.HttpsProxy, client.HttpsProxy)),
-		"noProxy":        tea.StringValue(util.DefaultString(runtime.NoProxy, client.NoProxy)),
-		"maxIdleConns":   tea.IntValue(util.DefaultNumber(runtime.MaxIdleConns, client.MaxIdleConns)),
-		"retry": map[string]interface{}{
-			"retryable":   tea.BoolValue(runtime.Autoretry),
-			"maxAttempts": tea.IntValue(util.DefaultNumber(runtime.MaxAttempts, tea.Int(3))),
-		},
-		"backoff": map[string]interface{}{
-			"policy": tea.StringValue(util.DefaultString(runtime.BackoffPolicy, tea.String("no"))),
-			"period": tea.IntValue(util.DefaultNumber(runtime.BackoffPeriod, tea.Int(1))),
-		},
-		"ignoreSSL": tea.BoolValue(runtime.IgnoreSSL),
-	}
-
-	_resp := make(map[string]interface{})
-	for _retryTimes := 0; tea.BoolValue(tea.AllowRetry(_runtime["retry"], tea.Int(_retryTimes))); _retryTimes++ {
-		if _retryTimes > 0 {
-			_backoffTime := tea.GetBackoffTime(_runtime["backoff"], tea.Int(_retryTimes))
-			if tea.IntValue(_backoffTime) > 0 {
-				tea.Sleep(_backoffTime)
-			}
-		}
-
-		_resp, _err = func() (map[string]interface{}, error) {
-			request_ := tea.NewRequest()
-			request_.Protocol = util.DefaultString(client.Protocol, protocol)
-			request_.Method = method
-			request_.Pathname = pathname
-			request_.Headers = map[string]*string{
-				"date":                    util.GetDateUTCString(),
-				"host":                    client.Endpoint,
-				"accept":                  tea.String("application/json"),
-				"x-acs-signature-nonce":   util.GetNonce(),
-				"x-acs-signature-method":  tea.String("HMAC-SHA1"),
-				"x-acs-signature-version": tea.String("1.0"),
-				"x-eventbridge-version":   tea.String("2015-06-06"),
-				"user-agent":              util.GetUserAgent(tea.String(" aliyun-eventbridge-sdk/1.2.0")),
-			}
-			if !tea.BoolValue(util.IsUnset(client.RegionId)) {
-				request_.Headers["x-eventbridge-regionId"] = client.RegionId
-			}
-
-			if !tea.BoolValue(util.IsUnset(body)) {
-				request_.Body = tea.ToReader(util.ToJSONString(body))
-				request_.Headers["content-type"] = tea.String("application/json; charset=utf-8")
-			}
-
-			if tea.BoolValue(util.EqualString(action, tea.String("putEvents"))) {
-				request_.Headers["content-type"] = tea.String("application/cloudevents-batch+json; charset=utf-8")
-			}
-
-			if !tea.BoolValue(util.IsUnset(query)) {
-				request_.Query = query
-			}
-
-			accessKeyId, _err := client.Credential.GetAccessKeyId()
-			if _err != nil {
-				return _result, _err
-			}
-
-			accessKeySecret, _err := client.Credential.GetAccessKeySecret()
-			if _err != nil {
-				return _result, _err
-			}
-
-			securityToken, _err := client.Credential.GetSecurityToken()
-			if _err != nil {
-				return _result, _err
-			}
-
-			if !tea.BoolValue(util.Empty(securityToken)) {
-				request_.Headers["x-acs-accesskey-id"] = accessKeyId
-				request_.Headers["x-acs-security-token"] = securityToken
-			}
-
-			stringToSign := eventbridgeutil.GetStringToSign(request_)
-			request_.Headers["authorization"] = tea.String("acs:" + tea.StringValue(accessKeyId) + ":" + tea.StringValue(eventbridgeutil.GetSignature(stringToSign, accessKeySecret)))
-			response_, _err := tea.DoRequest(request_, _runtime)
-			if _err != nil {
-				return _result, _err
-			}
-			result, _err := util.ReadAsJSON(response_.Body)
-			if _err != nil {
-				return _result, _err
-			}
-
-			tmp := util.AssertAsMap(result)
-			if tea.BoolValue(util.Is4xx(response_.StatusCode)) || tea.BoolValue(util.Is5xx(response_.StatusCode)) {
-				_err = tea.NewSDKError(map[string]interface{}{
-					"code":    tmp["code"],
-					"message": "[EventBridgeError-" + tea.ToString(tmp["requestId"]) + "] " + tea.ToString(tmp["message"]),
-					"data":    tmp,
-				})
-				return _result, _err
-			}
-
-			_result = tmp
-			return _result, _err
-		}()
-		if !tea.BoolValue(tea.Retryable(_err)) {
-			break
-		}
-	}
-
-	return _resp, _err
-}
-
-/**
- * Publish event to the aliyun EventBus
- */
-func (client *Client) PutEvents(eventList []*CloudEvent) (_result *PutEventsResponse, _err error) {
-	runtime := &util.RuntimeOptions{}
-	_result = &PutEventsResponse{}
-	_body, _err := client.PutEventsWithOptions(eventList, runtime)
-	if _err != nil {
-		return _result, _err
-	}
-	_result = _body
-	return _result, _err
-}
-
-/**
- * Publish event to the aliyun EventBus
- */
-func (client *Client) PutEventsWithOptions(eventList []*CloudEvent, runtime *util.RuntimeOptions) (_result *PutEventsResponse, _err error) {
-	for _, cloudEvent := range eventList {
-		if tea.BoolValue(util.IsUnset(cloudEvent.Specversion)) {
-			cloudEvent.Specversion = tea.String("1.0")
-		}
-
-		if tea.BoolValue(util.IsUnset(cloudEvent.Datacontenttype)) {
-			cloudEvent.Datacontenttype = tea.String("application/json; charset=utf-8")
-		}
-
-		_err = util.ValidateModel(cloudEvent)
-		if _err != nil {
-			return _result, _err
-		}
-	}
-	body := eventbridgeutil.Serialize(eventList)
-	_result = &PutEventsResponse{}
-	_body, _err := client.DoRequest(tea.String("putEvents"), tea.String("HTTP"), tea.String("POST"), tea.String("/openapi/putEvents"), nil, body, runtime)
-	if _err != nil {
-		return _result, _err
-	}
-	_err = tea.Convert(_body, &_result)
-	return _result, _err
-}
-
-/**
- * Creates a new event bus within your account. This can be a custom event bus which you can use to receive events from your custom applications and services
- */
-func (client *Client) CreateEventBus(request *CreateEventBusRequest) (_result *CreateEventBusResponse, _err error) {
-	runtime := &util.RuntimeOptions{}
-	_result = &CreateEventBusResponse{}
-	_body, _err := client.CreateEventBusWithOptions(request, runtime)
-	if _err != nil {
-		return _result, _err
-	}
-	_result = _body
-	return _result, _err
-}
-
-/**
- * Creates a new event bus within your account. This can be a custom event bus which you can use to receive events from your custom applications and services
- */
-func (client *Client) CreateEventBusWithOptions(request *CreateEventBusRequest, runtime *util.RuntimeOptions) (_result *CreateEventBusResponse, _err error) {
-	_err = util.ValidateModel(request)
-	if _err != nil {
-		return _result, _err
-	}
-	_result = &CreateEventBusResponse{}
-	_body, _err := client.DoRequest(tea.String("createEventBus"), tea.String("HTTP"), tea.String("POST"), tea.String("/openapi/createEventBus"), nil, tea.ToMap(request), runtime)
-	if _err != nil {
-		return _result, _err
-	}
-	_err = tea.Convert(_body, &_result)
-	return _result, _err
-}
-
-/**
- * Deletes the specified custom event bus in your account,You can't delete your account's default event bus
- */
-func (client *Client) DeleteEventBus(request *DeleteEventBusRequest) (_result *DeleteEventBusResponse, _err error) {
-	runtime := &util.RuntimeOptions{}
-	_result = &DeleteEventBusResponse{}
-	_body, _err := client.DeleteEventBusWithOptions(request, runtime)
-	if _err != nil {
-		return _result, _err
-	}
-	_result = _body
-	return _result, _err
-}
-
-/**
- * Deletes the specified custom event bus in your account,You can't delete your account's default event bus
- */
-func (client *Client) DeleteEventBusWithOptions(request *DeleteEventBusRequest, runtime *util.RuntimeOptions) (_result *DeleteEventBusResponse, _err error) {
-	_err = util.ValidateModel(request)
-	if _err != nil {
-		return _result, _err
-	}
-	_result = &DeleteEventBusResponse{}
-	_body, _err := client.DoRequest(tea.String("deleteEventBus"), tea.String("HTTP"), tea.String("POST"), tea.String("/openapi/deleteEventBus"), nil, tea.ToMap(request), runtime)
-	if _err != nil {
-		return _result, _err
-	}
-	_err = tea.Convert(_body, &_result)
-	return _result, _err
-}
-
-/**
- * Displays details about an event bus in your account
- */
-func (client *Client) GetEventBus(request *GetEventBusRequest) (_result *GetEventBusResponse, _err error) {
-	runtime := &util.RuntimeOptions{}
-	_result = &GetEventBusResponse{}
-	_body, _err := client.GetEventBusWithOptions(request, runtime)
-	if _err != nil {
-		return _result, _err
-	}
-	_result = _body
-	return _result, _err
-}
-
-/**
- * Displays details about an event bus in your account
- */
-func (client *Client) GetEventBusWithOptions(request *GetEventBusRequest, runtime *util.RuntimeOptions) (_result *GetEventBusResponse, _err error) {
-	_err = util.ValidateModel(request)
-	if _err != nil {
-		return _result, _err
-	}
-	_result = &GetEventBusResponse{}
-	_body, _err := client.DoRequest(tea.String("getEventBus"), tea.String("HTTP"), tea.String("POST"), tea.String("/openapi/getEventBus"), nil, tea.ToMap(request), runtime)
-	if _err != nil {
-		return _result, _err
-	}
-	_err = tea.Convert(_body, &_result)
-	return _result, _err
-}
-
-/**
- * List all the EventBus in your account, including the default event bus, custom event buses, which meet the search criteria.
- */
-func (client *Client) ListEventBuses(request *ListEventBusesRequest) (_result *ListEventBusesResponse, _err error) {
-	runtime := &util.RuntimeOptions{}
-	_result = &ListEventBusesResponse{}
-	_body, _err := client.ListEventBusesWithOptions(request, runtime)
-	if _err != nil {
-		return _result, _err
-	}
-	_result = _body
-	return _result, _err
-}
-
-/**
- * List all the EventBus in your account, including the default event bus, custom event buses, which meet the search criteria.
- */
-func (client *Client) ListEventBusesWithOptions(request *ListEventBusesRequest, runtime *util.RuntimeOptions) (_result *ListEventBusesResponse, _err error) {
-	_err = util.ValidateModel(request)
-	if _err != nil {
-		return _result, _err
-	}
-	_result = &ListEventBusesResponse{}
-	_body, _err := client.DoRequest(tea.String("listEventBuses"), tea.String("HTTP"), tea.String("POST"), tea.String("/openapi/listEventBuses"), nil, tea.ToMap(request), runtime)
-	if _err != nil {
-		return _result, _err
-	}
-	_err = tea.Convert(_body, &_result)
-	return _result, _err
-}
-
-/**
- * Create an EventBus rule on Aliyun
- */
-func (client *Client) CreateRule(request *CreateRuleRequest) (_result *CreateRuleResponse, _err error) {
-	runtime := &util.RuntimeOptions{}
-	_result = &CreateRuleResponse{}
-	_body, _err := client.CreateRuleWithOptions(request, runtime)
-	if _err != nil {
-		return _result, _err
-	}
-	_result = _body
-	return _result, _err
-}
-
-/**
- * Create an EventBus rule on Aliyun
- */
-func (client *Client) CreateRuleWithOptions(request *CreateRuleRequest, runtime *util.RuntimeOptions) (_result *CreateRuleResponse, _err error) {
-	_err = util.ValidateModel(request)
-	if _err != nil {
-		return _result, _err
-	}
-	_result = &CreateRuleResponse{}
-	_body, _err := client.DoRequest(tea.String("createRule"), tea.String("HTTP"), tea.String("POST"), tea.String("/openapi/createRule"), nil, tea.ToMap(request), runtime)
-	if _err != nil {
-		return _result, _err
-	}
-	_err = tea.Convert(_body, &_result)
-	return _result, _err
-}
-
-/**
- * Deletes the specified rule.
- */
-func (client *Client) DeleteRule(request *DeleteRuleRequest) (_result *DeleteRuleResponse, _err error) {
-	runtime := &util.RuntimeOptions{}
-	_result = &DeleteRuleResponse{}
-	_body, _err := client.DeleteRuleWithOptions(request, runtime)
-	if _err != nil {
-		return _result, _err
-	}
-	_result = _body
-	return _result, _err
-}
-
-/**
- * Deletes the specified rule.
- */
-func (client *Client) DeleteRuleWithOptions(request *DeleteRuleRequest, runtime *util.RuntimeOptions) (_result *DeleteRuleResponse, _err error) {
-	_err = util.ValidateModel(request)
-	if _err != nil {
-		return _result, _err
-	}
-	_result = &DeleteRuleResponse{}
-	_body, _err := client.DoRequest(tea.String("deleteRule"), tea.String("HTTP"), tea.String("POST"), tea.String("/openapi/deleteRule"), nil, tea.ToMap(request), runtime)
-	if _err != nil {
-		return _result, _err
-	}
-	_err = tea.Convert(_body, &_result)
-	return _result, _err
-}
-
-/**
- * Disables the specified rule
- */
-func (client *Client) DisableRule(request *DisableRuleRequest) (_result *DisableRuleResponse, _err error) {
-	runtime := &util.RuntimeOptions{}
-	_result = &DisableRuleResponse{}
-	_body, _err := client.DisableRuleWithOptions(request, runtime)
-	if _err != nil {
-		return _result, _err
-	}
-	_result = _body
-	return _result, _err
-}
-
-/**
- * Disables the specified rule
- */
-func (client *Client) DisableRuleWithOptions(request *DisableRuleRequest, runtime *util.RuntimeOptions) (_result *DisableRuleResponse, _err error) {
-	_err = util.ValidateModel(request)
-	if _err != nil {
-		return _result, _err
-	}
-	_result = &DisableRuleResponse{}
-	_body, _err := client.DoRequest(tea.String("disableRule"), tea.String("HTTP"), tea.String("POST"), tea.String("/openapi/disableRule"), nil, tea.ToMap(request), runtime)
-	if _err != nil {
-		return _result, _err
-	}
-	_err = tea.Convert(_body, &_result)
-	return _result, _err
-}
-
-/**
- * Enables the specified rule
- */
-func (client *Client) EnableRule(request *EnableRuleRequest) (_result *EnableRuleResponse, _err error) {
-	runtime := &util.RuntimeOptions{}
-	_result = &EnableRuleResponse{}
-	_body, _err := client.EnableRuleWithOptions(request, runtime)
-	if _err != nil {
-		return _result, _err
-	}
-	_result = _body
-	return _result, _err
-}
-
-/**
- * Enables the specified rule
- */
-func (client *Client) EnableRuleWithOptions(request *EnableRuleRequest, runtime *util.RuntimeOptions) (_result *EnableRuleResponse, _err error) {
-	_err = util.ValidateModel(request)
-	if _err != nil {
-		return _result, _err
-	}
-	_result = &EnableRuleResponse{}
-	_body, _err := client.DoRequest(tea.String("enableRule"), tea.String("HTTP"), tea.String("POST"), tea.String("/openapi/enableRule"), nil, tea.ToMap(request), runtime)
-	if _err != nil {
-		return _result, _err
-	}
-	_err = tea.Convert(_body, &_result)
-	return _result, _err
-}
-
-/**
- * Describes the specified rule
- */
-func (client *Client) GetRule(request *GetRuleRequest) (_result *GetRuleResponse, _err error) {
-	runtime := &util.RuntimeOptions{}
-	_result = &GetRuleResponse{}
-	_body, _err := client.GetRuleWithOptions(request, runtime)
-	if _err != nil {
-		return _result, _err
-	}
-	_result = _body
-	return _result, _err
-}
-
-/**
- * Describes the specified rule
- */
-func (client *Client) GetRuleWithOptions(request *GetRuleRequest, runtime *util.RuntimeOptions) (_result *GetRuleResponse, _err error) {
-	_err = util.ValidateModel(request)
-	if _err != nil {
-		return _result, _err
-	}
-	_result = &GetRuleResponse{}
-	_body, _err := client.DoRequest(tea.String("getRule"), tea.String("HTTP"), tea.String("POST"), tea.String("/openapi/getRule"), nil, tea.ToMap(request), runtime)
-	if _err != nil {
-		return _result, _err
-	}
-	_err = tea.Convert(_body, &_result)
-	return _result, _err
-}
-
-/**
- * List all the rules which meet the search criteria
- */
-func (client *Client) ListRules(request *ListRulesRequest) (_result *ListRulesResponse, _err error) {
-	runtime := &util.RuntimeOptions{}
-	_result = &ListRulesResponse{}
-	_body, _err := client.ListRulesWithOptions(request, runtime)
-	if _err != nil {
-		return _result, _err
-	}
-	_result = _body
-	return _result, _err
-}
-
-/**
- * List all the rules which meet the search criteria
- */
-func (client *Client) ListRulesWithOptions(request *ListRulesRequest, runtime *util.RuntimeOptions) (_result *ListRulesResponse, _err error) {
-	_err = util.ValidateModel(request)
-	if _err != nil {
-		return _result, _err
-	}
-	_result = &ListRulesResponse{}
-	_body, _err := client.DoRequest(tea.String("listRules"), tea.String("HTTP"), tea.String("POST"), tea.String("/openapi/listRules"), nil, tea.ToMap(request), runtime)
-	if _err != nil {
-		return _result, _err
-	}
-	_err = tea.Convert(_body, &_result)
-	return _result, _err
-}
-
-/**
- * update the specified rule.
- */
-func (client *Client) UpdateRule(request *UpdateRuleRequest) (_result *UpdateRuleResponse, _err error) {
-	runtime := &util.RuntimeOptions{}
-	_result = &UpdateRuleResponse{}
-	_body, _err := client.UpdateRuleWithOptions(request, runtime)
-	if _err != nil {
-		return _result, _err
-	}
-	_result = _body
-	return _result, _err
-}
-
-/**
- * update the specified rule.
- */
-func (client *Client) UpdateRuleWithOptions(request *UpdateRuleRequest, runtime *util.RuntimeOptions) (_result *UpdateRuleResponse, _err error) {
-	_err = util.ValidateModel(request)
-	if _err != nil {
-		return _result, _err
-	}
-	_result = &UpdateRuleResponse{}
-	_body, _err := client.DoRequest(tea.String("updateRule"), tea.String("HTTP"), tea.String("POST"), tea.String("/openapi/updateRule"), nil, tea.ToMap(request), runtime)
-	if _err != nil {
-		return _result, _err
-	}
-	_err = tea.Convert(_body, &_result)
-	return _result, _err
-}
-
-/**
- * Adds the specified targets to the specified rule
- */
-func (client *Client) CreateTargets(request *CreateTargetsRequest) (_result *CreateTargetsResponse, _err error) {
-	runtime := &util.RuntimeOptions{}
-	_result = &CreateTargetsResponse{}
-	_body, _err := client.CreateTargetsWithOptions(request, runtime)
-	if _err != nil {
-		return _result, _err
-	}
-	_result = _body
-	return _result, _err
-}
-
-/**
- * Adds the specified targets to the specified rule
- */
-func (client *Client) CreateTargetsWithOptions(request *CreateTargetsRequest, runtime *util.RuntimeOptions) (_result *CreateTargetsResponse, _err error) {
-	_err = util.ValidateModel(request)
-	if _err != nil {
-		return _result, _err
-	}
-	_result = &CreateTargetsResponse{}
-	_body, _err := client.DoRequest(tea.String("createTargets"), tea.String("HTTP"), tea.String("POST"), tea.String("/openapi/createTargets"), nil, tea.ToMap(request), runtime)
-	if _err != nil {
-		return _result, _err
-	}
-	_err = tea.Convert(_body, &_result)
-	return _result, _err
-}
-
-/**
- * Delete the specified targets from the specified rule
- */
-func (client *Client) DeleteTargets(request *DeleteTargetsRequest) (_result *DeleteTargetsResponse, _err error) {
-	runtime := &util.RuntimeOptions{}
-	_result = &DeleteTargetsResponse{}
-	_body, _err := client.DeleteTargetsWithOptions(request, runtime)
-	if _err != nil {
-		return _result, _err
-	}
-	_result = _body
-	return _result, _err
-}
-
-/**
- * Delete the specified targets from the specified rule
- */
-func (client *Client) DeleteTargetsWithOptions(request *DeleteTargetsRequest, runtime *util.RuntimeOptions) (_result *DeleteTargetsResponse, _err error) {
-	_err = util.ValidateModel(request)
-	if _err != nil {
-		return _result, _err
-	}
-	_result = &DeleteTargetsResponse{}
-	_body, _err := client.DoRequest(tea.String("deleteTargets"), tea.String("HTTP"), tea.String("POST"), tea.String("/openapi/deleteTargets"), nil, tea.ToMap(request), runtime)
-	if _err != nil {
-		return _result, _err
-	}
-	_err = tea.Convert(_body, &_result)
-	return _result, _err
-}
-
-/**
- * List all the Targets which meet the search criteria
- */
-func (client *Client) ListTargets(request *ListTargetsRequest) (_result *ListTargetsResponse, _err error) {
-	runtime := &util.RuntimeOptions{}
-	_result = &ListTargetsResponse{}
-	_body, _err := client.ListTargetsWithOptions(request, runtime)
-	if _err != nil {
-		return _result, _err
-	}
-	_result = _body
-	return _result, _err
-}
-
-/**
- * List all the Targets which meet the search criteria
- */
-func (client *Client) ListTargetsWithOptions(request *ListTargetsRequest, runtime *util.RuntimeOptions) (_result *ListTargetsResponse, _err error) {
-	_err = util.ValidateModel(request)
-	if _err != nil {
-		return _result, _err
-	}
-	_result = &ListTargetsResponse{}
-	_body, _err := client.DoRequest(tea.String("listTargets"), tea.String("HTTP"), tea.String("POST"), tea.String("/openapi/listTargets"), nil, tea.ToMap(request), runtime)
-	if _err != nil {
-		return _result, _err
-	}
-	_err = tea.Convert(_body, &_result)
-	return _result, _err
-}
-
-/**
- * Tests whether the specified event pattern matches the provided event
- */
-func (client *Client) TestEventPattern(request *TestEventPatternRequest) (_result *TestEventPatternResponse, _err error) {
-	runtime := &util.RuntimeOptions{}
-	_result = &TestEventPatternResponse{}
-	_body, _err := client.TestEventPatternWithOptions(request, runtime)
-	if _err != nil {
-		return _result, _err
-	}
-	_result = _body
-	return _result, _err
-}
-
-/**
- * Tests whether the specified event pattern matches the provided event
- */
-func (client *Client) TestEventPatternWithOptions(request *TestEventPatternRequest, runtime *util.RuntimeOptions) (_result *TestEventPatternResponse, _err error) {
-	_err = util.ValidateModel(request)
-	if _err != nil {
-		return _result, _err
-	}
-	_result = &TestEventPatternResponse{}
-	_body, _err := client.DoRequest(tea.String("testEventPattern"), tea.String("HTTP"), tea.String("POST"), tea.String("/openapi/testEventPattern"), nil, tea.ToMap(request), runtime)
-	if _err != nil {
-		return _result, _err
-	}
-	_err = tea.Convert(_body, &_result)
-	return _result, _err
-}
-
-/**
- * Tests whether the specified event pattern matches the provided event
- */
-func (client *Client) QueryEventTraces(request *QueryEventTracesRequest) (_result *QueryEventTracesResponse, _err error) {
-	runtime := &util.RuntimeOptions{}
-	_result = &QueryEventTracesResponse{}
-	_body, _err := client.QueryEventTracesWithOptions(request, runtime)
-	if _err != nil {
-		return _result, _err
-	}
-	_result = _body
-	return _result, _err
-}
-
-/**
- * Query the event traces by the event Id.
- */
-func (client *Client) QueryEventTracesWithOptions(request *QueryEventTracesRequest, runtime *util.RuntimeOptions) (_result *QueryEventTracesResponse, _err error) {
-	_err = util.ValidateModel(request)
-	if _err != nil {
-		return _result, _err
-	}
-	_result = &QueryEventTracesResponse{}
-	_body, _err := client.DoRequest(tea.String("queryEventTraces"), tea.String("HTTP"), tea.String("POST"), tea.String("/openapi/queryEventTraces"), nil, tea.ToMap(request), runtime)
-	if _err != nil {
-		return _result, _err
-	}
-	_err = tea.Convert(_body, &_result)
-	return _result, _err
-}
-
-/**
- * Tests whether the specified event pattern matches the provided event
- */
-func (client *Client) QueryEventByEventId(request *QueryEventByEventIdRequest) (_result *QueryEventByEventIdResponse, _err error) {
-	runtime := &util.RuntimeOptions{}
-	_result = &QueryEventByEventIdResponse{}
-	_body, _err := client.QueryEventByEventIdWithOptions(request, runtime)
-	if _err != nil {
-		return _result, _err
-	}
-	_result = _body
-	return _result, _err
-}
-
-/**
- * Query the event traces by the event Id.
- */
-func (client *Client) QueryEventByEventIdWithOptions(request *QueryEventByEventIdRequest, runtime *util.RuntimeOptions) (_result *QueryEventByEventIdResponse, _err error) {
-	_err = util.ValidateModel(request)
-	if _err != nil {
-		return _result, _err
-	}
-	_result = &QueryEventByEventIdResponse{}
-	_body, _err := client.DoRequest(tea.String("queryEventByEventId"), tea.String("HTTP"), tea.String("POST"), tea.String("/openapi/queryEventByEventId"), nil, tea.ToMap(request), runtime)
-	if _err != nil {
-		return _result, _err
-	}
-	_err = tea.Convert(_body, &_result)
-	return _result, _err
-}
-
-/**
- * Tests whether the specified event pattern matches the provided event
- */
-func (client *Client) QueryEventsByPeriod(request *QueryEventsByPeriodRequest) (_result *QueryEventsByPeriodResponse, _err error) {
-	runtime := &util.RuntimeOptions{}
-	_result = &QueryEventsByPeriodResponse{}
-	_body, _err := client.QueryEventsByPeriodWithOptions(request, runtime)
-	if _err != nil {
-		return _result, _err
-	}
-	_result = _body
-	return _result, _err
-}
-
-/**
- * Query the event traces by the event Id.
- */
-func (client *Client) QueryEventsByPeriodWithOptions(request *QueryEventsByPeriodRequest, runtime *util.RuntimeOptions) (_result *QueryEventsByPeriodResponse, _err error) {
-	_err = util.ValidateModel(request)
-	if _err != nil {
-		return _result, _err
-	}
-	_result = &QueryEventsByPeriodResponse{}
-	_body, _err := client.DoRequest(tea.String("queryEventsByPeriod"), tea.String("HTTP"), tea.String("POST"), tea.String("/openapi/queryEventsByPeriod"), nil, tea.ToMap(request), runtime)
-	if _err != nil {
-		return _result, _err
-	}
-	_err = tea.Convert(_body, &_result)
-	return _result, _err
 }
 
 /**
@@ -2737,6 +1919,38 @@ func (s *SourceRocketMQParameters) SetTimestamp(v int) *SourceRocketMQParameters
 }
 
 /**
+ * The detail of SourceScheduledEventParameters
+ */
+type SourceScheduledEventParameters struct {
+	Schedule *string            `json:"Schedule,omitempty" xml:"Schedule,omitempty" require:"true"`
+	TimeZone *string            `json:"TimeZone,omitempty" xml:"TimeZone,omitempty" require:"true"`
+	UserData map[string]*string `json:"UserData,omitempty" xml:"UserData,omitempty"`
+}
+
+func (s SourceScheduledEventParameters) String() string {
+	return tea.Prettify(s)
+}
+
+func (s SourceScheduledEventParameters) GoString() string {
+	return s.String()
+}
+
+func (s *SourceScheduledEventParameters) SetSchedule(v string) *SourceScheduledEventParameters {
+	s.Schedule = &v
+	return s
+}
+
+func (s *SourceScheduledEventParameters) SetTimeZone(v string) *SourceScheduledEventParameters {
+	s.TimeZone = &v
+	return s
+}
+
+func (s *SourceScheduledEventParameters) SetUserData(v map[string]*string) *SourceScheduledEventParameters {
+	s.UserData = v
+	return s
+}
+
+/**
  * The request of createEventSource
  */
 type CreateEventSourceRequest struct {
@@ -2748,11 +1962,6 @@ type CreateEventSourceRequest struct {
 	SourceRocketMQParameters       *SourceRocketMQParameters       `json:"SourceRocketMQParameters,omitempty" xml:"SourceRocketMQParameters,omitempty"`
 	SourceScheduledEventParameters *SourceScheduledEventParameters `json:"SourceScheduledEventParameters,omitempty" xml:"SourceScheduledEventParameters,omitempty"`
 	SourceHttpEventParameters      *SourceHttpEventParameters      `json:"SourceHttpEventParameters,omitempty" xml:"SourceHttpEventParameters,omitempty"`
-}
-
-func (s *CreateEventSourceRequest) SetSourceHttpEventParameters(v *SourceHttpEventParameters) *CreateEventSourceRequest {
-	s.SourceHttpEventParameters = v
-	return s
 }
 
 func (s CreateEventSourceRequest) String() string {
@@ -2798,26 +2007,21 @@ func (s *CreateEventSourceRequest) SetSourceScheduledEventParameters(v *SourceSc
 	return s
 }
 
+func (s *CreateEventSourceRequest) SetSourceHttpEventParameters(v *SourceHttpEventParameters) *CreateEventSourceRequest {
+	s.SourceHttpEventParameters = v
+	return s
+}
+
 /**
  * The detail of SourceKafkaParameters
  */
 type SourceKafkaParameters struct {
-	RegionId      *string                 `json:"RegionId,omitempty" xml:"RegionId,omitempty"`
-	ExtendConfig  *map[string]interface{} `json:"ExtendConfig,omitempty" xml:"ExtendConfig,omitempty"`
-	InstanceId    *string                 `json:"InstanceId,omitempty" xml:"InstanceId,omitempty"`
-	Topic         *string                 `json:"Topic,omitempty" xml:"Topic,omitempty"`
-	ConsumerGroup *string                 `json:"ConsumerGroup,omitempty" xml:"ConsumerGroup,omitempty" require:"true"`
-	OffsetReset   *string                 `json:"OffsetReset,omitempty" xml:"OffsetReset,omitempty"`
-}
-
-func (s *SourceKafkaParameters) SetRegionId(v string) *SourceKafkaParameters {
-	s.RegionId = &v
-	return s
-}
-
-func (s *SourceKafkaParameters) SetExtendConfig(v map[string]interface{}) *SourceKafkaParameters {
-	s.ExtendConfig = &v
-	return s
+	RegionId      *string                `json:"RegionId,omitempty" xml:"RegionId,omitempty"`
+	InstanceId    *string                `json:"InstanceId,omitempty" xml:"InstanceId,omitempty"`
+	Topic         *string                `json:"Topic,omitempty" xml:"Topic,omitempty"`
+	ConsumerGroup *string                `json:"ConsumerGroup,omitempty" xml:"ConsumerGroup,omitempty" require:"true"`
+	OffsetReset   *string                `json:"OffsetReset,omitempty" xml:"OffsetReset,omitempty"`
+	ExtendConfig  map[string]interface{} `json:"ExtendConfig,omitempty" xml:"ExtendConfig,omitempty"`
 }
 
 func (s SourceKafkaParameters) String() string {
@@ -2826,6 +2030,11 @@ func (s SourceKafkaParameters) String() string {
 
 func (s SourceKafkaParameters) GoString() string {
 	return s.String()
+}
+
+func (s *SourceKafkaParameters) SetRegionId(v string) *SourceKafkaParameters {
+	s.RegionId = &v
+	return s
 }
 
 func (s *SourceKafkaParameters) SetInstanceId(v string) *SourceKafkaParameters {
@@ -2845,6 +2054,11 @@ func (s *SourceKafkaParameters) SetConsumerGroup(v string) *SourceKafkaParameter
 
 func (s *SourceKafkaParameters) SetOffsetReset(v string) *SourceKafkaParameters {
 	s.OffsetReset = &v
+	return s
+}
+
+func (s *SourceKafkaParameters) SetExtendConfig(v map[string]interface{}) *SourceKafkaParameters {
+	s.ExtendConfig = v
 	return s
 }
 
@@ -4534,6 +3748,70 @@ func (s *UpdateEventStreamingResponse) SetResourceOwnerAccountId(v string) *Upda
 	return s
 }
 
+/**
+ * The detail of SourceHttpEventParameters
+ */
+type SourceHttpEventParameters struct {
+	Type           *string   `json:"Type,omitempty" xml:"Type,omitempty" require:"true"`
+	Method         []*string `json:"Method,omitempty" xml:"Method,omitempty" require:"true" type:"Repeated"`
+	SecurityConfig *string   `json:"SecurityConfig,omitempty" xml:"SecurityConfig,omitempty" require:"true"`
+	Ip             []*string `json:"Ip,omitempty" xml:"Ip,omitempty" type:"Repeated"`
+	Referer        []*string `json:"Referer,omitempty" xml:"Referer,omitempty" type:"Repeated"`
+}
+
+func (s SourceHttpEventParameters) String() string {
+	return tea.Prettify(s)
+}
+
+func (s SourceHttpEventParameters) GoString() string {
+	return s.String()
+}
+
+func (s *SourceHttpEventParameters) SetType(v string) *SourceHttpEventParameters {
+	s.Type = &v
+	return s
+}
+
+func (s *SourceHttpEventParameters) SetMethod(v []*string) *SourceHttpEventParameters {
+	s.Method = v
+	return s
+}
+
+func (s *SourceHttpEventParameters) SetSecurityConfig(v string) *SourceHttpEventParameters {
+	s.SecurityConfig = &v
+	return s
+}
+
+func (s *SourceHttpEventParameters) SetIp(v []*string) *SourceHttpEventParameters {
+	s.Ip = v
+	return s
+}
+
+func (s *SourceHttpEventParameters) SetReferer(v []*string) *SourceHttpEventParameters {
+	s.Referer = v
+	return s
+}
+
+/**
+ * The detail of ConcurrentConfig
+ */
+type ConcurrentConfig struct {
+	Concurrency *int32 `json:"ResourceKey,omitempty" xml:"ResourceKey,omitempty" require:"true"`
+}
+
+func (s ConcurrentConfig) String() string {
+	return tea.Prettify(s)
+}
+
+func (s ConcurrentConfig) GoString() string {
+	return s.String()
+}
+
+func (s *ConcurrentConfig) SetConcurrency(v int32) *ConcurrentConfig {
+	s.Concurrency = &v
+	return s
+}
+
 type Client struct {
 	Protocol       *string
 	ReadTimeout    *int
@@ -5753,100 +5031,4 @@ func (client *Client) UpdateEventStreamingWithOptions(request *UpdateEventStream
 	}
 	_err = tea.Convert(_body, &_result)
 	return _result, _err
-}
-
-/**
- * The detail of SourceScheduledEventParameters
- */
-type SourceScheduledEventParameters struct {
-	Schedule *string            `json:"Schedule,omitempty" xml:"Schedule,omitempty" require:"true"`
-	TimeZone *string            `json:"TimeZone,omitempty" xml:"TimeZone,omitempty" require:"true"`
-	UserData map[string]*string `json:"UserData,omitempty" xml:"UserData,omitempty"`
-}
-
-func (s SourceScheduledEventParameters) String() string {
-	return tea.Prettify(s)
-}
-
-func (s SourceScheduledEventParameters) GoString() string {
-	return s.String()
-}
-
-func (s *SourceScheduledEventParameters) SetSchedule(v string) *SourceScheduledEventParameters {
-	s.Schedule = &v
-	return s
-}
-
-func (s *SourceScheduledEventParameters) SetTimeZone(v string) *SourceScheduledEventParameters {
-	s.TimeZone = &v
-	return s
-}
-
-func (s *SourceScheduledEventParameters) SetUserData(v map[string]*string) *SourceScheduledEventParameters {
-	s.UserData = v
-	return s
-}
-
-/**
- * The detail of ConcurrentConfig
- */
-type ConcurrentConfig struct {
-	Concurrency *int `json:"Concurrency,omitempty" xml:"Concurrency,omitempty" require:"true"`
-}
-
-func (s ConcurrentConfig) String() string {
-	return tea.Prettify(s)
-}
-
-func (s ConcurrentConfig) GoString() string {
-	return s.String()
-}
-
-func (s *ConcurrentConfig) SetConcurrency(v int) *ConcurrentConfig {
-	s.Concurrency = &v
-	return s
-}
-
-/**
- * The detail of SourceHttpEventParameters
- */
-type SourceHttpEventParameters struct {
-	Type           *string   `json:"Type,omitempty" xml:"Type,omitempty" require:"true"`
-	Method         []*string `json:"Method,omitempty" xml:"Method,omitempty" require:"true"`
-	SecurityConfig *string   `json:"SecurityConfig,omitempty" xml:"SecurityConfig,omitempty" require:"true"`
-	Ip             []*string `json:"Ip,omitempty" xml:"Ip,omitempty" type:"Repeated"`
-	Referer        []*string `json:"Referer,omitempty" xml:"Referer,omitempty" type:"Repeated"`
-}
-
-func (s SourceHttpEventParameters) String() string {
-	return tea.Prettify(s)
-}
-
-func (s SourceHttpEventParameters) GoString() string {
-	return s.String()
-}
-
-func (s *SourceHttpEventParameters) SetType(v string) *SourceHttpEventParameters {
-	s.Type = &v
-	return s
-}
-
-func (s *SourceHttpEventParameters) SetMethod(v []*string) *SourceHttpEventParameters {
-	s.Method = v
-	return s
-}
-
-func (s *SourceHttpEventParameters) SetSecurityConfig(v string) *SourceHttpEventParameters {
-	s.SecurityConfig = &v
-	return s
-}
-
-func (s *SourceHttpEventParameters) SetIp(v []*string) *SourceHttpEventParameters {
-	s.Ip = v
-	return s
-}
-
-func (s *SourceHttpEventParameters) SetReferer(v []*string) *SourceHttpEventParameters {
-	s.Referer = v
-	return s
 }
