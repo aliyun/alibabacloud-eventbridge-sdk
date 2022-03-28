@@ -987,6 +987,10 @@ model SourceKafkaParameters = {
   consumerGroup: string(name='ConsumerGroup'),
   offsetReset?: string(name='OffsetReset'),
   extendConfig?: map[string] any(name='ExtendConfig'),
+  network?: string(name='Network'),
+  vpcId?: string(name='VpcId'),
+  vSwitchId?: string(name='VSwitchId'),
+  securityGroupId?: string(name='SecurityGroupId'),
 }
 
 /**
@@ -1071,6 +1075,7 @@ model SinkKafkaParameters = {
   key?: TargetParameter(name='Key'),
   value?: TargetParameter(name='Value'),
   extendConfig?: map[string] any(name='ExtendConfig'),
+  saslUser?: TargetParameter(name='SaslUser'),
 }
 
 /**
@@ -1181,7 +1186,7 @@ model EBUserDefinedEventSourceEntry = {
   sourceMNSParameters?: SourceMNSParameters(name='SourceMNSParameters'),
   sourceRocketMQParameters: SourceRocketMQParameters(name='SourceRocketMQParameters'),
   sourceKafkaParameters: SourceKafkaParameters(name='SourceKafkaParameters'),
-  sourceHttpEventParameters: SourceHttpEventParameters(name='SourceHttpEventParameters'),
+  sourceHttpEventResponse: SourceHttpEventResponse(name='SourceHttpEventResponse'),
 }
 
 /**
@@ -1643,6 +1648,16 @@ model SourceHttpEventParameters = {
   securityConfig: string(name='SecurityConfig'),
   ip?: [ string ](name='Ip'),
   referer?: [ string ](name='Referer'),
+}
+
+model SourceHttpEventResponse = {
+  type: string(name='Type'),
+  method: [ string ](name='Method'),
+  securityConfig: string(name='SecurityConfig'),
+  ip?: [ string ](name='Ip'),
+  referer?: [ string ](name='Referer'),
+  publicWebHookUrl?: [ string ](name='PublicWebHookUrl'),
+  vpcWebHookUrl?: [ string ](name='VpcWebHookUrl'),
 }
 
 /**

@@ -2016,12 +2016,16 @@ func (s *CreateEventSourceRequest) SetSourceHttpEventParameters(v *SourceHttpEve
  * The detail of SourceKafkaParameters
  */
 type SourceKafkaParameters struct {
-	RegionId      *string                `json:"RegionId,omitempty" xml:"RegionId,omitempty"`
-	InstanceId    *string                `json:"InstanceId,omitempty" xml:"InstanceId,omitempty"`
-	Topic         *string                `json:"Topic,omitempty" xml:"Topic,omitempty"`
-	ConsumerGroup *string                `json:"ConsumerGroup,omitempty" xml:"ConsumerGroup,omitempty" require:"true"`
-	OffsetReset   *string                `json:"OffsetReset,omitempty" xml:"OffsetReset,omitempty"`
-	ExtendConfig  map[string]interface{} `json:"ExtendConfig,omitempty" xml:"ExtendConfig,omitempty"`
+	RegionId        *string                `json:"RegionId,omitempty" xml:"RegionId,omitempty"`
+	InstanceId      *string                `json:"InstanceId,omitempty" xml:"InstanceId,omitempty"`
+	Topic           *string                `json:"Topic,omitempty" xml:"Topic,omitempty"`
+	ConsumerGroup   *string                `json:"ConsumerGroup,omitempty" xml:"ConsumerGroup,omitempty" require:"true"`
+	OffsetReset     *string                `json:"OffsetReset,omitempty" xml:"OffsetReset,omitempty"`
+	ExtendConfig    map[string]interface{} `json:"ExtendConfig,omitempty" xml:"ExtendConfig,omitempty"`
+	Network         *string                `json:"Network,omitempty" xml:"Network,omitempty"`
+	VpcId           *string                `json:"VpcId,omitempty" xml:"VpcId,omitempty"`
+	VSwitchId       *string                `json:"VSwitchId,omitempty" xml:"VSwitchId,omitempty"`
+	SecurityGroupId *string                `json:"SecurityGroupId,omitempty" xml:"SecurityGroupId,omitempty"`
 }
 
 func (s SourceKafkaParameters) String() string {
@@ -2059,6 +2063,26 @@ func (s *SourceKafkaParameters) SetOffsetReset(v string) *SourceKafkaParameters 
 
 func (s *SourceKafkaParameters) SetExtendConfig(v map[string]interface{}) *SourceKafkaParameters {
 	s.ExtendConfig = v
+	return s
+}
+
+func (s *SourceKafkaParameters) SetNetwork(v string) *SourceKafkaParameters {
+	s.Network = &v
+	return s
+}
+
+func (s *SourceKafkaParameters) SetVpcId(v string) *SourceKafkaParameters {
+	s.VpcId = &v
+	return s
+}
+
+func (s *SourceKafkaParameters) SetVSwitchId(v string) *SourceKafkaParameters {
+	s.VSwitchId = &v
+	return s
+}
+
+func (s *SourceKafkaParameters) SetSecurityGroupId(v string) *SourceKafkaParameters {
+	s.SecurityGroupId = &v
 	return s
 }
 
@@ -2372,6 +2396,7 @@ type SinkKafkaParameters struct {
 	Key          *TargetParameter       `json:"Key,omitempty" xml:"Key,omitempty"`
 	Value        *TargetParameter       `json:"Value,omitempty" xml:"Value,omitempty"`
 	ExtendConfig map[string]interface{} `json:"ExtendConfig,omitempty" xml:"ExtendConfig,omitempty"`
+	SaslUser     *TargetParameter       `json:"SaslUser,omitempty" xml:"SaslUser,omitempty"`
 }
 
 func (s SinkKafkaParameters) String() string {
@@ -2409,6 +2434,11 @@ func (s *SinkKafkaParameters) SetValue(v *TargetParameter) *SinkKafkaParameters 
 
 func (s *SinkKafkaParameters) SetExtendConfig(v map[string]interface{}) *SinkKafkaParameters {
 	s.ExtendConfig = v
+	return s
+}
+
+func (s *SinkKafkaParameters) SetSaslUser(v *TargetParameter) *SinkKafkaParameters {
+	s.SaslUser = v
 	return s
 }
 
@@ -2782,17 +2812,17 @@ func (s *CreateEventSourceResponse) SetEventSourceARN(v string) *CreateEventSour
  * The event source entry
  */
 type EBUserDefinedEventSourceEntry struct {
-	Name                      *string                    `json:"Name,omitempty" xml:"Name,omitempty"`
-	Description               *string                    `json:"Description,omitempty" xml:"Description,omitempty"`
-	Arn                       *string                    `json:"ARN,omitempty" xml:"ARN,omitempty"`
-	Status                    *string                    `json:"Status,omitempty" xml:"Status,omitempty"`
-	Ctime                     *int64                     `json:"Ctime,omitempty" xml:"Ctime,omitempty"`
-	EventBusName              *string                    `json:"EventBusName,omitempty" xml:"EventBusName,omitempty"`
-	SourceRabbitMQParameters  *SourceRabbitMQParameters  `json:"SourceRabbitMQParameters,omitempty" xml:"SourceRabbitMQParameters,omitempty"`
-	SourceMNSParameters       *SourceMNSParameters       `json:"SourceMNSParameters,omitempty" xml:"SourceMNSParameters,omitempty"`
-	SourceRocketMQParameters  *SourceRocketMQParameters  `json:"SourceRocketMQParameters,omitempty" xml:"SourceRocketMQParameters,omitempty" require:"true"`
-	SourceKafkaParameters     *SourceKafkaParameters     `json:"SourceKafkaParameters,omitempty" xml:"SourceKafkaParameters,omitempty" require:"true"`
-	SourceHttpEventParameters *SourceHttpEventParameters `json:"SourceHttpEventParameters,omitempty" xml:"SourceHttpEventParameters,omitempty" require:"true"`
+	Name                     *string                   `json:"Name,omitempty" xml:"Name,omitempty"`
+	Description              *string                   `json:"Description,omitempty" xml:"Description,omitempty"`
+	Arn                      *string                   `json:"ARN,omitempty" xml:"ARN,omitempty"`
+	Status                   *string                   `json:"Status,omitempty" xml:"Status,omitempty"`
+	Ctime                    *int64                    `json:"Ctime,omitempty" xml:"Ctime,omitempty"`
+	EventBusName             *string                   `json:"EventBusName,omitempty" xml:"EventBusName,omitempty"`
+	SourceRabbitMQParameters *SourceRabbitMQParameters `json:"SourceRabbitMQParameters,omitempty" xml:"SourceRabbitMQParameters,omitempty"`
+	SourceMNSParameters      *SourceMNSParameters      `json:"SourceMNSParameters,omitempty" xml:"SourceMNSParameters,omitempty"`
+	SourceRocketMQParameters *SourceRocketMQParameters `json:"SourceRocketMQParameters,omitempty" xml:"SourceRocketMQParameters,omitempty" require:"true"`
+	SourceKafkaParameters    *SourceKafkaParameters    `json:"SourceKafkaParameters,omitempty" xml:"SourceKafkaParameters,omitempty" require:"true"`
+	SourceHttpEventResponse  *SourceHttpEventResponse  `json:"SourceHttpEventResponse,omitempty" xml:"SourceHttpEventResponse,omitempty" require:"true"`
 }
 
 func (s EBUserDefinedEventSourceEntry) String() string {
@@ -2853,8 +2883,8 @@ func (s *EBUserDefinedEventSourceEntry) SetSourceKafkaParameters(v *SourceKafkaP
 	return s
 }
 
-func (s *EBUserDefinedEventSourceEntry) SetSourceHttpEventParameters(v *SourceHttpEventParameters) *EBUserDefinedEventSourceEntry {
-	s.SourceHttpEventParameters = v
+func (s *EBUserDefinedEventSourceEntry) SetSourceHttpEventResponse(v *SourceHttpEventResponse) *EBUserDefinedEventSourceEntry {
+	s.SourceHttpEventResponse = v
 	return s
 }
 
@@ -3789,6 +3819,59 @@ func (s *SourceHttpEventParameters) SetIp(v []*string) *SourceHttpEventParameter
 
 func (s *SourceHttpEventParameters) SetReferer(v []*string) *SourceHttpEventParameters {
 	s.Referer = v
+	return s
+}
+
+type SourceHttpEventResponse struct {
+	Type             *string   `json:"Type,omitempty" xml:"Type,omitempty" require:"true"`
+	Method           []*string `json:"Method,omitempty" xml:"Method,omitempty" require:"true" type:"Repeated"`
+	SecurityConfig   *string   `json:"SecurityConfig,omitempty" xml:"SecurityConfig,omitempty" require:"true"`
+	Ip               []*string `json:"Ip,omitempty" xml:"Ip,omitempty" type:"Repeated"`
+	Referer          []*string `json:"Referer,omitempty" xml:"Referer,omitempty" type:"Repeated"`
+	PublicWebHookUrl []*string `json:"PublicWebHookUrl,omitempty" xml:"PublicWebHookUrl,omitempty" type:"Repeated"`
+	VpcWebHookUrl    []*string `json:"VpcWebHookUrl,omitempty" xml:"VpcWebHookUrl,omitempty" type:"Repeated"`
+}
+
+func (s SourceHttpEventResponse) String() string {
+	return tea.Prettify(s)
+}
+
+func (s SourceHttpEventResponse) GoString() string {
+	return s.String()
+}
+
+func (s *SourceHttpEventResponse) SetType(v string) *SourceHttpEventResponse {
+	s.Type = &v
+	return s
+}
+
+func (s *SourceHttpEventResponse) SetMethod(v []*string) *SourceHttpEventResponse {
+	s.Method = v
+	return s
+}
+
+func (s *SourceHttpEventResponse) SetSecurityConfig(v string) *SourceHttpEventResponse {
+	s.SecurityConfig = &v
+	return s
+}
+
+func (s *SourceHttpEventResponse) SetIp(v []*string) *SourceHttpEventResponse {
+	s.Ip = v
+	return s
+}
+
+func (s *SourceHttpEventResponse) SetReferer(v []*string) *SourceHttpEventResponse {
+	s.Referer = v
+	return s
+}
+
+func (s *SourceHttpEventResponse) SetPublicWebHookUrl(v []*string) *SourceHttpEventResponse {
+	s.PublicWebHookUrl = v
+	return s
+}
+
+func (s *SourceHttpEventResponse) SetVpcWebHookUrl(v []*string) *SourceHttpEventResponse {
+	s.VpcWebHookUrl = v
 	return s
 }
 

@@ -26,6 +26,18 @@ public class SourceKafkaParameters extends TeaModel {
     @NameInMap("ExtendConfig")
     public java.util.Map<String, ?> extendConfig;
 
+    @NameInMap("Network")
+    public String network;
+
+    @NameInMap("VpcId")
+    public String vpcId;
+
+    @NameInMap("VSwitchId")
+    public String vSwitchId;
+
+    @NameInMap("SecurityGroupId")
+    public String securityGroupId;
+
     public static SourceKafkaParameters build(java.util.Map<String, ?> map) {
         SourceKafkaParameters self = new SourceKafkaParameters();
         return TeaModel.build(map, self);
@@ -63,7 +75,6 @@ public class SourceKafkaParameters extends TeaModel {
         return this.consumerGroup;
     }
 
-
     public SourceKafkaParameters setOffsetReset(String offsetReset) {
         this.offsetReset = offsetReset;
         return this;
@@ -78,6 +89,38 @@ public class SourceKafkaParameters extends TeaModel {
     }
     public java.util.Map<String, ?> getExtendConfig() {
         return this.extendConfig;
+    }
+
+    public SourceKafkaParameters setNetwork(String network) {
+        this.network = network;
+        return this;
+    }
+    public String getNetwork() {
+        return this.network;
+    }
+
+    public SourceKafkaParameters setVpcId(String vpcId) {
+        this.vpcId = vpcId;
+        return this;
+    }
+    public String getVpcId() {
+        return this.vpcId;
+    }
+
+    public SourceKafkaParameters setVSwitchId(String vSwitchId) {
+        this.vSwitchId = vSwitchId;
+        return this;
+    }
+    public String getVSwitchId() {
+        return this.vSwitchId;
+    }
+
+    public SourceKafkaParameters setSecurityGroupId(String securityGroupId) {
+        this.securityGroupId = securityGroupId;
+        return this;
+    }
+    public String getSecurityGroupId() {
+        return this.securityGroupId;
     }
 
 }

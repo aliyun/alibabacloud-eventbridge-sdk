@@ -2879,6 +2879,10 @@ class SourceKafkaParameters(TeaModel):
         consumer_group: str = None,
         offset_reset: str = None,
         extend_config: Dict[str, Any] = None,
+        network: str = None,
+        vpc_id: str = None,
+        v_switch_id: str = None,
+        security_group_id: str = None,
     ):
         self.region_id = region_id
         self.instance_id = instance_id
@@ -2886,6 +2890,10 @@ class SourceKafkaParameters(TeaModel):
         self.consumer_group = consumer_group
         self.offset_reset = offset_reset
         self.extend_config = extend_config
+        self.network = network
+        self.vpc_id = vpc_id
+        self.v_switch_id = v_switch_id
+        self.security_group_id = security_group_id
 
     def validate(self):
         self.validate_required(self.consumer_group, 'consumer_group')
@@ -2908,6 +2916,14 @@ class SourceKafkaParameters(TeaModel):
             result['OffsetReset'] = self.offset_reset
         if self.extend_config is not None:
             result['ExtendConfig'] = self.extend_config
+        if self.network is not None:
+            result['Network'] = self.network
+        if self.vpc_id is not None:
+            result['VpcId'] = self.vpc_id
+        if self.v_switch_id is not None:
+            result['VSwitchId'] = self.v_switch_id
+        if self.security_group_id is not None:
+            result['SecurityGroupId'] = self.security_group_id
         return result
 
     def from_map(self, m: dict = None):
@@ -2924,6 +2940,14 @@ class SourceKafkaParameters(TeaModel):
             self.offset_reset = m.get('OffsetReset')
         if m.get('ExtendConfig') is not None:
             self.extend_config = m.get('ExtendConfig')
+        if m.get('Network') is not None:
+            self.network = m.get('Network')
+        if m.get('VpcId') is not None:
+            self.vpc_id = m.get('VpcId')
+        if m.get('VSwitchId') is not None:
+            self.v_switch_id = m.get('VSwitchId')
+        if m.get('SecurityGroupId') is not None:
+            self.security_group_id = m.get('SecurityGroupId')
         return self
 
 
@@ -3236,6 +3260,7 @@ class SinkKafkaParameters(TeaModel):
         key: TargetParameter = None,
         value: TargetParameter = None,
         extend_config: Dict[str, Any] = None,
+        sasl_user: TargetParameter = None,
     ):
         self.instance_id = instance_id
         self.topic = topic
@@ -3243,6 +3268,7 @@ class SinkKafkaParameters(TeaModel):
         self.key = key
         self.value = value
         self.extend_config = extend_config
+        self.sasl_user = sasl_user
 
     def validate(self):
         if self.instance_id:
@@ -3255,6 +3281,8 @@ class SinkKafkaParameters(TeaModel):
             self.key.validate()
         if self.value:
             self.value.validate()
+        if self.sasl_user:
+            self.sasl_user.validate()
 
     def to_map(self):
         _map = super().to_map()
@@ -3274,6 +3302,8 @@ class SinkKafkaParameters(TeaModel):
             result['Value'] = self.value.to_map()
         if self.extend_config is not None:
             result['ExtendConfig'] = self.extend_config
+        if self.sasl_user is not None:
+            result['SaslUser'] = self.sasl_user.to_map()
         return result
 
     def from_map(self, m: dict = None):
@@ -3295,6 +3325,9 @@ class SinkKafkaParameters(TeaModel):
             self.value = temp_model.from_map(m['Value'])
         if m.get('ExtendConfig') is not None:
             self.extend_config = m.get('ExtendConfig')
+        if m.get('SaslUser') is not None:
+            temp_model = TargetParameter()
+            self.sasl_user = temp_model.from_map(m['SaslUser'])
         return self
 
 
@@ -3950,6 +3983,71 @@ class CreateEventSourceResponse(TeaModel):
         return self
 
 
+class SourceHttpEventResponse(TeaModel):
+    def __init__(
+        self,
+        type: str = None,
+        method: List[str] = None,
+        security_config: str = None,
+        ip: List[str] = None,
+        referer: List[str] = None,
+        public_web_hook_url: List[str] = None,
+        vpc_web_hook_url: List[str] = None,
+    ):
+        self.type = type
+        self.method = method
+        self.security_config = security_config
+        self.ip = ip
+        self.referer = referer
+        self.public_web_hook_url = public_web_hook_url
+        self.vpc_web_hook_url = vpc_web_hook_url
+
+    def validate(self):
+        self.validate_required(self.type, 'type')
+        self.validate_required(self.method, 'method')
+        self.validate_required(self.security_config, 'security_config')
+
+    def to_map(self):
+        _map = super().to_map()
+        if _map is not None:
+            return _map
+
+        result = dict()
+        if self.type is not None:
+            result['Type'] = self.type
+        if self.method is not None:
+            result['Method'] = self.method
+        if self.security_config is not None:
+            result['SecurityConfig'] = self.security_config
+        if self.ip is not None:
+            result['Ip'] = self.ip
+        if self.referer is not None:
+            result['Referer'] = self.referer
+        if self.public_web_hook_url is not None:
+            result['PublicWebHookUrl'] = self.public_web_hook_url
+        if self.vpc_web_hook_url is not None:
+            result['VpcWebHookUrl'] = self.vpc_web_hook_url
+        return result
+
+    def from_map(self, m: dict = None):
+        m = m or dict()
+        if m.get('Type') is not None:
+            self.type = m.get('Type')
+        if m.get('Method') is not None:
+            self.method = m.get('Method')
+        if m.get('SecurityConfig') is not None:
+            self.security_config = m.get('SecurityConfig')
+        if m.get('Ip') is not None:
+            self.ip = m.get('Ip')
+        if m.get('Referer') is not None:
+            self.referer = m.get('Referer')
+        if m.get('PublicWebHookUrl') is not None:
+            self.public_web_hook_url = m.get('PublicWebHookUrl')
+        if m.get('VpcWebHookUrl') is not None:
+            self.vpc_web_hook_url = m.get('VpcWebHookUrl')
+        return self
+
+
 class EBUserDefinedEventSourceEntry(TeaModel):
     """
     The event source entry
@@ -3966,7 +4064,7 @@ class EBUserDefinedEventSourceEntry(TeaModel):
         source_mnsparameters: SourceMNSParameters = None,
         source_rocket_mqparameters: SourceRocketMQParameters = None,
         source_kafka_parameters: SourceKafkaParameters = None,
-        source_http_event_parameters: SourceHttpEventParameters = None,
+        source_http_event_response: SourceHttpEventResponse = None,
     ):
         self.name = name
         self.description = description
@@ -3978,7 +4076,7 @@ class EBUserDefinedEventSourceEntry(TeaModel):
         self.source_mnsparameters = source_mnsparameters
         self.source_rocket_mqparameters = source_rocket_mqparameters
         self.source_kafka_parameters = source_kafka_parameters
-        self.source_http_event_parameters = source_http_event_parameters
+        self.source_http_event_response = source_http_event_response
 
     def validate(self):
         if self.source_rabbit_mqparameters:
@@ -3991,9 +4089,9 @@ class EBUserDefinedEventSourceEntry(TeaModel):
         self.validate_required(self.source_kafka_parameters, 'source_kafka_parameters')
         if self.source_kafka_parameters:
             self.source_kafka_parameters.validate()
-        self.validate_required(self.source_http_event_parameters, 'source_http_event_parameters')
-        if self.source_http_event_parameters:
-            self.source_http_event_parameters.validate()
+        self.validate_required(self.source_http_event_response, 'source_http_event_response')
+        if self.source_http_event_response:
+            self.source_http_event_response.validate()
 
     def to_map(self):
         _map = super().to_map()
@@ -4021,8 +4119,8 @@ class EBUserDefinedEventSourceEntry(TeaModel):
             result['SourceRocketMQParameters'] = self.source_rocket_mqparameters.to_map()
         if self.source_kafka_parameters is not None:
             result['SourceKafkaParameters'] = self.source_kafka_parameters.to_map()
-        if self.source_http_event_parameters is not None:
-            result['SourceHttpEventParameters'] = self.source_http_event_parameters.to_map()
+        if self.source_http_event_response is not None:
+            result['SourceHttpEventResponse'] = self.source_http_event_response.to_map()
         return result
 
     def from_map(self, m: dict = None):
@@ -4051,9 +4149,9 @@ class EBUserDefinedEventSourceEntry(TeaModel):
         if m.get('SourceKafkaParameters') is not None:
             temp_model = SourceKafkaParameters()
             self.source_kafka_parameters = temp_model.from_map(m['SourceKafkaParameters'])
-        if m.get('SourceHttpEventParameters') is not None:
-            temp_model = SourceHttpEventParameters()
-            self.source_http_event_parameters = temp_model.from_map(m['SourceHttpEventParameters'])
+        if m.get('SourceHttpEventResponse') is not None:
+            temp_model = SourceHttpEventResponse()
+            self.source_http_event_response = temp_model.from_map(m['SourceHttpEventResponse'])
         return self
 
 
