@@ -26,7 +26,7 @@
 
     <properties>
         <cloudevents.version>2.0.0-milestone1</cloudevents.version>
-        <netty.version>4.1.25.Final</netty.version>
+        <netty.version>4.1.42.Final</netty.version>
         <jackson.datatype.version>2.10.1</jackson.datatype.version>
         <guava.version>22.0</guava.version>
     </properties>
