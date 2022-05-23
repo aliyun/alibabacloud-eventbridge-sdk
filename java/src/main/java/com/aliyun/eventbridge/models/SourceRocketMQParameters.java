@@ -27,7 +27,6 @@ public class SourceRocketMQParameters extends TeaModel {
     public String groupID;
 
     @NameInMap("Timestamp")
-    @Validation(required = true)
     public Number timestamp;
 
     public static SourceRocketMQParameters build(java.util.Map<String, ?> map) {

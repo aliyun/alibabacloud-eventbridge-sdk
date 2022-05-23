@@ -2635,7 +2635,6 @@ class SourceRocketMQParameters(TeaModel):
 
     def validate(self):
         self.validate_required(self.group_id, 'group_id')
-        self.validate_required(self.timestamp, 'timestamp')
 
     def to_map(self):
         _map = super().to_map()

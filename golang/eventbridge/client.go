@@ -1872,7 +1872,7 @@ type SourceRocketMQParameters struct {
 	Tag        *string `json:"Tag,omitempty" xml:"Tag,omitempty"`
 	Offset     *string `json:"Offset,omitempty" xml:"Offset,omitempty"`
 	GroupID    *string `json:"GroupID,omitempty" xml:"GroupID,omitempty" require:"true"`
-	Timestamp  *int    `json:"Timestamp,omitempty" xml:"Timestamp,omitempty" require:"true"`
+	Timestamp  *int    `json:"Timestamp,omitempty" xml:"Timestamp,omitempty"`
 }
 
 func (s SourceRocketMQParameters) String() string {
