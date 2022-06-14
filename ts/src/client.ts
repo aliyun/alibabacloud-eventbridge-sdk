@@ -486,6 +486,7 @@ export class TargetEntry extends $tea.Model {
   endpoint: string;
   pushRetryStrategy?: string;
   paramList?: EBTargetParam[];
+  concurrentConfig?: ConcurrentConfig;
   static names(): { [key: string]: string } {
     return {
       id: 'Id',
@@ -493,6 +494,7 @@ export class TargetEntry extends $tea.Model {
       endpoint: 'Endpoint',
       pushRetryStrategy: 'PushRetryStrategy',
       paramList: 'ParamList',
+      concurrentConfig: 'ConcurrentConfig',
     };
   }
 
@@ -503,6 +505,7 @@ export class TargetEntry extends $tea.Model {
       endpoint: 'string',
       pushRetryStrategy: 'string',
       paramList: { 'type': 'array', 'itemType': EBTargetParam },
+      concurrentConfig: ConcurrentConfig,
     };
   }
 
@@ -1440,6 +1443,1668 @@ export class QueryEventsByPeriodResponse extends $tea.Model {
   }
 }
 
+/**
+ * The detail of SourceRabbitMQParameters
+ */
+export class SourceRabbitMQParameters extends $tea.Model {
+  regionId?: string;
+  instanceId?: string;
+  virtualHostName: string;
+  queueName: string;
+  static names(): { [key: string]: string } {
+    return {
+      regionId: 'RegionId',
+      instanceId: 'InstanceId',
+      virtualHostName: 'VirtualHostName',
+      queueName: 'QueueName',
+    };
+  }
+
+  static types(): { [key: string]: any } {
+    return {
+      regionId: 'string',
+      instanceId: 'string',
+      virtualHostName: 'string',
+      queueName: 'string',
+    };
+  }
+
+  constructor(map?: { [key: string]: any }) {
+    super(map);
+  }
+}
+
+/**
+ * The detail of SourceMNSParameters
+ */
+export class SourceMNSParameters extends $tea.Model {
+  regionId?: string;
+  queueName?: string;
+  isBase64Decode?: boolean;
+  static names(): { [key: string]: string } {
+    return {
+      regionId: 'RegionId',
+      queueName: 'QueueName',
+      isBase64Decode: 'IsBase64Decode',
+    };
+  }
+
+  static types(): { [key: string]: any } {
+    return {
+      regionId: 'string',
+      queueName: 'string',
+      isBase64Decode: 'boolean',
+    };
+  }
+
+  constructor(map?: { [key: string]: any }) {
+    super(map);
+  }
+}
+
+/**
+ * The detail of SourceRocketMQParameters
+ */
+export class SourceRocketMQParameters extends $tea.Model {
+  regionId?: string;
+  instanceId?: string;
+  topic?: string;
+  tag?: string;
+  offset?: string;
+  groupID: string;
+  timestamp?: number;
+  static names(): { [key: string]: string } {
+    return {
+      regionId: 'RegionId',
+      instanceId: 'InstanceId',
+      topic: 'Topic',
+      tag: 'Tag',
+      offset: 'Offset',
+      groupID: 'GroupID',
+      timestamp: 'Timestamp',
+    };
+  }
+
+  static types(): { [key: string]: any } {
+    return {
+      regionId: 'string',
+      instanceId: 'string',
+      topic: 'string',
+      tag: 'string',
+      offset: 'string',
+      groupID: 'string',
+      timestamp: 'number',
+    };
+  }
+
+  constructor(map?: { [key: string]: any }) {
+    super(map);
+  }
+}
+
+/**
+ * The detail of SourceScheduledEventParameters
+ */
+export class SourceScheduledEventParameters extends $tea.Model {
+  Schedule: string;
+  TimeZone: string;
+  UserData?: { [key: string]: string };
+  static names(): { [key: string]: string } {
+    return {
+      Schedule: 'Schedule',
+      TimeZone: 'TimeZone',
+      UserData: 'UserData',
+    };
+  }
+
+  static types(): { [key: string]: any } {
+    return {
+      Schedule: 'string',
+      TimeZone: 'string',
+      UserData: { 'type': 'map', 'keyType': 'string', 'valueType': 'string' },
+    };
+  }
+
+  constructor(map?: { [key: string]: any }) {
+    super(map);
+  }
+}
+
+/**
+ * The request of createEventSource
+ */
+export class CreateEventSourceRequest extends $tea.Model {
+  eventSourceName: string;
+  description?: string;
+  eventBusName: string;
+  sourceRabbitMQParameters?: SourceRabbitMQParameters;
+  sourceMNSParameters?: SourceMNSParameters;
+  SourceRocketMQParameters?: SourceRocketMQParameters;
+  sourceScheduledEventParameters?: SourceScheduledEventParameters;
+  sourceHttpEventParameters?: SourceHttpEventParameters;
+  static names(): { [key: string]: string } {
+    return {
+      eventSourceName: 'EventSourceName',
+      description: 'Description',
+      eventBusName: 'EventBusName',
+      sourceRabbitMQParameters: 'SourceRabbitMQParameters',
+      sourceMNSParameters: 'SourceMNSParameters',
+      SourceRocketMQParameters: 'SourceRocketMQParameters',
+      sourceScheduledEventParameters: 'SourceScheduledEventParameters',
+      sourceHttpEventParameters: 'SourceHttpEventParameters',
+    };
+  }
+
+  static types(): { [key: string]: any } {
+    return {
+      eventSourceName: 'string',
+      description: 'string',
+      eventBusName: 'string',
+      sourceRabbitMQParameters: SourceRabbitMQParameters,
+      sourceMNSParameters: SourceMNSParameters,
+      SourceRocketMQParameters: SourceRocketMQParameters,
+      sourceScheduledEventParameters: SourceScheduledEventParameters,
+      sourceHttpEventParameters: SourceHttpEventParameters,
+    };
+  }
+
+  constructor(map?: { [key: string]: any }) {
+    super(map);
+  }
+}
+
+/**
+ * The detail of SourceKafkaParameters
+ */
+export class SourceKafkaParameters extends $tea.Model {
+  regionId?: string;
+  InstanceId?: string;
+  topic?: string;
+  consumerGroup: string;
+  offsetReset?: string;
+  extendConfig?: { [key: string]: any };
+  network?: string;
+  vpcId?: string;
+  vSwitchId?: string;
+  securityGroupId?: string;
+  static names(): { [key: string]: string } {
+    return {
+      regionId: 'RegionId',
+      InstanceId: 'InstanceId',
+      topic: 'Topic',
+      consumerGroup: 'ConsumerGroup',
+      offsetReset: 'OffsetReset',
+      extendConfig: 'ExtendConfig',
+      network: 'Network',
+      vpcId: 'VpcId',
+      vSwitchId: 'VSwitchId',
+      securityGroupId: 'SecurityGroupId',
+    };
+  }
+
+  static types(): { [key: string]: any } {
+    return {
+      regionId: 'string',
+      InstanceId: 'string',
+      topic: 'string',
+      consumerGroup: 'string',
+      offsetReset: 'string',
+      extendConfig: { 'type': 'map', 'keyType': 'string', 'valueType': 'any' },
+      network: 'string',
+      vpcId: 'string',
+      vSwitchId: 'string',
+      securityGroupId: 'string',
+    };
+  }
+
+  constructor(map?: { [key: string]: any }) {
+    super(map);
+  }
+}
+
+/**
+ * The event source entry
+ */
+export class EventTypeEntry extends $tea.Model {
+  name: string;
+  eventSourceName: string;
+  shortName: string;
+  groupName: string;
+  static names(): { [key: string]: string } {
+    return {
+      name: 'Name',
+      eventSourceName: 'EventSourceName',
+      shortName: 'ShortName',
+      groupName: 'GroupName',
+    };
+  }
+
+  static types(): { [key: string]: any } {
+    return {
+      name: 'string',
+      eventSourceName: 'string',
+      shortName: 'string',
+      groupName: 'string',
+    };
+  }
+
+  constructor(map?: { [key: string]: any }) {
+    super(map);
+  }
+}
+
+/**
+ * The config of Source
+ */
+export class Source extends $tea.Model {
+  sourceMNSParameters?: SourceMNSParameters;
+  sourceRabbitMQParameters?: SourceRabbitMQParameters;
+  sourceRocketMQParameters?: SourceRocketMQParameters;
+  sourceKafkaParameters?: SourceKafkaParameters;
+  static names(): { [key: string]: string } {
+    return {
+      sourceMNSParameters: 'SourceMNSParameters',
+      sourceRabbitMQParameters: 'SourceRabbitMQParameters',
+      sourceRocketMQParameters: 'SourceRocketMQParameters',
+      sourceKafkaParameters: 'SourceKafkaParameters',
+    };
+  }
+
+  static types(): { [key: string]: any } {
+    return {
+      sourceMNSParameters: SourceMNSParameters,
+      sourceRabbitMQParameters: SourceRabbitMQParameters,
+      sourceRocketMQParameters: SourceRocketMQParameters,
+      sourceKafkaParameters: SourceKafkaParameters,
+    };
+  }
+
+  constructor(map?: { [key: string]: any }) {
+    super(map);
+  }
+}
+
+/**
+ * The config of Sink
+ */
+export class Sink extends $tea.Model {
+  sinkMNSParameters?: SinkMNSParameters;
+  sinkRabbitMQParameters?: SinkRabbitMQParameters;
+  sinkKafkaParameters?: SinkKafkaParameters;
+  sinkRocketMQParameters?: SinkRocketMQParameters;
+  sinkFcParameters?: SinkFcParameters;
+  sinkOdpsParameters?: SinkOdpsParameters;
+  static names(): { [key: string]: string } {
+    return {
+      sinkMNSParameters: 'SinkMNSParameters',
+      sinkRabbitMQParameters: 'SinkRabbitMQParameters',
+      sinkKafkaParameters: 'SinkKafkaParameters',
+      sinkRocketMQParameters: 'SinkRocketMQParameters',
+      sinkFcParameters: 'SinkFcParameters',
+      sinkOdpsParameters: 'SinkOdpsParameters',
+    };
+  }
+
+  static types(): { [key: string]: any } {
+    return {
+      sinkMNSParameters: SinkMNSParameters,
+      sinkRabbitMQParameters: SinkRabbitMQParameters,
+      sinkKafkaParameters: SinkKafkaParameters,
+      sinkRocketMQParameters: SinkRocketMQParameters,
+      sinkFcParameters: SinkFcParameters,
+      sinkOdpsParameters: SinkOdpsParameters,
+    };
+  }
+
+  constructor(map?: { [key: string]: any }) {
+    super(map);
+  }
+}
+
+/**
+ * The config of SinkOdpsParameters
+ */
+export class SinkOdpsParameters extends $tea.Model {
+  project?: TargetParameter;
+  table?: TargetParameter;
+  roleName?: TargetParameter;
+  format?: TargetParameter;
+  mode?: TargetParameter;
+  partitionWindowType?: TargetParameter;
+  timeZone?: TargetParameter;
+  useStreaming?: TargetParameter;
+  extendConfig?: { [key: string]: any };
+  static names(): { [key: string]: string } {
+    return {
+      project: 'Project',
+      table: 'Table',
+      roleName: 'RoleName',
+      format: 'Format',
+      mode: 'Mode',
+      partitionWindowType: 'PartitionWindowType',
+      timeZone: 'TimeZone',
+      useStreaming: 'UseStreaming',
+      extendConfig: 'ExtendConfig',
+    };
+  }
+
+  static types(): { [key: string]: any } {
+    return {
+      project: TargetParameter,
+      table: TargetParameter,
+      roleName: TargetParameter,
+      format: TargetParameter,
+      mode: TargetParameter,
+      partitionWindowType: TargetParameter,
+      timeZone: TargetParameter,
+      useStreaming: TargetParameter,
+      extendConfig: { 'type': 'map', 'keyType': 'string', 'valueType': 'any' },
+    };
+  }
+
+  constructor(map?: { [key: string]: any }) {
+    super(map);
+  }
+}
+
+/**
+ * The config of SinkFcParameters
+ */
+export class SinkFcParameters extends $tea.Model {
+  serviceName?: TargetParameter;
+  functionName?: TargetParameter;
+  body?: TargetParameter;
+  qualifier?: TargetParameter;
+  invocationType?: TargetParameter;
+  batchSize?: TargetParameter;
+  extendConfig?: { [key: string]: any };
+  static names(): { [key: string]: string } {
+    return {
+      serviceName: 'ServiceName',
+      functionName: 'FunctionName',
+      body: 'Body',
+      qualifier: 'Qualifier',
+      invocationType: 'InvocationType',
+      batchSize: 'BatchSize',
+      extendConfig: 'ExtendConfig',
+    };
+  }
+
+  static types(): { [key: string]: any } {
+    return {
+      serviceName: TargetParameter,
+      functionName: TargetParameter,
+      body: TargetParameter,
+      qualifier: TargetParameter,
+      invocationType: TargetParameter,
+      batchSize: TargetParameter,
+      extendConfig: { 'type': 'map', 'keyType': 'string', 'valueType': 'any' },
+    };
+  }
+
+  constructor(map?: { [key: string]: any }) {
+    super(map);
+  }
+}
+
+/**
+ * The config of SinkRocketMQParameters
+ */
+export class SinkRocketMQParameters extends $tea.Model {
+  instanceId?: TargetParameter;
+  topic?: TargetParameter;
+  body?: TargetParameter;
+  properties?: TargetParameter;
+  keys?: TargetParameter;
+  tags?: TargetParameter;
+  static names(): { [key: string]: string } {
+    return {
+      instanceId: 'InstanceId',
+      topic: 'Topic',
+      body: 'Body',
+      properties: 'Properties',
+      keys: 'Keys',
+      tags: 'Tags',
+    };
+  }
+
+  static types(): { [key: string]: any } {
+    return {
+      instanceId: TargetParameter,
+      topic: TargetParameter,
+      body: TargetParameter,
+      properties: TargetParameter,
+      keys: TargetParameter,
+      tags: TargetParameter,
+    };
+  }
+
+  constructor(map?: { [key: string]: any }) {
+    super(map);
+  }
+}
+
+/**
+ * The config of SinkKafkaParameters
+ */
+export class SinkKafkaParameters extends $tea.Model {
+  instanceId?: TargetParameter;
+  topic?: TargetParameter;
+  acks?: TargetParameter;
+  key?: TargetParameter;
+  value?: TargetParameter;
+  extendConfig?: { [key: string]: any };
+  saslUser?: TargetParameter;
+  static names(): { [key: string]: string } {
+    return {
+      instanceId: 'InstanceId',
+      topic: 'Topic',
+      acks: 'Acks',
+      key: 'Key',
+      value: 'Value',
+      extendConfig: 'ExtendConfig',
+      saslUser: 'SaslUser',
+    };
+  }
+
+  static types(): { [key: string]: any } {
+    return {
+      instanceId: TargetParameter,
+      topic: TargetParameter,
+      acks: TargetParameter,
+      key: TargetParameter,
+      value: TargetParameter,
+      extendConfig: { 'type': 'map', 'keyType': 'string', 'valueType': 'any' },
+      saslUser: TargetParameter,
+    };
+  }
+
+  constructor(map?: { [key: string]: any }) {
+    super(map);
+  }
+}
+
+/**
+ * The config of SinkRabbitMQParameters
+ */
+export class SinkRabbitMQParameters extends $tea.Model {
+  instanceId?: TargetParameter;
+  virtualHostName?: TargetParameter;
+  targetType?: TargetParameter;
+  exchange?: TargetParameter;
+  routingKey?: TargetParameter;
+  queueName?: TargetParameter;
+  body?: TargetParameter;
+  messageId?: TargetParameter;
+  properties?: TargetParameter;
+  static names(): { [key: string]: string } {
+    return {
+      instanceId: 'InstanceId',
+      virtualHostName: 'VirtualHostName',
+      targetType: 'TargetType',
+      exchange: 'Exchange',
+      routingKey: 'RoutingKey',
+      queueName: 'QueueName',
+      body: 'Body',
+      messageId: 'MessageId',
+      properties: 'Properties',
+    };
+  }
+
+  static types(): { [key: string]: any } {
+    return {
+      instanceId: TargetParameter,
+      virtualHostName: TargetParameter,
+      targetType: TargetParameter,
+      exchange: TargetParameter,
+      routingKey: TargetParameter,
+      queueName: TargetParameter,
+      body: TargetParameter,
+      messageId: TargetParameter,
+      properties: TargetParameter,
+    };
+  }
+
+  constructor(map?: { [key: string]: any }) {
+    super(map);
+  }
+}
+
+/**
+ * The config of SinkMNSParameters
+ */
+export class SinkMNSParameters extends $tea.Model {
+  QueueName?: TargetParameter;
+  body?: TargetParameter;
+  static names(): { [key: string]: string } {
+    return {
+      QueueName: 'QueueName',
+      body: 'Body',
+    };
+  }
+
+  static types(): { [key: string]: any } {
+    return {
+      QueueName: TargetParameter,
+      body: TargetParameter,
+    };
+  }
+
+  constructor(map?: { [key: string]: any }) {
+    super(map);
+  }
+}
+
+/**
+ * The config of TargetParameter
+ */
+export class TargetParameter extends $tea.Model {
+  value?: string;
+  form?: string;
+  template?: string;
+  static names(): { [key: string]: string } {
+    return {
+      value: 'Value',
+      form: 'Form',
+      template: 'Template',
+    };
+  }
+
+  static types(): { [key: string]: any } {
+    return {
+      value: 'string',
+      form: 'string',
+      template: 'string',
+    };
+  }
+
+  constructor(map?: { [key: string]: any }) {
+    super(map);
+  }
+}
+
+/**
+ * The config of RunOptions
+ */
+export class RunOptions extends $tea.Model {
+  maximumTasks?: number;
+  retryStrategy?: RetryStrategy;
+  errorsTolerance?: string;
+  deadLetterQueue?: DeadLetterQueue;
+  static names(): { [key: string]: string } {
+    return {
+      maximumTasks: 'MaximumTasks',
+      retryStrategy: 'RetryStrategy',
+      errorsTolerance: 'ErrorsTolerance',
+      deadLetterQueue: 'DeadLetterQueue',
+    };
+  }
+
+  static types(): { [key: string]: any } {
+    return {
+      maximumTasks: 'number',
+      retryStrategy: RetryStrategy,
+      errorsTolerance: 'string',
+      deadLetterQueue: DeadLetterQueue,
+    };
+  }
+
+  constructor(map?: { [key: string]: any }) {
+    super(map);
+  }
+}
+
+/**
+ * The config of RetryStrategy
+ */
+export class RetryStrategy extends $tea.Model {
+  pushRetryStrategy?: string;
+  maximumEventAgeInSeconds?: number;
+  maximumRetryAttempts?: number;
+  static names(): { [key: string]: string } {
+    return {
+      pushRetryStrategy: 'PushRetryStrategy',
+      maximumEventAgeInSeconds: 'MaximumEventAgeInSeconds',
+      maximumRetryAttempts: 'MaximumRetryAttempts',
+    };
+  }
+
+  static types(): { [key: string]: any } {
+    return {
+      pushRetryStrategy: 'string',
+      maximumEventAgeInSeconds: 'number',
+      maximumRetryAttempts: 'number',
+    };
+  }
+
+  constructor(map?: { [key: string]: any }) {
+    super(map);
+  }
+}
+
+/**
+ * The detail of DeadLetterQueue
+ */
+export class DeadLetterQueue extends $tea.Model {
+  arn?: string;
+  static names(): { [key: string]: string } {
+    return {
+      arn: 'Arn',
+    };
+  }
+
+  static types(): { [key: string]: any } {
+    return {
+      arn: 'string',
+    };
+  }
+
+  constructor(map?: { [key: string]: any }) {
+    super(map);
+  }
+}
+
+/**
+ * The metrics of event streaming
+ */
+export class EventStreamingMetric extends $tea.Model {
+  name?: string;
+  tps?: number;
+  delayTime?: number;
+  diffOffset?: number;
+  lastDateSyncTime?: number;
+  lastHeartBeat?: number;
+  status?: string;
+  static names(): { [key: string]: string } {
+    return {
+      name: 'Name',
+      tps: 'TPS',
+      delayTime: 'DelayTime',
+      diffOffset: 'DiffOffset',
+      lastDateSyncTime: 'LastDateSyncTime',
+      lastHeartBeat: 'LastHeartBeat',
+      status: 'Status',
+    };
+  }
+
+  static types(): { [key: string]: any } {
+    return {
+      name: 'string',
+      tps: 'number',
+      delayTime: 'number',
+      diffOffset: 'number',
+      lastDateSyncTime: 'number',
+      lastHeartBeat: 'number',
+      status: 'string',
+    };
+  }
+
+  constructor(map?: { [key: string]: any }) {
+    super(map);
+  }
+}
+
+/**
+ * The detail of EBEventStreamingEntry
+ */
+export class EBEventStreamingEntry extends $tea.Model {
+  eventStreamingName?: string;
+  description?: string;
+  source?: Source;
+  filterPattern?: string;
+  sink?: Sink;
+  runOptions?: RunOptions;
+  tag?: string;
+  status?: string;
+  static names(): { [key: string]: string } {
+    return {
+      eventStreamingName: 'EventStreamingName',
+      description: 'Description',
+      source: 'Source',
+      filterPattern: 'FilterPattern',
+      sink: 'Sink',
+      runOptions: 'RunOptions',
+      tag: 'Tag',
+      status: 'Status',
+    };
+  }
+
+  static types(): { [key: string]: any } {
+    return {
+      eventStreamingName: 'string',
+      description: 'string',
+      source: Source,
+      filterPattern: 'string',
+      sink: Sink,
+      runOptions: RunOptions,
+      tag: 'string',
+      status: 'string',
+    };
+  }
+
+  constructor(map?: { [key: string]: any }) {
+    super(map);
+  }
+}
+
+/**
+ * The response of createEventSource
+ */
+export class CreateEventSourceResponse extends $tea.Model {
+  requestId: string;
+  resourceOwnerAccountId: string;
+  eventSourceARN?: string;
+  static names(): { [key: string]: string } {
+    return {
+      requestId: 'RequestId',
+      resourceOwnerAccountId: 'ResourceOwnerAccountId',
+      eventSourceARN: 'EventSourceARN',
+    };
+  }
+
+  static types(): { [key: string]: any } {
+    return {
+      requestId: 'string',
+      resourceOwnerAccountId: 'string',
+      eventSourceARN: 'string',
+    };
+  }
+
+  constructor(map?: { [key: string]: any }) {
+    super(map);
+  }
+}
+
+/**
+ * The event source entry
+ */
+export class EBUserDefinedEventSourceEntry extends $tea.Model {
+  name?: string;
+  description?: string;
+  arn?: string;
+  status?: string;
+  ctime?: number;
+  eventBusName?: string;
+  sourceRabbitMQParameters?: SourceRabbitMQParameters;
+  sourceMNSParameters?: SourceMNSParameters;
+  sourceRocketMQParameters: SourceRocketMQParameters;
+  sourceKafkaParameters: SourceKafkaParameters;
+  sourceHttpEventResponse: SourceHttpEventResponse;
+  static names(): { [key: string]: string } {
+    return {
+      name: 'Name',
+      description: 'Description',
+      arn: 'ARN',
+      status: 'Status',
+      ctime: 'Ctime',
+      eventBusName: 'EventBusName',
+      sourceRabbitMQParameters: 'SourceRabbitMQParameters',
+      sourceMNSParameters: 'SourceMNSParameters',
+      sourceRocketMQParameters: 'SourceRocketMQParameters',
+      sourceKafkaParameters: 'SourceKafkaParameters',
+      sourceHttpEventResponse: 'SourceHttpEventResponse',
+    };
+  }
+
+  static types(): { [key: string]: any } {
+    return {
+      name: 'string',
+      description: 'string',
+      arn: 'string',
+      status: 'string',
+      ctime: 'number',
+      eventBusName: 'string',
+      sourceRabbitMQParameters: SourceRabbitMQParameters,
+      sourceMNSParameters: SourceMNSParameters,
+      sourceRocketMQParameters: SourceRocketMQParameters,
+      sourceKafkaParameters: SourceKafkaParameters,
+      sourceHttpEventResponse: SourceHttpEventResponse,
+    };
+  }
+
+  constructor(map?: { [key: string]: any }) {
+    super(map);
+  }
+}
+
+/**
+ * The event source entry
+ */
+export class EBAliyunOfficialEventSourceEntry extends $tea.Model {
+  name: string;
+  description: string;
+  arn: string;
+  status: string;
+  ctime: number;
+  eventBusName: string;
+  eventTypes: EventTypeEntry[];
+  static names(): { [key: string]: string } {
+    return {
+      name: 'Name',
+      description: 'Description',
+      arn: 'ARN',
+      status: 'Status',
+      ctime: 'Ctime',
+      eventBusName: 'EventBusName',
+      eventTypes: 'EventTypes',
+    };
+  }
+
+  static types(): { [key: string]: any } {
+    return {
+      name: 'string',
+      description: 'string',
+      arn: 'string',
+      status: 'string',
+      ctime: 'number',
+      eventBusName: 'string',
+      eventTypes: { 'type': 'array', 'itemType': EventTypeEntry },
+    };
+  }
+
+  constructor(map?: { [key: string]: any }) {
+    super(map);
+  }
+}
+
+/**
+ * The request of deleteEventSource
+ */
+export class DeleteEventSourceRequest extends $tea.Model {
+  eventBusName?: string;
+  eventSourceName: string;
+  static names(): { [key: string]: string } {
+    return {
+      eventBusName: 'EventBusName',
+      eventSourceName: 'EventSourceName',
+    };
+  }
+
+  static types(): { [key: string]: any } {
+    return {
+      eventBusName: 'string',
+      eventSourceName: 'string',
+    };
+  }
+
+  constructor(map?: { [key: string]: any }) {
+    super(map);
+  }
+}
+
+/**
+ * The response of deleteEventSource
+ */
+export class DeleteEventSourceResponse extends $tea.Model {
+  requestId: string;
+  resourceOwnerAccountId: string;
+  static names(): { [key: string]: string } {
+    return {
+      requestId: 'RequestId',
+      resourceOwnerAccountId: 'ResourceOwnerAccountId',
+    };
+  }
+
+  static types(): { [key: string]: any } {
+    return {
+      requestId: 'string',
+      resourceOwnerAccountId: 'string',
+    };
+  }
+
+  constructor(map?: { [key: string]: any }) {
+    super(map);
+  }
+}
+
+/**
+ * The request of update the event source
+ */
+export class UpdateEventSourceRequest extends $tea.Model {
+  eventSourceName: string;
+  description?: string;
+  eventBusName: string;
+  sourceRabbitMQParameters?: SourceRabbitMQParameters;
+  sourceMNSParameters?: SourceMNSParameters;
+  sourceRocketMQParameters?: SourceRocketMQParameters;
+  sourceScheduledEventParameters?: SourceScheduledEventParameters;
+  sourceHttpEventParameters?: SourceHttpEventParameters;
+  static names(): { [key: string]: string } {
+    return {
+      eventSourceName: 'EventSourceName',
+      description: 'Description',
+      eventBusName: 'EventBusName',
+      sourceRabbitMQParameters: 'SourceRabbitMQParameters',
+      sourceMNSParameters: 'SourceMNSParameters',
+      sourceRocketMQParameters: 'SourceRocketMQParameters',
+      sourceScheduledEventParameters: 'SourceScheduledEventParameters',
+      sourceHttpEventParameters: 'SourceHttpEventParameters',
+    };
+  }
+
+  static types(): { [key: string]: any } {
+    return {
+      eventSourceName: 'string',
+      description: 'string',
+      eventBusName: 'string',
+      sourceRabbitMQParameters: SourceRabbitMQParameters,
+      sourceMNSParameters: SourceMNSParameters,
+      sourceRocketMQParameters: SourceRocketMQParameters,
+      sourceScheduledEventParameters: SourceScheduledEventParameters,
+      sourceHttpEventParameters: SourceHttpEventParameters,
+    };
+  }
+
+  constructor(map?: { [key: string]: any }) {
+    super(map);
+  }
+}
+
+/**
+ * The response of update the event source
+ */
+export class UpdateEventSourceResponse extends $tea.Model {
+  requestId: string;
+  resourceOwnerAccountId: string;
+  static names(): { [key: string]: string } {
+    return {
+      requestId: 'RequestId',
+      resourceOwnerAccountId: 'ResourceOwnerAccountId',
+    };
+  }
+
+  static types(): { [key: string]: any } {
+    return {
+      requestId: 'string',
+      resourceOwnerAccountId: 'string',
+    };
+  }
+
+  constructor(map?: { [key: string]: any }) {
+    super(map);
+  }
+}
+
+/**
+ * The request of listUserDefinedEventSources
+ */
+export class ListUserDefinedRequest extends $tea.Model {
+  eventBusName?: string;
+  nextToken?: string;
+  limit?: number;
+  static names(): { [key: string]: string } {
+    return {
+      eventBusName: 'EventBusName',
+      nextToken: 'NextToken',
+      limit: 'Limit',
+    };
+  }
+
+  static types(): { [key: string]: any } {
+    return {
+      eventBusName: 'string',
+      nextToken: 'string',
+      limit: 'number',
+    };
+  }
+
+  constructor(map?: { [key: string]: any }) {
+    super(map);
+  }
+}
+
+/**
+ * The response of listUserDefinedEventSources
+ */
+export class ListUserDefinedResponse extends $tea.Model {
+  requestId: string;
+  resourceOwnerAccountId: string;
+  eventSources?: EBUserDefinedEventSourceEntry[];
+  nextToken?: string;
+  total?: number;
+  static names(): { [key: string]: string } {
+    return {
+      requestId: 'RequestId',
+      resourceOwnerAccountId: 'ResourceOwnerAccountId',
+      eventSources: 'EventSources',
+      nextToken: 'NextToken',
+      total: 'Total',
+    };
+  }
+
+  static types(): { [key: string]: any } {
+    return {
+      requestId: 'string',
+      resourceOwnerAccountId: 'string',
+      eventSources: { 'type': 'array', 'itemType': EBUserDefinedEventSourceEntry },
+      nextToken: 'string',
+      total: 'number',
+    };
+  }
+
+  constructor(map?: { [key: string]: any }) {
+    super(map);
+  }
+}
+
+/**
+ * The request of listAliyunOfficialEventSources
+ */
+export class ListAliyunOfficialRequest extends $tea.Model {
+  nextToken?: string;
+  limit?: number;
+  static names(): { [key: string]: string } {
+    return {
+      nextToken: 'NextToken',
+      limit: 'Limit',
+    };
+  }
+
+  static types(): { [key: string]: any } {
+    return {
+      nextToken: 'string',
+      limit: 'number',
+    };
+  }
+
+  constructor(map?: { [key: string]: any }) {
+    super(map);
+  }
+}
+
+/**
+ * The response of listAliyunOfficialEventSources
+ */
+export class ListAliyunOfficialResponse extends $tea.Model {
+  requestId: string;
+  resourceOwnerAccountId: string;
+  eventSourceList: EBAliyunOfficialEventSourceEntry[];
+  nextToken: string;
+  total: number;
+  static names(): { [key: string]: string } {
+    return {
+      requestId: 'RequestId',
+      resourceOwnerAccountId: 'ResourceOwnerAccountId',
+      eventSourceList: 'EventSourceList',
+      nextToken: 'NextToken',
+      total: 'Total',
+    };
+  }
+
+  static types(): { [key: string]: any } {
+    return {
+      requestId: 'string',
+      resourceOwnerAccountId: 'string',
+      eventSourceList: { 'type': 'array', 'itemType': EBAliyunOfficialEventSourceEntry },
+      nextToken: 'string',
+      total: 'number',
+    };
+  }
+
+  constructor(map?: { [key: string]: any }) {
+    super(map);
+  }
+}
+
+/**
+ * The request of createEventStreaming
+ */
+export class CreateEventStreamingRequest extends $tea.Model {
+  eventStreamingName?: string;
+  description?: string;
+  source?: Source;
+  filterPattern?: string;
+  sink?: Sink;
+  runOptions?: RunOptions;
+  tag?: string;
+  static names(): { [key: string]: string } {
+    return {
+      eventStreamingName: 'EventStreamingName',
+      description: 'Description',
+      source: 'Source',
+      filterPattern: 'FilterPattern',
+      sink: 'Sink',
+      runOptions: 'RunOptions',
+      tag: 'Tag',
+    };
+  }
+
+  static types(): { [key: string]: any } {
+    return {
+      eventStreamingName: 'string',
+      description: 'string',
+      source: Source,
+      filterPattern: 'string',
+      sink: Sink,
+      runOptions: RunOptions,
+      tag: 'string',
+    };
+  }
+
+  constructor(map?: { [key: string]: any }) {
+    super(map);
+  }
+}
+
+/**
+ * The response of createEventStreaming
+ */
+export class CreateEventStreamingResponse extends $tea.Model {
+  requestId: string;
+  resourceOwnerAccountId: string;
+  eventStreamingARN?: string;
+  static names(): { [key: string]: string } {
+    return {
+      requestId: 'RequestId',
+      resourceOwnerAccountId: 'ResourceOwnerAccountId',
+      eventStreamingARN: 'EventStreamingARN',
+    };
+  }
+
+  static types(): { [key: string]: any } {
+    return {
+      requestId: 'string',
+      resourceOwnerAccountId: 'string',
+      eventStreamingARN: 'string',
+    };
+  }
+
+  constructor(map?: { [key: string]: any }) {
+    super(map);
+  }
+}
+
+/**
+ * The request of delete event streaming
+ */
+export class DeleteEventStreamingRequest extends $tea.Model {
+  eventStreamingName: string;
+  static names(): { [key: string]: string } {
+    return {
+      eventStreamingName: 'EventStreamingName',
+    };
+  }
+
+  static types(): { [key: string]: any } {
+    return {
+      eventStreamingName: 'string',
+    };
+  }
+
+  constructor(map?: { [key: string]: any }) {
+    super(map);
+  }
+}
+
+/**
+ * The response of delete event streaming
+ */
+export class DeleteEventStreamingResponse extends $tea.Model {
+  requestId: string;
+  resourceOwnerAccountId: string;
+  static names(): { [key: string]: string } {
+    return {
+      requestId: 'RequestId',
+      resourceOwnerAccountId: 'ResourceOwnerAccountId',
+    };
+  }
+
+  static types(): { [key: string]: any } {
+    return {
+      requestId: 'string',
+      resourceOwnerAccountId: 'string',
+    };
+  }
+
+  constructor(map?: { [key: string]: any }) {
+    super(map);
+  }
+}
+
+/**
+ * The request of create event streaming
+ */
+export class GetEventStreamingRequest extends $tea.Model {
+  eventStreamingName: string;
+  static names(): { [key: string]: string } {
+    return {
+      eventStreamingName: 'EventStreamingName',
+    };
+  }
+
+  static types(): { [key: string]: any } {
+    return {
+      eventStreamingName: 'string',
+    };
+  }
+
+  constructor(map?: { [key: string]: any }) {
+    super(map);
+  }
+}
+
+/**
+ * The response of create event streaming
+ */
+export class GetEventStreamingResponse extends $tea.Model {
+  requestId: string;
+  resourceOwnerAccountId: string;
+  eventStreamingName: string;
+  description: string;
+  source: Source;
+  filterPattern: string;
+  sink: Sink;
+  runOptions: RunOptions;
+  tag: string;
+  status: string;
+  static names(): { [key: string]: string } {
+    return {
+      requestId: 'RequestId',
+      resourceOwnerAccountId: 'ResourceOwnerAccountId',
+      eventStreamingName: 'EventStreamingName',
+      description: 'Description',
+      source: 'Source',
+      filterPattern: 'FilterPattern',
+      sink: 'Sink',
+      runOptions: 'RunOptions',
+      tag: 'Tag',
+      status: 'Status',
+    };
+  }
+
+  static types(): { [key: string]: any } {
+    return {
+      requestId: 'string',
+      resourceOwnerAccountId: 'string',
+      eventStreamingName: 'string',
+      description: 'string',
+      source: Source,
+      filterPattern: 'string',
+      sink: Sink,
+      runOptions: RunOptions,
+      tag: 'string',
+      status: 'string',
+    };
+  }
+
+  constructor(map?: { [key: string]: any }) {
+    super(map);
+  }
+}
+
+/**
+ * The request of listEventStreamingMetrics
+ */
+export class ListEventStreamingMetricsRequest extends $tea.Model {
+  eventStreamingNames?: string[];
+  static names(): { [key: string]: string } {
+    return {
+      eventStreamingNames: 'EventStreamingNames',
+    };
+  }
+
+  static types(): { [key: string]: any } {
+    return {
+      eventStreamingNames: { 'type': 'array', 'itemType': 'string' },
+    };
+  }
+
+  constructor(map?: { [key: string]: any }) {
+    super(map);
+  }
+}
+
+/**
+ * The response of listEventStreamingMetrics
+ */
+export class ListEventStreamingMetricsResponse extends $tea.Model {
+  requestId: string;
+  resourceOwnerAccountId: string;
+  eventStreamingMetrics: EventStreamingMetric[];
+  static names(): { [key: string]: string } {
+    return {
+      requestId: 'RequestId',
+      resourceOwnerAccountId: 'ResourceOwnerAccountId',
+      eventStreamingMetrics: 'EventStreamingMetrics',
+    };
+  }
+
+  static types(): { [key: string]: any } {
+    return {
+      requestId: 'string',
+      resourceOwnerAccountId: 'string',
+      eventStreamingMetrics: { 'type': 'array', 'itemType': EventStreamingMetric },
+    };
+  }
+
+  constructor(map?: { [key: string]: any }) {
+    super(map);
+  }
+}
+
+/**
+ * The request of search EventStreaming
+ */
+export class ListEventStreamingsRequest extends $tea.Model {
+  namePrefix?: string;
+  sourceType?: string;
+  sinkType?: string;
+  limit?: number;
+  nextToken?: string;
+  tag?: string;
+  static names(): { [key: string]: string } {
+    return {
+      namePrefix: 'NamePrefix',
+      sourceType: 'SourceType',
+      sinkType: 'SinkType',
+      limit: 'Limit',
+      nextToken: 'NextToken',
+      tag: 'Tag',
+    };
+  }
+
+  static types(): { [key: string]: any } {
+    return {
+      namePrefix: 'string',
+      sourceType: 'string',
+      sinkType: 'string',
+      limit: 'number',
+      nextToken: 'string',
+      tag: 'string',
+    };
+  }
+
+  constructor(map?: { [key: string]: any }) {
+    super(map);
+  }
+}
+
+/**
+ * The response of search EventStreaming
+ */
+export class ListEventStreamingsResponse extends $tea.Model {
+  requestId: string;
+  resourceOwnerAccountId: string;
+  eventStreamings?: EBEventStreamingEntry[];
+  nextToken?: string;
+  total?: number;
+  static names(): { [key: string]: string } {
+    return {
+      requestId: 'RequestId',
+      resourceOwnerAccountId: 'ResourceOwnerAccountId',
+      eventStreamings: 'EventStreamings',
+      nextToken: 'NextToken',
+      total: 'Total',
+    };
+  }
+
+  static types(): { [key: string]: any } {
+    return {
+      requestId: 'string',
+      resourceOwnerAccountId: 'string',
+      eventStreamings: { 'type': 'array', 'itemType': EBEventStreamingEntry },
+      nextToken: 'string',
+      total: 'number',
+    };
+  }
+
+  constructor(map?: { [key: string]: any }) {
+    super(map);
+  }
+}
+
+/**
+ * The request of PauseEventStreaming
+ */
+export class PauseEventStreamingRequest extends $tea.Model {
+  eventStreamingName: string;
+  static names(): { [key: string]: string } {
+    return {
+      eventStreamingName: 'EventStreamingName',
+    };
+  }
+
+  static types(): { [key: string]: any } {
+    return {
+      eventStreamingName: 'string',
+    };
+  }
+
+  constructor(map?: { [key: string]: any }) {
+    super(map);
+  }
+}
+
+/**
+ * The response of PauseEventStreaming
+ */
+export class PauseEventStreamingResponse extends $tea.Model {
+  requestId: string;
+  resourceOwnerAccountId: string;
+  static names(): { [key: string]: string } {
+    return {
+      requestId: 'RequestId',
+      resourceOwnerAccountId: 'ResourceOwnerAccountId',
+    };
+  }
+
+  static types(): { [key: string]: any } {
+    return {
+      requestId: 'string',
+      resourceOwnerAccountId: 'string',
+    };
+  }
+
+  constructor(map?: { [key: string]: any }) {
+    super(map);
+  }
+}
+
+/**
+ * The request of StartEventStreaming
+ */
+export class StartEventStreamingRequest extends $tea.Model {
+  eventStreamingName: string;
+  static names(): { [key: string]: string } {
+    return {
+      eventStreamingName: 'EventStreamingName',
+    };
+  }
+
+  static types(): { [key: string]: any } {
+    return {
+      eventStreamingName: 'string',
+    };
+  }
+
+  constructor(map?: { [key: string]: any }) {
+    super(map);
+  }
+}
+
+/**
+ * The response of StartEventStreaming
+ */
+export class StartEventStreamingResponse extends $tea.Model {
+  requestId: string;
+  resourceOwnerAccountId: string;
+  static names(): { [key: string]: string } {
+    return {
+      requestId: 'RequestId',
+      resourceOwnerAccountId: 'ResourceOwnerAccountId',
+    };
+  }
+
+  static types(): { [key: string]: any } {
+    return {
+      requestId: 'string',
+      resourceOwnerAccountId: 'string',
+    };
+  }
+
+  constructor(map?: { [key: string]: any }) {
+    super(map);
+  }
+}
+
+/**
+ * The request of UpdateEventStreaming
+ */
+export class UpdateEventStreamingRequest extends $tea.Model {
+  eventStreamingName: string;
+  description?: string;
+  Source?: Source;
+  filterPattern?: string;
+  Sink?: Sink;
+  runOptions?: RunOptions;
+  tag?: string;
+  static names(): { [key: string]: string } {
+    return {
+      eventStreamingName: 'EventStreamingName',
+      description: 'Description',
+      Source: 'Source',
+      filterPattern: 'FilterPattern',
+      Sink: 'Sink',
+      runOptions: 'RunOptions',
+      tag: 'Tag',
+    };
+  }
+
+  static types(): { [key: string]: any } {
+    return {
+      eventStreamingName: 'string',
+      description: 'string',
+      Source: Source,
+      filterPattern: 'string',
+      Sink: Sink,
+      runOptions: RunOptions,
+      tag: 'string',
+    };
+  }
+
+  constructor(map?: { [key: string]: any }) {
+    super(map);
+  }
+}
+
+/**
+ * The response of UpdateEventStreaming
+ */
+export class UpdateEventStreamingResponse extends $tea.Model {
+  requestId: string;
+  resourceOwnerAccountId: string;
+  static names(): { [key: string]: string } {
+    return {
+      requestId: 'RequestId',
+      resourceOwnerAccountId: 'ResourceOwnerAccountId',
+    };
+  }
+
+  static types(): { [key: string]: any } {
+    return {
+      requestId: 'string',
+      resourceOwnerAccountId: 'string',
+    };
+  }
+
+  constructor(map?: { [key: string]: any }) {
+    super(map);
+  }
+}
+
+/**
+ * The detail of SourceHttpEventParameters
+ */
+export class SourceHttpEventParameters extends $tea.Model {
+  type: string;
+  method: string[];
+  securityConfig: string;
+  ip?: string[];
+  referer?: string[];
+  static names(): { [key: string]: string } {
+    return {
+      type: 'Type',
+      method: 'Method',
+      securityConfig: 'SecurityConfig',
+      ip: 'Ip',
+      referer: 'Referer',
+    };
+  }
+
+  static types(): { [key: string]: any } {
+    return {
+      type: 'string',
+      method: { 'type': 'array', 'itemType': 'string' },
+      securityConfig: 'string',
+      ip: { 'type': 'array', 'itemType': 'string' },
+      referer: { 'type': 'array', 'itemType': 'string' },
+    };
+  }
+
+  constructor(map?: { [key: string]: any }) {
+    super(map);
+  }
+}
+
+export class SourceHttpEventResponse extends $tea.Model {
+  type: string;
+  method: string[];
+  securityConfig: string;
+  ip?: string[];
+  referer?: string[];
+  publicWebHookUrl?: string[];
+  vpcWebHookUrl?: string[];
+  static names(): { [key: string]: string } {
+    return {
+      type: 'Type',
+      method: 'Method',
+      securityConfig: 'SecurityConfig',
+      ip: 'Ip',
+      referer: 'Referer',
+      publicWebHookUrl: 'PublicWebHookUrl',
+      vpcWebHookUrl: 'VpcWebHookUrl',
+    };
+  }
+
+  static types(): { [key: string]: any } {
+    return {
+      type: 'string',
+      method: { 'type': 'array', 'itemType': 'string' },
+      securityConfig: 'string',
+      ip: { 'type': 'array', 'itemType': 'string' },
+      referer: { 'type': 'array', 'itemType': 'string' },
+      publicWebHookUrl: { 'type': 'array', 'itemType': 'string' },
+      vpcWebHookUrl: { 'type': 'array', 'itemType': 'string' },
+    };
+  }
+
+  constructor(map?: { [key: string]: any }) {
+    super(map);
+  }
+}
+
+/**
+ * The detail of ConcurrentConfig
+ */
+export class ConcurrentConfig extends $tea.Model {
+  Concurrency: number;
+  static names(): { [key: string]: string } {
+    return {
+      Concurrency: 'ResourceKey',
+    };
+  }
+
+  static types(): { [key: string]: any } {
+    return {
+      Concurrency: 'number',
+    };
+  }
+
+  constructor(map?: { [key: string]: any }) {
+    super(map);
+  }
+}
+
 
 export default class Client {
   _protocol: string;
@@ -1936,6 +3601,214 @@ export default class Client {
   async queryEventsByPeriodWithOptions(request: QueryEventsByPeriodRequest, runtime: $Util.RuntimeOptions): Promise<QueryEventsByPeriodResponse> {
     Util.validateModel(request);
     return $tea.cast<QueryEventsByPeriodResponse>(await this.doRequest("queryEventsByPeriod", "HTTP", "POST", `/openapi/queryEventsByPeriod`, null, $tea.toMap(request), runtime), new QueryEventsByPeriodResponse({}));
+  }
+
+  /**
+   * Creates a new event source within your account
+   */
+  async createEventSource(request: CreateEventSourceRequest): Promise<CreateEventSourceResponse> {
+    let runtime = new $Util.RuntimeOptions({ });
+    return await this.createEventSourceWithOptions(request, runtime);
+  }
+
+  /**
+   * Creates a new event source within your account
+   */
+  async createEventSourceWithOptions(request: CreateEventSourceRequest, runtime: $Util.RuntimeOptions): Promise<CreateEventSourceResponse> {
+    Util.validateModel(request);
+    return $tea.cast<CreateEventSourceResponse>(await this.doRequest("createEventSource", "HTTP", "POST", `/openapi/v2/createEventSource`, null, $tea.toMap(request), runtime), new CreateEventSourceResponse({}));
+  }
+
+  /**
+   * Delete the event source
+   */
+  async deleteEventSource(request: DeleteEventSourceRequest): Promise<DeleteEventSourceResponse> {
+    let runtime = new $Util.RuntimeOptions({ });
+    return await this.deleteEventSourceWithOptions(request, runtime);
+  }
+
+  /**
+   * Delete the event source
+   */
+  async deleteEventSourceWithOptions(request: DeleteEventSourceRequest, runtime: $Util.RuntimeOptions): Promise<DeleteEventSourceResponse> {
+    Util.validateModel(request);
+    return $tea.cast<DeleteEventSourceResponse>(await this.doRequest("deleteEventSource", "HTTP", "POST", `/openapi/v2/deleteEventSource`, null, $tea.toMap(request), runtime), new DeleteEventSourceResponse({}));
+  }
+
+  /**
+   * Update the event source
+   */
+  async updateEventSource(request: UpdateEventSourceRequest): Promise<UpdateEventSourceResponse> {
+    let runtime = new $Util.RuntimeOptions({ });
+    return await this.updateEventSourceWithOptions(request, runtime);
+  }
+
+  /**
+   * Update the event source
+   */
+  async updateEventSourceWithOptions(request: UpdateEventSourceRequest, runtime: $Util.RuntimeOptions): Promise<UpdateEventSourceResponse> {
+    Util.validateModel(request);
+    return $tea.cast<UpdateEventSourceResponse>(await this.doRequest("updateEventSource", "HTTP", "POST", `/openapi/v2/updateEventSource`, null, $tea.toMap(request), runtime), new UpdateEventSourceResponse({}));
+  }
+
+  /**
+   * List the user defined event source within your account
+   */
+  async listUserDefinedEventSources(request: ListUserDefinedRequest): Promise<ListUserDefinedResponse> {
+    let runtime = new $Util.RuntimeOptions({ });
+    return await this.listUserDefinedEventSourcesWithOptions(request, runtime);
+  }
+
+  /**
+   * List the user defined event source within your account
+   */
+  async listUserDefinedEventSourcesWithOptions(request: ListUserDefinedRequest, runtime: $Util.RuntimeOptions): Promise<ListUserDefinedResponse> {
+    Util.validateModel(request);
+    return $tea.cast<ListUserDefinedResponse>(await this.doRequest("listUserDefinedEventSources", "HTTP", "POST", `/openapi/v2/listUserDefinedEventSources`, null, $tea.toMap(request), runtime), new ListUserDefinedResponse({}));
+  }
+
+  /**
+   * List the aliyun official event source within your account
+   */
+  async listAliyunOfficialEventSources(request: ListAliyunOfficialRequest): Promise<ListAliyunOfficialResponse> {
+    let runtime = new $Util.RuntimeOptions({ });
+    return await this.listAliyunOfficialEventSourcesWithOptions(request, runtime);
+  }
+
+  /**
+   * List the aliyun official event source within your account
+   */
+  async listAliyunOfficialEventSourcesWithOptions(request: ListAliyunOfficialRequest, runtime: $Util.RuntimeOptions): Promise<ListAliyunOfficialResponse> {
+    Util.validateModel(request);
+    return $tea.cast<ListAliyunOfficialResponse>(await this.doRequest("listAliyunOfficialEventSources", "HTTP", "POST", `/openapi/v2/listAliyunOfficialEventSources`, null, $tea.toMap(request), runtime), new ListAliyunOfficialResponse({}));
+  }
+
+  /**
+   * Create event streaming procss
+   */
+  async createEventStreaming(request: CreateEventStreamingRequest): Promise<CreateEventStreamingResponse> {
+    let runtime = new $Util.RuntimeOptions({ });
+    return await this.createEventStreamingWithOptions(request, runtime);
+  }
+
+  /**
+   * Create event streaming procss
+   */
+  async createEventStreamingWithOptions(request: CreateEventStreamingRequest, runtime: $Util.RuntimeOptions): Promise<CreateEventStreamingResponse> {
+    Util.validateModel(request);
+    return $tea.cast<CreateEventStreamingResponse>(await this.doRequest("createEventStreaming", "HTTP", "POST", `/openapi/v2/createEventStreaming`, null, $tea.toMap(request), runtime), new CreateEventStreamingResponse({}));
+  }
+
+  /**
+   * delete event streaming
+   */
+  async deleteEventStreaming(request: DeleteEventStreamingRequest): Promise<DeleteEventStreamingResponse> {
+    let runtime = new $Util.RuntimeOptions({ });
+    return await this.deleteEventStreamingWithOptions(request, runtime);
+  }
+
+  /**
+   * delete event streaming
+   */
+  async deleteEventStreamingWithOptions(request: DeleteEventStreamingRequest, runtime: $Util.RuntimeOptions): Promise<DeleteEventStreamingResponse> {
+    Util.validateModel(request);
+    return $tea.cast<DeleteEventStreamingResponse>(await this.doRequest("deleteEventStreaming", "HTTP", "POST", `/openapi/v2/deleteEventStreaming`, null, $tea.toMap(request), runtime), new DeleteEventStreamingResponse({}));
+  }
+
+  /**
+   * create event streaming
+   */
+  async getEventStreaming(request: GetEventStreamingRequest): Promise<GetEventStreamingResponse> {
+    let runtime = new $Util.RuntimeOptions({ });
+    return await this.getEventStreamingWithOptions(request, runtime);
+  }
+
+  /**
+   * create event streaming
+   */
+  async getEventStreamingWithOptions(request: GetEventStreamingRequest, runtime: $Util.RuntimeOptions): Promise<GetEventStreamingResponse> {
+    Util.validateModel(request);
+    return $tea.cast<GetEventStreamingResponse>(await this.doRequest("getEventStreaming", "HTTP", "POST", `/openapi/v2/getEventStreaming`, null, $tea.toMap(request), runtime), new GetEventStreamingResponse({}));
+  }
+
+  /**
+   * List the metrics of event streaming
+   */
+  async listEventStreamingMetrics(request: ListEventStreamingMetricsRequest): Promise<ListEventStreamingMetricsResponse> {
+    let runtime = new $Util.RuntimeOptions({ });
+    return await this.listEventStreamingMetricsWithOptions(request, runtime);
+  }
+
+  /**
+   * List the metrics of event streaming
+   */
+  async listEventStreamingMetricsWithOptions(request: ListEventStreamingMetricsRequest, runtime: $Util.RuntimeOptions): Promise<ListEventStreamingMetricsResponse> {
+    Util.validateModel(request);
+    return $tea.cast<ListEventStreamingMetricsResponse>(await this.doRequest("listEventStreamingMetrics", "HTTP", "POST", `/openapi/v2/listEventStreamingMetrics`, null, $tea.toMap(request), runtime), new ListEventStreamingMetricsResponse({}));
+  }
+
+  /**
+   * create event streaming
+   */
+  async listEventStreamings(request: ListEventStreamingsRequest): Promise<ListEventStreamingsResponse> {
+    let runtime = new $Util.RuntimeOptions({ });
+    return await this.listEventStreamingsWithOptions(request, runtime);
+  }
+
+  /**
+   * create event streaming
+   */
+  async listEventStreamingsWithOptions(request: ListEventStreamingsRequest, runtime: $Util.RuntimeOptions): Promise<ListEventStreamingsResponse> {
+    Util.validateModel(request);
+    return $tea.cast<ListEventStreamingsResponse>(await this.doRequest("listEventStreamings", "HTTP", "POST", `/openapi/v2/listEventStreamings`, null, $tea.toMap(request), runtime), new ListEventStreamingsResponse({}));
+  }
+
+  /**
+   * delete event streaming
+   */
+  async pauseEventStreaming(request: PauseEventStreamingRequest): Promise<PauseEventStreamingResponse> {
+    let runtime = new $Util.RuntimeOptions({ });
+    return await this.pauseEventStreamingWithOptions(request, runtime);
+  }
+
+  /**
+   * delete event streaming
+   */
+  async pauseEventStreamingWithOptions(request: PauseEventStreamingRequest, runtime: $Util.RuntimeOptions): Promise<PauseEventStreamingResponse> {
+    Util.validateModel(request);
+    return $tea.cast<PauseEventStreamingResponse>(await this.doRequest("startEventStreaming", "HTTP", "POST", `/openapi/v2/pauseEventStreaming`, null, $tea.toMap(request), runtime), new PauseEventStreamingResponse({}));
+  }
+
+  /**
+   * create event streaming
+   */
+  async startEventStreaming(request: StartEventStreamingRequest): Promise<StartEventStreamingResponse> {
+    let runtime = new $Util.RuntimeOptions({ });
+    return await this.startEventStreamingsWithOptions(request, runtime);
+  }
+
+  /**
+   * create event streaming
+   */
+  async startEventStreamingsWithOptions(request: StartEventStreamingRequest, runtime: $Util.RuntimeOptions): Promise<StartEventStreamingResponse> {
+    Util.validateModel(request);
+    return $tea.cast<StartEventStreamingResponse>(await this.doRequest("startEventStreaming", "HTTP", "POST", `/openapi/v2/startEventStreaming`, null, $tea.toMap(request), runtime), new StartEventStreamingResponse({}));
+  }
+
+  /**
+   * Update event streaming procss
+   */
+  async updateEventStreaming(request: UpdateEventStreamingRequest): Promise<UpdateEventStreamingResponse> {
+    let runtime = new $Util.RuntimeOptions({ });
+    return await this.updateEventStreamingWithOptions(request, runtime);
+  }
+
+  /**
+   * create event streaming
+   */
+  async updateEventStreamingWithOptions(request: UpdateEventStreamingRequest, runtime: $Util.RuntimeOptions): Promise<UpdateEventStreamingResponse> {
+    Util.validateModel(request);
+    return $tea.cast<UpdateEventStreamingResponse>(await this.doRequest("updateEventStreaming", "HTTP", "POST", `/openapi/v2/updateEventStreaming`, null, $tea.toMap(request), runtime), new UpdateEventStreamingResponse({}));
   }
 
 }
