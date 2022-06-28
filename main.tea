@@ -1591,11 +1591,19 @@ model StartEventStreamingResponse = {
  */
 async function startEventStreaming(request: StartEventStreamingRequest): StartEventStreamingResponse {
   var runtime = new Util.RuntimeOptions{};
-  return startEventStreamingsWithOptions(request, runtime);
+  return startEventStreamingWithOptions(request, runtime);
 }
 
 /**
  * create event streaming
+ */
+async function startEventStreamingWithOptions(request: StartEventStreamingRequest, runtime: Util.RuntimeOptions): StartEventStreamingResponse {
+  Util.validateModel(request);
+  return doRequest('startEventStreaming', 'HTTP', 'POST', `/openapi/v2/startEventStreaming`, null, request, runtime);
+}
+
+/**
+ * deprecated please use startEventStreamingWithOptions
  */
 async function startEventStreamingsWithOptions(request: StartEventStreamingRequest, runtime: Util.RuntimeOptions): StartEventStreamingResponse {
   Util.validateModel(request);

@@ -3784,11 +3784,19 @@ export default class Client {
    */
   async startEventStreaming(request: StartEventStreamingRequest): Promise<StartEventStreamingResponse> {
     let runtime = new $Util.RuntimeOptions({ });
-    return await this.startEventStreamingsWithOptions(request, runtime);
+    return await this.startEventStreamingWithOptions(request, runtime);
   }
 
   /**
    * create event streaming
+   */
+  async startEventStreamingWithOptions(request: StartEventStreamingRequest, runtime: $Util.RuntimeOptions): Promise<StartEventStreamingResponse> {
+    Util.validateModel(request);
+    return $tea.cast<StartEventStreamingResponse>(await this.doRequest("startEventStreaming", "HTTP", "POST", `/openapi/v2/startEventStreaming`, null, $tea.toMap(request), runtime), new StartEventStreamingResponse({}));
+  }
+
+  /**
+   * deprecated please use startEventStreamingWithOptions
    */
   async startEventStreamingsWithOptions(request: StartEventStreamingRequest, runtime: $Util.RuntimeOptions): Promise<StartEventStreamingResponse> {
     Util.validateModel(request);

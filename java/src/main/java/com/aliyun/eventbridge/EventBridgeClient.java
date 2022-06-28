@@ -84,6 +84,7 @@ public class EventBridgeClient implements EventBridge {
         this._maxIdleConns = config.maxIdleConns;
     }
 
+    @Override
     public java.util.Map<String, ?> doRequest(String action, String protocol, String method, String pathname, java.util.Map<String, String> query, Object body, RuntimeOptions runtime) {
         java.util.Map<String, Object> runtime_ = TeaConverter.buildMap(
             new TeaPair("timeouted", "retry"),
@@ -754,14 +755,23 @@ public class EventBridgeClient implements EventBridge {
     @Override
     public StartEventStreamingResponse startEventStreaming(StartEventStreamingRequest request) {
         RuntimeOptions runtime = new RuntimeOptions();
-        return this.startEventStreamingsWithOptions(request, runtime);
+        return this.startEventStreamingWithOptions(request, runtime);
+    }
+
+    /**
+     * deprecated please use startEventStreamingWithOptions
+     */
+    @Override
+    public StartEventStreamingResponse startEventStreamingsWithOptions(StartEventStreamingRequest request, RuntimeOptions runtime) {
+        com.aliyun.teautil.Common.validateModel(request);
+        return TeaModel.toModel(this.doRequest("startEventStreaming", "HTTP", "POST", "/openapi/v2/startEventStreaming", null, TeaModel.buildMap(request), runtime), new StartEventStreamingResponse());
     }
 
     /**
      * create event streaming
-     */
+    */
     @Override
-    public StartEventStreamingResponse startEventStreamingsWithOptions(StartEventStreamingRequest request, RuntimeOptions runtime) {
+    public StartEventStreamingResponse startEventStreamingWithOptions(StartEventStreamingRequest request, RuntimeOptions runtime) {
         com.aliyun.teautil.Common.validateModel(request);
         return TeaModel.toModel(this.doRequest("startEventStreaming", "HTTP", "POST", "/openapi/v2/startEventStreaming", null, TeaModel.buildMap(request), runtime), new StartEventStreamingResponse());
     }

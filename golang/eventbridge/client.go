@@ -5060,7 +5060,7 @@ func (client *Client) PauseEventStreamingWithOptions(request *PauseEventStreamin
 func (client *Client) StartEventStreaming(request *StartEventStreamingRequest) (_result *StartEventStreamingResponse, _err error) {
 	runtime := &util.RuntimeOptions{}
 	_result = &StartEventStreamingResponse{}
-	_body, _err := client.StartEventStreamingsWithOptions(request, runtime)
+	_body, _err := client.StartEventStreamingWithOptions(request, runtime)
 	if _err != nil {
 		return _result, _err
 	}
@@ -5070,6 +5070,23 @@ func (client *Client) StartEventStreaming(request *StartEventStreamingRequest) (
 
 /**
  * create event streaming
+ */
+func (client *Client) StartEventStreamingWithOptions(request *StartEventStreamingRequest, runtime *util.RuntimeOptions) (_result *StartEventStreamingResponse, _err error) {
+	_err = util.ValidateModel(request)
+	if _err != nil {
+		return _result, _err
+	}
+	_result = &StartEventStreamingResponse{}
+	_body, _err := client.DoRequest(tea.String("startEventStreaming"), tea.String("HTTP"), tea.String("POST"), tea.String("/openapi/v2/startEventStreaming"), nil, tea.ToMap(request), runtime)
+	if _err != nil {
+		return _result, _err
+	}
+	_err = tea.Convert(_body, &_result)
+	return _result, _err
+}
+
+/**
+ * deprecated please use startEventStreamingWithOptions
  */
 func (client *Client) StartEventStreamingsWithOptions(request *StartEventStreamingRequest, runtime *util.RuntimeOptions) (_result *StartEventStreamingResponse, _err error) {
 	_err = util.ValidateModel(request)
