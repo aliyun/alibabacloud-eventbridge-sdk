@@ -741,9 +741,14 @@ public interface EventBridge {
     StartEventStreamingResponse startEventStreaming(StartEventStreamingRequest request);
 
     /**
-     * create event streaming
+     * deprecated please use startEventStreamingWithOptions
      */
     StartEventStreamingResponse startEventStreamingsWithOptions(StartEventStreamingRequest request, RuntimeOptions runtime);
+    
+    /**
+     * create event streaming
+    */
+    StartEventStreamingResponse startEventStreamingWithOptions(StartEventStreamingRequest request, RuntimeOptions runtime);
 
     /**
      * Update event streaming procss

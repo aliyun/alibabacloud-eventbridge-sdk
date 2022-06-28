@@ -1741,7 +1741,7 @@ class Client:
         create event streaming
         """
         runtime = util_models.RuntimeOptions()
-        return self.start_event_streamings_with_options(request, runtime)
+        return self.start_event_streaming_with_options(request, runtime)
 
     async def start_event_streaming_async(
         self,
@@ -1751,9 +1751,9 @@ class Client:
         create event streaming
         """
         runtime = util_models.RuntimeOptions()
-        return await self.start_event_streamings_with_options_async(request, runtime)
+        return await self.start_event_streaming_with_options_async(request, runtime)
 
-    def start_event_streamings_with_options(
+    def start_event_streaming_with_options(
         self,
         request: event_bridge_models.StartEventStreamingRequest,
         runtime: util_models.RuntimeOptions,
@@ -1767,13 +1767,41 @@ class Client:
             self.do_request('startEventStreaming', 'HTTP', 'POST', f'/openapi/v2/startEventStreaming', None, TeaCore.to_map(request), runtime)
         )
 
-    async def start_event_streamings_with_options_async(
+    async def start_event_streaming_with_options_async(
         self,
         request: event_bridge_models.StartEventStreamingRequest,
         runtime: util_models.RuntimeOptions,
     ) -> event_bridge_models.StartEventStreamingResponse:
         """
         create event streaming
+        """
+        UtilClient.validate_model(request)
+        return TeaCore.from_map(
+            event_bridge_models.StartEventStreamingResponse(),
+            await self.do_request_async('startEventStreaming', 'HTTP', 'POST', f'/openapi/v2/startEventStreaming', None, TeaCore.to_map(request), runtime)
+        )
+
+    def start_event_streamings_with_options(
+        self,
+        request: event_bridge_models.StartEventStreamingRequest,
+        runtime: util_models.RuntimeOptions,
+    ) -> event_bridge_models.StartEventStreamingResponse:
+        """
+        deprecated please use startEventStreamingWithOptions
+        """
+        UtilClient.validate_model(request)
+        return TeaCore.from_map(
+            event_bridge_models.StartEventStreamingResponse(),
+            self.do_request('startEventStreaming', 'HTTP', 'POST', f'/openapi/v2/startEventStreaming', None, TeaCore.to_map(request), runtime)
+        )
+
+    async def start_event_streamings_with_options_async(
+        self,
+        request: event_bridge_models.StartEventStreamingRequest,
+        runtime: util_models.RuntimeOptions,
+    ) -> event_bridge_models.StartEventStreamingResponse:
+        """
+        deprecated please use startEventStreamingWithOptions
         """
         UtilClient.validate_model(request)
         return TeaCore.from_map(
