@@ -802,7 +802,7 @@ class ConcurrentConfig(TeaModel):
         self.concurrency = concurrency
 
     def validate(self):
-        self.validate_required(self.concurrency, 'concurrency')
+        pass
 
     def to_map(self):
         _map = super().to_map()
@@ -811,13 +811,13 @@ class ConcurrentConfig(TeaModel):
 
         result = dict()
         if self.concurrency is not None:
-            result['ResourceKey'] = self.concurrency
+            result['Concurrency'] = self.concurrency
         return result
 
     def from_map(self, m: dict = None):
         m = m or dict()
-        if m.get('ResourceKey') is not None:
-            self.concurrency = m.get('ResourceKey')
+        if m.get('Concurrency') is not None:
+            self.concurrency = m.get('Concurrency')
         return self
 
 
@@ -2720,6 +2720,127 @@ class SourceScheduledEventParameters(TeaModel):
         return self
 
 
+class SourceMQTTParameters(TeaModel):
+    """
+    The detail of SourceMQTTParameters
+    """
+    def __init__(
+        self,
+        region_id: str = None,
+        instance_id: str = None,
+        topic: str = None,
+    ):
+        self.region_id = region_id
+        self.instance_id = instance_id
+        self.topic = topic
+
+    def validate(self):
+        self.validate_required(self.instance_id, 'instance_id')
+        self.validate_required(self.topic, 'topic')
+
+    def to_map(self):
+        _map = super().to_map()
+        if _map is not None:
+            return _map
+
+        result = dict()
+        if self.region_id is not None:
+            result['RegionId'] = self.region_id
+        if self.instance_id is not None:
+            result['InstanceId'] = self.instance_id
+        if self.topic is not None:
+            result['Topic'] = self.topic
+        return result
+
+    def from_map(self, m: dict = None):
+        m = m or dict()
+        if m.get('RegionId') is not None:
+            self.region_id = m.get('RegionId')
+        if m.get('InstanceId') is not None:
+            self.instance_id = m.get('InstanceId')
+        if m.get('Topic') is not None:
+            self.topic = m.get('Topic')
+        return self
+
+
+class SourceDTSParameters(TeaModel):
+    """
+    The detail of SourceDTSParameters
+    """
+    def __init__(
+        self,
+        region_id: str = None,
+        broker_url: str = None,
+        topic: str = None,
+        sid: str = None,
+        username: str = None,
+        password: str = None,
+        init_check_point: int = None,
+        task_id: str = None,
+    ):
+        self.region_id = region_id
+        self.broker_url = broker_url
+        self.topic = topic
+        self.sid = sid
+        self.username = username
+        self.password = password
+        self.init_check_point = init_check_point
+        self.task_id = task_id
+
+    def validate(self):
+        self.validate_required(self.broker_url, 'broker_url')
+        self.validate_required(self.topic, 'topic')
+        self.validate_required(self.sid, 'sid')
+        self.validate_required(self.username, 'username')
+        self.validate_required(self.password, 'password')
+        self.validate_required(self.init_check_point, 'init_check_point')
+        self.validate_required(self.task_id, 'task_id')
+
+    def to_map(self):
+        _map = super().to_map()
+        if _map is not None:
+            return _map
+
+        result = dict()
+        if self.region_id is not None:
+            result['RegionId'] = self.region_id
+        if self.broker_url is not None:
+            result['BrokerUrl'] = self.broker_url
+        if self.topic is not None:
+            result['Topic'] = self.topic
+        if self.sid is not None:
+            result['Sid'] = self.sid
+        if self.username is not None:
+            result['Username'] = self.username
+        if self.password is not None:
+            result['Password'] = self.password
+        if self.init_check_point is not None:
+            result['InitCheckPoint'] = self.init_check_point
+        if self.task_id is not None:
+            result['TaskId'] = self.task_id
+        return result
+
+    def from_map(self, m: dict = None):
+        m = m or dict()
+        if m.get('RegionId') is not None:
+            self.region_id = m.get('RegionId')
+        if m.get('BrokerUrl') is not None:
+            self.broker_url = m.get('BrokerUrl')
+        if m.get('Topic') is not None:
+            self.topic = m.get('Topic')
+        if m.get('Sid') is not None:
+            self.sid = m.get('Sid')
+        if m.get('Username') is not None:
+            self.username = m.get('Username')
+        if m.get('Password') is not None:
+            self.password = m.get('Password')
+        if m.get('InitCheckPoint') is not None:
+            self.init_check_point = m.get('InitCheckPoint')
+        if m.get('TaskId') is not None:
+            self.task_id = m.get('TaskId')
+        return self
+
+
 class SourceHttpEventParameters(TeaModel):
     """
     The detail of SourceHttpEventParameters
@@ -3011,11 +3132,15 @@ class Source(TeaModel):
         source_rabbit_mqparameters: SourceRabbitMQParameters = None,
         source_rocket_mqparameters: SourceRocketMQParameters = None,
         source_kafka_parameters: SourceKafkaParameters = None,
+        source_mqttparameters: SourceMQTTParameters = None,
+        source_dtsparameters: SourceDTSParameters = None,
     ):
         self.source_mnsparameters = source_mnsparameters
         self.source_rabbit_mqparameters = source_rabbit_mqparameters
         self.source_rocket_mqparameters = source_rocket_mqparameters
         self.source_kafka_parameters = source_kafka_parameters
+        self.source_mqttparameters = source_mqttparameters
+        self.source_dtsparameters = source_dtsparameters
 
     def validate(self):
         if self.source_mnsparameters:
@@ -3026,6 +3151,10 @@ class Source(TeaModel):
             self.source_rocket_mqparameters.validate()
         if self.source_kafka_parameters:
             self.source_kafka_parameters.validate()
+        if self.source_mqttparameters:
+            self.source_mqttparameters.validate()
+        if self.source_dtsparameters:
+            self.source_dtsparameters.validate()
 
     def to_map(self):
         _map = super().to_map()
@@ -3041,6 +3170,10 @@ class Source(TeaModel):
             result['SourceRocketMQParameters'] = self.source_rocket_mqparameters.to_map()
         if self.source_kafka_parameters is not None:
             result['SourceKafkaParameters'] = self.source_kafka_parameters.to_map()
+        if self.source_mqttparameters is not None:
+            result['SourceMQTTParameters'] = self.source_mqttparameters.to_map()
+        if self.source_dtsparameters is not None:
+            result['SourceDTSParameters'] = self.source_dtsparameters.to_map()
         return result
 
     def from_map(self, m: dict = None):
@@ -3057,6 +3190,12 @@ class Source(TeaModel):
         if m.get('SourceKafkaParameters') is not None:
             temp_model = SourceKafkaParameters()
             self.source_kafka_parameters = temp_model.from_map(m['SourceKafkaParameters'])
+        if m.get('SourceMQTTParameters') is not None:
+            temp_model = SourceMQTTParameters()
+            self.source_mqttparameters = temp_model.from_map(m['SourceMQTTParameters'])
+        if m.get('SourceDTSParameters') is not None:
+            temp_model = SourceDTSParameters()
+            self.source_dtsparameters = temp_model.from_map(m['SourceDTSParameters'])
         return self
 
 

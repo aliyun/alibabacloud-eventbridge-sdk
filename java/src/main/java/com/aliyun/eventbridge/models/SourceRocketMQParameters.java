@@ -27,7 +27,7 @@ public class SourceRocketMQParameters extends TeaModel {
     public String groupID;
 
     @NameInMap("Timestamp")
-    public Number timestamp;
+    public Long timestamp;
 
     public static SourceRocketMQParameters build(java.util.Map<String, ?> map) {
         SourceRocketMQParameters self = new SourceRocketMQParameters();
@@ -82,11 +82,11 @@ public class SourceRocketMQParameters extends TeaModel {
         return this.groupID;
     }
 
-    public SourceRocketMQParameters setTimestamp(Number timestamp) {
+    public SourceRocketMQParameters setTimestamp(Long timestamp) {
         this.timestamp = timestamp;
         return this;
     }
-    public Number getTimestamp() {
+    public Long getTimestamp() {
         return this.timestamp;
     }
 

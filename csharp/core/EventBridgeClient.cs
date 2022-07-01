@@ -1051,5 +1051,473 @@ namespace AlibabaCloud.SDK.EventBridge
             return TeaModel.ToObject<QueryEventsByPeriodResponse>(await DoRequestAsync("queryEventsByPeriod", "HTTP", "POST", "/openapi/queryEventsByPeriod", null, request.ToMap(), runtime));
         }
 
+        /**
+         * Creates a new event source within your account
+         */
+        public CreateEventSourceResponse CreateEventSource(CreateEventSourceRequest request)
+        {
+            AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime = new AlibabaCloud.TeaUtil.Models.RuntimeOptions();
+            return CreateEventSourceWithOptions(request, runtime);
+        }
+
+        /**
+         * Creates a new event source within your account
+         */
+        public async Task<CreateEventSourceResponse> CreateEventSourceAsync(CreateEventSourceRequest request)
+        {
+            AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime = new AlibabaCloud.TeaUtil.Models.RuntimeOptions();
+            return await CreateEventSourceWithOptionsAsync(request, runtime);
+        }
+
+        /**
+         * Creates a new event source within your account
+         */
+        public CreateEventSourceResponse CreateEventSourceWithOptions(CreateEventSourceRequest request, AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime)
+        {
+            AlibabaCloud.TeaUtil.Common.ValidateModel(request);
+            return TeaModel.ToObject<CreateEventSourceResponse>(DoRequest("createEventSource", "HTTP", "POST", "/openapi/v2/createEventSource", null, request.ToMap(), runtime));
+        }
+
+        /**
+         * Creates a new event source within your account
+         */
+        public async Task<CreateEventSourceResponse> CreateEventSourceWithOptionsAsync(CreateEventSourceRequest request, AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime)
+        {
+            AlibabaCloud.TeaUtil.Common.ValidateModel(request);
+            return TeaModel.ToObject<CreateEventSourceResponse>(await DoRequestAsync("createEventSource", "HTTP", "POST", "/openapi/v2/createEventSource", null, request.ToMap(), runtime));
+        }
+
+        /**
+         * Delete the event source
+         */
+        public DeleteEventSourceResponse DeleteEventSource(DeleteEventSourceRequest request)
+        {
+            AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime = new AlibabaCloud.TeaUtil.Models.RuntimeOptions();
+            return DeleteEventSourceWithOptions(request, runtime);
+        }
+
+        /**
+         * Delete the event source
+         */
+        public async Task<DeleteEventSourceResponse> DeleteEventSourceAsync(DeleteEventSourceRequest request)
+        {
+            AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime = new AlibabaCloud.TeaUtil.Models.RuntimeOptions();
+            return await DeleteEventSourceWithOptionsAsync(request, runtime);
+        }
+
+        /**
+         * Delete the event source
+         */
+        public DeleteEventSourceResponse DeleteEventSourceWithOptions(DeleteEventSourceRequest request, AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime)
+        {
+            AlibabaCloud.TeaUtil.Common.ValidateModel(request);
+            return TeaModel.ToObject<DeleteEventSourceResponse>(DoRequest("deleteEventSource", "HTTP", "POST", "/openapi/v2/deleteEventSource", null, request.ToMap(), runtime));
+        }
+
+        /**
+         * Delete the event source
+         */
+        public async Task<DeleteEventSourceResponse> DeleteEventSourceWithOptionsAsync(DeleteEventSourceRequest request, AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime)
+        {
+            AlibabaCloud.TeaUtil.Common.ValidateModel(request);
+            return TeaModel.ToObject<DeleteEventSourceResponse>(await DoRequestAsync("deleteEventSource", "HTTP", "POST", "/openapi/v2/deleteEventSource", null, request.ToMap(), runtime));
+        }
+
+        /**
+         * Update the event source
+         */
+        public UpdateEventSourceResponse UpdateEventSource(UpdateEventSourceRequest request)
+        {
+            AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime = new AlibabaCloud.TeaUtil.Models.RuntimeOptions();
+            return UpdateEventSourceWithOptions(request, runtime);
+        }
+
+        /**
+         * Update the event source
+         */
+        public async Task<UpdateEventSourceResponse> UpdateEventSourceAsync(UpdateEventSourceRequest request)
+        {
+            AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime = new AlibabaCloud.TeaUtil.Models.RuntimeOptions();
+            return await UpdateEventSourceWithOptionsAsync(request, runtime);
+        }
+
+        /**
+         * Update the event source
+         */
+        public UpdateEventSourceResponse UpdateEventSourceWithOptions(UpdateEventSourceRequest request, AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime)
+        {
+            AlibabaCloud.TeaUtil.Common.ValidateModel(request);
+            return TeaModel.ToObject<UpdateEventSourceResponse>(DoRequest("updateEventSource", "HTTP", "POST", "/openapi/v2/updateEventSource", null, request.ToMap(), runtime));
+        }
+
+        /**
+         * Update the event source
+         */
+        public async Task<UpdateEventSourceResponse> UpdateEventSourceWithOptionsAsync(UpdateEventSourceRequest request, AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime)
+        {
+            AlibabaCloud.TeaUtil.Common.ValidateModel(request);
+            return TeaModel.ToObject<UpdateEventSourceResponse>(await DoRequestAsync("updateEventSource", "HTTP", "POST", "/openapi/v2/updateEventSource", null, request.ToMap(), runtime));
+        }
+
+        /**
+         * List the user defined event source within your account
+         */
+        public ListUserDefinedResponse ListUserDefinedEventSources(ListUserDefinedRequest request)
+        {
+            AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime = new AlibabaCloud.TeaUtil.Models.RuntimeOptions();
+            return ListUserDefinedEventSourcesWithOptions(request, runtime);
+        }
+
+        /**
+         * List the user defined event source within your account
+         */
+        public async Task<ListUserDefinedResponse> ListUserDefinedEventSourcesAsync(ListUserDefinedRequest request)
+        {
+            AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime = new AlibabaCloud.TeaUtil.Models.RuntimeOptions();
+            return await ListUserDefinedEventSourcesWithOptionsAsync(request, runtime);
+        }
+
+        /**
+         * List the user defined event source within your account
+         */
+        public ListUserDefinedResponse ListUserDefinedEventSourcesWithOptions(ListUserDefinedRequest request, AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime)
+        {
+            AlibabaCloud.TeaUtil.Common.ValidateModel(request);
+            return TeaModel.ToObject<ListUserDefinedResponse>(DoRequest("listUserDefinedEventSources", "HTTP", "POST", "/openapi/v2/listUserDefinedEventSources", null, request.ToMap(), runtime));
+        }
+
+        /**
+         * List the user defined event source within your account
+         */
+        public async Task<ListUserDefinedResponse> ListUserDefinedEventSourcesWithOptionsAsync(ListUserDefinedRequest request, AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime)
+        {
+            AlibabaCloud.TeaUtil.Common.ValidateModel(request);
+            return TeaModel.ToObject<ListUserDefinedResponse>(await DoRequestAsync("listUserDefinedEventSources", "HTTP", "POST", "/openapi/v2/listUserDefinedEventSources", null, request.ToMap(), runtime));
+        }
+
+        /**
+         * List the aliyun official event source within your account
+         */
+        public ListAliyunOfficialResponse ListAliyunOfficialEventSources(ListAliyunOfficialRequest request)
+        {
+            AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime = new AlibabaCloud.TeaUtil.Models.RuntimeOptions();
+            return ListAliyunOfficialEventSourcesWithOptions(request, runtime);
+        }
+
+        /**
+         * List the aliyun official event source within your account
+         */
+        public async Task<ListAliyunOfficialResponse> ListAliyunOfficialEventSourcesAsync(ListAliyunOfficialRequest request)
+        {
+            AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime = new AlibabaCloud.TeaUtil.Models.RuntimeOptions();
+            return await ListAliyunOfficialEventSourcesWithOptionsAsync(request, runtime);
+        }
+
+        /**
+         * List the aliyun official event source within your account
+         */
+        public ListAliyunOfficialResponse ListAliyunOfficialEventSourcesWithOptions(ListAliyunOfficialRequest request, AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime)
+        {
+            AlibabaCloud.TeaUtil.Common.ValidateModel(request);
+            return TeaModel.ToObject<ListAliyunOfficialResponse>(DoRequest("listAliyunOfficialEventSources", "HTTP", "POST", "/openapi/v2/listAliyunOfficialEventSources", null, request.ToMap(), runtime));
+        }
+
+        /**
+         * List the aliyun official event source within your account
+         */
+        public async Task<ListAliyunOfficialResponse> ListAliyunOfficialEventSourcesWithOptionsAsync(ListAliyunOfficialRequest request, AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime)
+        {
+            AlibabaCloud.TeaUtil.Common.ValidateModel(request);
+            return TeaModel.ToObject<ListAliyunOfficialResponse>(await DoRequestAsync("listAliyunOfficialEventSources", "HTTP", "POST", "/openapi/v2/listAliyunOfficialEventSources", null, request.ToMap(), runtime));
+        }
+
+        /**
+         * Create event streaming procss
+         */
+        public CreateEventStreamingResponse CreateEventStreaming(CreateEventStreamingRequest request)
+        {
+            AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime = new AlibabaCloud.TeaUtil.Models.RuntimeOptions();
+            return CreateEventStreamingWithOptions(request, runtime);
+        }
+
+        /**
+         * Create event streaming procss
+         */
+        public async Task<CreateEventStreamingResponse> CreateEventStreamingAsync(CreateEventStreamingRequest request)
+        {
+            AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime = new AlibabaCloud.TeaUtil.Models.RuntimeOptions();
+            return await CreateEventStreamingWithOptionsAsync(request, runtime);
+        }
+
+        /**
+         * Create event streaming procss
+         */
+        public CreateEventStreamingResponse CreateEventStreamingWithOptions(CreateEventStreamingRequest request, AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime)
+        {
+            AlibabaCloud.TeaUtil.Common.ValidateModel(request);
+            return TeaModel.ToObject<CreateEventStreamingResponse>(DoRequest("createEventStreaming", "HTTP", "POST", "/openapi/v2/createEventStreaming", null, request.ToMap(), runtime));
+        }
+
+        /**
+         * Create event streaming procss
+         */
+        public async Task<CreateEventStreamingResponse> CreateEventStreamingWithOptionsAsync(CreateEventStreamingRequest request, AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime)
+        {
+            AlibabaCloud.TeaUtil.Common.ValidateModel(request);
+            return TeaModel.ToObject<CreateEventStreamingResponse>(await DoRequestAsync("createEventStreaming", "HTTP", "POST", "/openapi/v2/createEventStreaming", null, request.ToMap(), runtime));
+        }
+
+        /**
+         * delete event streaming
+         */
+        public DeleteEventStreamingResponse DeleteEventStreaming(DeleteEventStreamingRequest request)
+        {
+            AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime = new AlibabaCloud.TeaUtil.Models.RuntimeOptions();
+            return DeleteEventStreamingWithOptions(request, runtime);
+        }
+
+        /**
+         * delete event streaming
+         */
+        public async Task<DeleteEventStreamingResponse> DeleteEventStreamingAsync(DeleteEventStreamingRequest request)
+        {
+            AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime = new AlibabaCloud.TeaUtil.Models.RuntimeOptions();
+            return await DeleteEventStreamingWithOptionsAsync(request, runtime);
+        }
+
+        /**
+         * delete event streaming
+         */
+        public DeleteEventStreamingResponse DeleteEventStreamingWithOptions(DeleteEventStreamingRequest request, AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime)
+        {
+            AlibabaCloud.TeaUtil.Common.ValidateModel(request);
+            return TeaModel.ToObject<DeleteEventStreamingResponse>(DoRequest("deleteEventStreaming", "HTTP", "POST", "/openapi/v2/deleteEventStreaming", null, request.ToMap(), runtime));
+        }
+
+        /**
+         * delete event streaming
+         */
+        public async Task<DeleteEventStreamingResponse> DeleteEventStreamingWithOptionsAsync(DeleteEventStreamingRequest request, AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime)
+        {
+            AlibabaCloud.TeaUtil.Common.ValidateModel(request);
+            return TeaModel.ToObject<DeleteEventStreamingResponse>(await DoRequestAsync("deleteEventStreaming", "HTTP", "POST", "/openapi/v2/deleteEventStreaming", null, request.ToMap(), runtime));
+        }
+
+        /**
+         * create event streaming
+         */
+        public GetEventStreamingResponse GetEventStreaming(GetEventStreamingRequest request)
+        {
+            AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime = new AlibabaCloud.TeaUtil.Models.RuntimeOptions();
+            return GetEventStreamingWithOptions(request, runtime);
+        }
+
+        /**
+         * create event streaming
+         */
+        public async Task<GetEventStreamingResponse> GetEventStreamingAsync(GetEventStreamingRequest request)
+        {
+            AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime = new AlibabaCloud.TeaUtil.Models.RuntimeOptions();
+            return await GetEventStreamingWithOptionsAsync(request, runtime);
+        }
+
+        /**
+         * create event streaming
+         */
+        public GetEventStreamingResponse GetEventStreamingWithOptions(GetEventStreamingRequest request, AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime)
+        {
+            AlibabaCloud.TeaUtil.Common.ValidateModel(request);
+            return TeaModel.ToObject<GetEventStreamingResponse>(DoRequest("getEventStreaming", "HTTP", "POST", "/openapi/v2/getEventStreaming", null, request.ToMap(), runtime));
+        }
+
+        /**
+         * create event streaming
+         */
+        public async Task<GetEventStreamingResponse> GetEventStreamingWithOptionsAsync(GetEventStreamingRequest request, AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime)
+        {
+            AlibabaCloud.TeaUtil.Common.ValidateModel(request);
+            return TeaModel.ToObject<GetEventStreamingResponse>(await DoRequestAsync("getEventStreaming", "HTTP", "POST", "/openapi/v2/getEventStreaming", null, request.ToMap(), runtime));
+        }
+
+        /**
+         * List the metrics of event streaming
+         */
+        public ListEventStreamingMetricsResponse ListEventStreamingMetrics(ListEventStreamingMetricsRequest request)
+        {
+            AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime = new AlibabaCloud.TeaUtil.Models.RuntimeOptions();
+            return ListEventStreamingMetricsWithOptions(request, runtime);
+        }
+
+        /**
+         * List the metrics of event streaming
+         */
+        public async Task<ListEventStreamingMetricsResponse> ListEventStreamingMetricsAsync(ListEventStreamingMetricsRequest request)
+        {
+            AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime = new AlibabaCloud.TeaUtil.Models.RuntimeOptions();
+            return await ListEventStreamingMetricsWithOptionsAsync(request, runtime);
+        }
+
+        /**
+         * List the metrics of event streaming
+         */
+        public ListEventStreamingMetricsResponse ListEventStreamingMetricsWithOptions(ListEventStreamingMetricsRequest request, AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime)
+        {
+            AlibabaCloud.TeaUtil.Common.ValidateModel(request);
+            return TeaModel.ToObject<ListEventStreamingMetricsResponse>(DoRequest("listEventStreamingMetrics", "HTTP", "POST", "/openapi/v2/listEventStreamingMetrics", null, request.ToMap(), runtime));
+        }
+
+        /**
+         * List the metrics of event streaming
+         */
+        public async Task<ListEventStreamingMetricsResponse> ListEventStreamingMetricsWithOptionsAsync(ListEventStreamingMetricsRequest request, AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime)
+        {
+            AlibabaCloud.TeaUtil.Common.ValidateModel(request);
+            return TeaModel.ToObject<ListEventStreamingMetricsResponse>(await DoRequestAsync("listEventStreamingMetrics", "HTTP", "POST", "/openapi/v2/listEventStreamingMetrics", null, request.ToMap(), runtime));
+        }
+
+        /**
+         * create event streaming
+         */
+        public ListEventStreamingsResponse ListEventStreamings(ListEventStreamingsRequest request)
+        {
+            AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime = new AlibabaCloud.TeaUtil.Models.RuntimeOptions();
+            return ListEventStreamingsWithOptions(request, runtime);
+        }
+
+        /**
+         * create event streaming
+         */
+        public async Task<ListEventStreamingsResponse> ListEventStreamingsAsync(ListEventStreamingsRequest request)
+        {
+            AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime = new AlibabaCloud.TeaUtil.Models.RuntimeOptions();
+            return await ListEventStreamingsWithOptionsAsync(request, runtime);
+        }
+
+        /**
+         * create event streaming
+         */
+        public ListEventStreamingsResponse ListEventStreamingsWithOptions(ListEventStreamingsRequest request, AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime)
+        {
+            AlibabaCloud.TeaUtil.Common.ValidateModel(request);
+            return TeaModel.ToObject<ListEventStreamingsResponse>(DoRequest("listEventStreamings", "HTTP", "POST", "/openapi/v2/listEventStreamings", null, request.ToMap(), runtime));
+        }
+
+        /**
+         * create event streaming
+         */
+        public async Task<ListEventStreamingsResponse> ListEventStreamingsWithOptionsAsync(ListEventStreamingsRequest request, AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime)
+        {
+            AlibabaCloud.TeaUtil.Common.ValidateModel(request);
+            return TeaModel.ToObject<ListEventStreamingsResponse>(await DoRequestAsync("listEventStreamings", "HTTP", "POST", "/openapi/v2/listEventStreamings", null, request.ToMap(), runtime));
+        }
+
+        /**
+         * delete event streaming
+         */
+        public PauseEventStreamingResponse PauseEventStreaming(PauseEventStreamingRequest request)
+        {
+            AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime = new AlibabaCloud.TeaUtil.Models.RuntimeOptions();
+            return PauseEventStreamingWithOptions(request, runtime);
+        }
+
+        /**
+         * delete event streaming
+         */
+        public async Task<PauseEventStreamingResponse> PauseEventStreamingAsync(PauseEventStreamingRequest request)
+        {
+            AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime = new AlibabaCloud.TeaUtil.Models.RuntimeOptions();
+            return await PauseEventStreamingWithOptionsAsync(request, runtime);
+        }
+
+        /**
+         * delete event streaming
+         */
+        public PauseEventStreamingResponse PauseEventStreamingWithOptions(PauseEventStreamingRequest request, AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime)
+        {
+            AlibabaCloud.TeaUtil.Common.ValidateModel(request);
+            return TeaModel.ToObject<PauseEventStreamingResponse>(DoRequest("startEventStreaming", "HTTP", "POST", "/openapi/v2/pauseEventStreaming", null, request.ToMap(), runtime));
+        }
+
+        /**
+         * delete event streaming
+         */
+        public async Task<PauseEventStreamingResponse> PauseEventStreamingWithOptionsAsync(PauseEventStreamingRequest request, AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime)
+        {
+            AlibabaCloud.TeaUtil.Common.ValidateModel(request);
+            return TeaModel.ToObject<PauseEventStreamingResponse>(await DoRequestAsync("startEventStreaming", "HTTP", "POST", "/openapi/v2/pauseEventStreaming", null, request.ToMap(), runtime));
+        }
+
+        /**
+         * create event streaming
+         */
+        public StartEventStreamingResponse StartEventStreaming(StartEventStreamingRequest request)
+        {
+            AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime = new AlibabaCloud.TeaUtil.Models.RuntimeOptions();
+            return StartEventStreamingWithOptions(request, runtime);
+        }
+
+        /**
+         * create event streaming
+         */
+        public async Task<StartEventStreamingResponse> StartEventStreamingAsync(StartEventStreamingRequest request)
+        {
+            AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime = new AlibabaCloud.TeaUtil.Models.RuntimeOptions();
+            return await StartEventStreamingWithOptionsAsync(request, runtime);
+        }
+
+        /**
+         * create event streaming
+         */
+        public StartEventStreamingResponse StartEventStreamingWithOptions(StartEventStreamingRequest request, AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime)
+        {
+            AlibabaCloud.TeaUtil.Common.ValidateModel(request);
+            return TeaModel.ToObject<StartEventStreamingResponse>(DoRequest("startEventStreaming", "HTTP", "POST", "/openapi/v2/startEventStreaming", null, request.ToMap(), runtime));
+        }
+
+        /**
+         * create event streaming
+         */
+        public async Task<StartEventStreamingResponse> StartEventStreamingWithOptionsAsync(StartEventStreamingRequest request, AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime)
+        {
+            AlibabaCloud.TeaUtil.Common.ValidateModel(request);
+            return TeaModel.ToObject<StartEventStreamingResponse>(await DoRequestAsync("startEventStreaming", "HTTP", "POST", "/openapi/v2/startEventStreaming", null, request.ToMap(), runtime));
+        }
+
+        /**
+         * Update event streaming procss
+         */
+        public UpdateEventStreamingResponse UpdateEventStreaming(UpdateEventStreamingRequest request)
+        {
+            AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime = new AlibabaCloud.TeaUtil.Models.RuntimeOptions();
+            return UpdateEventStreamingWithOptions(request, runtime);
+        }
+
+        /**
+         * Update event streaming procss
+         */
+        public async Task<UpdateEventStreamingResponse> UpdateEventStreamingAsync(UpdateEventStreamingRequest request)
+        {
+            AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime = new AlibabaCloud.TeaUtil.Models.RuntimeOptions();
+            return await UpdateEventStreamingWithOptionsAsync(request, runtime);
+        }
+
+        /**
+         * create event streaming
+         */
+        public UpdateEventStreamingResponse UpdateEventStreamingWithOptions(UpdateEventStreamingRequest request, AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime)
+        {
+            AlibabaCloud.TeaUtil.Common.ValidateModel(request);
+            return TeaModel.ToObject<UpdateEventStreamingResponse>(DoRequest("updateEventStreaming", "HTTP", "POST", "/openapi/v2/updateEventStreaming", null, request.ToMap(), runtime));
+        }
+
+        /**
+         * create event streaming
+         */
+        public async Task<UpdateEventStreamingResponse> UpdateEventStreamingWithOptionsAsync(UpdateEventStreamingRequest request, AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime)
+        {
+            AlibabaCloud.TeaUtil.Common.ValidateModel(request);
+            return TeaModel.ToObject<UpdateEventStreamingResponse>(await DoRequestAsync("updateEventStreaming", "HTTP", "POST", "/openapi/v2/updateEventStreaming", null, request.ToMap(), runtime));
+        }
+
     }
 }

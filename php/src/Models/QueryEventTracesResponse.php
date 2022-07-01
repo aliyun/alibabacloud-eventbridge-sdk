@@ -1,60 +1,52 @@
 <?php
 
 // This file is auto-generated, don't edit it. Thanks.
-
 namespace AlibabaCloud\SDK\EventBridge\Models;
 
 use AlibabaCloud\Tea\Model;
 
-class QueryEventTracesResponse extends Model
-{
-    /**
-     * @var EventTrace[]
-     */
-    public $eventTraceList;
+use AlibabaCloud\SDK\EventBridge\Models\EventTrace;
+
+class QueryEventTracesResponse extends Model {
     protected $_name = [
         'eventTraceList' => 'EventTraceList',
     ];
-
-    public function validate()
-    {
+    public function validate() {
         Model::validateRequired('eventTraceList', $this->eventTraceList, true);
     }
-
-    public function toMap()
-    {
+    public function toMap() {
         $res = [];
         if (null !== $this->eventTraceList) {
             $res['EventTraceList'] = [];
-            if (null !== $this->eventTraceList && \is_array($this->eventTraceList)) {
+            if(null !== $this->eventTraceList && is_array($this->eventTraceList)){
                 $n = 0;
-                foreach ($this->eventTraceList as $item) {
+                foreach($this->eventTraceList as $item){
                     $res['EventTraceList'][$n++] = null !== $item ? $item->toMap() : $item;
                 }
             }
         }
-
         return $res;
     }
-
     /**
      * @param array $map
-     *
      * @return QueryEventTracesResponse
      */
-    public static function fromMap($map = [])
-    {
+    public static function fromMap($map = []) {
         $model = new self();
-        if (isset($map['EventTraceList'])) {
-            if (!empty($map['EventTraceList'])) {
+        if(isset($map['EventTraceList'])){
+            if(!empty($map['EventTraceList'])){
                 $model->eventTraceList = [];
-                $n                     = 0;
-                foreach ($map['EventTraceList'] as $item) {
+                $n = 0;
+                foreach($map['EventTraceList'] as $item) {
                     $model->eventTraceList[$n++] = null !== $item ? EventTrace::fromMap($item) : $item;
                 }
             }
         }
-
         return $model;
     }
+    /**
+     * @var EventTrace[]
+     */
+    public $eventTraceList;
+
 }

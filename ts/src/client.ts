@@ -1546,22 +1546,93 @@ export class SourceRocketMQParameters extends $tea.Model {
  * The detail of SourceScheduledEventParameters
  */
 export class SourceScheduledEventParameters extends $tea.Model {
-  Schedule: string;
-  TimeZone: string;
-  UserData?: { [key: string]: string };
+  schedule: string;
+  timeZone: string;
+  userData?: { [key: string]: string };
   static names(): { [key: string]: string } {
     return {
-      Schedule: 'Schedule',
-      TimeZone: 'TimeZone',
-      UserData: 'UserData',
+      schedule: 'Schedule',
+      timeZone: 'TimeZone',
+      userData: 'UserData',
     };
   }
 
   static types(): { [key: string]: any } {
     return {
-      Schedule: 'string',
-      TimeZone: 'string',
-      UserData: { 'type': 'map', 'keyType': 'string', 'valueType': 'string' },
+      schedule: 'string',
+      timeZone: 'string',
+      userData: { 'type': 'map', 'keyType': 'string', 'valueType': 'string' },
+    };
+  }
+
+  constructor(map?: { [key: string]: any }) {
+    super(map);
+  }
+}
+
+/**
+ * The detail of SourceMQTTParameters
+ */
+export class SourceMQTTParameters extends $tea.Model {
+  regionId?: string;
+  instanceId: string;
+  topic: string;
+  static names(): { [key: string]: string } {
+    return {
+      regionId: 'RegionId',
+      instanceId: 'InstanceId',
+      topic: 'Topic',
+    };
+  }
+
+  static types(): { [key: string]: any } {
+    return {
+      regionId: 'string',
+      instanceId: 'string',
+      topic: 'string',
+    };
+  }
+
+  constructor(map?: { [key: string]: any }) {
+    super(map);
+  }
+}
+
+/**
+ * The detail of SourceDTSParameters
+ */
+export class SourceDTSParameters extends $tea.Model {
+  regionId?: string;
+  brokerUrl: string;
+  topic: string;
+  sid: string;
+  username: string;
+  password: string;
+  initCheckPoint: number;
+  taskId: string;
+  static names(): { [key: string]: string } {
+    return {
+      regionId: 'RegionId',
+      brokerUrl: 'BrokerUrl',
+      topic: 'Topic',
+      sid: 'Sid',
+      username: 'Username',
+      password: 'Password',
+      initCheckPoint: 'InitCheckPoint',
+      taskId: 'TaskId',
+    };
+  }
+
+  static types(): { [key: string]: any } {
+    return {
+      regionId: 'string',
+      brokerUrl: 'string',
+      topic: 'string',
+      sid: 'string',
+      username: 'string',
+      password: 'string',
+      initCheckPoint: 'number',
+      taskId: 'string',
     };
   }
 
@@ -1579,7 +1650,7 @@ export class CreateEventSourceRequest extends $tea.Model {
   eventBusName: string;
   sourceRabbitMQParameters?: SourceRabbitMQParameters;
   sourceMNSParameters?: SourceMNSParameters;
-  SourceRocketMQParameters?: SourceRocketMQParameters;
+  sourceRocketMQParameters?: SourceRocketMQParameters;
   sourceScheduledEventParameters?: SourceScheduledEventParameters;
   sourceHttpEventParameters?: SourceHttpEventParameters;
   static names(): { [key: string]: string } {
@@ -1589,7 +1660,7 @@ export class CreateEventSourceRequest extends $tea.Model {
       eventBusName: 'EventBusName',
       sourceRabbitMQParameters: 'SourceRabbitMQParameters',
       sourceMNSParameters: 'SourceMNSParameters',
-      SourceRocketMQParameters: 'SourceRocketMQParameters',
+      sourceRocketMQParameters: 'SourceRocketMQParameters',
       sourceScheduledEventParameters: 'SourceScheduledEventParameters',
       sourceHttpEventParameters: 'SourceHttpEventParameters',
     };
@@ -1602,7 +1673,7 @@ export class CreateEventSourceRequest extends $tea.Model {
       eventBusName: 'string',
       sourceRabbitMQParameters: SourceRabbitMQParameters,
       sourceMNSParameters: SourceMNSParameters,
-      SourceRocketMQParameters: SourceRocketMQParameters,
+      sourceRocketMQParameters: SourceRocketMQParameters,
       sourceScheduledEventParameters: SourceScheduledEventParameters,
       sourceHttpEventParameters: SourceHttpEventParameters,
     };
@@ -1618,7 +1689,7 @@ export class CreateEventSourceRequest extends $tea.Model {
  */
 export class SourceKafkaParameters extends $tea.Model {
   regionId?: string;
-  InstanceId?: string;
+  instanceId?: string;
   topic?: string;
   consumerGroup: string;
   offsetReset?: string;
@@ -1630,7 +1701,7 @@ export class SourceKafkaParameters extends $tea.Model {
   static names(): { [key: string]: string } {
     return {
       regionId: 'RegionId',
-      InstanceId: 'InstanceId',
+      instanceId: 'InstanceId',
       topic: 'Topic',
       consumerGroup: 'ConsumerGroup',
       offsetReset: 'OffsetReset',
@@ -1645,7 +1716,7 @@ export class SourceKafkaParameters extends $tea.Model {
   static types(): { [key: string]: any } {
     return {
       regionId: 'string',
-      InstanceId: 'string',
+      instanceId: 'string',
       topic: 'string',
       consumerGroup: 'string',
       offsetReset: 'string',
@@ -1701,12 +1772,16 @@ export class Source extends $tea.Model {
   sourceRabbitMQParameters?: SourceRabbitMQParameters;
   sourceRocketMQParameters?: SourceRocketMQParameters;
   sourceKafkaParameters?: SourceKafkaParameters;
+  sourceMQTTParameters?: SourceMQTTParameters;
+  sourceDTSParameters?: SourceDTSParameters;
   static names(): { [key: string]: string } {
     return {
       sourceMNSParameters: 'SourceMNSParameters',
       sourceRabbitMQParameters: 'SourceRabbitMQParameters',
       sourceRocketMQParameters: 'SourceRocketMQParameters',
       sourceKafkaParameters: 'SourceKafkaParameters',
+      sourceMQTTParameters: 'SourceMQTTParameters',
+      sourceDTSParameters: 'SourceDTSParameters',
     };
   }
 
@@ -1716,6 +1791,8 @@ export class Source extends $tea.Model {
       sourceRabbitMQParameters: SourceRabbitMQParameters,
       sourceRocketMQParameters: SourceRocketMQParameters,
       sourceKafkaParameters: SourceKafkaParameters,
+      sourceMQTTParameters: SourceMQTTParameters,
+      sourceDTSParameters: SourceDTSParameters,
     };
   }
 
@@ -1974,18 +2051,18 @@ export class SinkRabbitMQParameters extends $tea.Model {
  * The config of SinkMNSParameters
  */
 export class SinkMNSParameters extends $tea.Model {
-  QueueName?: TargetParameter;
+  queueName?: TargetParameter;
   body?: TargetParameter;
   static names(): { [key: string]: string } {
     return {
-      QueueName: 'QueueName',
+      queueName: 'QueueName',
       body: 'Body',
     };
   }
 
   static types(): { [key: string]: any } {
     return {
-      QueueName: TargetParameter,
+      queueName: TargetParameter,
       body: TargetParameter,
     };
   }
@@ -3087,16 +3164,16 @@ export class SourceHttpEventResponse extends $tea.Model {
  * The detail of ConcurrentConfig
  */
 export class ConcurrentConfig extends $tea.Model {
-  Concurrency: number;
+  concurrency?: number;
   static names(): { [key: string]: string } {
     return {
-      Concurrency: 'ResourceKey',
+      concurrency: 'Concurrency',
     };
   }
 
   static types(): { [key: string]: any } {
     return {
-      Concurrency: 'number',
+      concurrency: 'number',
     };
   }
 
@@ -3791,14 +3868,6 @@ export default class Client {
    * create event streaming
    */
   async startEventStreamingWithOptions(request: StartEventStreamingRequest, runtime: $Util.RuntimeOptions): Promise<StartEventStreamingResponse> {
-    Util.validateModel(request);
-    return $tea.cast<StartEventStreamingResponse>(await this.doRequest("startEventStreaming", "HTTP", "POST", `/openapi/v2/startEventStreaming`, null, $tea.toMap(request), runtime), new StartEventStreamingResponse({}));
-  }
-
-  /**
-   * deprecated please use startEventStreamingWithOptions
-   */
-  async startEventStreamingsWithOptions(request: StartEventStreamingRequest, runtime: $Util.RuntimeOptions): Promise<StartEventStreamingResponse> {
     Util.validateModel(request);
     return $tea.cast<StartEventStreamingResponse>(await this.doRequest("startEventStreaming", "HTTP", "POST", `/openapi/v2/startEventStreaming`, null, $tea.toMap(request), runtime), new StartEventStreamingResponse({}));
   }

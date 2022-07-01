@@ -216,5 +216,135 @@ namespace AlibabaCloud.SDK.EventBridge
          * Query the event traces by the event Id.
          */
         QueryEventsByPeriodResponse QueryEventsByPeriodWithOptions(QueryEventsByPeriodRequest request, AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime);
+
+        /**
+         * Creates a new event source within your account
+         */
+        CreateEventSourceResponse CreateEventSource(CreateEventSourceRequest request);
+
+        /**
+         * Creates a new event source within your account
+         */
+        CreateEventSourceResponse CreateEventSourceWithOptions(CreateEventSourceRequest request, AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime);
+
+        /**
+         * Delete the event source
+         */
+        DeleteEventSourceResponse DeleteEventSource(DeleteEventSourceRequest request);
+
+        /**
+         * Delete the event source
+         */
+        DeleteEventSourceResponse DeleteEventSourceWithOptions(DeleteEventSourceRequest request, AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime);
+
+        /**
+         * Update the event source
+         */
+        UpdateEventSourceResponse UpdateEventSource(UpdateEventSourceRequest request);
+
+        /**
+         * Update the event source
+         */
+        UpdateEventSourceResponse UpdateEventSourceWithOptions(UpdateEventSourceRequest request, AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime);
+
+        /**
+         * List the user defined event source within your account
+         */
+        ListUserDefinedResponse ListUserDefinedEventSources(ListUserDefinedRequest request);
+
+        /**
+         * List the user defined event source within your account
+         */
+        ListUserDefinedResponse ListUserDefinedEventSourcesWithOptions(ListUserDefinedRequest request, AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime);
+
+        /**
+         * List the aliyun official event source within your account
+         */
+        ListAliyunOfficialResponse ListAliyunOfficialEventSources(ListAliyunOfficialRequest request);
+
+        /**
+         * List the aliyun official event source within your account
+         */
+        ListAliyunOfficialResponse ListAliyunOfficialEventSourcesWithOptions(ListAliyunOfficialRequest request, AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime);
+
+        /**
+         * Create event streaming procss
+         */
+        CreateEventStreamingResponse CreateEventStreaming(CreateEventStreamingRequest request);
+
+        /**
+         * Create event streaming procss
+         */
+        CreateEventStreamingResponse CreateEventStreamingWithOptions(CreateEventStreamingRequest request, AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime);
+
+        /**
+         * delete event streaming
+         */
+        DeleteEventStreamingResponse DeleteEventStreaming(DeleteEventStreamingRequest request);
+
+        /**
+         * delete event streaming
+         */
+        DeleteEventStreamingResponse DeleteEventStreamingWithOptions(DeleteEventStreamingRequest request, AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime);
+
+        /**
+         * create event streaming
+         */
+        GetEventStreamingResponse GetEventStreaming(GetEventStreamingRequest request);
+
+        /**
+         * create event streaming
+         */
+        GetEventStreamingResponse GetEventStreamingWithOptions(GetEventStreamingRequest request, AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime);
+
+        /**
+         * List the metrics of event streaming
+         */
+        ListEventStreamingMetricsResponse ListEventStreamingMetrics(ListEventStreamingMetricsRequest request);
+
+        /**
+         * List the metrics of event streaming
+         */
+        ListEventStreamingMetricsResponse ListEventStreamingMetricsWithOptions(ListEventStreamingMetricsRequest request, AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime);
+
+        /**
+         * create event streaming
+         */
+        ListEventStreamingsResponse ListEventStreamings(ListEventStreamingsRequest request);
+
+        /**
+         * create event streaming
+         */
+        ListEventStreamingsResponse ListEventStreamingsWithOptions(ListEventStreamingsRequest request, AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime);
+
+        /**
+         * delete event streaming
+         */
+        PauseEventStreamingResponse PauseEventStreaming(PauseEventStreamingRequest request);
+
+        /**
+         * delete event streaming
+         */
+        PauseEventStreamingResponse PauseEventStreamingWithOptions(PauseEventStreamingRequest request, AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime);
+
+        /**
+         * create event streaming
+         */
+        StartEventStreamingResponse StartEventStreaming(StartEventStreamingRequest request);
+
+        /**
+         * create event streaming
+         */
+        StartEventStreamingResponse StartEventStreamingWithOptions(StartEventStreamingRequest request, AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime);
+
+        /**
+         * Update event streaming procss
+         */
+        UpdateEventStreamingResponse UpdateEventStreaming(UpdateEventStreamingRequest request);
+
+        /**
+         * create event streaming
+         */
+        UpdateEventStreamingResponse UpdateEventStreamingWithOptions(UpdateEventStreamingRequest request, AlibabaCloud.TeaUtil.Models.RuntimeOptions runtime);
    }
 }

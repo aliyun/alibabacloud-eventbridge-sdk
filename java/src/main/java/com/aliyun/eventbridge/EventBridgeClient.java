@@ -759,15 +759,6 @@ public class EventBridgeClient implements EventBridge {
     }
 
     /**
-     * deprecated please use startEventStreamingWithOptions
-     */
-    @Override
-    public StartEventStreamingResponse startEventStreamingsWithOptions(StartEventStreamingRequest request, RuntimeOptions runtime) {
-        com.aliyun.teautil.Common.validateModel(request);
-        return TeaModel.toModel(this.doRequest("startEventStreaming", "HTTP", "POST", "/openapi/v2/startEventStreaming", null, TeaModel.buildMap(request), runtime), new StartEventStreamingResponse());
-    }
-
-    /**
      * create event streaming
     */
     @Override

@@ -741,11 +741,6 @@ public interface EventBridge {
     StartEventStreamingResponse startEventStreaming(StartEventStreamingRequest request);
 
     /**
-     * deprecated please use startEventStreamingWithOptions
-     */
-    StartEventStreamingResponse startEventStreamingsWithOptions(StartEventStreamingRequest request, RuntimeOptions runtime);
-    
-    /**
      * create event streaming
     */
     StartEventStreamingResponse startEventStreamingWithOptions(StartEventStreamingRequest request, RuntimeOptions runtime);

@@ -951,16 +951,39 @@ model SourceRocketMQParameters = {
   tag?: string(name='Tag'),
   offset?: string(name='Offset'),
   groupID: string(name='GroupID'),
-  timestamp?: number(name='Timestamp'),
+  timestamp?: int64(name='Timestamp'),
 }
 
 /**
  * The detail of SourceScheduledEventParameters
  */
 model SourceScheduledEventParameters = {
-  Schedule: string(name='Schedule'),
-  TimeZone: string(name='TimeZone'),
-  UserData?: map[string]string(name='UserData'),
+  schedule: string(name='Schedule'),
+  timeZone: string(name='TimeZone'),
+  userData?: map[string]string(name='UserData'),
+}
+
+/**
+ * The detail of SourceMQTTParameters
+ */
+model SourceMQTTParameters = {
+  regionId?: string(name='RegionId'),
+  instanceId: string(name='InstanceId'),
+  topic: string(name='Topic'),
+}
+
+/**
+ * The detail of SourceDTSParameters
+ */
+model SourceDTSParameters = {
+  regionId?: string(name='RegionId'),
+  brokerUrl: string(name='BrokerUrl'),
+  topic: string(name='Topic'),
+  sid: string(name='Sid'),
+  username: string(name='Username'),
+  password: string(name='Password'),
+  initCheckPoint: int32(name='InitCheckPoint'),
+  taskId: string(name='TaskId')
 }
 
 /**
@@ -972,7 +995,7 @@ model CreateEventSourceRequest = {
   eventBusName: string(name='EventBusName'),
   sourceRabbitMQParameters?: SourceRabbitMQParameters(name='SourceRabbitMQParameters'),
   sourceMNSParameters?: SourceMNSParameters(name='SourceMNSParameters'),
-  SourceRocketMQParameters?: SourceRocketMQParameters(name='SourceRocketMQParameters'),
+  sourceRocketMQParameters?: SourceRocketMQParameters(name='SourceRocketMQParameters'),
   sourceScheduledEventParameters?: SourceScheduledEventParameters(name='SourceScheduledEventParameters'),
   sourceHttpEventParameters?: SourceHttpEventParameters(name='SourceHttpEventParameters'),
   }
@@ -982,7 +1005,7 @@ model CreateEventSourceRequest = {
  */
 model SourceKafkaParameters = {
   regionId?: string(name='RegionId'),
-  InstanceId?: string(name='InstanceId'),
+  instanceId?: string(name='InstanceId'),
   topic?: string(name='Topic'),
   consumerGroup: string(name='ConsumerGroup'),
   offsetReset?: string(name='OffsetReset'),
@@ -1011,6 +1034,8 @@ model Source = {
   sourceRabbitMQParameters?: SourceRabbitMQParameters(name='SourceRabbitMQParameters'),
   sourceRocketMQParameters?: SourceRocketMQParameters(name='SourceRocketMQParameters'),
   sourceKafkaParameters?: SourceKafkaParameters(name='SourceKafkaParameters'),
+  sourceMQTTParameters?: SourceMQTTParameters(name='SourceMQTTParameters'),
+  sourceDTSParameters?: SourceDTSParameters(name='SourceDTSParameters'),
 }
 
 /**
@@ -1097,7 +1122,7 @@ model SinkRabbitMQParameters = {
  * The config of SinkMNSParameters
  */
 model SinkMNSParameters = {
-  QueueName?: TargetParameter(name='QueueName'),
+  queueName?: TargetParameter(name='QueueName'),
   body?: TargetParameter(name='Body'),
 }
 
@@ -1602,13 +1627,6 @@ async function startEventStreamingWithOptions(request: StartEventStreamingReques
   return doRequest('startEventStreaming', 'HTTP', 'POST', `/openapi/v2/startEventStreaming`, null, request, runtime);
 }
 
-/**
- * deprecated please use startEventStreamingWithOptions
- */
-async function startEventStreamingsWithOptions(request: StartEventStreamingRequest, runtime: Util.RuntimeOptions): StartEventStreamingResponse {
-  Util.validateModel(request);
-  return doRequest('startEventStreaming', 'HTTP', 'POST', `/openapi/v2/startEventStreaming`, null, request, runtime);
-}
 
 /**
  * The request of UpdateEventStreaming
@@ -1672,5 +1690,5 @@ model SourceHttpEventResponse = {
  * The detail of ConcurrentConfig
  */
 model ConcurrentConfig = {
-  Concurrency: int32(name='ResourceKey'),
+  concurrency?: int32(name='Concurrency'),
 }

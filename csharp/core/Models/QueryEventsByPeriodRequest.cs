@@ -19,11 +19,11 @@ namespace AlibabaCloud.SDK.EventBridge.Models
 
         [NameInMap("StartTime")]
         [Validation(Required=true)]
-        public int? StartTime { get; set; }
+        public long? StartTime { get; set; }
 
         [NameInMap("EndTime")]
         [Validation(Required=true)]
-        public int? EndTime { get; set; }
+        public long? EndTime { get; set; }
 
         [NameInMap("Limit")]
         [Validation(Required=false)]

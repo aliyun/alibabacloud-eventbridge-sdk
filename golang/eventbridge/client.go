@@ -1872,7 +1872,7 @@ type SourceRocketMQParameters struct {
 	Tag        *string `json:"Tag,omitempty" xml:"Tag,omitempty"`
 	Offset     *string `json:"Offset,omitempty" xml:"Offset,omitempty"`
 	GroupID    *string `json:"GroupID,omitempty" xml:"GroupID,omitempty" require:"true"`
-	Timestamp  *int    `json:"Timestamp,omitempty" xml:"Timestamp,omitempty"`
+	Timestamp  *int64  `json:"Timestamp,omitempty" xml:"Timestamp,omitempty"`
 }
 
 func (s SourceRocketMQParameters) String() string {
@@ -1913,7 +1913,7 @@ func (s *SourceRocketMQParameters) SetGroupID(v string) *SourceRocketMQParameter
 	return s
 }
 
-func (s *SourceRocketMQParameters) SetTimestamp(v int) *SourceRocketMQParameters {
+func (s *SourceRocketMQParameters) SetTimestamp(v int64) *SourceRocketMQParameters {
 	s.Timestamp = &v
 	return s
 }
@@ -1947,6 +1947,100 @@ func (s *SourceScheduledEventParameters) SetTimeZone(v string) *SourceScheduledE
 
 func (s *SourceScheduledEventParameters) SetUserData(v map[string]*string) *SourceScheduledEventParameters {
 	s.UserData = v
+	return s
+}
+
+/**
+ * The detail of SourceMQTTParameters
+ */
+type SourceMQTTParameters struct {
+	RegionId   *string `json:"RegionId,omitempty" xml:"RegionId,omitempty"`
+	InstanceId *string `json:"InstanceId,omitempty" xml:"InstanceId,omitempty" require:"true"`
+	Topic      *string `json:"Topic,omitempty" xml:"Topic,omitempty" require:"true"`
+}
+
+func (s SourceMQTTParameters) String() string {
+	return tea.Prettify(s)
+}
+
+func (s SourceMQTTParameters) GoString() string {
+	return s.String()
+}
+
+func (s *SourceMQTTParameters) SetRegionId(v string) *SourceMQTTParameters {
+	s.RegionId = &v
+	return s
+}
+
+func (s *SourceMQTTParameters) SetInstanceId(v string) *SourceMQTTParameters {
+	s.InstanceId = &v
+	return s
+}
+
+func (s *SourceMQTTParameters) SetTopic(v string) *SourceMQTTParameters {
+	s.Topic = &v
+	return s
+}
+
+/**
+ * The detail of SourceDTSParameters
+ */
+type SourceDTSParameters struct {
+	RegionId       *string `json:"RegionId,omitempty" xml:"RegionId,omitempty"`
+	BrokerUrl      *string `json:"BrokerUrl,omitempty" xml:"BrokerUrl,omitempty" require:"true"`
+	Topic          *string `json:"Topic,omitempty" xml:"Topic,omitempty" require:"true"`
+	Sid            *string `json:"Sid,omitempty" xml:"Sid,omitempty" require:"true"`
+	Username       *string `json:"Username,omitempty" xml:"Username,omitempty" require:"true"`
+	Password       *string `json:"Password,omitempty" xml:"Password,omitempty" require:"true"`
+	InitCheckPoint *int32  `json:"InitCheckPoint,omitempty" xml:"InitCheckPoint,omitempty" require:"true"`
+	TaskId         *string `json:"TaskId,omitempty" xml:"TaskId,omitempty" require:"true"`
+}
+
+func (s SourceDTSParameters) String() string {
+	return tea.Prettify(s)
+}
+
+func (s SourceDTSParameters) GoString() string {
+	return s.String()
+}
+
+func (s *SourceDTSParameters) SetRegionId(v string) *SourceDTSParameters {
+	s.RegionId = &v
+	return s
+}
+
+func (s *SourceDTSParameters) SetBrokerUrl(v string) *SourceDTSParameters {
+	s.BrokerUrl = &v
+	return s
+}
+
+func (s *SourceDTSParameters) SetTopic(v string) *SourceDTSParameters {
+	s.Topic = &v
+	return s
+}
+
+func (s *SourceDTSParameters) SetSid(v string) *SourceDTSParameters {
+	s.Sid = &v
+	return s
+}
+
+func (s *SourceDTSParameters) SetUsername(v string) *SourceDTSParameters {
+	s.Username = &v
+	return s
+}
+
+func (s *SourceDTSParameters) SetPassword(v string) *SourceDTSParameters {
+	s.Password = &v
+	return s
+}
+
+func (s *SourceDTSParameters) SetInitCheckPoint(v int32) *SourceDTSParameters {
+	s.InitCheckPoint = &v
+	return s
+}
+
+func (s *SourceDTSParameters) SetTaskId(v string) *SourceDTSParameters {
+	s.TaskId = &v
 	return s
 }
 
@@ -2132,6 +2226,8 @@ type Source struct {
 	SourceRabbitMQParameters *SourceRabbitMQParameters `json:"SourceRabbitMQParameters,omitempty" xml:"SourceRabbitMQParameters,omitempty"`
 	SourceRocketMQParameters *SourceRocketMQParameters `json:"SourceRocketMQParameters,omitempty" xml:"SourceRocketMQParameters,omitempty"`
 	SourceKafkaParameters    *SourceKafkaParameters    `json:"SourceKafkaParameters,omitempty" xml:"SourceKafkaParameters,omitempty"`
+	SourceMQTTParameters     *SourceMQTTParameters     `json:"SourceMQTTParameters,omitempty" xml:"SourceMQTTParameters,omitempty"`
+	SourceDTSParameters      *SourceDTSParameters      `json:"SourceDTSParameters,omitempty" xml:"SourceDTSParameters,omitempty"`
 }
 
 func (s Source) String() string {
@@ -2159,6 +2255,16 @@ func (s *Source) SetSourceRocketMQParameters(v *SourceRocketMQParameters) *Sourc
 
 func (s *Source) SetSourceKafkaParameters(v *SourceKafkaParameters) *Source {
 	s.SourceKafkaParameters = v
+	return s
+}
+
+func (s *Source) SetSourceMQTTParameters(v *SourceMQTTParameters) *Source {
+	s.SourceMQTTParameters = v
+	return s
+}
+
+func (s *Source) SetSourceDTSParameters(v *SourceDTSParameters) *Source {
+	s.SourceDTSParameters = v
 	return s
 }
 
@@ -3879,7 +3985,7 @@ func (s *SourceHttpEventResponse) SetVpcWebHookUrl(v []*string) *SourceHttpEvent
  * The detail of ConcurrentConfig
  */
 type ConcurrentConfig struct {
-	Concurrency *int32 `json:"ResourceKey,omitempty" xml:"ResourceKey,omitempty" require:"true"`
+	Concurrency *int32 `json:"Concurrency,omitempty" xml:"Concurrency,omitempty"`
 }
 
 func (s ConcurrentConfig) String() string {
@@ -5072,23 +5178,6 @@ func (client *Client) StartEventStreaming(request *StartEventStreamingRequest) (
  * create event streaming
  */
 func (client *Client) StartEventStreamingWithOptions(request *StartEventStreamingRequest, runtime *util.RuntimeOptions) (_result *StartEventStreamingResponse, _err error) {
-	_err = util.ValidateModel(request)
-	if _err != nil {
-		return _result, _err
-	}
-	_result = &StartEventStreamingResponse{}
-	_body, _err := client.DoRequest(tea.String("startEventStreaming"), tea.String("HTTP"), tea.String("POST"), tea.String("/openapi/v2/startEventStreaming"), nil, tea.ToMap(request), runtime)
-	if _err != nil {
-		return _result, _err
-	}
-	_err = tea.Convert(_body, &_result)
-	return _result, _err
-}
-
-/**
- * deprecated please use startEventStreamingWithOptions
- */
-func (client *Client) StartEventStreamingsWithOptions(request *StartEventStreamingRequest, runtime *util.RuntimeOptions) (_result *StartEventStreamingResponse, _err error) {
 	_err = util.ValidateModel(request)
 	if _err != nil {
 		return _result, _err

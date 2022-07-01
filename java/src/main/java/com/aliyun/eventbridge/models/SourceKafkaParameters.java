@@ -11,7 +11,7 @@ public class SourceKafkaParameters extends TeaModel {
     public String regionId;
 
     @NameInMap("InstanceId")
-    public String InstanceId;
+    public String instanceId;
 
     @NameInMap("Topic")
     public String topic;
@@ -51,12 +51,12 @@ public class SourceKafkaParameters extends TeaModel {
         return this.regionId;
     }
 
-    public SourceKafkaParameters setInstanceId(String InstanceId) {
-        this.InstanceId = InstanceId;
+    public SourceKafkaParameters setInstanceId(String instanceId) {
+        this.instanceId = instanceId;
         return this;
     }
     public String getInstanceId() {
-        return this.InstanceId;
+        return this.instanceId;
     }
 
     public SourceKafkaParameters setTopic(String topic) {

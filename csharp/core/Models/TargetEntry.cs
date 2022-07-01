@@ -32,6 +32,10 @@ namespace AlibabaCloud.SDK.EventBridge.Models
         [Validation(Required=false)]
         public List<EBTargetParam> ParamList { get; set; }
 
+        [NameInMap("ConcurrentConfig")]
+        [Validation(Required=false)]
+        public ConcurrentConfig ConcurrentConfig { get; set; }
+
     }
 
 }

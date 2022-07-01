@@ -8,7 +8,7 @@ import com.aliyun.tea.*;
  */
 public class SinkMNSParameters extends TeaModel {
     @NameInMap("QueueName")
-    public TargetParameter QueueName;
+    public TargetParameter queueName;
 
     @NameInMap("Body")
     public TargetParameter body;
@@ -18,12 +18,12 @@ public class SinkMNSParameters extends TeaModel {
         return TeaModel.build(map, self);
     }
 
-    public SinkMNSParameters setQueueName(TargetParameter QueueName) {
-        this.QueueName = QueueName;
+    public SinkMNSParameters setQueueName(TargetParameter queueName) {
+        this.queueName = queueName;
         return this;
     }
     public TargetParameter getQueueName() {
-        return this.QueueName;
+        return this.queueName;
     }
 
     public SinkMNSParameters setBody(TargetParameter body) {
