@@ -8,7 +8,6 @@ import com.aliyun.tea.*;
  */
 public class ConcurrentConfig extends TeaModel {
     @NameInMap("Concurrency")
-    @Validation(required = true)
     public Integer concurrency;
 
     public static ConcurrentConfig build(java.util.Map<String, ?> map) {

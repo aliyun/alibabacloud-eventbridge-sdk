@@ -760,6 +760,15 @@ public interface EventBridge {
      */
     UpdateEventStreamingResponse updateEventStreamingWithOptions(UpdateEventStreamingRequest request, RuntimeOptions runtime);
 
+    /**
+     * List the saas event source within your account.
+     */
+    ListPartnerEventSourcesResponse listPartnerEventSources(ListPartnerEventSourcesRequest request);
 
+    /**
+     * List the metrics of event streaming
+     */
+    ListPartnerEventSourcesResponse listPartnerEventSourcesWithOptions(ListPartnerEventSourcesRequest request,
+                                                                       RuntimeOptions runtime);
 
 }

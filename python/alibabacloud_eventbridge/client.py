@@ -29,6 +29,9 @@ class Client:
     _endpoint: str = None
     _region_id: str = None
     _credential: CredentialClient = None
+    _local_addr: str = None
+    _socks_5proxy: str = None
+    _socks_5net_work: str = None
 
     def __init__(
         self, 
@@ -80,6 +83,9 @@ class Client:
         self._http_proxy = config.http_proxy
         self._https_proxy = config.https_proxy
         self._max_idle_conns = config.max_idle_conns
+        self._local_addr = config.local_addr
+        self._socks_5proxy = config.socks_5proxy
+        self._socks_5net_work = config.socks_5net_work
 
     def do_request(
         self,
@@ -119,7 +125,10 @@ class Client:
                 'policy': UtilClient.default_string(runtime.backoff_policy, 'no'),
                 'period': UtilClient.default_number(runtime.backoff_period, 1)
             },
-            'ignoreSSL': runtime.ignore_ssl
+            'ignoreSSL': runtime.ignore_ssl,
+            'localAddr': runtime.local_addr,
+            'socks5Proxy': runtime.socks_5proxy,
+            'socks5NetWork': runtime.socks_5net_work
         }
         _last_request = None
         _last_exception = None
@@ -219,7 +228,10 @@ class Client:
                 'policy': UtilClient.default_string(runtime.backoff_policy, 'no'),
                 'period': UtilClient.default_number(runtime.backoff_period, 1)
             },
-            'ignoreSSL': runtime.ignore_ssl
+            'ignoreSSL': runtime.ignore_ssl,
+            'localAddr': runtime.local_addr,
+            'socks5Proxy': runtime.socks_5proxy,
+            'socks5NetWork': runtime.socks_5net_work
         }
         _last_request = None
         _last_exception = None
@@ -1855,4 +1867,52 @@ class Client:
         return TeaCore.from_map(
             event_bridge_models.UpdateEventStreamingResponse(),
             await self.do_request_async('updateEventStreaming', 'HTTP', 'POST', f'/openapi/v2/updateEventStreaming', None, TeaCore.to_map(request), runtime)
+        )
+
+    def list_partner_event_sources(
+        self,
+        request: event_bridge_models.ListPartnerEventSourcesRequest,
+    ) -> event_bridge_models.ListPartnerEventSourcesResponse:
+        """
+        List the saas event source within your account.
+        """
+        runtime = util_models.RuntimeOptions()
+        return self.list_partner_event_sources_with_options(request, runtime)
+
+    async def list_partner_event_sources_async(
+        self,
+        request: event_bridge_models.ListPartnerEventSourcesRequest,
+    ) -> event_bridge_models.ListPartnerEventSourcesResponse:
+        """
+        List the saas event source within your account.
+        """
+        runtime = util_models.RuntimeOptions()
+        return await self.list_partner_event_sources_with_options_async(request, runtime)
+
+    def list_partner_event_sources_with_options(
+        self,
+        request: event_bridge_models.ListPartnerEventSourcesRequest,
+        runtime: util_models.RuntimeOptions,
+    ) -> event_bridge_models.ListPartnerEventSourcesResponse:
+        """
+        List the metrics of event streaming
+        """
+        UtilClient.validate_model(request)
+        return TeaCore.from_map(
+            event_bridge_models.ListPartnerEventSourcesResponse(),
+            self.do_request('listEventStreamingMetrics', 'HTTP', 'POST', f'/openapi/listPartnerEventSources', None, TeaCore.to_map(request), runtime)
+        )
+
+    async def list_partner_event_sources_with_options_async(
+        self,
+        request: event_bridge_models.ListPartnerEventSourcesRequest,
+        runtime: util_models.RuntimeOptions,
+    ) -> event_bridge_models.ListPartnerEventSourcesResponse:
+        """
+        List the metrics of event streaming
+        """
+        UtilClient.validate_model(request)
+        return TeaCore.from_map(
+            event_bridge_models.ListPartnerEventSourcesResponse(),
+            await self.do_request_async('listEventStreamingMetrics', 'HTTP', 'POST', f'/openapi/listPartnerEventSources', None, TeaCore.to_map(request), runtime)
         )

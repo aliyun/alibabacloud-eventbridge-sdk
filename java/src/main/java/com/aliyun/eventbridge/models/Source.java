@@ -19,6 +19,12 @@ public class Source extends TeaModel {
     @NameInMap("SourceKafkaParameters")
     public SourceKafkaParameters sourceKafkaParameters;
 
+    @NameInMap("SourceMQTTParameters")
+    public SourceMQTTParameters sourceMQTTParameters;
+
+    @NameInMap("SourceDTSParameters")
+    public SourceDTSParameters sourceDTSParameters;
+
     public static Source build(java.util.Map<String, ?> map) {
         Source self = new Source();
         return TeaModel.build(map, self);
@@ -54,6 +60,22 @@ public class Source extends TeaModel {
     }
     public SourceKafkaParameters getSourceKafkaParameters() {
         return this.sourceKafkaParameters;
+    }
+
+    public Source setSourceMQTTParameters(SourceMQTTParameters sourceMQTTParameters) {
+        this.sourceMQTTParameters = sourceMQTTParameters;
+        return this;
+    }
+    public SourceMQTTParameters getSourceMQTTParameters() {
+        return this.sourceMQTTParameters;
+    }
+
+    public Source setSourceDTSParameters(SourceDTSParameters sourceDTSParameters) {
+        this.sourceDTSParameters = sourceDTSParameters;
+        return this;
+    }
+    public SourceDTSParameters getSourceDTSParameters() {
+        return this.sourceDTSParameters;
     }
 
 }

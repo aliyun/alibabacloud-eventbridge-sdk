@@ -25,6 +25,12 @@ public class EventBridgeClient implements EventBridge {
     public String _endpoint;
     public String _regionId;
     public com.aliyun.credentials.Client _credential;
+
+    public String _localAddr;
+
+    public String _socks5Proxy;
+
+    public String _socks5NetWork;
     /**
      * Init client with Config
      * @param config config contains the necessary information to create a client
@@ -82,6 +88,9 @@ public class EventBridgeClient implements EventBridge {
         this._httpProxy = config.httpProxy;
         this._httpsProxy = config.httpsProxy;
         this._maxIdleConns = config.maxIdleConns;
+        this._localAddr = config.localAddr;
+        this._socks5Proxy = config.socks5Proxy;
+        this._socks5NetWork = config.socks5NetWork;
     }
 
     @Override
@@ -102,7 +111,10 @@ public class EventBridgeClient implements EventBridge {
                 new TeaPair("policy", com.aliyun.teautil.Common.defaultString(runtime.backoffPolicy, "no")),
                 new TeaPair("period", com.aliyun.teautil.Common.defaultNumber(runtime.backoffPeriod, 1))
             )),
-            new TeaPair("ignoreSSL", runtime.ignoreSSL)
+            new TeaPair("ignoreSSL", runtime.ignoreSSL),
+            new TeaPair("localAddr", com.aliyun.teautil.Common.defaultString(runtime.localAddr, _localAddr)),
+            new TeaPair("socks5Proxy", com.aliyun.teautil.Common.defaultString(runtime.socks5Proxy, _socks5Proxy)),
+            new TeaPair("socks5NetWork", com.aliyun.teautil.Common.defaultString(runtime.socks5NetWork, _socks5NetWork))
         );
 
         TeaRequest _lastRequest = null;
@@ -792,5 +804,26 @@ public class EventBridgeClient implements EventBridge {
     public UpdateEventStreamingResponse updateEventStreamingWithOptions(UpdateEventStreamingRequest request, RuntimeOptions runtime) {
         com.aliyun.teautil.Common.validateModel(request);
         return TeaModel.toModel(this.doRequest("updateEventStreaming", "HTTP", "POST", "/openapi/v2/updateEventStreaming", null, TeaModel.buildMap(request), runtime), new UpdateEventStreamingResponse());
+    }
+
+    /**
+     * List the saas event source within your account.
+     */
+    @Override
+    public ListPartnerEventSourcesResponse listPartnerEventSources(ListPartnerEventSourcesRequest request) {
+        RuntimeOptions runtime = new RuntimeOptions();
+        return this.listPartnerEventSourcesWithOptions(request, runtime);
+    }
+
+    /**
+     * List the metrics of event streaming
+     */
+    @Override
+    public ListPartnerEventSourcesResponse listPartnerEventSourcesWithOptions(ListPartnerEventSourcesRequest request,
+                                                                              RuntimeOptions runtime) {
+        com.aliyun.teautil.Common.validateModel(request);
+        return TeaModel.toModel(this.doRequest("listEventStreamingMetrics", "HTTP", "POST",
+                        "/openapi/listPartnerEventSources", null, TeaModel.buildMap(request), runtime),
+                new ListPartnerEventSourcesResponse());
     }
 }
