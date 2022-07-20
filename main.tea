@@ -15,6 +15,9 @@ type @maxIdleConns = integer
 type @endpoint = string
 type @regionId = string
 type @credential = Credential
+type @localAddr = string
+type @socks5Proxy = string
+type @socks5NetWork = string
 
 /**
  * Model for initing client
@@ -33,6 +36,9 @@ model Config {
   endpoint?: string(description='endpoint',example='cs.aliyuncs.com',default=''),
   noProxy?: string(description='proxy white list',example='http://localhost',default=''),
   maxIdleConns?: integer(description='max idle conns',example='3',default=''),
+  localAddr?: string(description='localAddr'),
+  socks5Proxy?: string(description='socks5proxy',example='http://localhost',default=''),
+  socks5NetWork?: string(description='socks5NetWork')
 }
 
 /**
@@ -91,6 +97,9 @@ init(config: Config){
   @httpProxy = config.httpProxy;
   @httpsProxy = config.httpsProxy;
   @maxIdleConns = config.maxIdleConns;
+  @localAddr = config.localAddr;
+  @socks5Proxy = config.socks5Proxy;
+  @socks5NetWork = config.socks5NetWork;
 }
 
 /**
@@ -918,7 +927,10 @@ api doRequest(action: string, protocol: string, method: string, pathname: string
     policy = Util.defaultString(runtime.backoffPolicy, 'no'),
     period = Util.defaultNumber(runtime.backoffPeriod, 1)
   },
-  ignoreSSL = runtime.ignoreSSL
+  ignoreSSL = runtime.ignoreSSL,
+  localAddr = Util.defaultString(runtime.localAddr, @localAddr),
+  socks5Proxy = Util.defaultString(runtime.socks5Proxy, @socks5Proxy),
+  socks5NetWork = Util.defaultString(runtime.socks5NetWork, @socks5NetWork),
 }
 
 
@@ -961,6 +973,29 @@ model SourceScheduledEventParameters = {
   Schedule: string(name='Schedule'),
   TimeZone: string(name='TimeZone'),
   UserData?: map[string]string(name='UserData'),
+}
+
+/**
+ * The detail of SourceMQTTParameters
+ */
+model SourceMQTTParameters = {
+  regionId?: string(name='RegionId'),
+  instanceId: string(name='InstanceId'),
+  topic: string(name='Topic'),
+}
+
+/**
+ * The detail of SourceDTSParameters
+ */
+model SourceDTSParameters = {
+  regionId?: string(name='RegionId'),
+  brokerUrl: string(name='BrokerUrl'),
+  topic: string(name='Topic'),
+  sid: string(name='Sid'),
+  username: string(name='Username'),
+  password: string(name='Password'),
+  initCheckPoint: int32(name='InitCheckPoint'),
+  taskId: string(name='TaskId')
 }
 
 /**
@@ -1011,6 +1046,8 @@ model Source = {
   sourceRabbitMQParameters?: SourceRabbitMQParameters(name='SourceRabbitMQParameters'),
   sourceRocketMQParameters?: SourceRocketMQParameters(name='SourceRocketMQParameters'),
   sourceKafkaParameters?: SourceKafkaParameters(name='SourceKafkaParameters'),
+  sourceMQTTParameters?: SourceMQTTParameters(name='SourceMQTTParameters'),
+  sourceDTSParameters?: SourceDTSParameters(name='SourceDTSParameters'),
 }
 
 /**
@@ -1672,5 +1709,44 @@ model SourceHttpEventResponse = {
  * The detail of ConcurrentConfig
  */
 model ConcurrentConfig = {
-  Concurrency: int32(name='ResourceKey'),
+  concurrency?: int32(name='Concurrency'),
+}
+
+/**
+ * The request of listPartnerEventSources
+ */
+model ListPartnerEventSourcesRequest = {
+  namePrefix?: string(name='namePrefix'),
+  tag?: string(name='Tag'),
+}
+model EBSaaSEventSourceEntry = {
+  name?: string(name='Name'),
+  description?: string(name='Description'),
+  logo?: string(name='Logo'),
+  doc?: string(name='Doc'),
+  ctime?: int64(name='Ctime'),
+  tag?: [string](name='Tag'),
+  fullName?:string(name='FullName'),
+}
+/**
+ * The response of listPartnerEventSources
+ */
+model ListPartnerEventSourcesResponse = {
+  eventSources?: [EBSaaSEventSourceEntry] (name='EventSources'),
+}
+
+/**
+ * List the saas event source within your account.
+ */
+async function listPartnerEventSources(request: ListPartnerEventSourcesRequest): ListPartnerEventSourcesResponse {
+  var runtime = new Util.RuntimeOptions{};
+  return listPartnerEventSourcesWithOptions(request, runtime);
+}
+
+/**
+ * List the metrics of event streaming
+ */
+async function listPartnerEventSourcesWithOptions(request: ListPartnerEventSourcesRequest, runtime: Util.RuntimeOptions): ListPartnerEventSourcesResponse {
+  Util.validateModel(request);
+  return doRequest('listEventStreamingMetrics', 'HTTP', 'POST', `/openapi/listPartnerEventSources`, null, request, runtime);
 }

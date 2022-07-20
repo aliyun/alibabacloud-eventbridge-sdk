@@ -41,6 +41,12 @@ type Config struct {
 	NoProxy *string `json:"noProxy,omitempty" xml:"noProxy,omitempty"`
 	// max idle conns
 	MaxIdleConns *int `json:"maxIdleConns,omitempty" xml:"maxIdleConns,omitempty"`
+	// localAddr
+	LocalAddr *string `json:"localAddr,omitempty" xml:"localAddr,omitempty"`
+	// socks5proxy
+	Socks5Proxy *string `json:"socks5Proxy,omitempty" xml:"socks5Proxy,omitempty"`
+	// socks5NetWork
+	Socks5NetWork *string `json:"socks5NetWork,omitempty" xml:"socks5NetWork,omitempty"`
 }
 
 func (s Config) String() string {
@@ -113,6 +119,21 @@ func (s *Config) SetNoProxy(v string) *Config {
 
 func (s *Config) SetMaxIdleConns(v int) *Config {
 	s.MaxIdleConns = &v
+	return s
+}
+
+func (s *Config) SetLocalAddr(v string) *Config {
+	s.LocalAddr = &v
+	return s
+}
+
+func (s *Config) SetSocks5Proxy(v string) *Config {
+	s.Socks5Proxy = &v
+	return s
+}
+
+func (s *Config) SetSocks5NetWork(v string) *Config {
+	s.Socks5NetWork = &v
 	return s
 }
 
@@ -1951,6 +1972,100 @@ func (s *SourceScheduledEventParameters) SetUserData(v map[string]*string) *Sour
 }
 
 /**
+ * The detail of SourceMQTTParameters
+ */
+type SourceMQTTParameters struct {
+	RegionId   *string `json:"RegionId,omitempty" xml:"RegionId,omitempty"`
+	InstanceId *string `json:"InstanceId,omitempty" xml:"InstanceId,omitempty" require:"true"`
+	Topic      *string `json:"Topic,omitempty" xml:"Topic,omitempty" require:"true"`
+}
+
+func (s SourceMQTTParameters) String() string {
+	return tea.Prettify(s)
+}
+
+func (s SourceMQTTParameters) GoString() string {
+	return s.String()
+}
+
+func (s *SourceMQTTParameters) SetRegionId(v string) *SourceMQTTParameters {
+	s.RegionId = &v
+	return s
+}
+
+func (s *SourceMQTTParameters) SetInstanceId(v string) *SourceMQTTParameters {
+	s.InstanceId = &v
+	return s
+}
+
+func (s *SourceMQTTParameters) SetTopic(v string) *SourceMQTTParameters {
+	s.Topic = &v
+	return s
+}
+
+/**
+ * The detail of SourceDTSParameters
+ */
+type SourceDTSParameters struct {
+	RegionId       *string `json:"RegionId,omitempty" xml:"RegionId,omitempty"`
+	BrokerUrl      *string `json:"BrokerUrl,omitempty" xml:"BrokerUrl,omitempty" require:"true"`
+	Topic          *string `json:"Topic,omitempty" xml:"Topic,omitempty" require:"true"`
+	Sid            *string `json:"Sid,omitempty" xml:"Sid,omitempty" require:"true"`
+	Username       *string `json:"Username,omitempty" xml:"Username,omitempty" require:"true"`
+	Password       *string `json:"Password,omitempty" xml:"Password,omitempty" require:"true"`
+	InitCheckPoint *int32  `json:"InitCheckPoint,omitempty" xml:"InitCheckPoint,omitempty" require:"true"`
+	TaskId         *string `json:"TaskId,omitempty" xml:"TaskId,omitempty" require:"true"`
+}
+
+func (s SourceDTSParameters) String() string {
+	return tea.Prettify(s)
+}
+
+func (s SourceDTSParameters) GoString() string {
+	return s.String()
+}
+
+func (s *SourceDTSParameters) SetRegionId(v string) *SourceDTSParameters {
+	s.RegionId = &v
+	return s
+}
+
+func (s *SourceDTSParameters) SetBrokerUrl(v string) *SourceDTSParameters {
+	s.BrokerUrl = &v
+	return s
+}
+
+func (s *SourceDTSParameters) SetTopic(v string) *SourceDTSParameters {
+	s.Topic = &v
+	return s
+}
+
+func (s *SourceDTSParameters) SetSid(v string) *SourceDTSParameters {
+	s.Sid = &v
+	return s
+}
+
+func (s *SourceDTSParameters) SetUsername(v string) *SourceDTSParameters {
+	s.Username = &v
+	return s
+}
+
+func (s *SourceDTSParameters) SetPassword(v string) *SourceDTSParameters {
+	s.Password = &v
+	return s
+}
+
+func (s *SourceDTSParameters) SetInitCheckPoint(v int32) *SourceDTSParameters {
+	s.InitCheckPoint = &v
+	return s
+}
+
+func (s *SourceDTSParameters) SetTaskId(v string) *SourceDTSParameters {
+	s.TaskId = &v
+	return s
+}
+
+/**
  * The request of createEventSource
  */
 type CreateEventSourceRequest struct {
@@ -2132,6 +2247,8 @@ type Source struct {
 	SourceRabbitMQParameters *SourceRabbitMQParameters `json:"SourceRabbitMQParameters,omitempty" xml:"SourceRabbitMQParameters,omitempty"`
 	SourceRocketMQParameters *SourceRocketMQParameters `json:"SourceRocketMQParameters,omitempty" xml:"SourceRocketMQParameters,omitempty"`
 	SourceKafkaParameters    *SourceKafkaParameters    `json:"SourceKafkaParameters,omitempty" xml:"SourceKafkaParameters,omitempty"`
+	SourceMQTTParameters     *SourceMQTTParameters     `json:"SourceMQTTParameters,omitempty" xml:"SourceMQTTParameters,omitempty"`
+	SourceDTSParameters      *SourceDTSParameters      `json:"SourceDTSParameters,omitempty" xml:"SourceDTSParameters,omitempty"`
 }
 
 func (s Source) String() string {
@@ -2159,6 +2276,16 @@ func (s *Source) SetSourceRocketMQParameters(v *SourceRocketMQParameters) *Sourc
 
 func (s *Source) SetSourceKafkaParameters(v *SourceKafkaParameters) *Source {
 	s.SourceKafkaParameters = v
+	return s
+}
+
+func (s *Source) SetSourceMQTTParameters(v *SourceMQTTParameters) *Source {
+	s.SourceMQTTParameters = v
+	return s
+}
+
+func (s *Source) SetSourceDTSParameters(v *SourceDTSParameters) *Source {
+	s.SourceDTSParameters = v
 	return s
 }
 
@@ -3879,7 +4006,7 @@ func (s *SourceHttpEventResponse) SetVpcWebHookUrl(v []*string) *SourceHttpEvent
  * The detail of ConcurrentConfig
  */
 type ConcurrentConfig struct {
-	Concurrency *int32 `json:"ResourceKey,omitempty" xml:"ResourceKey,omitempty" require:"true"`
+	Concurrency *int32 `json:"Concurrency,omitempty" xml:"Concurrency,omitempty"`
 }
 
 func (s ConcurrentConfig) String() string {
@@ -3895,6 +4022,105 @@ func (s *ConcurrentConfig) SetConcurrency(v int32) *ConcurrentConfig {
 	return s
 }
 
+/**
+ * The request of listPartnerEventSources
+ */
+type ListPartnerEventSourcesRequest struct {
+	NamePrefix *string `json:"namePrefix,omitempty" xml:"namePrefix,omitempty"`
+	Tag        *string `json:"Tag,omitempty" xml:"Tag,omitempty"`
+}
+
+func (s ListPartnerEventSourcesRequest) String() string {
+	return tea.Prettify(s)
+}
+
+func (s ListPartnerEventSourcesRequest) GoString() string {
+	return s.String()
+}
+
+func (s *ListPartnerEventSourcesRequest) SetNamePrefix(v string) *ListPartnerEventSourcesRequest {
+	s.NamePrefix = &v
+	return s
+}
+
+func (s *ListPartnerEventSourcesRequest) SetTag(v string) *ListPartnerEventSourcesRequest {
+	s.Tag = &v
+	return s
+}
+
+type EBSaaSEventSourceEntry struct {
+	Name        *string   `json:"Name,omitempty" xml:"Name,omitempty"`
+	Description *string   `json:"Description,omitempty" xml:"Description,omitempty"`
+	Logo        *string   `json:"Logo,omitempty" xml:"Logo,omitempty"`
+	Doc         *string   `json:"Doc,omitempty" xml:"Doc,omitempty"`
+	Ctime       *int64    `json:"Ctime,omitempty" xml:"Ctime,omitempty"`
+	Tag         []*string `json:"Tag,omitempty" xml:"Tag,omitempty" type:"Repeated"`
+	FullName    *string   `json:"FullName,omitempty" xml:"FullName,omitempty"`
+}
+
+func (s EBSaaSEventSourceEntry) String() string {
+	return tea.Prettify(s)
+}
+
+func (s EBSaaSEventSourceEntry) GoString() string {
+	return s.String()
+}
+
+func (s *EBSaaSEventSourceEntry) SetName(v string) *EBSaaSEventSourceEntry {
+	s.Name = &v
+	return s
+}
+
+func (s *EBSaaSEventSourceEntry) SetDescription(v string) *EBSaaSEventSourceEntry {
+	s.Description = &v
+	return s
+}
+
+func (s *EBSaaSEventSourceEntry) SetLogo(v string) *EBSaaSEventSourceEntry {
+	s.Logo = &v
+	return s
+}
+
+func (s *EBSaaSEventSourceEntry) SetDoc(v string) *EBSaaSEventSourceEntry {
+	s.Doc = &v
+	return s
+}
+
+func (s *EBSaaSEventSourceEntry) SetCtime(v int64) *EBSaaSEventSourceEntry {
+	s.Ctime = &v
+	return s
+}
+
+func (s *EBSaaSEventSourceEntry) SetTag(v []*string) *EBSaaSEventSourceEntry {
+	s.Tag = v
+	return s
+}
+
+func (s *EBSaaSEventSourceEntry) SetFullName(v string) *EBSaaSEventSourceEntry {
+	s.FullName = &v
+	return s
+}
+
+/**
+ * The response of listPartnerEventSources
+ */
+type ListPartnerEventSourcesResponse struct {
+	EventSources []*EBSaaSEventSourceEntry `json:"EventSources,omitempty" xml:"EventSources,omitempty" type:"Repeated"`
+}
+
+func (s ListPartnerEventSourcesResponse) String() string {
+	return tea.Prettify(s)
+}
+
+func (s ListPartnerEventSourcesResponse) GoString() string {
+	return s.String()
+}
+
+func (s *ListPartnerEventSourcesResponse) SetEventSources(v []*EBSaaSEventSourceEntry) *ListPartnerEventSourcesResponse {
+	s.EventSources = v
+	return s
+}
+
 type Client struct {
 	Protocol       *string
 	ReadTimeout    *int
@@ -3906,6 +4132,9 @@ type Client struct {
 	Endpoint       *string
 	RegionId       *string
 	Credential     credential.Credential
+	LocalAddr      *string
+	Socks5Proxy    *string
+	Socks5NetWork  *string
 }
 
 /**
@@ -3982,6 +4211,9 @@ func (client *Client) Init(config *Config) (_err error) {
 	client.HttpProxy = config.HttpProxy
 	client.HttpsProxy = config.HttpsProxy
 	client.MaxIdleConns = config.MaxIdleConns
+	client.LocalAddr = config.LocalAddr
+	client.Socks5Proxy = config.Socks5Proxy
+	client.Socks5NetWork = config.Socks5NetWork
 	return nil
 }
 
@@ -4017,7 +4249,10 @@ func (client *Client) DoRequest(action *string, protocol *string, method *string
 			"policy": tea.StringValue(util.DefaultString(runtime.BackoffPolicy, tea.String("no"))),
 			"period": tea.IntValue(util.DefaultNumber(runtime.BackoffPeriod, tea.Int(1))),
 		},
-		"ignoreSSL": tea.BoolValue(runtime.IgnoreSSL),
+		"ignoreSSL":     tea.BoolValue(runtime.IgnoreSSL),
+		"localAddr":     tea.StringValue(runtime.LocalAddr),
+		"socks5Proxy":   tea.StringValue(runtime.Socks5Proxy),
+		"socks5NetWork": tea.StringValue(runtime.Socks5NetWork),
 	}
 
 	_resp := make(map[string]interface{})
@@ -5126,6 +5361,37 @@ func (client *Client) UpdateEventStreamingWithOptions(request *UpdateEventStream
 	}
 	_result = &UpdateEventStreamingResponse{}
 	_body, _err := client.DoRequest(tea.String("updateEventStreaming"), tea.String("HTTP"), tea.String("POST"), tea.String("/openapi/v2/updateEventStreaming"), nil, tea.ToMap(request), runtime)
+	if _err != nil {
+		return _result, _err
+	}
+	_err = tea.Convert(_body, &_result)
+	return _result, _err
+}
+
+/**
+ * List the saas event source within your account.
+ */
+func (client *Client) ListPartnerEventSources(request *ListPartnerEventSourcesRequest) (_result *ListPartnerEventSourcesResponse, _err error) {
+	runtime := &util.RuntimeOptions{}
+	_result = &ListPartnerEventSourcesResponse{}
+	_body, _err := client.ListPartnerEventSourcesWithOptions(request, runtime)
+	if _err != nil {
+		return _result, _err
+	}
+	_result = _body
+	return _result, _err
+}
+
+/**
+ * List the metrics of event streaming
+ */
+func (client *Client) ListPartnerEventSourcesWithOptions(request *ListPartnerEventSourcesRequest, runtime *util.RuntimeOptions) (_result *ListPartnerEventSourcesResponse, _err error) {
+	_err = util.ValidateModel(request)
+	if _err != nil {
+		return _result, _err
+	}
+	_result = &ListPartnerEventSourcesResponse{}
+	_body, _err := client.DoRequest(tea.String("listEventStreamingMetrics"), tea.String("HTTP"), tea.String("POST"), tea.String("/openapi/listPartnerEventSources"), nil, tea.ToMap(request), runtime)
 	if _err != nil {
 		return _result, _err
 	}

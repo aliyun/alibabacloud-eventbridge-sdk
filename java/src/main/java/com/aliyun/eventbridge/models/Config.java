@@ -60,6 +60,18 @@ public class Config extends TeaModel {
     @NameInMap("maxIdleConns")
     public Integer maxIdleConns;
 
+    // localAddr
+    @NameInMap("localAddr")
+    public String localAddr;
+
+    // socks5proxy
+    @NameInMap("socks5Proxy")
+    public String socks5Proxy;
+
+    // socks5NetWork
+    @NameInMap("socks5NetWork")
+    public String socks5NetWork;
+
     public static Config build(java.util.Map<String, ?> map) {
         Config self = new Config();
         return TeaModel.build(map, self);
@@ -167,6 +179,30 @@ public class Config extends TeaModel {
     }
     public Integer getMaxIdleConns() {
         return this.maxIdleConns;
+    }
+
+    public Config setLocalAddr(String localAddr) {
+        this.localAddr = localAddr;
+        return this;
+    }
+    public String getLocalAddr() {
+        return this.localAddr;
+    }
+
+    public Config setSocks5Proxy(String socks5Proxy) {
+        this.socks5Proxy = socks5Proxy;
+        return this;
+    }
+    public String getSocks5Proxy() {
+        return this.socks5Proxy;
+    }
+
+    public Config setSocks5NetWork(String socks5NetWork) {
+        this.socks5NetWork = socks5NetWork;
+        return this;
+    }
+    public String getSocks5NetWork() {
+        return this.socks5NetWork;
     }
 
 }
