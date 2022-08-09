@@ -25,6 +25,9 @@ public class Source extends TeaModel {
     @NameInMap("SourceDTSParameters")
     public SourceDTSParameters sourceDTSParameters;
 
+    @NameInMap("SourceSLSParameters")
+    public SourceSLSParameters sourceSLSParameters;
+
     public static Source build(java.util.Map<String, ?> map) {
         Source self = new Source();
         return TeaModel.build(map, self);
@@ -76,6 +79,14 @@ public class Source extends TeaModel {
     }
     public SourceDTSParameters getSourceDTSParameters() {
         return this.sourceDTSParameters;
+    }
+
+    public Source setSourceSLSParameters(SourceSLSParameters sourceSLSParameters) {
+        this.sourceSLSParameters = sourceSLSParameters;
+        return this;
+    }
+    public SourceSLSParameters getSourceSLSParameters() {
+        return this.sourceSLSParameters;
     }
 
 }

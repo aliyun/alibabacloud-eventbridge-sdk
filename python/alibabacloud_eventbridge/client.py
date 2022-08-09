@@ -126,9 +126,9 @@ class Client:
                 'period': UtilClient.default_number(runtime.backoff_period, 1)
             },
             'ignoreSSL': runtime.ignore_ssl,
-            'localAddr': runtime.local_addr,
-            'socks5Proxy': runtime.socks_5proxy,
-            'socks5NetWork': runtime.socks_5net_work
+            'localAddr': UtilClient.default_string(runtime.local_addr, self._local_addr),
+            'socks5Proxy': UtilClient.default_string(runtime.socks_5proxy, self._socks_5proxy),
+            'socks5NetWork': UtilClient.default_string(runtime.socks_5net_work, self._socks_5net_work)
         }
         _last_request = None
         _last_exception = None
@@ -229,9 +229,9 @@ class Client:
                 'period': UtilClient.default_number(runtime.backoff_period, 1)
             },
             'ignoreSSL': runtime.ignore_ssl,
-            'localAddr': runtime.local_addr,
-            'socks5Proxy': runtime.socks_5proxy,
-            'socks5NetWork': runtime.socks_5net_work
+            'localAddr': UtilClient.default_string(runtime.local_addr, self._local_addr),
+            'socks5Proxy': UtilClient.default_string(runtime.socks_5proxy, self._socks_5proxy),
+            'socks5NetWork': UtilClient.default_string(runtime.socks_5net_work, self._socks_5net_work)
         }
         _last_request = None
         _last_exception = None
