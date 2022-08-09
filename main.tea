@@ -999,6 +999,28 @@ model SourceDTSParameters = {
 }
 
 /**
+ * The detail of SourceSLSParameters
+ */
+model SourceSLSParameters = {
+  regionId?: string(name='RegionId'),
+  project: string(name='Project'),
+  logStore: string(name='LogStore'),
+  consumerGroup: string(name='ConsumerGroup'),
+  consumePosition?: string(name='ConsumePosition'),
+  roleName: string(name='RoleName'),
+}
+
+/**
+ * The config of SinkSLSParameters
+ */
+model SinkSLSParameters = {
+  project?: TargetParameter(name='Project'),
+  logStore?: TargetParameter(name='LogStore'),
+  topic?: TargetParameter(name='Topic'),
+  body?: TargetParameter(name='Body'),
+  roleName?: TargetParameter(name='RoleName'),
+}
+/**
  * The request of createEventSource
  */
 model CreateEventSourceRequest = {
@@ -1010,6 +1032,7 @@ model CreateEventSourceRequest = {
   SourceRocketMQParameters?: SourceRocketMQParameters(name='SourceRocketMQParameters'),
   sourceScheduledEventParameters?: SourceScheduledEventParameters(name='SourceScheduledEventParameters'),
   sourceHttpEventParameters?: SourceHttpEventParameters(name='SourceHttpEventParameters'),
+  sourceSLSParameters?: SourceSLSParameters(name='SourceSLSParameters'),
   }
 
 /**
@@ -1048,6 +1071,7 @@ model Source = {
   sourceKafkaParameters?: SourceKafkaParameters(name='SourceKafkaParameters'),
   sourceMQTTParameters?: SourceMQTTParameters(name='SourceMQTTParameters'),
   sourceDTSParameters?: SourceDTSParameters(name='SourceDTSParameters'),
+  sourceSLSParameters?: SourceSLSParameters(name='SourceSLSParameters'),
 }
 
 /**
@@ -1060,6 +1084,7 @@ model Sink = {
   sinkRocketMQParameters?: SinkRocketMQParameters(name='SinkRocketMQParameters'),
   sinkFcParameters?: SinkFcParameters(name='SinkFcParameters'),
   sinkOdpsParameters?: SinkOdpsParameters(name='SinkOdpsParameters'),
+  sinkSLSParameters?: SinkSLSParameters(name='SinkSLSParameters'),
 }
 
 /**
@@ -1224,6 +1249,7 @@ model EBUserDefinedEventSourceEntry = {
   sourceRocketMQParameters: SourceRocketMQParameters(name='SourceRocketMQParameters'),
   sourceKafkaParameters: SourceKafkaParameters(name='SourceKafkaParameters'),
   sourceHttpEventResponse: SourceHttpEventResponse(name='SourceHttpEventResponse'),
+  sourceSLSParameters?: SourceSLSParameters(name='SourceSLSParameters'),
 }
 
 /**
@@ -1299,6 +1325,7 @@ model UpdateEventSourceRequest = {
   sourceRocketMQParameters?: SourceRocketMQParameters(name='SourceRocketMQParameters'),
   sourceScheduledEventParameters?: SourceScheduledEventParameters(name='SourceScheduledEventParameters'),
   sourceHttpEventParameters?: SourceHttpEventParameters(name='SourceHttpEventParameters'),
+  sourceSLSParameters?: SourceSLSParameters(name='SourceSLSParameters'),
 }
 
 /**

@@ -2862,6 +2862,179 @@ class SourceDTSParameters(TeaModel):
         return self
 
 
+class SourceSLSParameters(TeaModel):
+    """
+    The detail of SourceSLSParameters
+    """
+    def __init__(
+        self,
+        region_id: str = None,
+        project: str = None,
+        log_store: str = None,
+        consumer_group: str = None,
+        consume_position: str = None,
+        role_name: str = None,
+    ):
+        self.region_id = region_id
+        self.project = project
+        self.log_store = log_store
+        self.consumer_group = consumer_group
+        self.consume_position = consume_position
+        self.role_name = role_name
+
+    def validate(self):
+        self.validate_required(self.project, 'project')
+        self.validate_required(self.log_store, 'log_store')
+        self.validate_required(self.consumer_group, 'consumer_group')
+        self.validate_required(self.role_name, 'role_name')
+
+    def to_map(self):
+        _map = super().to_map()
+        if _map is not None:
+            return _map
+
+        result = dict()
+        if self.region_id is not None:
+            result['RegionId'] = self.region_id
+        if self.project is not None:
+            result['Project'] = self.project
+        if self.log_store is not None:
+            result['LogStore'] = self.log_store
+        if self.consumer_group is not None:
+            result['ConsumerGroup'] = self.consumer_group
+        if self.consume_position is not None:
+            result['ConsumePosition'] = self.consume_position
+        if self.role_name is not None:
+            result['RoleName'] = self.role_name
+        return result
+
+    def from_map(self, m: dict = None):
+        m = m or dict()
+        if m.get('RegionId') is not None:
+            self.region_id = m.get('RegionId')
+        if m.get('Project') is not None:
+            self.project = m.get('Project')
+        if m.get('LogStore') is not None:
+            self.log_store = m.get('LogStore')
+        if m.get('ConsumerGroup') is not None:
+            self.consumer_group = m.get('ConsumerGroup')
+        if m.get('ConsumePosition') is not None:
+            self.consume_position = m.get('ConsumePosition')
+        if m.get('RoleName') is not None:
+            self.role_name = m.get('RoleName')
+        return self
+
+
+class TargetParameter(TeaModel):
+    """
+    The config of TargetParameter
+    """
+    def __init__(
+        self,
+        value: str = None,
+        form: str = None,
+        template: str = None,
+    ):
+        self.value = value
+        self.form = form
+        self.template = template
+
+    def validate(self):
+        pass
+
+    def to_map(self):
+        _map = super().to_map()
+        if _map is not None:
+            return _map
+
+        result = dict()
+        if self.value is not None:
+            result['Value'] = self.value
+        if self.form is not None:
+            result['Form'] = self.form
+        if self.template is not None:
+            result['Template'] = self.template
+        return result
+
+    def from_map(self, m: dict = None):
+        m = m or dict()
+        if m.get('Value') is not None:
+            self.value = m.get('Value')
+        if m.get('Form') is not None:
+            self.form = m.get('Form')
+        if m.get('Template') is not None:
+            self.template = m.get('Template')
+        return self
+
+
+class SinkSLSParameters(TeaModel):
+    """
+    The config of SinkSLSParameters
+    """
+    def __init__(
+        self,
+        project: TargetParameter = None,
+        log_store: TargetParameter = None,
+        topic: TargetParameter = None,
+        body: TargetParameter = None,
+        role_name: TargetParameter = None,
+    ):
+        self.project = project
+        self.log_store = log_store
+        self.topic = topic
+        self.body = body
+        self.role_name = role_name
+
+    def validate(self):
+        if self.project:
+            self.project.validate()
+        if self.log_store:
+            self.log_store.validate()
+        if self.topic:
+            self.topic.validate()
+        if self.body:
+            self.body.validate()
+        if self.role_name:
+            self.role_name.validate()
+
+    def to_map(self):
+        _map = super().to_map()
+        if _map is not None:
+            return _map
+
+        result = dict()
+        if self.project is not None:
+            result['Project'] = self.project.to_map()
+        if self.log_store is not None:
+            result['LogStore'] = self.log_store.to_map()
+        if self.topic is not None:
+            result['Topic'] = self.topic.to_map()
+        if self.body is not None:
+            result['Body'] = self.body.to_map()
+        if self.role_name is not None:
+            result['RoleName'] = self.role_name.to_map()
+        return result
+
+    def from_map(self, m: dict = None):
+        m = m or dict()
+        if m.get('Project') is not None:
+            temp_model = TargetParameter()
+            self.project = temp_model.from_map(m['Project'])
+        if m.get('LogStore') is not None:
+            temp_model = TargetParameter()
+            self.log_store = temp_model.from_map(m['LogStore'])
+        if m.get('Topic') is not None:
+            temp_model = TargetParameter()
+            self.topic = temp_model.from_map(m['Topic'])
+        if m.get('Body') is not None:
+            temp_model = TargetParameter()
+            self.body = temp_model.from_map(m['Body'])
+        if m.get('RoleName') is not None:
+            temp_model = TargetParameter()
+            self.role_name = temp_model.from_map(m['RoleName'])
+        return self
+
+
 class SourceHttpEventParameters(TeaModel):
     """
     The detail of SourceHttpEventParameters
@@ -2932,6 +3105,7 @@ class CreateEventSourceRequest(TeaModel):
         source_rocket_mqparameters: SourceRocketMQParameters = None,
         source_scheduled_event_parameters: SourceScheduledEventParameters = None,
         source_http_event_parameters: SourceHttpEventParameters = None,
+        source_slsparameters: SourceSLSParameters = None,
     ):
         self.event_source_name = event_source_name
         self.description = description
@@ -2941,6 +3115,7 @@ class CreateEventSourceRequest(TeaModel):
         self.source_rocket_mqparameters = source_rocket_mqparameters
         self.source_scheduled_event_parameters = source_scheduled_event_parameters
         self.source_http_event_parameters = source_http_event_parameters
+        self.source_slsparameters = source_slsparameters
 
     def validate(self):
         self.validate_required(self.event_source_name, 'event_source_name')
@@ -2957,6 +3132,8 @@ class CreateEventSourceRequest(TeaModel):
             self.source_scheduled_event_parameters.validate()
         if self.source_http_event_parameters:
             self.source_http_event_parameters.validate()
+        if self.source_slsparameters:
+            self.source_slsparameters.validate()
 
     def to_map(self):
         _map = super().to_map()
@@ -2980,6 +3157,8 @@ class CreateEventSourceRequest(TeaModel):
             result['SourceScheduledEventParameters'] = self.source_scheduled_event_parameters.to_map()
         if self.source_http_event_parameters is not None:
             result['SourceHttpEventParameters'] = self.source_http_event_parameters.to_map()
+        if self.source_slsparameters is not None:
+            result['SourceSLSParameters'] = self.source_slsparameters.to_map()
         return result
 
     def from_map(self, m: dict = None):
@@ -3005,6 +3184,9 @@ class CreateEventSourceRequest(TeaModel):
         if m.get('SourceHttpEventParameters') is not None:
             temp_model = SourceHttpEventParameters()
             self.source_http_event_parameters = temp_model.from_map(m['SourceHttpEventParameters'])
+        if m.get('SourceSLSParameters') is not None:
+            temp_model = SourceSLSParameters()
+            self.source_slsparameters = temp_model.from_map(m['SourceSLSParameters'])
         return self
 
 
@@ -3155,6 +3337,7 @@ class Source(TeaModel):
         source_kafka_parameters: SourceKafkaParameters = None,
         source_mqttparameters: SourceMQTTParameters = None,
         source_dtsparameters: SourceDTSParameters = None,
+        source_slsparameters: SourceSLSParameters = None,
     ):
         self.source_mnsparameters = source_mnsparameters
         self.source_rabbit_mqparameters = source_rabbit_mqparameters
@@ -3162,6 +3345,7 @@ class Source(TeaModel):
         self.source_kafka_parameters = source_kafka_parameters
         self.source_mqttparameters = source_mqttparameters
         self.source_dtsparameters = source_dtsparameters
+        self.source_slsparameters = source_slsparameters
 
     def validate(self):
         if self.source_mnsparameters:
@@ -3176,6 +3360,8 @@ class Source(TeaModel):
             self.source_mqttparameters.validate()
         if self.source_dtsparameters:
             self.source_dtsparameters.validate()
+        if self.source_slsparameters:
+            self.source_slsparameters.validate()
 
     def to_map(self):
         _map = super().to_map()
@@ -3195,6 +3381,8 @@ class Source(TeaModel):
             result['SourceMQTTParameters'] = self.source_mqttparameters.to_map()
         if self.source_dtsparameters is not None:
             result['SourceDTSParameters'] = self.source_dtsparameters.to_map()
+        if self.source_slsparameters is not None:
+            result['SourceSLSParameters'] = self.source_slsparameters.to_map()
         return result
 
     def from_map(self, m: dict = None):
@@ -3217,48 +3405,9 @@ class Source(TeaModel):
         if m.get('SourceDTSParameters') is not None:
             temp_model = SourceDTSParameters()
             self.source_dtsparameters = temp_model.from_map(m['SourceDTSParameters'])
-        return self
-
-
-class TargetParameter(TeaModel):
-    """
-    The config of TargetParameter
-    """
-    def __init__(
-        self,
-        value: str = None,
-        form: str = None,
-        template: str = None,
-    ):
-        self.value = value
-        self.form = form
-        self.template = template
-
-    def validate(self):
-        pass
-
-    def to_map(self):
-        _map = super().to_map()
-        if _map is not None:
-            return _map
-
-        result = dict()
-        if self.value is not None:
-            result['Value'] = self.value
-        if self.form is not None:
-            result['Form'] = self.form
-        if self.template is not None:
-            result['Template'] = self.template
-        return result
-
-    def from_map(self, m: dict = None):
-        m = m or dict()
-        if m.get('Value') is not None:
-            self.value = m.get('Value')
-        if m.get('Form') is not None:
-            self.form = m.get('Form')
-        if m.get('Template') is not None:
-            self.template = m.get('Template')
+        if m.get('SourceSLSParameters') is not None:
+            temp_model = SourceSLSParameters()
+            self.source_slsparameters = temp_model.from_map(m['SourceSLSParameters'])
         return self
 
 
@@ -3763,6 +3912,7 @@ class Sink(TeaModel):
         sink_rocket_mqparameters: SinkRocketMQParameters = None,
         sink_fc_parameters: SinkFcParameters = None,
         sink_odps_parameters: SinkOdpsParameters = None,
+        sink_slsparameters: SinkSLSParameters = None,
     ):
         self.sink_mnsparameters = sink_mnsparameters
         self.sink_rabbit_mqparameters = sink_rabbit_mqparameters
@@ -3770,6 +3920,7 @@ class Sink(TeaModel):
         self.sink_rocket_mqparameters = sink_rocket_mqparameters
         self.sink_fc_parameters = sink_fc_parameters
         self.sink_odps_parameters = sink_odps_parameters
+        self.sink_slsparameters = sink_slsparameters
 
     def validate(self):
         if self.sink_mnsparameters:
@@ -3784,6 +3935,8 @@ class Sink(TeaModel):
             self.sink_fc_parameters.validate()
         if self.sink_odps_parameters:
             self.sink_odps_parameters.validate()
+        if self.sink_slsparameters:
+            self.sink_slsparameters.validate()
 
     def to_map(self):
         _map = super().to_map()
@@ -3803,6 +3956,8 @@ class Sink(TeaModel):
             result['SinkFcParameters'] = self.sink_fc_parameters.to_map()
         if self.sink_odps_parameters is not None:
             result['SinkOdpsParameters'] = self.sink_odps_parameters.to_map()
+        if self.sink_slsparameters is not None:
+            result['SinkSLSParameters'] = self.sink_slsparameters.to_map()
         return result
 
     def from_map(self, m: dict = None):
@@ -3825,6 +3980,9 @@ class Sink(TeaModel):
         if m.get('SinkOdpsParameters') is not None:
             temp_model = SinkOdpsParameters()
             self.sink_odps_parameters = temp_model.from_map(m['SinkOdpsParameters'])
+        if m.get('SinkSLSParameters') is not None:
+            temp_model = SinkSLSParameters()
+            self.sink_slsparameters = temp_model.from_map(m['SinkSLSParameters'])
         return self
 
 
@@ -4224,6 +4382,7 @@ class EBUserDefinedEventSourceEntry(TeaModel):
         source_rocket_mqparameters: SourceRocketMQParameters = None,
         source_kafka_parameters: SourceKafkaParameters = None,
         source_http_event_response: SourceHttpEventResponse = None,
+        source_slsparameters: SourceSLSParameters = None,
     ):
         self.name = name
         self.description = description
@@ -4236,6 +4395,7 @@ class EBUserDefinedEventSourceEntry(TeaModel):
         self.source_rocket_mqparameters = source_rocket_mqparameters
         self.source_kafka_parameters = source_kafka_parameters
         self.source_http_event_response = source_http_event_response
+        self.source_slsparameters = source_slsparameters
 
     def validate(self):
         if self.source_rabbit_mqparameters:
@@ -4251,6 +4411,8 @@ class EBUserDefinedEventSourceEntry(TeaModel):
         self.validate_required(self.source_http_event_response, 'source_http_event_response')
         if self.source_http_event_response:
             self.source_http_event_response.validate()
+        if self.source_slsparameters:
+            self.source_slsparameters.validate()
 
     def to_map(self):
         _map = super().to_map()
@@ -4280,6 +4442,8 @@ class EBUserDefinedEventSourceEntry(TeaModel):
             result['SourceKafkaParameters'] = self.source_kafka_parameters.to_map()
         if self.source_http_event_response is not None:
             result['SourceHttpEventResponse'] = self.source_http_event_response.to_map()
+        if self.source_slsparameters is not None:
+            result['SourceSLSParameters'] = self.source_slsparameters.to_map()
         return result
 
     def from_map(self, m: dict = None):
@@ -4311,6 +4475,9 @@ class EBUserDefinedEventSourceEntry(TeaModel):
         if m.get('SourceHttpEventResponse') is not None:
             temp_model = SourceHttpEventResponse()
             self.source_http_event_response = temp_model.from_map(m['SourceHttpEventResponse'])
+        if m.get('SourceSLSParameters') is not None:
+            temp_model = SourceSLSParameters()
+            self.source_slsparameters = temp_model.from_map(m['SourceSLSParameters'])
         return self
 
 
@@ -4482,6 +4649,7 @@ class UpdateEventSourceRequest(TeaModel):
         source_rocket_mqparameters: SourceRocketMQParameters = None,
         source_scheduled_event_parameters: SourceScheduledEventParameters = None,
         source_http_event_parameters: SourceHttpEventParameters = None,
+        source_slsparameters: SourceSLSParameters = None,
     ):
         self.event_source_name = event_source_name
         self.description = description
@@ -4491,6 +4659,7 @@ class UpdateEventSourceRequest(TeaModel):
         self.source_rocket_mqparameters = source_rocket_mqparameters
         self.source_scheduled_event_parameters = source_scheduled_event_parameters
         self.source_http_event_parameters = source_http_event_parameters
+        self.source_slsparameters = source_slsparameters
 
     def validate(self):
         self.validate_required(self.event_source_name, 'event_source_name')
@@ -4507,6 +4676,8 @@ class UpdateEventSourceRequest(TeaModel):
             self.source_scheduled_event_parameters.validate()
         if self.source_http_event_parameters:
             self.source_http_event_parameters.validate()
+        if self.source_slsparameters:
+            self.source_slsparameters.validate()
 
     def to_map(self):
         _map = super().to_map()
@@ -4530,6 +4701,8 @@ class UpdateEventSourceRequest(TeaModel):
             result['SourceScheduledEventParameters'] = self.source_scheduled_event_parameters.to_map()
         if self.source_http_event_parameters is not None:
             result['SourceHttpEventParameters'] = self.source_http_event_parameters.to_map()
+        if self.source_slsparameters is not None:
+            result['SourceSLSParameters'] = self.source_slsparameters.to_map()
         return result
 
     def from_map(self, m: dict = None):
@@ -4555,6 +4728,9 @@ class UpdateEventSourceRequest(TeaModel):
         if m.get('SourceHttpEventParameters') is not None:
             temp_model = SourceHttpEventParameters()
             self.source_http_event_parameters = temp_model.from_map(m['SourceHttpEventParameters'])
+        if m.get('SourceSLSParameters') is not None:
+            temp_model = SourceSLSParameters()
+            self.source_slsparameters = temp_model.from_map(m['SourceSLSParameters'])
         return self
 
 

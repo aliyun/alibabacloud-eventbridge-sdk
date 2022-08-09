@@ -2066,6 +2066,100 @@ func (s *SourceDTSParameters) SetTaskId(v string) *SourceDTSParameters {
 }
 
 /**
+ * The detail of SourceSLSParameters
+ */
+type SourceSLSParameters struct {
+	RegionId        *string `json:"RegionId,omitempty" xml:"RegionId,omitempty"`
+	Project         *string `json:"Project,omitempty" xml:"Project,omitempty" require:"true"`
+	LogStore        *string `json:"LogStore,omitempty" xml:"LogStore,omitempty" require:"true"`
+	ConsumerGroup   *string `json:"ConsumerGroup,omitempty" xml:"ConsumerGroup,omitempty" require:"true"`
+	ConsumePosition *string `json:"ConsumePosition,omitempty" xml:"ConsumePosition,omitempty"`
+	RoleName        *string `json:"RoleName,omitempty" xml:"RoleName,omitempty" require:"true"`
+}
+
+func (s SourceSLSParameters) String() string {
+	return tea.Prettify(s)
+}
+
+func (s SourceSLSParameters) GoString() string {
+	return s.String()
+}
+
+func (s *SourceSLSParameters) SetRegionId(v string) *SourceSLSParameters {
+	s.RegionId = &v
+	return s
+}
+
+func (s *SourceSLSParameters) SetProject(v string) *SourceSLSParameters {
+	s.Project = &v
+	return s
+}
+
+func (s *SourceSLSParameters) SetLogStore(v string) *SourceSLSParameters {
+	s.LogStore = &v
+	return s
+}
+
+func (s *SourceSLSParameters) SetConsumerGroup(v string) *SourceSLSParameters {
+	s.ConsumerGroup = &v
+	return s
+}
+
+func (s *SourceSLSParameters) SetConsumePosition(v string) *SourceSLSParameters {
+	s.ConsumePosition = &v
+	return s
+}
+
+func (s *SourceSLSParameters) SetRoleName(v string) *SourceSLSParameters {
+	s.RoleName = &v
+	return s
+}
+
+/**
+ * The config of SinkSLSParameters
+ */
+type SinkSLSParameters struct {
+	Project  *TargetParameter `json:"Project,omitempty" xml:"Project,omitempty"`
+	LogStore *TargetParameter `json:"LogStore,omitempty" xml:"LogStore,omitempty"`
+	Topic    *TargetParameter `json:"Topic,omitempty" xml:"Topic,omitempty"`
+	Body     *TargetParameter `json:"Body,omitempty" xml:"Body,omitempty"`
+	RoleName *TargetParameter `json:"RoleName,omitempty" xml:"RoleName,omitempty"`
+}
+
+func (s SinkSLSParameters) String() string {
+	return tea.Prettify(s)
+}
+
+func (s SinkSLSParameters) GoString() string {
+	return s.String()
+}
+
+func (s *SinkSLSParameters) SetProject(v *TargetParameter) *SinkSLSParameters {
+	s.Project = v
+	return s
+}
+
+func (s *SinkSLSParameters) SetLogStore(v *TargetParameter) *SinkSLSParameters {
+	s.LogStore = v
+	return s
+}
+
+func (s *SinkSLSParameters) SetTopic(v *TargetParameter) *SinkSLSParameters {
+	s.Topic = v
+	return s
+}
+
+func (s *SinkSLSParameters) SetBody(v *TargetParameter) *SinkSLSParameters {
+	s.Body = v
+	return s
+}
+
+func (s *SinkSLSParameters) SetRoleName(v *TargetParameter) *SinkSLSParameters {
+	s.RoleName = v
+	return s
+}
+
+/**
  * The request of createEventSource
  */
 type CreateEventSourceRequest struct {
@@ -2077,6 +2171,7 @@ type CreateEventSourceRequest struct {
 	SourceRocketMQParameters       *SourceRocketMQParameters       `json:"SourceRocketMQParameters,omitempty" xml:"SourceRocketMQParameters,omitempty"`
 	SourceScheduledEventParameters *SourceScheduledEventParameters `json:"SourceScheduledEventParameters,omitempty" xml:"SourceScheduledEventParameters,omitempty"`
 	SourceHttpEventParameters      *SourceHttpEventParameters      `json:"SourceHttpEventParameters,omitempty" xml:"SourceHttpEventParameters,omitempty"`
+	SourceSLSParameters            *SourceSLSParameters            `json:"SourceSLSParameters,omitempty" xml:"SourceSLSParameters,omitempty"`
 }
 
 func (s CreateEventSourceRequest) String() string {
@@ -2124,6 +2219,11 @@ func (s *CreateEventSourceRequest) SetSourceScheduledEventParameters(v *SourceSc
 
 func (s *CreateEventSourceRequest) SetSourceHttpEventParameters(v *SourceHttpEventParameters) *CreateEventSourceRequest {
 	s.SourceHttpEventParameters = v
+	return s
+}
+
+func (s *CreateEventSourceRequest) SetSourceSLSParameters(v *SourceSLSParameters) *CreateEventSourceRequest {
+	s.SourceSLSParameters = v
 	return s
 }
 
@@ -2249,6 +2349,7 @@ type Source struct {
 	SourceKafkaParameters    *SourceKafkaParameters    `json:"SourceKafkaParameters,omitempty" xml:"SourceKafkaParameters,omitempty"`
 	SourceMQTTParameters     *SourceMQTTParameters     `json:"SourceMQTTParameters,omitempty" xml:"SourceMQTTParameters,omitempty"`
 	SourceDTSParameters      *SourceDTSParameters      `json:"SourceDTSParameters,omitempty" xml:"SourceDTSParameters,omitempty"`
+	SourceSLSParameters      *SourceSLSParameters      `json:"SourceSLSParameters,omitempty" xml:"SourceSLSParameters,omitempty"`
 }
 
 func (s Source) String() string {
@@ -2289,6 +2390,11 @@ func (s *Source) SetSourceDTSParameters(v *SourceDTSParameters) *Source {
 	return s
 }
 
+func (s *Source) SetSourceSLSParameters(v *SourceSLSParameters) *Source {
+	s.SourceSLSParameters = v
+	return s
+}
+
 /**
  * The config of Sink
  */
@@ -2299,6 +2405,7 @@ type Sink struct {
 	SinkRocketMQParameters *SinkRocketMQParameters `json:"SinkRocketMQParameters,omitempty" xml:"SinkRocketMQParameters,omitempty"`
 	SinkFcParameters       *SinkFcParameters       `json:"SinkFcParameters,omitempty" xml:"SinkFcParameters,omitempty"`
 	SinkOdpsParameters     *SinkOdpsParameters     `json:"SinkOdpsParameters,omitempty" xml:"SinkOdpsParameters,omitempty"`
+	SinkSLSParameters      *SinkSLSParameters      `json:"SinkSLSParameters,omitempty" xml:"SinkSLSParameters,omitempty"`
 }
 
 func (s Sink) String() string {
@@ -2336,6 +2443,11 @@ func (s *Sink) SetSinkFcParameters(v *SinkFcParameters) *Sink {
 
 func (s *Sink) SetSinkOdpsParameters(v *SinkOdpsParameters) *Sink {
 	s.SinkOdpsParameters = v
+	return s
+}
+
+func (s *Sink) SetSinkSLSParameters(v *SinkSLSParameters) *Sink {
+	s.SinkSLSParameters = v
 	return s
 }
 
@@ -2950,6 +3062,7 @@ type EBUserDefinedEventSourceEntry struct {
 	SourceRocketMQParameters *SourceRocketMQParameters `json:"SourceRocketMQParameters,omitempty" xml:"SourceRocketMQParameters,omitempty" require:"true"`
 	SourceKafkaParameters    *SourceKafkaParameters    `json:"SourceKafkaParameters,omitempty" xml:"SourceKafkaParameters,omitempty" require:"true"`
 	SourceHttpEventResponse  *SourceHttpEventResponse  `json:"SourceHttpEventResponse,omitempty" xml:"SourceHttpEventResponse,omitempty" require:"true"`
+	SourceSLSParameters      *SourceSLSParameters      `json:"SourceSLSParameters,omitempty" xml:"SourceSLSParameters,omitempty"`
 }
 
 func (s EBUserDefinedEventSourceEntry) String() string {
@@ -3012,6 +3125,11 @@ func (s *EBUserDefinedEventSourceEntry) SetSourceKafkaParameters(v *SourceKafkaP
 
 func (s *EBUserDefinedEventSourceEntry) SetSourceHttpEventResponse(v *SourceHttpEventResponse) *EBUserDefinedEventSourceEntry {
 	s.SourceHttpEventResponse = v
+	return s
+}
+
+func (s *EBUserDefinedEventSourceEntry) SetSourceSLSParameters(v *SourceSLSParameters) *EBUserDefinedEventSourceEntry {
+	s.SourceSLSParameters = v
 	return s
 }
 
@@ -3135,6 +3253,7 @@ type UpdateEventSourceRequest struct {
 	SourceRocketMQParameters       *SourceRocketMQParameters       `json:"SourceRocketMQParameters,omitempty" xml:"SourceRocketMQParameters,omitempty"`
 	SourceScheduledEventParameters *SourceScheduledEventParameters `json:"SourceScheduledEventParameters,omitempty" xml:"SourceScheduledEventParameters,omitempty"`
 	SourceHttpEventParameters      *SourceHttpEventParameters      `json:"SourceHttpEventParameters,omitempty" xml:"SourceHttpEventParameters,omitempty"`
+	SourceSLSParameters            *SourceSLSParameters            `json:"SourceSLSParameters,omitempty" xml:"SourceSLSParameters,omitempty"`
 }
 
 func (s UpdateEventSourceRequest) String() string {
@@ -3182,6 +3301,11 @@ func (s *UpdateEventSourceRequest) SetSourceScheduledEventParameters(v *SourceSc
 
 func (s *UpdateEventSourceRequest) SetSourceHttpEventParameters(v *SourceHttpEventParameters) *UpdateEventSourceRequest {
 	s.SourceHttpEventParameters = v
+	return s
+}
+
+func (s *UpdateEventSourceRequest) SetSourceSLSParameters(v *SourceSLSParameters) *UpdateEventSourceRequest {
+	s.SourceSLSParameters = v
 	return s
 }
 
@@ -4250,9 +4374,9 @@ func (client *Client) DoRequest(action *string, protocol *string, method *string
 			"period": tea.IntValue(util.DefaultNumber(runtime.BackoffPeriod, tea.Int(1))),
 		},
 		"ignoreSSL":     tea.BoolValue(runtime.IgnoreSSL),
-		"localAddr":     tea.StringValue(runtime.LocalAddr),
-		"socks5Proxy":   tea.StringValue(runtime.Socks5Proxy),
-		"socks5NetWork": tea.StringValue(runtime.Socks5NetWork),
+		"localAddr":     tea.StringValue(util.DefaultString(runtime.LocalAddr, client.LocalAddr)),
+		"socks5Proxy":   tea.StringValue(util.DefaultString(runtime.Socks5Proxy, client.Socks5Proxy)),
+		"socks5NetWork": tea.StringValue(util.DefaultString(runtime.Socks5NetWork, client.Socks5NetWork)),
 	}
 
 	_resp := make(map[string]interface{})

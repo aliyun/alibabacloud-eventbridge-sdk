@@ -43,6 +43,9 @@ public class EBUserDefinedEventSourceEntry extends TeaModel {
     @Validation(required = true)
     public SourceHttpEventResponse sourceHttpEventResponse;
 
+    @NameInMap("SourceSLSParameters")
+    public SourceSLSParameters sourceSLSParameters;
+
     public static EBUserDefinedEventSourceEntry build(java.util.Map<String, ?> map) {
         EBUserDefinedEventSourceEntry self = new EBUserDefinedEventSourceEntry();
         return TeaModel.build(map, self);
@@ -134,6 +137,14 @@ public class EBUserDefinedEventSourceEntry extends TeaModel {
     }
     public SourceHttpEventResponse getSourceHttpEventResponse() {
         return this.sourceHttpEventResponse;
+    }
+
+    public EBUserDefinedEventSourceEntry setSourceSLSParameters(SourceSLSParameters sourceSLSParameters) {
+        this.sourceSLSParameters = sourceSLSParameters;
+        return this;
+    }
+    public SourceSLSParameters getSourceSLSParameters() {
+        return this.sourceSLSParameters;
     }
 
 }

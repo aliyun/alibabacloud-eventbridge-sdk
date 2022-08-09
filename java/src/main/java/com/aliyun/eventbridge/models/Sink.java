@@ -25,6 +25,9 @@ public class Sink extends TeaModel {
     @NameInMap("SinkOdpsParameters")
     public SinkOdpsParameters sinkOdpsParameters;
 
+    @NameInMap("SinkSLSParameters")
+    public SinkSLSParameters sinkSLSParameters;
+
     public static Sink build(java.util.Map<String, ?> map) {
         Sink self = new Sink();
         return TeaModel.build(map, self);
@@ -76,6 +79,14 @@ public class Sink extends TeaModel {
     }
     public SinkOdpsParameters getSinkOdpsParameters() {
         return this.sinkOdpsParameters;
+    }
+
+    public Sink setSinkSLSParameters(SinkSLSParameters sinkSLSParameters) {
+        this.sinkSLSParameters = sinkSLSParameters;
+        return this;
+    }
+    public SinkSLSParameters getSinkSLSParameters() {
+        return this.sinkSLSParameters;
     }
 
 }
