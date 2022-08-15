@@ -2239,7 +2239,7 @@ type SourceKafkaParameters struct {
 	ExtendConfig    map[string]interface{} `json:"ExtendConfig,omitempty" xml:"ExtendConfig,omitempty"`
 	Network         *string                `json:"Network,omitempty" xml:"Network,omitempty"`
 	VpcId           *string                `json:"VpcId,omitempty" xml:"VpcId,omitempty"`
-	VSwitchId       *string                `json:"VSwitchId,omitempty" xml:"VSwitchId,omitempty"`
+	VSwitchIds      *string                `json:"VSwitchIds,omitempty" xml:"VSwitchIds,omitempty"`
 	SecurityGroupId *string                `json:"SecurityGroupId,omitempty" xml:"SecurityGroupId,omitempty"`
 }
 
@@ -2291,8 +2291,8 @@ func (s *SourceKafkaParameters) SetVpcId(v string) *SourceKafkaParameters {
 	return s
 }
 
-func (s *SourceKafkaParameters) SetVSwitchId(v string) *SourceKafkaParameters {
-	s.VSwitchId = &v
+func (s *SourceKafkaParameters) SetVSwitchIds(v string) *SourceKafkaParameters {
+	s.VSwitchIds = &v
 	return s
 }
 

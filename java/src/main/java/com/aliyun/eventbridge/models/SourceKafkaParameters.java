@@ -32,8 +32,8 @@ public class SourceKafkaParameters extends TeaModel {
     @NameInMap("VpcId")
     public String vpcId;
 
-    @NameInMap("VSwitchId")
-    public String vSwitchId;
+    @NameInMap("VSwitchIds")
+    public String vSwitchIds;
 
     @NameInMap("SecurityGroupId")
     public String securityGroupId;
@@ -107,12 +107,12 @@ public class SourceKafkaParameters extends TeaModel {
         return this.vpcId;
     }
 
-    public SourceKafkaParameters setVSwitchId(String vSwitchId) {
-        this.vSwitchId = vSwitchId;
+    public SourceKafkaParameters setVSwitchIds(String vSwitchIds) {
+        this.vSwitchIds = vSwitchIds;
         return this;
     }
-    public String getVSwitchId() {
-        return this.vSwitchId;
+    public String getVSwitchIds() {
+        return this.vSwitchIds;
     }
 
     public SourceKafkaParameters setSecurityGroupId(String securityGroupId) {
