@@ -3204,7 +3204,7 @@ class SourceKafkaParameters(TeaModel):
         extend_config: Dict[str, Any] = None,
         network: str = None,
         vpc_id: str = None,
-        v_switch_id: str = None,
+        v_switch_ids: str = None,
         security_group_id: str = None,
     ):
         self.region_id = region_id
@@ -3215,7 +3215,7 @@ class SourceKafkaParameters(TeaModel):
         self.extend_config = extend_config
         self.network = network
         self.vpc_id = vpc_id
-        self.v_switch_id = v_switch_id
+        self.v_switch_ids = v_switch_ids
         self.security_group_id = security_group_id
 
     def validate(self):
@@ -3243,8 +3243,8 @@ class SourceKafkaParameters(TeaModel):
             result['Network'] = self.network
         if self.vpc_id is not None:
             result['VpcId'] = self.vpc_id
-        if self.v_switch_id is not None:
-            result['VSwitchId'] = self.v_switch_id
+        if self.v_switch_ids is not None:
+            result['VSwitchIds'] = self.v_switch_ids
         if self.security_group_id is not None:
             result['SecurityGroupId'] = self.security_group_id
         return result
@@ -3267,8 +3267,8 @@ class SourceKafkaParameters(TeaModel):
             self.network = m.get('Network')
         if m.get('VpcId') is not None:
             self.vpc_id = m.get('VpcId')
-        if m.get('VSwitchId') is not None:
-            self.v_switch_id = m.get('VSwitchId')
+        if m.get('VSwitchIds') is not None:
+            self.v_switch_ids = m.get('VSwitchIds')
         if m.get('SecurityGroupId') is not None:
             self.security_group_id = m.get('SecurityGroupId')
         return self
