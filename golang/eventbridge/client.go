@@ -2072,7 +2072,6 @@ type SourceSLSParameters struct {
 	RegionId        *string `json:"RegionId,omitempty" xml:"RegionId,omitempty"`
 	Project         *string `json:"Project,omitempty" xml:"Project,omitempty" require:"true"`
 	LogStore        *string `json:"LogStore,omitempty" xml:"LogStore,omitempty" require:"true"`
-	ConsumerGroup   *string `json:"ConsumerGroup,omitempty" xml:"ConsumerGroup,omitempty" require:"true"`
 	ConsumePosition *string `json:"ConsumePosition,omitempty" xml:"ConsumePosition,omitempty"`
 	RoleName        *string `json:"RoleName,omitempty" xml:"RoleName,omitempty" require:"true"`
 }
@@ -2097,11 +2096,6 @@ func (s *SourceSLSParameters) SetProject(v string) *SourceSLSParameters {
 
 func (s *SourceSLSParameters) SetLogStore(v string) *SourceSLSParameters {
 	s.LogStore = &v
-	return s
-}
-
-func (s *SourceSLSParameters) SetConsumerGroup(v string) *SourceSLSParameters {
-	s.ConsumerGroup = &v
 	return s
 }
 
@@ -2815,6 +2809,7 @@ type RunOptions struct {
 	RetryStrategy   *RetryStrategy   `json:"RetryStrategy,omitempty" xml:"RetryStrategy,omitempty"`
 	ErrorsTolerance *string          `json:"ErrorsTolerance,omitempty" xml:"ErrorsTolerance,omitempty"`
 	DeadLetterQueue *DeadLetterQueue `json:"DeadLetterQueue,omitempty" xml:"DeadLetterQueue,omitempty"`
+	BatchWindow     *BatchWindow     `json:"BatchWindow,omitempty" xml:"BatchWindow,omitempty"`
 }
 
 func (s RunOptions) String() string {
@@ -2842,6 +2837,11 @@ func (s *RunOptions) SetErrorsTolerance(v string) *RunOptions {
 
 func (s *RunOptions) SetDeadLetterQueue(v *DeadLetterQueue) *RunOptions {
 	s.DeadLetterQueue = v
+	return s
+}
+
+func (s *RunOptions) SetBatchWindow(v *BatchWindow) *RunOptions {
+	s.BatchWindow = v
 	return s
 }
 
@@ -2874,6 +2874,32 @@ func (s *RetryStrategy) SetMaximumEventAgeInSeconds(v int) *RetryStrategy {
 
 func (s *RetryStrategy) SetMaximumRetryAttempts(v int) *RetryStrategy {
 	s.MaximumRetryAttempts = &v
+	return s
+}
+
+/**
+ * The config of BatchWindow
+ */
+type BatchWindow struct {
+	CountBasedWindow *int `json:"CountBasedWindow,omitempty" xml:"CountBasedWindow,omitempty"`
+	TimeBasedWindow  *int `json:"TimeBasedWindow,omitempty" xml:"TimeBasedWindow,omitempty"`
+}
+
+func (s BatchWindow) String() string {
+	return tea.Prettify(s)
+}
+
+func (s BatchWindow) GoString() string {
+	return s.String()
+}
+
+func (s *BatchWindow) SetCountBasedWindow(v int) *BatchWindow {
+	s.CountBasedWindow = &v
+	return s
+}
+
+func (s *BatchWindow) SetTimeBasedWindow(v int) *BatchWindow {
+	s.TimeBasedWindow = &v
 	return s
 }
 
@@ -5506,8 +5532,7 @@ func (client *Client) ListPartnerEventSources(request *ListPartnerEventSourcesRe
 	return _result, _err
 }
 
-/**
- * List the metrics of event streaming
+/** * List the metrics of event streaming
  */
 func (client *Client) ListPartnerEventSourcesWithOptions(request *ListPartnerEventSourcesRequest, runtime *util.RuntimeOptions) (_result *ListPartnerEventSourcesResponse, _err error) {
 	_err = util.ValidateModel(request)
