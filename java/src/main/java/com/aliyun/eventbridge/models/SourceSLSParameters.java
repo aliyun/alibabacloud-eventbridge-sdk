@@ -18,10 +18,6 @@ public class SourceSLSParameters extends TeaModel {
     @Validation(required = true)
     public String logStore;
 
-    @NameInMap("ConsumerGroup")
-    @Validation(required = true)
-    public String consumerGroup;
-
     @NameInMap("ConsumePosition")
     public String consumePosition;
 
@@ -56,14 +52,6 @@ public class SourceSLSParameters extends TeaModel {
     }
     public String getLogStore() {
         return this.logStore;
-    }
-
-    public SourceSLSParameters setConsumerGroup(String consumerGroup) {
-        this.consumerGroup = consumerGroup;
-        return this;
-    }
-    public String getConsumerGroup() {
-        return this.consumerGroup;
     }
 
     public SourceSLSParameters setConsumePosition(String consumePosition) {

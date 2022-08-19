@@ -1005,7 +1005,6 @@ model SourceSLSParameters = {
   regionId?: string(name='RegionId'),
   project: string(name='Project'),
   logStore: string(name='LogStore'),
-  consumerGroup: string(name='ConsumerGroup'),
   consumePosition?: string(name='ConsumePosition'),
   roleName: string(name='RoleName'),
 }
@@ -1180,6 +1179,7 @@ model RunOptions = {
   retryStrategy?: RetryStrategy(name='RetryStrategy'),
   errorsTolerance?: string(name='ErrorsTolerance'),
   deadLetterQueue?: DeadLetterQueue(name='DeadLetterQueue'),
+  batchWindow?: BatchWindow(name='BatchWindow'),
 }
 
 /**
@@ -1189,6 +1189,14 @@ model RetryStrategy = {
   pushRetryStrategy?: string(name='PushRetryStrategy'),
   maximumEventAgeInSeconds?: integer(name='MaximumEventAgeInSeconds'),
   maximumRetryAttempts?: integer(name='MaximumRetryAttempts'),
+}
+
+/**
+ * The config of BatchWindow
+ */
+model BatchWindow = {
+  countBasedWindow?: integer(name='CountBasedWindow'),
+  timeBasedWindow?: integer(name='TimeBasedWindow'),
 }
 
 /**

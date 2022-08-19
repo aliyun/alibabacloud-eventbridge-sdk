@@ -19,6 +19,9 @@ public class RunOptions extends TeaModel {
     @NameInMap("DeadLetterQueue")
     public DeadLetterQueue deadLetterQueue;
 
+    @NameInMap("BatchWindow")
+    public BatchWindow batchWindow;
+
     public static RunOptions build(java.util.Map<String, ?> map) {
         RunOptions self = new RunOptions();
         return TeaModel.build(map, self);
@@ -54,6 +57,14 @@ public class RunOptions extends TeaModel {
     }
     public DeadLetterQueue getDeadLetterQueue() {
         return this.deadLetterQueue;
+    }
+
+    public RunOptions setBatchWindow(BatchWindow batchWindow) {
+        this.batchWindow = batchWindow;
+        return this;
+    }
+    public BatchWindow getBatchWindow() {
+        return this.batchWindow;
     }
 
 }

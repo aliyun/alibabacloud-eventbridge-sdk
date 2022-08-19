@@ -2871,21 +2871,18 @@ class SourceSLSParameters(TeaModel):
         region_id: str = None,
         project: str = None,
         log_store: str = None,
-        consumer_group: str = None,
         consume_position: str = None,
         role_name: str = None,
     ):
         self.region_id = region_id
         self.project = project
         self.log_store = log_store
-        self.consumer_group = consumer_group
         self.consume_position = consume_position
         self.role_name = role_name
 
     def validate(self):
         self.validate_required(self.project, 'project')
         self.validate_required(self.log_store, 'log_store')
-        self.validate_required(self.consumer_group, 'consumer_group')
         self.validate_required(self.role_name, 'role_name')
 
     def to_map(self):
@@ -2900,8 +2897,6 @@ class SourceSLSParameters(TeaModel):
             result['Project'] = self.project
         if self.log_store is not None:
             result['LogStore'] = self.log_store
-        if self.consumer_group is not None:
-            result['ConsumerGroup'] = self.consumer_group
         if self.consume_position is not None:
             result['ConsumePosition'] = self.consume_position
         if self.role_name is not None:
@@ -2916,8 +2911,6 @@ class SourceSLSParameters(TeaModel):
             self.project = m.get('Project')
         if m.get('LogStore') is not None:
             self.log_store = m.get('LogStore')
-        if m.get('ConsumerGroup') is not None:
-            self.consumer_group = m.get('ConsumerGroup')
         if m.get('ConsumePosition') is not None:
             self.consume_position = m.get('ConsumePosition')
         if m.get('RoleName') is not None:
@@ -4058,6 +4051,42 @@ class DeadLetterQueue(TeaModel):
         return self
 
 
+class BatchWindow(TeaModel):
+    """
+    The config of BatchWindow
+    """
+    def __init__(
+        self,
+        count_based_window: int = None,
+        time_based_window: int = None,
+    ):
+        self.count_based_window = count_based_window
+        self.time_based_window = time_based_window
+
+    def validate(self):
+        pass
+
+    def to_map(self):
+        _map = super().to_map()
+        if _map is not None:
+            return _map
+
+        result = dict()
+        if self.count_based_window is not None:
+            result['CountBasedWindow'] = self.count_based_window
+        if self.time_based_window is not None:
+            result['TimeBasedWindow'] = self.time_based_window
+        return result
+
+    def from_map(self, m: dict = None):
+        m = m or dict()
+        if m.get('CountBasedWindow') is not None:
+            self.count_based_window = m.get('CountBasedWindow')
+        if m.get('TimeBasedWindow') is not None:
+            self.time_based_window = m.get('TimeBasedWindow')
+        return self
+
+
 class RunOptions(TeaModel):
     """
     The config of RunOptions
@@ -4068,17 +4097,21 @@ class RunOptions(TeaModel):
         retry_strategy: RetryStrategy = None,
         errors_tolerance: str = None,
         dead_letter_queue: DeadLetterQueue = None,
+        batch_window: BatchWindow = None,
     ):
         self.maximum_tasks = maximum_tasks
         self.retry_strategy = retry_strategy
         self.errors_tolerance = errors_tolerance
         self.dead_letter_queue = dead_letter_queue
+        self.batch_window = batch_window
 
     def validate(self):
         if self.retry_strategy:
             self.retry_strategy.validate()
         if self.dead_letter_queue:
             self.dead_letter_queue.validate()
+        if self.batch_window:
+            self.batch_window.validate()
 
     def to_map(self):
         _map = super().to_map()
@@ -4094,6 +4127,8 @@ class RunOptions(TeaModel):
             result['ErrorsTolerance'] = self.errors_tolerance
         if self.dead_letter_queue is not None:
             result['DeadLetterQueue'] = self.dead_letter_queue.to_map()
+        if self.batch_window is not None:
+            result['BatchWindow'] = self.batch_window.to_map()
         return result
 
     def from_map(self, m: dict = None):
@@ -4108,6 +4143,9 @@ class RunOptions(TeaModel):
         if m.get('DeadLetterQueue') is not None:
             temp_model = DeadLetterQueue()
             self.dead_letter_queue = temp_model.from_map(m['DeadLetterQueue'])
+        if m.get('BatchWindow') is not None:
+            temp_model = BatchWindow()
+            self.batch_window = temp_model.from_map(m['BatchWindow'])
         return self
 
 
