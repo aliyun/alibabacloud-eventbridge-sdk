@@ -24,6 +24,9 @@ export class Config extends $tea.Model {
   endpoint?: string;
   noProxy?: string;
   maxIdleConns?: number;
+  localAddr?: string;
+  socks5Proxy?: string;
+  socks5NetWork?: string;
   static names(): { [key: string]: string } {
     return {
       accessKeyId: 'accessKeyId',
@@ -39,6 +42,9 @@ export class Config extends $tea.Model {
       endpoint: 'endpoint',
       noProxy: 'noProxy',
       maxIdleConns: 'maxIdleConns',
+      localAddr: 'localAddr',
+      socks5Proxy: 'socks5Proxy',
+      socks5NetWork: 'socks5NetWork',
     };
   }
 
@@ -57,6 +63,9 @@ export class Config extends $tea.Model {
       endpoint: 'string',
       noProxy: 'string',
       maxIdleConns: 'number',
+      localAddr: 'string',
+      socks5Proxy: 'string',
+      socks5NetWork: 'string',
     };
   }
 
@@ -1262,6 +1271,14 @@ export class EventTrace extends $tea.Model {
   eventId: string;
   eventBusName: string;
   actionTime: string;
+  eventSource: string;
+  receivedTime: number;
+  ruleName: string;
+  ruleMatchingTime: number;
+  notifyLatency: number;
+  notifyTime: number;
+  endpoint: string;
+  notifyStatus: string;
   static names(): { [key: string]: string } {
     return {
       resourceOwnerId: 'ResourceOwnerId',
@@ -1269,6 +1286,14 @@ export class EventTrace extends $tea.Model {
       eventId: 'EventId',
       eventBusName: 'EventBusName',
       actionTime: 'ActionTime',
+      eventSource: 'EventSource',
+      receivedTime: 'ReceivedTime',
+      ruleName: 'RuleName',
+      ruleMatchingTime: 'RuleMatchingTime',
+      notifyLatency: 'NotifyLatency',
+      notifyTime: 'NotifyTime',
+      endpoint: 'Endpoint',
+      notifyStatus: 'NotifyStatus',
     };
   }
 
@@ -1279,6 +1304,14 @@ export class EventTrace extends $tea.Model {
       eventId: 'string',
       eventBusName: 'string',
       actionTime: 'string',
+      eventSource: 'string',
+      receivedTime: 'number',
+      ruleName: 'string',
+      ruleMatchingTime: 'number',
+      notifyLatency: 'number',
+      notifyTime: 'number',
+      endpoint: 'string',
+      notifyStatus: 'string',
     };
   }
 
@@ -1336,12 +1369,14 @@ export class TracedEvent extends $tea.Model {
   eventSource: string;
   eventId: string;
   eventBusName: string;
+  eventType: string;
   static names(): { [key: string]: string } {
     return {
-      eventReceivedTime: 'eventReceivedTime',
+      eventReceivedTime: 'EventReceivedTime',
       eventSource: 'EventSource',
       eventId: 'EventId',
       eventBusName: 'EventBusName',
+      eventType: 'EventType',
     };
   }
 
@@ -1351,6 +1386,7 @@ export class TracedEvent extends $tea.Model {
       eventSource: 'string',
       eventId: 'string',
       eventBusName: 'string',
+      eventType: 'string',
     };
   }
 
@@ -1360,7 +1396,7 @@ export class TracedEvent extends $tea.Model {
 }
 
 export class QueryEventByEventIdResponse extends $tea.Model {
-  tracedEvents: EventTrace[];
+  tracedEvents: TracedEvent[];
   nextToken: string;
   total: number;
   static names(): { [key: string]: string } {
@@ -1373,7 +1409,7 @@ export class QueryEventByEventIdResponse extends $tea.Model {
 
   static types(): { [key: string]: any } {
     return {
-      tracedEvents: { 'type': 'array', 'itemType': EventTrace },
+      tracedEvents: { 'type': 'array', 'itemType': TracedEvent },
       nextToken: 'string',
       total: 'number',
     };
@@ -1391,6 +1427,8 @@ export class QueryEventsByPeriodRequest extends $tea.Model {
   endTime: number;
   limit?: number;
   nextToken?: string;
+  eventType?: string;
+  matchedRule?: string;
   static names(): { [key: string]: string } {
     return {
       eventBusName: 'EventBusName',
@@ -1399,6 +1437,8 @@ export class QueryEventsByPeriodRequest extends $tea.Model {
       endTime: 'EndTime',
       limit: 'Limit',
       nextToken: 'NextToken',
+      eventType: 'EventType',
+      matchedRule: 'MatchedRule',
     };
   }
 
@@ -1410,6 +1450,8 @@ export class QueryEventsByPeriodRequest extends $tea.Model {
       endTime: 'number',
       limit: 'number',
       nextToken: 'string',
+      eventType: 'string',
+      matchedRule: 'string',
     };
   }
 
@@ -1419,7 +1461,7 @@ export class QueryEventsByPeriodRequest extends $tea.Model {
 }
 
 export class QueryEventsByPeriodResponse extends $tea.Model {
-  tracedEvents: EventTrace[];
+  tracedEvents: TracedEvent[];
   nextToken: string;
   total: number;
   static names(): { [key: string]: string } {
@@ -1432,7 +1474,7 @@ export class QueryEventsByPeriodResponse extends $tea.Model {
 
   static types(): { [key: string]: any } {
     return {
-      tracedEvents: { 'type': 'array', 'itemType': EventTrace },
+      tracedEvents: { 'type': 'array', 'itemType': TracedEvent },
       nextToken: 'string',
       total: 'number',
     };
@@ -1571,6 +1613,145 @@ export class SourceScheduledEventParameters extends $tea.Model {
 }
 
 /**
+ * The detail of SourceMQTTParameters
+ */
+export class SourceMQTTParameters extends $tea.Model {
+  regionId?: string;
+  instanceId: string;
+  topic: string;
+  static names(): { [key: string]: string } {
+    return {
+      regionId: 'RegionId',
+      instanceId: 'InstanceId',
+      topic: 'Topic',
+    };
+  }
+
+  static types(): { [key: string]: any } {
+    return {
+      regionId: 'string',
+      instanceId: 'string',
+      topic: 'string',
+    };
+  }
+
+  constructor(map?: { [key: string]: any }) {
+    super(map);
+  }
+}
+
+/**
+ * The detail of SourceDTSParameters
+ */
+export class SourceDTSParameters extends $tea.Model {
+  regionId?: string;
+  brokerUrl: string;
+  topic: string;
+  sid: string;
+  username: string;
+  password: string;
+  initCheckPoint: number;
+  taskId: string;
+  static names(): { [key: string]: string } {
+    return {
+      regionId: 'RegionId',
+      brokerUrl: 'BrokerUrl',
+      topic: 'Topic',
+      sid: 'Sid',
+      username: 'Username',
+      password: 'Password',
+      initCheckPoint: 'InitCheckPoint',
+      taskId: 'TaskId',
+    };
+  }
+
+  static types(): { [key: string]: any } {
+    return {
+      regionId: 'string',
+      brokerUrl: 'string',
+      topic: 'string',
+      sid: 'string',
+      username: 'string',
+      password: 'string',
+      initCheckPoint: 'number',
+      taskId: 'string',
+    };
+  }
+
+  constructor(map?: { [key: string]: any }) {
+    super(map);
+  }
+}
+
+/**
+ * The detail of SourceSLSParameters
+ */
+export class SourceSLSParameters extends $tea.Model {
+  regionId?: string;
+  project: string;
+  logStore: string;
+  consumePosition?: string;
+  roleName: string;
+  static names(): { [key: string]: string } {
+    return {
+      regionId: 'RegionId',
+      project: 'Project',
+      logStore: 'LogStore',
+      consumePosition: 'ConsumePosition',
+      roleName: 'RoleName',
+    };
+  }
+
+  static types(): { [key: string]: any } {
+    return {
+      regionId: 'string',
+      project: 'string',
+      logStore: 'string',
+      consumePosition: 'string',
+      roleName: 'string',
+    };
+  }
+
+  constructor(map?: { [key: string]: any }) {
+    super(map);
+  }
+}
+
+/**
+ * The config of SinkSLSParameters
+ */
+export class SinkSLSParameters extends $tea.Model {
+  project?: TargetParameter;
+  logStore?: TargetParameter;
+  topic?: TargetParameter;
+  body?: TargetParameter;
+  roleName?: TargetParameter;
+  static names(): { [key: string]: string } {
+    return {
+      project: 'Project',
+      logStore: 'LogStore',
+      topic: 'Topic',
+      body: 'Body',
+      roleName: 'RoleName',
+    };
+  }
+
+  static types(): { [key: string]: any } {
+    return {
+      project: TargetParameter,
+      logStore: TargetParameter,
+      topic: TargetParameter,
+      body: TargetParameter,
+      roleName: TargetParameter,
+    };
+  }
+
+  constructor(map?: { [key: string]: any }) {
+    super(map);
+  }
+}
+
+/**
  * The request of createEventSource
  */
 export class CreateEventSourceRequest extends $tea.Model {
@@ -1582,6 +1763,7 @@ export class CreateEventSourceRequest extends $tea.Model {
   SourceRocketMQParameters?: SourceRocketMQParameters;
   sourceScheduledEventParameters?: SourceScheduledEventParameters;
   sourceHttpEventParameters?: SourceHttpEventParameters;
+  sourceSLSParameters?: SourceSLSParameters;
   static names(): { [key: string]: string } {
     return {
       eventSourceName: 'EventSourceName',
@@ -1592,6 +1774,7 @@ export class CreateEventSourceRequest extends $tea.Model {
       SourceRocketMQParameters: 'SourceRocketMQParameters',
       sourceScheduledEventParameters: 'SourceScheduledEventParameters',
       sourceHttpEventParameters: 'SourceHttpEventParameters',
+      sourceSLSParameters: 'SourceSLSParameters',
     };
   }
 
@@ -1605,6 +1788,7 @@ export class CreateEventSourceRequest extends $tea.Model {
       SourceRocketMQParameters: SourceRocketMQParameters,
       sourceScheduledEventParameters: SourceScheduledEventParameters,
       sourceHttpEventParameters: SourceHttpEventParameters,
+      sourceSLSParameters: SourceSLSParameters,
     };
   }
 
@@ -1625,7 +1809,7 @@ export class SourceKafkaParameters extends $tea.Model {
   extendConfig?: { [key: string]: any };
   network?: string;
   vpcId?: string;
-  vSwitchId?: string;
+  vSwitchIds?: string;
   securityGroupId?: string;
   static names(): { [key: string]: string } {
     return {
@@ -1637,7 +1821,7 @@ export class SourceKafkaParameters extends $tea.Model {
       extendConfig: 'ExtendConfig',
       network: 'Network',
       vpcId: 'VpcId',
-      vSwitchId: 'VSwitchId',
+      vSwitchIds: 'VSwitchIds',
       securityGroupId: 'SecurityGroupId',
     };
   }
@@ -1652,7 +1836,7 @@ export class SourceKafkaParameters extends $tea.Model {
       extendConfig: { 'type': 'map', 'keyType': 'string', 'valueType': 'any' },
       network: 'string',
       vpcId: 'string',
-      vSwitchId: 'string',
+      vSwitchIds: 'string',
       securityGroupId: 'string',
     };
   }
@@ -1701,12 +1885,18 @@ export class Source extends $tea.Model {
   sourceRabbitMQParameters?: SourceRabbitMQParameters;
   sourceRocketMQParameters?: SourceRocketMQParameters;
   sourceKafkaParameters?: SourceKafkaParameters;
+  sourceMQTTParameters?: SourceMQTTParameters;
+  sourceDTSParameters?: SourceDTSParameters;
+  sourceSLSParameters?: SourceSLSParameters;
   static names(): { [key: string]: string } {
     return {
       sourceMNSParameters: 'SourceMNSParameters',
       sourceRabbitMQParameters: 'SourceRabbitMQParameters',
       sourceRocketMQParameters: 'SourceRocketMQParameters',
       sourceKafkaParameters: 'SourceKafkaParameters',
+      sourceMQTTParameters: 'SourceMQTTParameters',
+      sourceDTSParameters: 'SourceDTSParameters',
+      sourceSLSParameters: 'SourceSLSParameters',
     };
   }
 
@@ -1716,6 +1906,9 @@ export class Source extends $tea.Model {
       sourceRabbitMQParameters: SourceRabbitMQParameters,
       sourceRocketMQParameters: SourceRocketMQParameters,
       sourceKafkaParameters: SourceKafkaParameters,
+      sourceMQTTParameters: SourceMQTTParameters,
+      sourceDTSParameters: SourceDTSParameters,
+      sourceSLSParameters: SourceSLSParameters,
     };
   }
 
@@ -1734,6 +1927,7 @@ export class Sink extends $tea.Model {
   sinkRocketMQParameters?: SinkRocketMQParameters;
   sinkFcParameters?: SinkFcParameters;
   sinkOdpsParameters?: SinkOdpsParameters;
+  sinkSLSParameters?: SinkSLSParameters;
   static names(): { [key: string]: string } {
     return {
       sinkMNSParameters: 'SinkMNSParameters',
@@ -1742,6 +1936,7 @@ export class Sink extends $tea.Model {
       sinkRocketMQParameters: 'SinkRocketMQParameters',
       sinkFcParameters: 'SinkFcParameters',
       sinkOdpsParameters: 'SinkOdpsParameters',
+      sinkSLSParameters: 'SinkSLSParameters',
     };
   }
 
@@ -1753,6 +1948,7 @@ export class Sink extends $tea.Model {
       sinkRocketMQParameters: SinkRocketMQParameters,
       sinkFcParameters: SinkFcParameters,
       sinkOdpsParameters: SinkOdpsParameters,
+      sinkSLSParameters: SinkSLSParameters,
     };
   }
 
@@ -2031,12 +2227,14 @@ export class RunOptions extends $tea.Model {
   retryStrategy?: RetryStrategy;
   errorsTolerance?: string;
   deadLetterQueue?: DeadLetterQueue;
+  batchWindow?: BatchWindow;
   static names(): { [key: string]: string } {
     return {
       maximumTasks: 'MaximumTasks',
       retryStrategy: 'RetryStrategy',
       errorsTolerance: 'ErrorsTolerance',
       deadLetterQueue: 'DeadLetterQueue',
+      batchWindow: 'BatchWindow',
     };
   }
 
@@ -2046,6 +2244,7 @@ export class RunOptions extends $tea.Model {
       retryStrategy: RetryStrategy,
       errorsTolerance: 'string',
       deadLetterQueue: DeadLetterQueue,
+      batchWindow: BatchWindow,
     };
   }
 
@@ -2074,6 +2273,31 @@ export class RetryStrategy extends $tea.Model {
       pushRetryStrategy: 'string',
       maximumEventAgeInSeconds: 'number',
       maximumRetryAttempts: 'number',
+    };
+  }
+
+  constructor(map?: { [key: string]: any }) {
+    super(map);
+  }
+}
+
+/**
+ * The config of BatchWindow
+ */
+export class BatchWindow extends $tea.Model {
+  countBasedWindow?: number;
+  timeBasedWindow?: number;
+  static names(): { [key: string]: string } {
+    return {
+      countBasedWindow: 'CountBasedWindow',
+      timeBasedWindow: 'TimeBasedWindow',
+    };
+  }
+
+  static types(): { [key: string]: any } {
+    return {
+      countBasedWindow: 'number',
+      timeBasedWindow: 'number',
     };
   }
 
@@ -2230,6 +2454,7 @@ export class EBUserDefinedEventSourceEntry extends $tea.Model {
   sourceRocketMQParameters: SourceRocketMQParameters;
   sourceKafkaParameters: SourceKafkaParameters;
   sourceHttpEventResponse: SourceHttpEventResponse;
+  sourceSLSParameters?: SourceSLSParameters;
   static names(): { [key: string]: string } {
     return {
       name: 'Name',
@@ -2243,6 +2468,7 @@ export class EBUserDefinedEventSourceEntry extends $tea.Model {
       sourceRocketMQParameters: 'SourceRocketMQParameters',
       sourceKafkaParameters: 'SourceKafkaParameters',
       sourceHttpEventResponse: 'SourceHttpEventResponse',
+      sourceSLSParameters: 'SourceSLSParameters',
     };
   }
 
@@ -2259,6 +2485,7 @@ export class EBUserDefinedEventSourceEntry extends $tea.Model {
       sourceRocketMQParameters: SourceRocketMQParameters,
       sourceKafkaParameters: SourceKafkaParameters,
       sourceHttpEventResponse: SourceHttpEventResponse,
+      sourceSLSParameters: SourceSLSParameters,
     };
   }
 
@@ -2369,6 +2596,7 @@ export class UpdateEventSourceRequest extends $tea.Model {
   sourceRocketMQParameters?: SourceRocketMQParameters;
   sourceScheduledEventParameters?: SourceScheduledEventParameters;
   sourceHttpEventParameters?: SourceHttpEventParameters;
+  sourceSLSParameters?: SourceSLSParameters;
   static names(): { [key: string]: string } {
     return {
       eventSourceName: 'EventSourceName',
@@ -2379,6 +2607,7 @@ export class UpdateEventSourceRequest extends $tea.Model {
       sourceRocketMQParameters: 'SourceRocketMQParameters',
       sourceScheduledEventParameters: 'SourceScheduledEventParameters',
       sourceHttpEventParameters: 'SourceHttpEventParameters',
+      sourceSLSParameters: 'SourceSLSParameters',
     };
   }
 
@@ -2392,6 +2621,7 @@ export class UpdateEventSourceRequest extends $tea.Model {
       sourceRocketMQParameters: SourceRocketMQParameters,
       sourceScheduledEventParameters: SourceScheduledEventParameters,
       sourceHttpEventParameters: SourceHttpEventParameters,
+      sourceSLSParameters: SourceSLSParameters,
     };
   }
 
@@ -3087,16 +3317,147 @@ export class SourceHttpEventResponse extends $tea.Model {
  * The detail of ConcurrentConfig
  */
 export class ConcurrentConfig extends $tea.Model {
-  Concurrency: number;
+  concurrency?: number;
   static names(): { [key: string]: string } {
     return {
-      Concurrency: 'ResourceKey',
+      concurrency: 'Concurrency',
     };
   }
 
   static types(): { [key: string]: any } {
     return {
-      Concurrency: 'number',
+      concurrency: 'number',
+    };
+  }
+
+  constructor(map?: { [key: string]: any }) {
+    super(map);
+  }
+}
+
+/**
+ * The request of listPartnerEventSources
+ */
+export class ListPartnerEventSourcesRequest extends $tea.Model {
+  namePrefix?: string;
+  tag?: string;
+  static names(): { [key: string]: string } {
+    return {
+      namePrefix: 'namePrefix',
+      tag: 'Tag',
+    };
+  }
+
+  static types(): { [key: string]: any } {
+    return {
+      namePrefix: 'string',
+      tag: 'string',
+    };
+  }
+
+  constructor(map?: { [key: string]: any }) {
+    super(map);
+  }
+}
+
+export class EBSaaSEventSourceEntry extends $tea.Model {
+  name?: string;
+  description?: string;
+  logo?: string;
+  doc?: string;
+  ctime?: number;
+  tag?: string[];
+  fullName?: string;
+  static names(): { [key: string]: string } {
+    return {
+      name: 'Name',
+      description: 'Description',
+      logo: 'Logo',
+      doc: 'Doc',
+      ctime: 'Ctime',
+      tag: 'Tag',
+      fullName: 'FullName',
+    };
+  }
+
+  static types(): { [key: string]: any } {
+    return {
+      name: 'string',
+      description: 'string',
+      logo: 'string',
+      doc: 'string',
+      ctime: 'number',
+      tag: { 'type': 'array', 'itemType': 'string' },
+      fullName: 'string',
+    };
+  }
+
+  constructor(map?: { [key: string]: any }) {
+    super(map);
+  }
+}
+
+/**
+ * The response of listPartnerEventSources
+ */
+export class ListPartnerEventSourcesResponse extends $tea.Model {
+  eventSources?: EBSaaSEventSourceEntry[];
+  static names(): { [key: string]: string } {
+    return {
+      eventSources: 'EventSources',
+    };
+  }
+
+  static types(): { [key: string]: any } {
+    return {
+      eventSources: { 'type': 'array', 'itemType': EBSaaSEventSourceEntry },
+    };
+  }
+
+  constructor(map?: { [key: string]: any }) {
+    super(map);
+  }
+}
+
+export class QueryEventsRequest extends $tea.Model {
+  eventBusName: string;
+  eventSourceName?: string;
+  eventIds: string[];
+  static names(): { [key: string]: string } {
+    return {
+      eventBusName: 'EventBusName',
+      eventSourceName: 'EventSourceName',
+      eventIds: 'EventIds',
+    };
+  }
+
+  static types(): { [key: string]: any } {
+    return {
+      eventBusName: 'string',
+      eventSourceName: 'string',
+      eventIds: { 'type': 'array', 'itemType': 'string' },
+    };
+  }
+
+  constructor(map?: { [key: string]: any }) {
+    super(map);
+  }
+}
+
+export class QueryEventsResponse extends $tea.Model {
+  eventMap: { [key: string]: string };
+  eventBusName: string;
+  static names(): { [key: string]: string } {
+    return {
+      eventMap: 'EventMap',
+      eventBusName: 'EventBusName',
+    };
+  }
+
+  static types(): { [key: string]: any } {
+    return {
+      eventMap: { 'type': 'map', 'keyType': 'string', 'valueType': 'string' },
+      eventBusName: 'string',
     };
   }
 
@@ -3117,6 +3478,9 @@ export default class Client {
   _endpoint: string;
   _regionId: string;
   _credential: Credential;
+  _localAddr: string;
+  _socks5Proxy: string;
+  _socks5NetWork: string;
 
   /**
    * Init client with Config
@@ -3175,6 +3539,9 @@ export default class Client {
     this._httpProxy = config.httpProxy;
     this._httpsProxy = config.httpsProxy;
     this._maxIdleConns = config.maxIdleConns;
+    this._localAddr = config.localAddr;
+    this._socks5Proxy = config.socks5Proxy;
+    this._socks5NetWork = config.socks5NetWork;
   }
 
   /**
@@ -3206,6 +3573,9 @@ export default class Client {
         period: Util.defaultNumber(runtime.backoffPeriod, 1),
       },
       ignoreSSL: runtime.ignoreSSL,
+      localAddr: Util.defaultString(runtime.localAddr, this._localAddr),
+      socks5Proxy: Util.defaultString(runtime.socks5Proxy, this._socks5Proxy),
+      socks5NetWork: Util.defaultString(runtime.socks5NetWork, this._socks5NetWork),
     }
 
     let _lastRequest = null;
@@ -3817,6 +4187,38 @@ export default class Client {
   async updateEventStreamingWithOptions(request: UpdateEventStreamingRequest, runtime: $Util.RuntimeOptions): Promise<UpdateEventStreamingResponse> {
     Util.validateModel(request);
     return $tea.cast<UpdateEventStreamingResponse>(await this.doRequest("updateEventStreaming", "HTTP", "POST", `/openapi/v2/updateEventStreaming`, null, $tea.toMap(request), runtime), new UpdateEventStreamingResponse({}));
+  }
+
+  /**
+   * List the saas event source within your account.
+   */
+  async listPartnerEventSources(request: ListPartnerEventSourcesRequest): Promise<ListPartnerEventSourcesResponse> {
+    let runtime = new $Util.RuntimeOptions({ });
+    return await this.listPartnerEventSourcesWithOptions(request, runtime);
+  }
+
+  /**
+   * List the metrics of event streaming
+   */
+  async listPartnerEventSourcesWithOptions(request: ListPartnerEventSourcesRequest, runtime: $Util.RuntimeOptions): Promise<ListPartnerEventSourcesResponse> {
+    Util.validateModel(request);
+    return $tea.cast<ListPartnerEventSourcesResponse>(await this.doRequest("listEventStreamingMetrics", "HTTP", "POST", `/openapi/listPartnerEventSources`, null, $tea.toMap(request), runtime), new ListPartnerEventSourcesResponse({}));
+  }
+
+  /**
+   * Query the event by the event Id.
+   */
+  async queryEvents(request: QueryEventsRequest): Promise<QueryEventsResponse> {
+    let runtime = new $Util.RuntimeOptions({ });
+    return await this.queryEventsWithOptions(request, runtime);
+  }
+
+  /**
+   * Query the event by the event Id.
+   */
+  async queryEventsWithOptions(request: QueryEventsRequest, runtime: $Util.RuntimeOptions): Promise<QueryEventsResponse> {
+    Util.validateModel(request);
+    return $tea.cast<QueryEventsResponse>(await this.doRequest("queryEvents", "HTTP", "POST", `/openapi/queryEventsByEventIds`, null, $tea.toMap(request), runtime), new QueryEventsResponse({}));
   }
 
 }

@@ -24,6 +24,38 @@ public class EventTrace extends TeaModel {
     @Validation(required = true)
     public String actionTime;
 
+    @NameInMap("EventSource")
+    @Validation(required = true)
+    public String eventSource;
+
+    @NameInMap("ReceivedTime")
+    @Validation(required = true)
+    public Long receivedTime;
+
+    @NameInMap("RuleName")
+    @Validation(required = true)
+    public String ruleName;
+
+    @NameInMap("RuleMatchingTime")
+    @Validation(required = true)
+    public Long ruleMatchingTime;
+
+    @NameInMap("NotifyLatency")
+    @Validation(required = true)
+    public Long notifyLatency;
+
+    @NameInMap("NotifyTime")
+    @Validation(required = true)
+    public Long notifyTime;
+
+    @NameInMap("Endpoint")
+    @Validation(required = true)
+    public String endpoint;
+
+    @NameInMap("NotifyStatus")
+    @Validation(required = true)
+    public String notifyStatus;
+
     public static EventTrace build(java.util.Map<String, ?> map) {
         EventTrace self = new EventTrace();
         return TeaModel.build(map, self);
@@ -67,6 +99,70 @@ public class EventTrace extends TeaModel {
     }
     public String getActionTime() {
         return this.actionTime;
+    }
+
+    public EventTrace setEventSource(String eventSource) {
+        this.eventSource = eventSource;
+        return this;
+    }
+    public String getEventSource() {
+        return this.eventSource;
+    }
+
+    public EventTrace setReceivedTime(Long receivedTime) {
+        this.receivedTime = receivedTime;
+        return this;
+    }
+    public Long getReceivedTime() {
+        return this.receivedTime;
+    }
+
+    public EventTrace setRuleName(String ruleName) {
+        this.ruleName = ruleName;
+        return this;
+    }
+    public String getRuleName() {
+        return this.ruleName;
+    }
+
+    public EventTrace setRuleMatchingTime(Long ruleMatchingTime) {
+        this.ruleMatchingTime = ruleMatchingTime;
+        return this;
+    }
+    public Long getRuleMatchingTime() {
+        return this.ruleMatchingTime;
+    }
+
+    public EventTrace setNotifyLatency(Long notifyLatency) {
+        this.notifyLatency = notifyLatency;
+        return this;
+    }
+    public Long getNotifyLatency() {
+        return this.notifyLatency;
+    }
+
+    public EventTrace setNotifyTime(Long notifyTime) {
+        this.notifyTime = notifyTime;
+        return this;
+    }
+    public Long getNotifyTime() {
+        return this.notifyTime;
+    }
+
+    public EventTrace setEndpoint(String endpoint) {
+        this.endpoint = endpoint;
+        return this;
+    }
+    public String getEndpoint() {
+        return this.endpoint;
+    }
+
+    public EventTrace setNotifyStatus(String notifyStatus) {
+        this.notifyStatus = notifyStatus;
+        return this;
+    }
+    public String getNotifyStatus() {
+        return this.notifyStatus;
     }
 
 }

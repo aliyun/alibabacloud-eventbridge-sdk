@@ -756,6 +756,14 @@ model EventTrace {
   eventId: string(name='EventId'),
   eventBusName: string(name='EventBusName'),
   actionTime: string(name='ActionTime'),
+  eventSource: string(name='EventSource'),
+  receivedTime: int64(name='ReceivedTime'),
+  ruleName: string(name='RuleName'),
+  ruleMatchingTime: int64(name='RuleMatchingTime'),
+  notifyLatency: int64(name='NotifyLatency'),
+  notifyTime: int64(name='NotifyTime'),
+  endpoint: string(name='Endpoint'),
+  notifyStatus: string(name='NotifyStatus'),
 }
 
 model QueryEventTracesResponse {
@@ -786,14 +794,15 @@ model QueryEventByEventIdRequest {
 }
 
 model TracedEvent {
-  eventReceivedTime: string(name='eventReceivedTime'),
+  eventReceivedTime: string(name='EventReceivedTime'),
   eventSource: string(name='EventSource'),
   eventId: string(name='EventId'),
-  eventBusName: string(name='EventBusName')
+  eventBusName: string(name='EventBusName'),
+  eventType: string(name='EventType'),
 }
 
 model QueryEventByEventIdResponse {
-  tracedEvents: [ EventTrace ](name='TracedEvents'),
+  tracedEvents: [ TracedEvent ](name='TracedEvents'),
   nextToken: string(name='NextToken'),
   total: integer(name='Total'),
 }
@@ -822,10 +831,12 @@ model QueryEventsByPeriodRequest {
   endTime: long(name='EndTime'),
   limit?: integer(name='Limit'),
   nextToken?: string(name='NextToken'),
+  eventType?: string(name='EventType'),
+  matchedRule?: string(name='MatchedRule'),
 }
 
 model QueryEventsByPeriodResponse {
-  tracedEvents: [ EventTrace ](name='TracedEvents'),
+  tracedEvents: [ TracedEvent ](name='TracedEvents'),
   nextToken: string(name='NextToken'),
   total: integer(name='Total'),
 }
@@ -1784,4 +1795,32 @@ async function listPartnerEventSources(request: ListPartnerEventSourcesRequest):
 async function listPartnerEventSourcesWithOptions(request: ListPartnerEventSourcesRequest, runtime: Util.RuntimeOptions): ListPartnerEventSourcesResponse {
   Util.validateModel(request);
   return doRequest('listEventStreamingMetrics', 'HTTP', 'POST', `/openapi/listPartnerEventSources`, null, request, runtime);
+}
+
+model QueryEventsRequest {
+  eventBusName: string(name='EventBusName'),
+  eventSourceName?: string(name='EventSourceName'),
+  eventIds: [string](name='EventIds'),
+}
+
+model QueryEventsResponse {
+  eventMap: map[string]string(name='EventMap'),
+  eventBusName: string(name='EventBusName'),
+}
+
+/**
+ * Query the event by the event Id.
+ */
+async function queryEvents(request: QueryEventsRequest): QueryEventsResponse {
+  var runtime = new Util.RuntimeOptions{};
+  return queryEventsWithOptions(request, runtime);
+}
+
+
+/**
+ * Query the event by the event Id.
+ */
+async function queryEventsWithOptions(request: QueryEventsRequest, runtime: Util.RuntimeOptions): QueryEventsResponse {
+  Util.validateModel(request);
+  return doRequest('queryEvents','HTTP', 'POST', `/openapi/queryEventsByEventIds`, null, request, runtime);
 }

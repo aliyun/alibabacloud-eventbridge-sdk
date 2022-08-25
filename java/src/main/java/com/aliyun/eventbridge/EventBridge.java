@@ -771,4 +771,13 @@ public interface EventBridge {
     ListPartnerEventSourcesResponse listPartnerEventSourcesWithOptions(ListPartnerEventSourcesRequest request,
                                                                        RuntimeOptions runtime);
 
+    /**
+     * Query the event by the event Id.
+     */
+    QueryEventsResponse queryEvents(QueryEventsRequest request);
+
+    /**
+     * Query the event by the event Id.
+     */
+    QueryEventsResponse queryEventsWithOptions(QueryEventsRequest request, RuntimeOptions runtime);
 }

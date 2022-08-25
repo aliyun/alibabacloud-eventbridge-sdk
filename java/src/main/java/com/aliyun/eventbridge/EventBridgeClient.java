@@ -826,4 +826,22 @@ public class EventBridgeClient implements EventBridge {
                         "/openapi/listPartnerEventSources", null, TeaModel.buildMap(request), runtime),
                 new ListPartnerEventSourcesResponse());
     }
+
+    /**
+     * Query the event by the event Id.
+     */
+    @Override
+    public QueryEventsResponse queryEvents(QueryEventsRequest request) {
+        RuntimeOptions runtime = new RuntimeOptions();
+        return this.queryEventsWithOptions(request, runtime);
+    }
+
+    /**
+     * Query the event by the event Id.
+     */
+    @Override
+    public QueryEventsResponse queryEventsWithOptions(QueryEventsRequest request, RuntimeOptions runtime) {
+        com.aliyun.teautil.Common.validateModel(request);
+        return TeaModel.toModel(this.doRequest("queryEvent", "HTTP", "POST", "/openapi/queryEventsByEventIds", null, TeaModel.buildMap(request), runtime), new QueryEventsResponse());
+    }
 }

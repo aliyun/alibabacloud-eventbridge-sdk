@@ -6,7 +6,7 @@ import com.aliyun.tea.*;
 public class QueryEventsByPeriodResponse extends TeaModel {
     @NameInMap("TracedEvents")
     @Validation(required = true)
-    public java.util.List<EventTrace> tracedEvents;
+    public java.util.List<TracedEvent> tracedEvents;
 
     @NameInMap("NextToken")
     @Validation(required = true)
@@ -21,11 +21,11 @@ public class QueryEventsByPeriodResponse extends TeaModel {
         return TeaModel.build(map, self);
     }
 
-    public QueryEventsByPeriodResponse setTracedEvents(java.util.List<EventTrace> tracedEvents) {
+    public QueryEventsByPeriodResponse setTracedEvents(java.util.List<TracedEvent> tracedEvents) {
         this.tracedEvents = tracedEvents;
         return this;
     }
-    public java.util.List<EventTrace> getTracedEvents() {
+    public java.util.List<TracedEvent> getTracedEvents() {
         return this.tracedEvents;
     }
 
