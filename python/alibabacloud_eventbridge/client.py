@@ -1916,3 +1916,51 @@ class Client:
             event_bridge_models.ListPartnerEventSourcesResponse(),
             await self.do_request_async('listEventStreamingMetrics', 'HTTP', 'POST', f'/openapi/listPartnerEventSources', None, TeaCore.to_map(request), runtime)
         )
+
+    def query_events(
+        self,
+        request: event_bridge_models.QueryEventsRequest,
+    ) -> event_bridge_models.QueryEventsResponse:
+        """
+        Query the event by the event Id.
+        """
+        runtime = util_models.RuntimeOptions()
+        return self.query_events_with_options(request, runtime)
+
+    async def query_events_async(
+        self,
+        request: event_bridge_models.QueryEventsRequest,
+    ) -> event_bridge_models.QueryEventsResponse:
+        """
+        Query the event by the event Id.
+        """
+        runtime = util_models.RuntimeOptions()
+        return await self.query_events_with_options_async(request, runtime)
+
+    def query_events_with_options(
+        self,
+        request: event_bridge_models.QueryEventsRequest,
+        runtime: util_models.RuntimeOptions,
+    ) -> event_bridge_models.QueryEventsResponse:
+        """
+        Query the event by the event Id.
+        """
+        UtilClient.validate_model(request)
+        return TeaCore.from_map(
+            event_bridge_models.QueryEventsResponse(),
+            self.do_request('queryEvents', 'HTTP', 'POST', f'/openapi/queryEventsByEventIds', None, TeaCore.to_map(request), runtime)
+        )
+
+    async def query_events_with_options_async(
+        self,
+        request: event_bridge_models.QueryEventsRequest,
+        runtime: util_models.RuntimeOptions,
+    ) -> event_bridge_models.QueryEventsResponse:
+        """
+        Query the event by the event Id.
+        """
+        UtilClient.validate_model(request)
+        return TeaCore.from_map(
+            event_bridge_models.QueryEventsResponse(),
+            await self.do_request_async('queryEvents', 'HTTP', 'POST', f'/openapi/queryEventsByEventIds', None, TeaCore.to_map(request), runtime)
+        )

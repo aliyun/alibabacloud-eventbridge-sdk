@@ -25,6 +25,12 @@ public class QueryEventsByPeriodRequest extends TeaModel {
     @NameInMap("NextToken")
     public String nextToken;
 
+    @NameInMap("EventType")
+    public String eventType;
+
+    @NameInMap("MatchedRule")
+    public String matchedRule;
+
     public static QueryEventsByPeriodRequest build(java.util.Map<String, ?> map) {
         QueryEventsByPeriodRequest self = new QueryEventsByPeriodRequest();
         return TeaModel.build(map, self);
@@ -76,6 +82,22 @@ public class QueryEventsByPeriodRequest extends TeaModel {
     }
     public String getNextToken() {
         return this.nextToken;
+    }
+
+    public QueryEventsByPeriodRequest setEventType(String eventType) {
+        this.eventType = eventType;
+        return this;
+    }
+    public String getEventType() {
+        return this.eventType;
+    }
+
+    public QueryEventsByPeriodRequest setMatchedRule(String matchedRule) {
+        this.matchedRule = matchedRule;
+        return this;
+    }
+    public String getMatchedRule() {
+        return this.matchedRule;
     }
 
 }

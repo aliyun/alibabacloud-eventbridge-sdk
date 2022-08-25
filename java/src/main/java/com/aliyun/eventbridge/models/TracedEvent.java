@@ -4,7 +4,7 @@ package com.aliyun.eventbridge.models;
 import com.aliyun.tea.*;
 
 public class TracedEvent extends TeaModel {
-    @NameInMap("eventReceivedTime")
+    @NameInMap("EventReceivedTime")
     @Validation(required = true)
     public String eventReceivedTime;
 
@@ -19,6 +19,10 @@ public class TracedEvent extends TeaModel {
     @NameInMap("EventBusName")
     @Validation(required = true)
     public String eventBusName;
+
+    @NameInMap("EventType")
+    @Validation(required = true)
+    public String eventType;
 
     public static TracedEvent build(java.util.Map<String, ?> map) {
         TracedEvent self = new TracedEvent();
@@ -55,6 +59,14 @@ public class TracedEvent extends TeaModel {
     }
     public String getEventBusName() {
         return this.eventBusName;
+    }
+
+    public TracedEvent setEventType(String eventType) {
+        this.eventType = eventType;
+        return this;
+    }
+    public String getEventType() {
+        return this.eventType;
     }
 
 }
