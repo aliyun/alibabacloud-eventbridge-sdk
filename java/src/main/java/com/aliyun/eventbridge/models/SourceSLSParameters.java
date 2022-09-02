@@ -25,6 +25,9 @@ public class SourceSLSParameters extends TeaModel {
     @Validation(required = true)
     public String roleName;
 
+    @NameInMap("ConsumerGroup")
+    public String consumerGroup;
+
     public static SourceSLSParameters build(java.util.Map<String, ?> map) {
         SourceSLSParameters self = new SourceSLSParameters();
         return TeaModel.build(map, self);
@@ -68,6 +71,14 @@ public class SourceSLSParameters extends TeaModel {
     }
     public String getRoleName() {
         return this.roleName;
+    }
+
+    public SourceSLSParameters setConsumerGroup(String consumerGroup) {
+        this.consumerGroup = consumerGroup;
+        return this;
+    }
+    public String getConsumerGroup() {
+        return this.consumerGroup;
     }
 
 }
