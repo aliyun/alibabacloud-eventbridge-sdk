@@ -659,6 +659,8 @@ type TargetEntry struct {
 	PushRetryStrategy *string           `json:"PushRetryStrategy,omitempty" xml:"PushRetryStrategy,omitempty"`
 	ParamList         []*EBTargetParam  `json:"ParamList,omitempty" xml:"ParamList,omitempty" type:"Repeated"`
 	ConcurrentConfig  *ConcurrentConfig `json:"ConcurrentConfig,omitempty" xml:"ConcurrentConfig,omitempty"`
+	DeadLetterQueue   *DeadLetterQueue  `json:"DeadLetterQueue,omitempty" xml:"DeadLetterQueue,omitempty"`
+	ErrorsTolerance   *string           `json:"ErrorsTolerance,omitempty" xml:"ErrorsTolerance,omitempty"`
 }
 
 func (s TargetEntry) String() string {
@@ -696,6 +698,16 @@ func (s *TargetEntry) SetParamList(v []*EBTargetParam) *TargetEntry {
 
 func (s *TargetEntry) SetConcurrentConfig(v *ConcurrentConfig) *TargetEntry {
 	s.ConcurrentConfig = v
+	return s
+}
+
+func (s *TargetEntry) SetDeadLetterQueue(v *DeadLetterQueue) *TargetEntry {
+	s.DeadLetterQueue = v
+	return s
+}
+
+func (s *TargetEntry) SetErrorsTolerance(v string) *TargetEntry {
+	s.ErrorsTolerance = &v
 	return s
 }
 
@@ -1587,11 +1599,19 @@ func (s *QueryEventTracesRequest) SetEventId(v string) *QueryEventTracesRequest 
 }
 
 type EventTrace struct {
-	ResourceOwnerId *string `json:"ResourceOwnerId,omitempty" xml:"ResourceOwnerId,omitempty" require:"true"`
-	Action          *string `json:"Action,omitempty" xml:"Action,omitempty" require:"true"`
-	EventId         *string `json:"EventId,omitempty" xml:"EventId,omitempty" require:"true"`
-	EventBusName    *string `json:"EventBusName,omitempty" xml:"EventBusName,omitempty" require:"true"`
-	ActionTime      *string `json:"ActionTime,omitempty" xml:"ActionTime,omitempty" require:"true"`
+	ResourceOwnerId  *string `json:"ResourceOwnerId,omitempty" xml:"ResourceOwnerId,omitempty" require:"true"`
+	Action           *string `json:"Action,omitempty" xml:"Action,omitempty" require:"true"`
+	EventId          *string `json:"EventId,omitempty" xml:"EventId,omitempty" require:"true"`
+	EventBusName     *string `json:"EventBusName,omitempty" xml:"EventBusName,omitempty" require:"true"`
+	ActionTime       *string `json:"ActionTime,omitempty" xml:"ActionTime,omitempty" require:"true"`
+	EventSource      *string `json:"EventSource,omitempty" xml:"EventSource,omitempty" require:"true"`
+	ReceivedTime     *int64  `json:"ReceivedTime,omitempty" xml:"ReceivedTime,omitempty" require:"true"`
+	RuleName         *string `json:"RuleName,omitempty" xml:"RuleName,omitempty" require:"true"`
+	RuleMatchingTime *int64  `json:"RuleMatchingTime,omitempty" xml:"RuleMatchingTime,omitempty" require:"true"`
+	NotifyLatency    *int64  `json:"NotifyLatency,omitempty" xml:"NotifyLatency,omitempty" require:"true"`
+	NotifyTime       *int64  `json:"NotifyTime,omitempty" xml:"NotifyTime,omitempty" require:"true"`
+	Endpoint         *string `json:"Endpoint,omitempty" xml:"Endpoint,omitempty" require:"true"`
+	NotifyStatus     *string `json:"NotifyStatus,omitempty" xml:"NotifyStatus,omitempty" require:"true"`
 }
 
 func (s EventTrace) String() string {
@@ -1624,6 +1644,46 @@ func (s *EventTrace) SetEventBusName(v string) *EventTrace {
 
 func (s *EventTrace) SetActionTime(v string) *EventTrace {
 	s.ActionTime = &v
+	return s
+}
+
+func (s *EventTrace) SetEventSource(v string) *EventTrace {
+	s.EventSource = &v
+	return s
+}
+
+func (s *EventTrace) SetReceivedTime(v int64) *EventTrace {
+	s.ReceivedTime = &v
+	return s
+}
+
+func (s *EventTrace) SetRuleName(v string) *EventTrace {
+	s.RuleName = &v
+	return s
+}
+
+func (s *EventTrace) SetRuleMatchingTime(v int64) *EventTrace {
+	s.RuleMatchingTime = &v
+	return s
+}
+
+func (s *EventTrace) SetNotifyLatency(v int64) *EventTrace {
+	s.NotifyLatency = &v
+	return s
+}
+
+func (s *EventTrace) SetNotifyTime(v int64) *EventTrace {
+	s.NotifyTime = &v
+	return s
+}
+
+func (s *EventTrace) SetEndpoint(v string) *EventTrace {
+	s.Endpoint = &v
+	return s
+}
+
+func (s *EventTrace) SetNotifyStatus(v string) *EventTrace {
+	s.NotifyStatus = &v
 	return s
 }
 
@@ -1674,10 +1734,11 @@ func (s *QueryEventByEventIdRequest) SetEventId(v string) *QueryEventByEventIdRe
 }
 
 type TracedEvent struct {
-	EventReceivedTime *string `json:"eventReceivedTime,omitempty" xml:"eventReceivedTime,omitempty" require:"true"`
+	EventReceivedTime *string `json:"EventReceivedTime,omitempty" xml:"EventReceivedTime,omitempty" require:"true"`
 	EventSource       *string `json:"EventSource,omitempty" xml:"EventSource,omitempty" require:"true"`
 	EventId           *string `json:"EventId,omitempty" xml:"EventId,omitempty" require:"true"`
 	EventBusName      *string `json:"EventBusName,omitempty" xml:"EventBusName,omitempty" require:"true"`
+	EventType         *string `json:"EventType,omitempty" xml:"EventType,omitempty" require:"true"`
 }
 
 func (s TracedEvent) String() string {
@@ -1708,10 +1769,15 @@ func (s *TracedEvent) SetEventBusName(v string) *TracedEvent {
 	return s
 }
 
+func (s *TracedEvent) SetEventType(v string) *TracedEvent {
+	s.EventType = &v
+	return s
+}
+
 type QueryEventByEventIdResponse struct {
-	TracedEvents []*EventTrace `json:"TracedEvents,omitempty" xml:"TracedEvents,omitempty" require:"true" type:"Repeated"`
-	NextToken    *string       `json:"NextToken,omitempty" xml:"NextToken,omitempty" require:"true"`
-	Total        *int          `json:"Total,omitempty" xml:"Total,omitempty" require:"true"`
+	TracedEvents []*TracedEvent `json:"TracedEvents,omitempty" xml:"TracedEvents,omitempty" require:"true" type:"Repeated"`
+	NextToken    *string        `json:"NextToken,omitempty" xml:"NextToken,omitempty" require:"true"`
+	Total        *int           `json:"Total,omitempty" xml:"Total,omitempty" require:"true"`
 }
 
 func (s QueryEventByEventIdResponse) String() string {
@@ -1722,7 +1788,7 @@ func (s QueryEventByEventIdResponse) GoString() string {
 	return s.String()
 }
 
-func (s *QueryEventByEventIdResponse) SetTracedEvents(v []*EventTrace) *QueryEventByEventIdResponse {
+func (s *QueryEventByEventIdResponse) SetTracedEvents(v []*TracedEvent) *QueryEventByEventIdResponse {
 	s.TracedEvents = v
 	return s
 }
@@ -1744,6 +1810,8 @@ type QueryEventsByPeriodRequest struct {
 	EndTime      *int64  `json:"EndTime,omitempty" xml:"EndTime,omitempty" require:"true"`
 	Limit        *int    `json:"Limit,omitempty" xml:"Limit,omitempty"`
 	NextToken    *string `json:"NextToken,omitempty" xml:"NextToken,omitempty"`
+	EventType    *string `json:"EventType,omitempty" xml:"EventType,omitempty"`
+	MatchedRule  *string `json:"MatchedRule,omitempty" xml:"MatchedRule,omitempty"`
 }
 
 func (s QueryEventsByPeriodRequest) String() string {
@@ -1784,10 +1852,20 @@ func (s *QueryEventsByPeriodRequest) SetNextToken(v string) *QueryEventsByPeriod
 	return s
 }
 
+func (s *QueryEventsByPeriodRequest) SetEventType(v string) *QueryEventsByPeriodRequest {
+	s.EventType = &v
+	return s
+}
+
+func (s *QueryEventsByPeriodRequest) SetMatchedRule(v string) *QueryEventsByPeriodRequest {
+	s.MatchedRule = &v
+	return s
+}
+
 type QueryEventsByPeriodResponse struct {
-	TracedEvents []*EventTrace `json:"TracedEvents,omitempty" xml:"TracedEvents,omitempty" require:"true" type:"Repeated"`
-	NextToken    *string       `json:"NextToken,omitempty" xml:"NextToken,omitempty" require:"true"`
-	Total        *int          `json:"Total,omitempty" xml:"Total,omitempty" require:"true"`
+	TracedEvents []*TracedEvent `json:"TracedEvents,omitempty" xml:"TracedEvents,omitempty" require:"true" type:"Repeated"`
+	NextToken    *string        `json:"NextToken,omitempty" xml:"NextToken,omitempty" require:"true"`
+	Total        *int           `json:"Total,omitempty" xml:"Total,omitempty" require:"true"`
 }
 
 func (s QueryEventsByPeriodResponse) String() string {
@@ -1798,7 +1876,7 @@ func (s QueryEventsByPeriodResponse) GoString() string {
 	return s.String()
 }
 
-func (s *QueryEventsByPeriodResponse) SetTracedEvents(v []*EventTrace) *QueryEventsByPeriodResponse {
+func (s *QueryEventsByPeriodResponse) SetTracedEvents(v []*TracedEvent) *QueryEventsByPeriodResponse {
 	s.TracedEvents = v
 	return s
 }
@@ -1887,13 +1965,24 @@ func (s *SourceMNSParameters) SetIsBase64Decode(v bool) *SourceMNSParameters {
  * The detail of SourceRocketMQParameters
  */
 type SourceRocketMQParameters struct {
-	RegionId   *string `json:"RegionId,omitempty" xml:"RegionId,omitempty"`
-	InstanceId *string `json:"InstanceId,omitempty" xml:"InstanceId,omitempty"`
-	Topic      *string `json:"Topic,omitempty" xml:"Topic,omitempty"`
-	Tag        *string `json:"Tag,omitempty" xml:"Tag,omitempty"`
-	Offset     *string `json:"Offset,omitempty" xml:"Offset,omitempty"`
-	GroupID    *string `json:"GroupID,omitempty" xml:"GroupID,omitempty" require:"true"`
-	Timestamp  *int    `json:"Timestamp,omitempty" xml:"Timestamp,omitempty"`
+	RegionId                *string `json:"RegionId,omitempty" xml:"RegionId,omitempty"`
+	InstanceId              *string `json:"InstanceId,omitempty" xml:"InstanceId,omitempty"`
+	Topic                   *string `json:"Topic,omitempty" xml:"Topic,omitempty"`
+	Tag                     *string `json:"Tag,omitempty" xml:"Tag,omitempty"`
+	Offset                  *string `json:"Offset,omitempty" xml:"Offset,omitempty"`
+	GroupID                 *string `json:"GroupID,omitempty" xml:"GroupID,omitempty" require:"true"`
+	Timestamp               *int    `json:"Timestamp,omitempty" xml:"Timestamp,omitempty"`
+	InstanceType            *string `json:"InstanceType,omitempty" xml:"InstanceType,omitempty"`
+	InstanceEndpoint        *string `json:"InstanceEndpoint,omitempty" xml:"InstanceEndpoint,omitempty"`
+	InstanceUsername        *string `json:"InstanceUsername,omitempty" xml:"InstanceUsername,omitempty"`
+	InstancePassword        *string `json:"InstancePassword,omitempty" xml:"InstancePassword,omitempty"`
+	FilterType              *string `json:"FilterType,omitempty" xml:"FilterType,omitempty"`
+	FilterSql               *string `json:"FilterSql,omitempty" xml:"FilterSql,omitempty"`
+	AuthType                *string `json:"AuthType,omitempty" xml:"AuthType,omitempty"`
+	InstanceVpcId           *string `json:"InstanceVpcId,omitempty" xml:"InstanceVpcId,omitempty"`
+	InstanceVSwitchIds      *string `json:"InstanceVSwitchIds,omitempty" xml:"InstanceVSwitchIds,omitempty"`
+	InstanceSecurityGroupId *string `json:"InstanceSecurityGroupId,omitempty" xml:"InstanceSecurityGroupId,omitempty"`
+	InstanceNetwork         *string `json:"InstanceNetwork,omitempty" xml:"InstanceNetwork,omitempty"`
 }
 
 func (s SourceRocketMQParameters) String() string {
@@ -1936,6 +2025,61 @@ func (s *SourceRocketMQParameters) SetGroupID(v string) *SourceRocketMQParameter
 
 func (s *SourceRocketMQParameters) SetTimestamp(v int) *SourceRocketMQParameters {
 	s.Timestamp = &v
+	return s
+}
+
+func (s *SourceRocketMQParameters) SetInstanceType(v string) *SourceRocketMQParameters {
+	s.InstanceType = &v
+	return s
+}
+
+func (s *SourceRocketMQParameters) SetInstanceEndpoint(v string) *SourceRocketMQParameters {
+	s.InstanceEndpoint = &v
+	return s
+}
+
+func (s *SourceRocketMQParameters) SetInstanceUsername(v string) *SourceRocketMQParameters {
+	s.InstanceUsername = &v
+	return s
+}
+
+func (s *SourceRocketMQParameters) SetInstancePassword(v string) *SourceRocketMQParameters {
+	s.InstancePassword = &v
+	return s
+}
+
+func (s *SourceRocketMQParameters) SetFilterType(v string) *SourceRocketMQParameters {
+	s.FilterType = &v
+	return s
+}
+
+func (s *SourceRocketMQParameters) SetFilterSql(v string) *SourceRocketMQParameters {
+	s.FilterSql = &v
+	return s
+}
+
+func (s *SourceRocketMQParameters) SetAuthType(v string) *SourceRocketMQParameters {
+	s.AuthType = &v
+	return s
+}
+
+func (s *SourceRocketMQParameters) SetInstanceVpcId(v string) *SourceRocketMQParameters {
+	s.InstanceVpcId = &v
+	return s
+}
+
+func (s *SourceRocketMQParameters) SetInstanceVSwitchIds(v string) *SourceRocketMQParameters {
+	s.InstanceVSwitchIds = &v
+	return s
+}
+
+func (s *SourceRocketMQParameters) SetInstanceSecurityGroupId(v string) *SourceRocketMQParameters {
+	s.InstanceSecurityGroupId = &v
+	return s
+}
+
+func (s *SourceRocketMQParameters) SetInstanceNetwork(v string) *SourceRocketMQParameters {
+	s.InstanceNetwork = &v
 	return s
 }
 
@@ -2074,6 +2218,7 @@ type SourceSLSParameters struct {
 	LogStore        *string `json:"LogStore,omitempty" xml:"LogStore,omitempty" require:"true"`
 	ConsumePosition *string `json:"ConsumePosition,omitempty" xml:"ConsumePosition,omitempty"`
 	RoleName        *string `json:"RoleName,omitempty" xml:"RoleName,omitempty" require:"true"`
+	ConsumerGroup   *string `json:"ConsumerGroup,omitempty" xml:"ConsumerGroup,omitempty"`
 }
 
 func (s SourceSLSParameters) String() string {
@@ -2106,6 +2251,11 @@ func (s *SourceSLSParameters) SetConsumePosition(v string) *SourceSLSParameters 
 
 func (s *SourceSLSParameters) SetRoleName(v string) *SourceSLSParameters {
 	s.RoleName = &v
+	return s
+}
+
+func (s *SourceSLSParameters) SetConsumerGroup(v string) *SourceSLSParameters {
+	s.ConsumerGroup = &v
 	return s
 }
 
@@ -2524,6 +2674,7 @@ type SinkFcParameters struct {
 	InvocationType *TargetParameter       `json:"InvocationType,omitempty" xml:"InvocationType,omitempty"`
 	BatchSize      *TargetParameter       `json:"BatchSize,omitempty" xml:"BatchSize,omitempty"`
 	ExtendConfig   map[string]interface{} `json:"ExtendConfig,omitempty" xml:"ExtendConfig,omitempty"`
+	Concurrency    *TargetParameter       `json:"Concurrency,omitempty" xml:"Concurrency,omitempty"`
 }
 
 func (s SinkFcParameters) String() string {
@@ -2566,6 +2717,11 @@ func (s *SinkFcParameters) SetBatchSize(v *TargetParameter) *SinkFcParameters {
 
 func (s *SinkFcParameters) SetExtendConfig(v map[string]interface{}) *SinkFcParameters {
 	s.ExtendConfig = v
+	return s
+}
+
+func (s *SinkFcParameters) SetConcurrency(v *TargetParameter) *SinkFcParameters {
+	s.Concurrency = v
 	return s
 }
 
@@ -4271,6 +4427,58 @@ func (s *ListPartnerEventSourcesResponse) SetEventSources(v []*EBSaaSEventSource
 	return s
 }
 
+type QueryEventsRequest struct {
+	EventBusName    *string   `json:"EventBusName,omitempty" xml:"EventBusName,omitempty" require:"true"`
+	EventSourceName *string   `json:"EventSourceName,omitempty" xml:"EventSourceName,omitempty"`
+	EventIds        []*string `json:"EventIds,omitempty" xml:"EventIds,omitempty" require:"true" type:"Repeated"`
+}
+
+func (s QueryEventsRequest) String() string {
+	return tea.Prettify(s)
+}
+
+func (s QueryEventsRequest) GoString() string {
+	return s.String()
+}
+
+func (s *QueryEventsRequest) SetEventBusName(v string) *QueryEventsRequest {
+	s.EventBusName = &v
+	return s
+}
+
+func (s *QueryEventsRequest) SetEventSourceName(v string) *QueryEventsRequest {
+	s.EventSourceName = &v
+	return s
+}
+
+func (s *QueryEventsRequest) SetEventIds(v []*string) *QueryEventsRequest {
+	s.EventIds = v
+	return s
+}
+
+type QueryEventsResponse struct {
+	EventMap     map[string]*string `json:"EventMap,omitempty" xml:"EventMap,omitempty" require:"true"`
+	EventBusName *string            `json:"EventBusName,omitempty" xml:"EventBusName,omitempty" require:"true"`
+}
+
+func (s QueryEventsResponse) String() string {
+	return tea.Prettify(s)
+}
+
+func (s QueryEventsResponse) GoString() string {
+	return s.String()
+}
+
+func (s *QueryEventsResponse) SetEventMap(v map[string]*string) *QueryEventsResponse {
+	s.EventMap = v
+	return s
+}
+
+func (s *QueryEventsResponse) SetEventBusName(v string) *QueryEventsResponse {
+	s.EventBusName = &v
+	return s
+}
+
 type Client struct {
 	Protocol       *string
 	ReadTimeout    *int
@@ -4477,7 +4685,11 @@ func (client *Client) DoRequest(action *string, protocol *string, method *string
 				return _result, _err
 			}
 
-			tmp := util.AssertAsMap(result)
+			tmp, _err := util.AssertAsMap(result)
+			if _err != nil {
+				return _result, _err
+			}
+
 			if tea.BoolValue(util.Is4xx(response_.StatusCode)) || tea.BoolValue(util.Is5xx(response_.StatusCode)) {
 				_err = tea.NewSDKError(map[string]interface{}{
 					"code":    tmp["code"],
@@ -5532,7 +5744,8 @@ func (client *Client) ListPartnerEventSources(request *ListPartnerEventSourcesRe
 	return _result, _err
 }
 
-/** * List the metrics of event streaming
+/**
+ * List the metrics of event streaming
  */
 func (client *Client) ListPartnerEventSourcesWithOptions(request *ListPartnerEventSourcesRequest, runtime *util.RuntimeOptions) (_result *ListPartnerEventSourcesResponse, _err error) {
 	_err = util.ValidateModel(request)
@@ -5541,6 +5754,37 @@ func (client *Client) ListPartnerEventSourcesWithOptions(request *ListPartnerEve
 	}
 	_result = &ListPartnerEventSourcesResponse{}
 	_body, _err := client.DoRequest(tea.String("listEventStreamingMetrics"), tea.String("HTTP"), tea.String("POST"), tea.String("/openapi/listPartnerEventSources"), nil, tea.ToMap(request), runtime)
+	if _err != nil {
+		return _result, _err
+	}
+	_err = tea.Convert(_body, &_result)
+	return _result, _err
+}
+
+/**
+ * Query the event by the event Id.
+ */
+func (client *Client) QueryEvents(request *QueryEventsRequest) (_result *QueryEventsResponse, _err error) {
+	runtime := &util.RuntimeOptions{}
+	_result = &QueryEventsResponse{}
+	_body, _err := client.QueryEventsWithOptions(request, runtime)
+	if _err != nil {
+		return _result, _err
+	}
+	_result = _body
+	return _result, _err
+}
+
+/**
+ * Query the event by the event Id.
+ */
+func (client *Client) QueryEventsWithOptions(request *QueryEventsRequest, runtime *util.RuntimeOptions) (_result *QueryEventsResponse, _err error) {
+	_err = util.ValidateModel(request)
+	if _err != nil {
+		return _result, _err
+	}
+	_result = &QueryEventsResponse{}
+	_body, _err := client.DoRequest(tea.String("queryEvents"), tea.String("HTTP"), tea.String("POST"), tea.String("/openapi/queryEventsByEventIds"), nil, tea.ToMap(request), runtime)
 	if _err != nil {
 		return _result, _err
 	}
