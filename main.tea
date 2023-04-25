@@ -335,6 +335,8 @@ model TargetEntry = {
   pushRetryStrategy?: string(name='PushRetryStrategy'),
   paramList?: [ EBTargetParam ](name='ParamList'),
   concurrentConfig?: ConcurrentConfig(name='ConcurrentConfig'),
+  deadLetterQueue?: DeadLetterQueue(name='DeadLetterQueue'),
+  errorsTolerance?: string(name='ErrorsTolerance'),
 }
 
 /**
@@ -975,6 +977,17 @@ model SourceRocketMQParameters = {
   offset?: string(name='Offset'),
   groupID: string(name='GroupID'),
   timestamp?: number(name='Timestamp'),
+  instanceType?: string(name='InstanceType'),
+  instanceEndpoint?: string(name='InstanceEndpoint'),
+  instanceUsername?: string(name='InstanceUsername'),
+  instancePassword?: string(name='InstancePassword'),
+  filterType?: string(name='FilterType'),
+  filterSql?: string(name='FilterSql'),
+  authType?: string(name='AuthType'),
+  instanceVpcId?: string(name='InstanceVpcId'),
+  instanceVSwitchIds?: string(name='InstanceVSwitchIds'),
+  instanceSecurityGroupId?: string(name='InstanceSecurityGroupId'),
+  instanceNetwork?: string(name='InstanceNetwork'),
 }
 
 /**
@@ -1124,6 +1137,7 @@ model SinkFcParameters = {
   invocationType?: TargetParameter(name='InvocationType'),
   batchSize?: TargetParameter(name='BatchSize'),
   extendConfig?: map[string] any(name='ExtendConfig'),
+  concurrency?: TargetParameter(name='Concurrency'),
 }
 
 /**
