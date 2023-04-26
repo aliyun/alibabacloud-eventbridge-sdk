@@ -28,6 +28,12 @@ public class TargetEntry extends TeaModel {
     @NameInMap("ConcurrentConfig")
     public ConcurrentConfig concurrentConfig;
 
+    @NameInMap("DeadLetterQueue")
+    public DeadLetterQueue deadLetterQueue;
+
+    @NameInMap("ErrorsTolerance")
+    public String errorsTolerance;
+
     public static TargetEntry build(java.util.Map<String, ?> map) {
         TargetEntry self = new TargetEntry();
         return TeaModel.build(map, self);
@@ -79,6 +85,22 @@ public class TargetEntry extends TeaModel {
     }
     public ConcurrentConfig getConcurrentConfig() {
         return this.concurrentConfig;
+    }
+
+    public TargetEntry setDeadLetterQueue(DeadLetterQueue deadLetterQueue) {
+        this.deadLetterQueue = deadLetterQueue;
+        return this;
+    }
+    public DeadLetterQueue getDeadLetterQueue() {
+        return this.deadLetterQueue;
+    }
+
+    public TargetEntry setErrorsTolerance(String errorsTolerance) {
+        this.errorsTolerance = errorsTolerance;
+        return this;
+    }
+    public String getErrorsTolerance() {
+        return this.errorsTolerance;
     }
 
 }
