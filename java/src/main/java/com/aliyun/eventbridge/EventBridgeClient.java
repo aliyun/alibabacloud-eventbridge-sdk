@@ -118,6 +118,7 @@ public class EventBridgeClient implements EventBridge {
         );
 
         TeaRequest _lastRequest = null;
+        Exception _lastException = null;
         long _now = System.currentTimeMillis();
         int _retryTimes = 0;
         while (Tea.allowRetry((java.util.Map<String, Object>) runtime_.get("retry"), _retryTimes, _now)) {
@@ -171,7 +172,7 @@ public class EventBridgeClient implements EventBridge {
                 String stringToSign = com.aliyun.eventbridge.base.EventBridgeUtil.getStringToSign(request_);
                 request_.headers.put("authorization", "acs:" + accessKeyId + ":" + com.aliyun.eventbridge.base.EventBridgeUtil.getSignature(stringToSign, accessKeySecret) + "");
                 _lastRequest = request_;
-                TeaResponse response_ = Tea.doAction(request_, runtime_);
+                TeaResponse response_ = Tea.doAction(request_, runtime_, interceptorChain);
 
                 Object result = com.aliyun.teautil.Common.readAsJSON(response_.body);
                 java.util.Map<String, Object> tmp = com.aliyun.teautil.Common.assertAsMap(result);
@@ -186,6 +187,7 @@ public class EventBridgeClient implements EventBridge {
                 return tmp;
             } catch (Exception e) {
                 if (Tea.isRetryable(e)) {
+                    _lastException = e;
                     continue;
                 }
                 if (e instanceof TeaException) {
@@ -194,8 +196,19 @@ public class EventBridgeClient implements EventBridge {
                 throw new TeaException(e.getMessage(), e);
             }
         }
+        throw new TeaUnretryableException(_lastRequest, _lastException);
+    }
 
-        throw new TeaUnretryableException(_lastRequest);
+    public void addRuntimeOptionsInterceptor(RuntimeOptionsInterceptor interceptor) {
+        interceptorChain.addRuntimeOptionsInterceptor(interceptor);
+    }
+
+    public void addRequestInterceptor(RequestInterceptor interceptor) {
+        interceptorChain.addRequestInterceptor(interceptor);
+    }
+
+    public void addResponseInterceptor(ResponseInterceptor interceptor) {
+        interceptorChain.addResponseInterceptor(interceptor);
     }
 
     /**
@@ -551,18 +564,6 @@ public class EventBridgeClient implements EventBridge {
         return TeaModel.toModel(this.doRequest("queryEventsByPeriod", "HTTP", "POST", "/openapi/queryEventsByPeriod", null, TeaModel.buildMap(request), runtime), new QueryEventsByPeriodResponse());
     }
 
-    public void addRuntimeOptionsInterceptor(RuntimeOptionsInterceptor interceptor) {
-        interceptorChain.addRuntimeOptionsInterceptor(interceptor);
-    }
-
-    public void addRequestInterceptor(RequestInterceptor interceptor) {
-        interceptorChain.addRequestInterceptor(interceptor);
-    }
-
-    public void addResponseInterceptor(ResponseInterceptor interceptor) {
-        interceptorChain.addResponseInterceptor(interceptor);
-    }
-
     /**
      * Creates a new event source within your account
      */
@@ -842,6 +843,6 @@ public class EventBridgeClient implements EventBridge {
     @Override
     public QueryEventsResponse queryEventsWithOptions(QueryEventsRequest request, RuntimeOptions runtime) {
         com.aliyun.teautil.Common.validateModel(request);
-        return TeaModel.toModel(this.doRequest("queryEvent", "HTTP", "POST", "/openapi/queryEventsByEventIds", null, TeaModel.buildMap(request), runtime), new QueryEventsResponse());
+        return TeaModel.toModel(this.doRequest("queryEvents", "HTTP", "POST", "/openapi/queryEventsByEventIds", null, TeaModel.buildMap(request), runtime), new QueryEventsResponse());
     }
 }

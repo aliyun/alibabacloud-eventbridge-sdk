@@ -4685,10 +4685,7 @@ func (client *Client) DoRequest(action *string, protocol *string, method *string
 				return _result, _err
 			}
 
-			tmp, _err := util.AssertAsMap(result)
-			if _err != nil {
-				return _result, _err
-			}
+			tmp := util.AssertAsMap(result)
 
 			if tea.BoolValue(util.Is4xx(response_.StatusCode)) || tea.BoolValue(util.Is5xx(response_.StatusCode)) {
 				_err = tea.NewSDKError(map[string]interface{}{

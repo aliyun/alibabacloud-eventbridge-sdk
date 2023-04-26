@@ -28,6 +28,9 @@ public class SinkFcParameters extends TeaModel {
     @NameInMap("ExtendConfig")
     public java.util.Map<String, ?> extendConfig;
 
+    @NameInMap("Concurrency")
+    public TargetParameter concurrency;
+
     public static SinkFcParameters build(java.util.Map<String, ?> map) {
         SinkFcParameters self = new SinkFcParameters();
         return TeaModel.build(map, self);
@@ -87,6 +90,14 @@ public class SinkFcParameters extends TeaModel {
     }
     public java.util.Map<String, ?> getExtendConfig() {
         return this.extendConfig;
+    }
+
+    public SinkFcParameters setConcurrency(TargetParameter concurrency) {
+        this.concurrency = concurrency;
+        return this;
+    }
+    public TargetParameter getConcurrency() {
+        return this.concurrency;
     }
 
 }
