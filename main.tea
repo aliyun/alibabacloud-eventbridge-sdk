@@ -18,6 +18,7 @@ type @credential = Credential
 type @localAddr = string
 type @socks5Proxy = string
 type @socks5NetWork = string
+type @tlsMinVersion = string
 
 /**
  * Model for initing client
@@ -38,7 +39,8 @@ model Config {
   maxIdleConns?: integer(description='max idle conns',example='3',default=''),
   localAddr?: string(description='localAddr'),
   socks5Proxy?: string(description='socks5proxy',example='http://localhost',default=''),
-  socks5NetWork?: string(description='socks5NetWork')
+  socks5NetWork?: string(description='socks5NetWork'),
+  tlsMinVersion?: string(description='TLS Minimum Version', example='TLSv1, TLSv1.1, TLSv1.2, TLSv1.3',default='TLSv1.2')
 }
 
 /**
@@ -100,6 +102,7 @@ init(config: Config){
   @localAddr = config.localAddr;
   @socks5Proxy = config.socks5Proxy;
   @socks5NetWork = config.socks5NetWork;
+  @tlsMinVersion = config.tlsMinVersion;
 }
 
 /**
@@ -944,6 +947,7 @@ api doRequest(action: string, protocol: string, method: string, pathname: string
   localAddr = Util.defaultString(runtime.localAddr, @localAddr),
   socks5Proxy = Util.defaultString(runtime.socks5Proxy, @socks5Proxy),
   socks5NetWork = Util.defaultString(runtime.socks5NetWork, @socks5NetWork),
+  tlsMinVersion = @tlsMinVersion
 }
 
 
